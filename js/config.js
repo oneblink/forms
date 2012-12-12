@@ -7,7 +7,9 @@ require.config({
       'https://d1c6dfkb81l78v.cloudfront.net/jquery/1.8.3/jq.min'
     ],
     underscore: 'https://d1c6dfkb81l78v.cloudfront.net/underscorejs/1.4.3/u.min',
+    // require.js plugins
     domReady: 'lib/domReady-2.0.1',
+    text: 'lib/text-2.0.3',
     // testing libraries
     chai: 'lib/chai-1.4.0',
     mocha: 'lib/mocha-1.7.4',

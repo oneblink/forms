@@ -1,7 +1,8 @@
 define(['backbone'], function(Backbone) {
+  'use strict';
+
   var Form = Backbone.Model.extend({
     constructor: function() {
-      console.log(arguments);
     }
   });
 

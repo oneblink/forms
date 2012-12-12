@@ -1,6 +1,7 @@
 
 define(['jquery'], function() {
-  var Forms = window.BlinkForms = {};
+  'use strict';
+  //var Forms = window.BlinkForms = {};
 });
 
 

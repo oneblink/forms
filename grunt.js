@@ -3,10 +3,38 @@
  * @param {Object} grunt instance of Grunt.
  */
 module.exports = function(grunt) {
+  'use strict';
 
   grunt.loadNpmTasks('grunt-requirejs');
+  grunt.loadNpmTasks('grunt-jslint');
 
   grunt.initConfig({
+
+    jslint: {
+      files: [
+        '**/*.js'
+      ],
+      exclude: [
+        'js/config.js',
+        'node_modules/**',
+        'js/lib/**',
+        '**/*.min.js'
+      ],
+      directives: {
+        browser: true,
+        white: true,
+        predef: [
+          // pre-defined globals
+          'module',
+          'define',
+          'require'
+        ]
+      },
+      options: {
+        errorsOnly: true,
+        failOnError: true
+      }
+    },
 
     requirejs: {
       std: {
@@ -34,7 +62,7 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('build', 'requirejs');
+  grunt.registerTask('default', 'jslint requirejs');
 
 };
 
