@@ -1,5 +1,5 @@
 
-define(['jquery'], function() {
-  var Forms = window.BlinkForms = {};
+define(['mocha', 'chai'], function(mocha, chai) {
+  mocha.run();
 });
 
