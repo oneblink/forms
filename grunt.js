@@ -56,14 +56,15 @@ module.exports = function(grunt) {
           },
           name: 'main',
           include: ['config', 'boot'],
-          out: 'main.min.js'
+          out: 'js/main.min.js'
         }
       }
     }
 
   });
 
-  grunt.registerTask('default', 'jslint requirejs');
+  grunt.registerTask('default', 'jslint');
+  grunt.registerTask('build', 'jslint requirejs');
 
 };
 
