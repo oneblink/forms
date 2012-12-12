@@ -2,7 +2,8 @@
   "name": "bforms_v3",
   "version": "0.0.1",
   "dependencies": {
+    "grunt": "~0.3",
     "grunt-jslint": "~0.2",
-    "grunt-requirejs": "~0.3"
+    "grunt-contrib-requirejs": "~0.3"
   }
 }

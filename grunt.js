@@ -5,7 +5,7 @@
 module.exports = function(grunt) {
   'use strict';
 
-  grunt.loadNpmTasks('grunt-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-jslint');
 
   grunt.initConfig({
@@ -31,32 +31,33 @@ module.exports = function(grunt) {
         ]
       },
       options: {
-        errorsOnly: true,
         failOnError: true
       }
     },
 
     requirejs: {
-      std: {
-        baseUrl: 'js',
-        mainConfigFile: 'js/config.js',
-        optimize: 'uglify',
-        uglify: {
-          max_line_length: 80
-        },
-        paths: {
-          backbone: 'empty:',
-          jquery: 'empty:',
-          underscore: 'empty:',
-          // testing libraries
-          chai: 'empty:',
-          mocha: 'empty:',
-          // boot / entry points
-          main: 'main'
-        },
-        name: 'main',
-        include: ['config', 'boot'],
-        out: 'main.min.js'
+      compile: {
+        options: {
+          baseUrl: 'js',
+          mainConfigFile: 'js/config.js',
+          optimize: 'uglify',
+          uglify: {
+            max_line_length: 80
+          },
+          paths: {
+            backbone: 'empty:',
+            jquery: 'empty:',
+            underscore: 'empty:',
+            // testing libraries
+            chai: 'empty:',
+            mocha: 'empty:',
+            // boot / entry points
+            main: 'main'
+          },
+          name: 'main',
+          include: ['config', 'boot'],
+          out: 'main.min.js'
+        }
       }
     }
 
