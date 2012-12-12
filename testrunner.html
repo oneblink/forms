@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="css/mocha-1.7.4.css" />
+  <script src="js/lib/require-2.1.2.min.js"></script>
+</head>
+<body>
+  <div id="mocha"></div>
+  <script>
+  require.config({
+    paths: {
+      'boot': ['js/main.min', 'js/boot']
+    }
+  });
+  require(['boot'], function() {
+    require(['testRunner']);
+  });
+  </script>
+</body>
+</html>

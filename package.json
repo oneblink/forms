@@ -1,0 +1,7 @@
+{
+  "name": "bforms_v3",
+  "version": "0.0.1",
+  "dependencies": {
+    "grunt-requirejs": "~0.3"
+  }
+}

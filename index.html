@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title></title>
+  <script src="js/lib/require-2.1.2.min.js"></script>
+</head>
+<body>
+  <script>
+  require.config({
+    paths: {
+      'boot': ['js/main.min', 'js/boot']
+    }
+  });
+  require(['boot'], function() {
+    require(['main']);
+  });
+  </script>
+</body>
+</html>

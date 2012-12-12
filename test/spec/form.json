@@ -1,0 +1,12 @@
+{
+  "default": {
+    "name": "form1",
+    "label": "Form 1",
+    "_elements:": [
+      /* fully-defined elements go here */
+    ],
+    "!element": {
+      /* overriding properties go here */
+    }
+  }
+}
