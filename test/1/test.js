@@ -4,8 +4,7 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json'],
        function($, Q, chai, json) {
   'use strict';
 
-  var assert = chai.assert,
-      Forms;
+  var assert = chai.assert;
 
   suite('1', function() {
     var obj;
@@ -26,7 +25,7 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json'],
               if (window.BlinkForms) {
                 dfrd.resolve();
               } else {
-                setTimeout(check, 197);
+                setTimeout(check, 47);
               }
             };
 
@@ -35,12 +34,13 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json'],
       });
 
       test('BlinkForms global is an Object', function() {
-        Forms = window.BlinkForms;
+        var Forms = window.BlinkForms;
         assert.equal($.type(Forms), 'object');
       });
 
       test('initialise with form.json', function() {
-        var form;
+        var Forms = window.BlinkForms,
+            form;
         Forms.initialize(obj);
         form = Forms.currentFormObject;
         assert.equal($.type(form), 'object');
@@ -51,6 +51,7 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json'],
     });
 
     teardown(function() {
+      delete window.BlinkForms.currentFormObject;
     });
   });
 });
