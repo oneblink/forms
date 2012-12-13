@@ -6,6 +6,7 @@ require.config({
       'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min',
       'https://d1c6dfkb81l78v.cloudfront.net/jquery/1.8.3/jq.min'
     ],
+    q: 'lib/q-0.8.11.min',
     underscore: 'https://d1c6dfkb81l78v.cloudfront.net/underscorejs/1.4.3/u.min',
     // require.js plugins
     domReady: 'lib/domReady-2.0.1',

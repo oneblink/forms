@@ -1,13 +1,19 @@
 
-define(['mocha'], function(mocha) {
+define(['mocha', 'q'], function(mocha, Q) {
   'use strict';
+  var tests = Q.defer();
 
-  mocha.setup({ui: 'tdd'});
+  mocha.setup({
+    ui: 'tdd',
+    globals: ['Backbone', 'BlinkForms']
+  });
 
-  require(['../test/1/test']);
+  require(['../test/1/test'], function() {
+    tests.resolve();
+  });
 
-  setTimeout(function() {
+  tests.promise.then(function() {
     mocha.run();
-  }, 497);
+  });
 });
 

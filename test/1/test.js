@@ -1,10 +1,11 @@
 /*global suite:true, test:true, setup:true, teardown:true*/ // mocha
 
-define(['jquery', 'chai', 'text!/test/1/form.json'], function($, chai, json) {
+define(['jquery', 'q', 'chai', 'text!/test/1/form.json'],
+       function($, Q, chai, json) {
   'use strict';
 
   var assert = chai.assert,
-      Forms = window.BlinkForms;
+      Forms;
 
   suite('1', function() {
     var obj;
@@ -19,7 +20,22 @@ define(['jquery', 'chai', 'text!/test/1/form.json'], function($, chai, json) {
 
     suite('Form', function() {
 
-      test('BlinkForms global is defined', function() {
+      test('wait for BlinkForms global', function(done) {
+        var dfrd = Q.defer(),
+            check = function() {
+              if (window.BlinkForms) {
+                dfrd.resolve();
+              } else {
+                setTimeout(check, 197);
+              }
+            };
+
+        check();
+        dfrd.promise.then(done);
+      });
+
+      test('BlinkForms global is an Object', function() {
+        Forms = window.BlinkForms;
         assert.equal($.type(Forms), 'object');
       });
 
