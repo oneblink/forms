@@ -2,7 +2,17 @@
   "default": {
     "name": "form1",
     "label": "Form 1",
-    "_elements:": [
+    "_elements": [
+      {
+        "default": {
+          "name": "date"
+        }
+      },
+      {
+        "default": {
+          "name": "note"
+        }
+      }
     ],
     "!element": {
     }
