@@ -1,13 +1,14 @@
 /*global suite:true, test:true, setup:true, teardown:true*/ // mocha
 
-define(['jquery', 'q', 'chai', 'text!/test/1/form.json'],
-       function($, Q, chai, json) {
+define(['jquery', 'q', 'chai', 'text!/test/1/form.json', 'views/jqm/form'],
+       function($, Q, chai, json, View) {
   'use strict';
 
   var assert = chai.assert;
 
   suite('1', function() {
-    var obj;
+    var obj,
+        $form = $('form');
 
     /**
      * execute once before everything else in this suite
@@ -51,7 +52,17 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json'],
         assert.equal(form.get('label'), 'Form 1');
       });
 
-    });
+      test('render form for jQuery Mobile', function() {
+        var Forms = window.BlinkForms,
+            form = Forms.currentFormObject,
+            view;
+
+        view = new View({ model: form });
+        $form.append(view.el);
+        view.render();
+      });
+
+    }); // END: suite('Form', ...)
 
     /**
      * execute once after everything else in this suite
@@ -59,5 +70,6 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json'],
     suiteTeardown(function() {
       delete window.BlinkForms.currentFormObject;
     });
-  });
+
+  }); // END: suite('1', ...)
 });
