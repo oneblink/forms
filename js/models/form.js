@@ -1,4 +1,5 @@
-define(['underscore', 'backbone'], function(_, Backbone) {
+define(['underscore', 'backbone', 'models/element'],
+       function(_, Backbone, Element) {
   'use strict';
 
   var Form = Backbone.Model.extend({
@@ -10,6 +11,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       var pertinent = def.default,
           elements = pertinent._elements,
           names;
+      delete pertinent._elements;
       if (action && def[action]) {
         names = def[action]._elements;
         delete def[action]._elements;
@@ -23,15 +25,12 @@ define(['underscore', 'backbone'], function(_, Backbone) {
           return names.indexOf(el.default.name);
         });
       }
-      // collapse pertinent action-specific element attributes
+      // creates models from element definitions
       elements = _.map(elements, function(el) {
-        if (action && el[action]) {
-          $.extend(el.default, el[action]);
-        }
         // TODO: merge in !element overrides
-        return el.default;
+        return new Element(el);
       });
-      pertinent._elements = elements;
+      pertinent.elements = elements;
       this.attributes = pertinent;
     }
   });
