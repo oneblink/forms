@@ -9,7 +9,10 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json'],
   suite('1', function() {
     var obj;
 
-    setup(function() {
+    /**
+     * execute once before everything else in this suite
+     */
+    suiteSetup(function() {
       obj = JSON.parse(json);
     });
 
@@ -50,7 +53,10 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json'],
 
     });
 
-    teardown(function() {
+    /**
+     * execute once after everything else in this suite
+     */
+    suiteTeardown(function() {
       delete window.BlinkForms.currentFormObject;
     });
   });
