@@ -1,5 +1,6 @@
 define(['underscore', 'backbone', 'jquery', 'models/element', 'models/page',
-      'collections/elements'],
+      'collections/elements',
+      'models/elements/text'],
       function(_, Backbone, $, Element, Page, Elements) {
   'use strict';
 
@@ -13,11 +14,10 @@ define(['underscore', 'backbone', 'jquery', 'models/element', 'models/page',
      * @param {Number} index desired Page index.
      */
     getPage: function(index) {
-      console.log('getPage: ' + index);
       var pages = this.get('pages');
       // assume that by now it's okay to create vanilla Pages
       while (pages.length <= index) {
-        pages.push(new Page());
+        pages.push(Page.create());
       }
       return pages[index];
     },
@@ -51,7 +51,7 @@ define(['underscore', 'backbone', 'jquery', 'models/element', 'models/page',
       if (pages && _.isArray(pages)) {
         // TODO: allow pages to be redeclared per-action
         pages = _.map(pages, function(p) {
-          return new Page(p, action, self);
+          return Page.create(p, action, self);
         });
       } else {
         pages = [];

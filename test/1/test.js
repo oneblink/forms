@@ -1,7 +1,8 @@
 /*global suite:true, test:true, setup:true, teardown:true*/ // mocha
 
-define(['jquery', 'q', 'chai', 'text!/test/1/form.json', 'views/jqm/form'],
-       function($, Q, chai, json, View) {
+define(['jquery', 'q', 'chai',
+      'text!/test/1/form.json', 'views/jqm/form'], // 'jquerymobile'
+      function($, Q, chai, json, View) {
   'use strict';
 
   var assert = chai.assert;
@@ -63,6 +64,10 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json', 'views/jqm/form'],
           model: form
         });
         view.render();
+/*        $.mobile.changePage($form.children('section').first(), {
+          pageContainer: $form,
+          fromPage: $form.children('section').last()
+        }); */
       });
 
     }); // END: suite('Form', ...)

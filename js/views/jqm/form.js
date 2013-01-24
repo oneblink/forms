@@ -1,5 +1,5 @@
-define(['underscore', 'backbone', 'views/jqm/page'],
-       function(_, Backbone, PageView) {
+define(['underscore', 'backbone'],
+       function(_, Backbone) {
   var FormView = Backbone.View.extend({
     tagName: 'form',
     attributes: {
@@ -12,7 +12,7 @@ define(['underscore', 'backbone', 'views/jqm/page'],
 
       this.$el.empty();
       _.forEach(pages, function(page) {
-        var view = new PageView({ model: page });
+        var view = page.attributes._view;
 
         view.render();
         self.$el.append(view.el);

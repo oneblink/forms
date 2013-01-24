@@ -1,4 +1,4 @@
-define(['underscore', 'backbone'], function(_, Backbone) {
+define(['underscore', 'backbone', 'require'], function(_, Backbone, require) {
   'use strict';
 
   var Element = Backbone.Model.extend({
@@ -8,7 +8,6 @@ define(['underscore', 'backbone'], function(_, Backbone) {
           form = attrs.form,
           page = attrs.page;
 
-      console.log('initialize:', attrs);
       if (form && _.isNumber(attrs.page)) {
         attrs.page = form.getPage(attrs.page);
         attrs.page.add(this);
@@ -22,7 +21,10 @@ define(['underscore', 'backbone'], function(_, Backbone) {
      */
     create: function(def, action, form) {
       var attrs,
-          el;
+          view,
+          el,
+          TypedElement,
+          View;
 
       if (!def || !_.isObject(def)) {
         return new Element();
@@ -35,8 +37,18 @@ define(['underscore', 'backbone'], function(_, Backbone) {
         attrs.form = form;
       }
       // TODO: determine Element type and select sub-Prototype
-      el = new Element(attrs);
-      attrs = el.attributes;
+      switch (attrs.type) {
+        case 'text':
+          TypedElement = require('models/elements/text');
+          View = require('views/jqm/elements/text');
+          el = new TypedElement(attrs);
+          break;
+        default:
+          View = require('views/jqm/element');
+          el = new Element(attrs);
+      }
+      view = new View({model: el});
+      el.attributes._view = view;
       return el;
     }
   });

@@ -3,18 +3,18 @@
  * - cannot be nested
  * - only used immediately within a form (not deeper in)
  */
-define(['underscore', 'backbone', 'collections/elements'],
-       function(_, Backbone, Elements) {
+define(['underscore', 'backbone', 'collections/elements', 'views/jqm/page'],
+       function(_, Backbone, Elements, PageView) {
   'use strict';
 
   var Page;
 
   Page = Backbone.Model.extend({
     defaults: {
-      break: true
     },
     initialize: function() {
       this.attributes.elements = new Elements();
+      this.attributes._view = new PageView({model: this});
     },
     add: function(element) {
       this.attributes.elements.add(element);

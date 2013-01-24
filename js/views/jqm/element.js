@@ -1,4 +1,6 @@
 define(['underscore', 'backbone'], function(_, Backbone) {
+  'use strict';
+
   var ElementView = Backbone.View.extend({
     tagName: 'div',
     attributes: {
@@ -30,9 +32,6 @@ define(['underscore', 'backbone'], function(_, Backbone) {
           break;
         case 'date':
           $input = $('<input type="date" />');
-          break;
-        case 'text':
-          $input = $('<input type="text" />');
           break;
         case 'hidden':
           $input = $('<input type="hidden" />');

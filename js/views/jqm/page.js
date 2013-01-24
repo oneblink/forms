@@ -11,8 +11,8 @@ define(['underscore', 'backbone', 'views/jqm/element'],
       var self = this;
       this.$el.empty();
       this.model.get('elements').forEach(function(el) {
-        var view = new ElementView({model: el}),
-            type = el.get('type');
+        var view = el.attributes._view,
+            type = el.attributes.type;
 
         view.render();
         if (type === 'hidden') {
