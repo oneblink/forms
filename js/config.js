@@ -1,10 +1,10 @@
 require.config({
   baseUrl: 'js',
   paths: {
-    backbone: 'https://d1c6dfkb81l78v.cloudfront.net/backbonejs/0.9.2/backbone.min',
+    backbone: 'https://d1c6dfkb81l78v.cloudfront.net/backbonejs/0.9.10/backbone.min',
     jquery: [
-      'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min',
-      'https://d1c6dfkb81l78v.cloudfront.net/jquery/1.8.3/jq.min'
+      'https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min',
+      'https://d1c6dfkb81l78v.cloudfront.net/jquery/1.9.0/jquery.min'
     ],
     q: 'lib/q-0.8.11.min',
     underscore: 'https://d1c6dfkb81l78v.cloudfront.net/underscorejs/1.4.3/u.min',
