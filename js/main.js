@@ -8,9 +8,10 @@ define(['jquery', 'models/form'], function($, Form) {
    */
   Forms.initialize = function(def) {
     var form;
-    if ($.isPlainObject(def)) {
-      form = new Form(def);
+    if (!$.isPlainObject(def) || $.type(def.default) !== 'object') {
+      throw new Error('unexpected Form definition structure');
     }
+    form = Form.create(def, 'add');
     if (!Forms.currentFormObject) {
       // TODO: this is insufficient, needs a more thorough test
       Forms.currentFormObject = form;

@@ -57,8 +57,11 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json', 'views/jqm/form'],
             form = Forms.currentFormObject,
             view;
 
-        view = new View({ model: form });
-        $form.append(view.el);
+        view = new View({
+          $el: $form,
+          el: $form[0],
+          model: form
+        });
         view.render();
       });
 
@@ -68,7 +71,7 @@ define(['jquery', 'q', 'chai', 'text!/test/1/form.json', 'views/jqm/form'],
      * execute once after everything else in this suite
      */
     suiteTeardown(function() {
-      delete window.BlinkForms.currentFormObject;
+//      delete window.BlinkForms.currentFormObject;
     });
 
   }); // END: suite('1', ...)

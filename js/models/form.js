@@ -1,37 +1,91 @@
-define(['underscore', 'backbone', 'models/element'],
-       function(_, Backbone, Element) {
+define(['underscore', 'backbone', 'jquery', 'models/element', 'models/page',
+      'collections/elements'],
+      function(_, Backbone, $, Element, Page, Elements) {
   'use strict';
 
-  var Form = Backbone.Model.extend({
+  var Form;
+
+  Form = Backbone.Model.extend({
+    initialize: function() {
+    },
+    /**
+     * get a Page, creating it if necessary
+     * @param {Number} index desired Page index.
+     */
+    getPage: function(index) {
+      console.log('getPage: ' + index);
+      var pages = this.get('pages');
+      // assume that by now it's okay to create vanilla Pages
+      while (pages.length <= index) {
+        pages.push(new Page());
+      }
+      return pages[index];
+    },
+    getElement: function(name) {
+      return this.attributes.elements.get(name);
+    }
+  }, {
+    // static properties
     /**
      * @param {Object} def complete form definition.
      * @param {String} action "add" | "edit" | "view" | etc...
      */
-    constructor: function(def, action) {
-      var pertinent = def.default,
-          elements = pertinent._elements,
-          names;
-      delete pertinent._elements;
+    create: function(def, action) {
+      var attrs,
+          elements,
+          pages,
+          elNames,
+          form;
+
+      if (!def || !_.isObject(def)) {
+        return new Form();
+      }
+      attrs = def.default;
+
+      elements = attrs._elements;
+      delete attrs._elements;
+
+      pages = attrs._pages;
+      delete attrs._elements;
+
+      if (pages && _.isArray(pages)) {
+        // TODO: allow pages to be redeclared per-action
+        pages = _.map(pages, function(p) {
+          return new Page(p, action, self);
+        });
+      } else {
+        pages = [];
+      }
+      attrs.pages = pages;
+
       if (action && def[action]) {
-        names = def[action]._elements;
+        elNames = def[action]._elements;
         delete def[action]._elements;
-        _.extend(pertinent, def[action]);
+        _.extend(attrs, def[action]);
+
+        form = new Form(attrs);
+
         // remove all elements not needed for this action
         elements = _.filter(elements, function(el) {
-          return names.indexOf(el.default.name) !== -1;
+          return elNames.indexOf(el.default.name) !== -1;
         });
         // sort elements as per the action-specific order
         elements = _.sortBy(element, function(el) {
-          return names.indexOf(el.default.name);
+          return elNames.indexOf(el.default.name);
         });
+      } else {
+        form = new Form(attrs);
       }
-      // creates models from element definitions
+      // create models from element definitions
       elements = _.map(elements, function(el) {
         // TODO: merge in !element overrides
-        return new Element(el);
+        return Element.create(el, action, form);
       });
-      pertinent.elements = elements;
-      this.attributes = pertinent;
+      // create collection
+      elements = new Elements(elements);
+      form.set('elements', elements);
+
+      return form;
     }
   });
 

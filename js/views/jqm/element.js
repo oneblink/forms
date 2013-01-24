@@ -4,18 +4,50 @@ define(['underscore', 'backbone'], function(_, Backbone) {
     attributes: {
       'data-role': 'fieldcontain'
     },
-    className: '',
     events: {
     },
     render: function() {
       var $label = $(document.createElement('label')),
           $fieldset = $(document.createElement('fieldset')),
-          $input;
+          $input,
+          type = this.model.get('type'),
+          name = this.model.get('name');
 
-      $label.text(this.model.get('label') || this.model.get('name'));
+      $label.text(this.model.get('label') || name);
 
-      this.$el.empty();
-      this.$el.append($label);
+      switch (type) {
+        case 'file':
+          $input = $('<input type="file" />');
+          break;
+        case 'image':
+          $input = $('<input type="file" />');
+          break;
+        case 'url':
+          $input = $('<input type="url" />');
+          break;
+        case 'email':
+          $input = $('<input type="email" />');
+          break;
+        case 'date':
+          $input = $('<input type="date" />');
+          break;
+        case 'text':
+          $input = $('<input type="text" />');
+          break;
+        case 'hidden':
+          $input = $('<input type="hidden" />');
+          break;
+      }
+      $input.attr('name', name);
+      if (type === 'hidden') {
+        this.$el = $input;
+        this.el = $input[0];
+      } else {
+        this.$el.empty();
+        this.$el.append($label);
+        $fieldset.append($input);
+        this.$el.append($fieldset);
+      }
     }
   });
 

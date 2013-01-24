@@ -5,16 +5,86 @@
     "_elements": [
       {
         "default": {
-          "name": "date"
+          "name": "date",
+          "label": "Date",
+          "type": "date",
+          "page": 0
         }
       },
       {
         "default": {
-          "name": "note"
+          "name": "url",
+          "label": "URL",
+          "type": "url",
+          "page": 0
+
+        }
+      },
+      {
+        "default": {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "page": 0
+
+        }
+      },
+      {
+        "default": {
+          "name": "streetAddress",
+          "label": "Street Address",
+          "type": "text",
+          "isMultiLine": true,
+          "page": 1
+
+        }
+      },
+      {
+        "default": {
+          "name": "city",
+          "label": "City",
+          "type": "text",
+          "page": 1
+
+        }
+      },
+      {
+        "default": {
+          "name": "postCode",
+          "label": "Post Code",
+          "type": "text",
+          "page": 1
+
+        }
+      },
+      {
+        "default": {
+          "name": "country",
+          "label": "Country",
+          "type": "text",
+          "page": 1
+
+        }
+      },
+      {
+        "default": {
+          "name": "file",
+          "label": "File",
+          "type": "file",
+          "page": 0
+
+        }
+      },
+      {
+        "default": {
+          "name": "image",
+          "label": "Image",
+          "type": "image",
+          "page": 0
+
         }
       }
-    ],
-    "!element": {
-    }
+    ]
   }
 }
+
