@@ -3,7 +3,9 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 
   var Element = Backbone.Model.extend({
     defaults: {
-      page: 0
+      page: 0,
+      defaultValue: '',
+      value: ''
     },
     idAttribute: 'name',
     initialize: function() {
@@ -14,6 +16,10 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       if (form && _.isNumber(attrs.page)) {
         attrs.page = form.getPage(attrs.page);
         attrs.page.add(this);
+      }
+      this.set('value', this.attributes.defaultValue);
+      if (!this.attributes.label) {
+        this.set('label', this.attributes.name);
       }
     }
   }, {

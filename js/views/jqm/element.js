@@ -1,4 +1,4 @@
-define(['underscore', 'backbone'], function(_, Backbone) {
+define(['underscore', 'backbone', 'rivets'], function(_, Backbone, rivets) {
   'use strict';
 
   var ElementView = Backbone.View.extend({
@@ -8,6 +8,9 @@ define(['underscore', 'backbone'], function(_, Backbone) {
     },
     events: {
     },
+    initialize: function() {
+      this.rivet = rivets.bind(this.el, {m: this.model});
+    },
     render: function() {
       var $label = $(document.createElement('label')),
           $fieldset = $(document.createElement('fieldset')),
@@ -15,7 +18,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
           type = this.model.get('type'),
           name = this.model.get('name');
 
-      $label.text(this.model.get('label') || name);
+      $label.attr('data-rv-text', 'm.label');
 
       switch (type) {
         case 'file':
@@ -34,11 +37,16 @@ define(['underscore', 'backbone'], function(_, Backbone) {
           $input = $('<input type="date" />');
           break;
       }
-      $input.attr('name', name);
+      $input.attr({
+        name: name,
+        'data-rv-value': 'm.value'
+      });
       this.$el.empty();
       this.$el.append($label);
       $fieldset.append($input);
       this.$el.append($fieldset);
+      this.rivet.unbind();
+      this.rivet = rivets.bind(this.el, {m: this.model});
     }
   });
 

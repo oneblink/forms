@@ -10,14 +10,19 @@ define(['underscore', 'backbone', 'views/jqm/element'],
           type = this.model.get('type'),
           name = this.model.get('name');
 
-      $label.text(this.model.get('label') || name);
+      $label.attr('data-rv-text', 'm.label');
 
       $input = $('<input type="text" />');
-      $input.attr('name', name);
+      $input.attr({
+        name: name,
+        'data-rv-value': 'm.value'
+      });
       this.$el.empty();
       this.$el.append($label);
       $fieldset.append($input);
       this.$el.append($fieldset);
+      this.rivet.unbind();
+      this.rivet = rivets.bind(this.el, {m: this.model});
     }
   });
 
