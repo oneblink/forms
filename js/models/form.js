@@ -1,5 +1,5 @@
 define(['underscore', 'backbone', 'jquery',
-  'collections/elements',
+  'collections/elements'
 ], function(_, Backbone, $, Elements) {
   'use strict';
 
