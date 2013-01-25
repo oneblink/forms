@@ -3,8 +3,8 @@
  * - cannot be nested
  * - only used immediately within a form (not deeper in)
  */
-define(['underscore', 'backbone', 'collections/elements', 'views/jqm/page'],
-       function(_, Backbone, Elements, PageView) {
+define(['underscore', 'backbone', 'collections/elements'],
+       function(_, Backbone, Elements) {
   'use strict';
 
   var Page;
@@ -13,8 +13,11 @@ define(['underscore', 'backbone', 'collections/elements', 'views/jqm/page'],
     defaults: {
     },
     initialize: function() {
+      var Forms = window.BlinkForms;
       this.attributes.elements = new Elements();
-      this.attributes._view = new PageView({model: this});
+      if (Forms._views.Page) {
+        this.attributes._view = new Forms._views.Page({model: this});
+      }
     },
     add: function(element) {
       this.attributes.elements.add(element);

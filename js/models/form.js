@@ -1,7 +1,6 @@
-define(['underscore', 'backbone', 'jquery', 'models/element', 'models/page',
-      'collections/elements',
-      'models/elements/text'],
-      function(_, Backbone, $, Element, Page, Elements) {
+define(['underscore', 'backbone', 'jquery',
+  'collections/elements',
+], function(_, Backbone, $, Elements) {
   'use strict';
 
   var Form;
@@ -14,7 +13,9 @@ define(['underscore', 'backbone', 'jquery', 'models/element', 'models/page',
      * @param {Number} index desired Page index.
      */
     getPage: function(index) {
-      var pages = this.get('pages');
+      var Page = window.BlinkForms._models.Page,
+          pages = this.get('pages');
+
       // assume that by now it's okay to create vanilla Pages
       while (pages.length <= index) {
         pages.push(Page.create());
@@ -31,7 +32,9 @@ define(['underscore', 'backbone', 'jquery', 'models/element', 'models/page',
      * @param {String} action "add" | "edit" | "view" | etc...
      */
     create: function(def, action) {
-      var attrs,
+      var Page = window.BlinkForms._models.Page,
+          Element = window.BlinkForms._models.Element,
+          attrs,
           elements,
           pages,
           elNames,

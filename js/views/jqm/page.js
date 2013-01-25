@@ -1,5 +1,5 @@
-define(['underscore', 'backbone', 'views/jqm/element'],
-       function(_, Backbone, ElementView) {
+define(['underscore', 'backbone'],
+       function(_, Backbone) {
   var PageView = Backbone.View.extend({
     tagName: 'section',
     attributes: {

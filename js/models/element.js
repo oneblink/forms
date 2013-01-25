@@ -1,4 +1,4 @@
-define(['underscore', 'backbone', 'require'], function(_, Backbone, require) {
+define(['underscore', 'backbone'], function(_, Backbone) {
   'use strict';
 
   var Element = Backbone.Model.extend({
@@ -20,7 +20,8 @@ define(['underscore', 'backbone', 'require'], function(_, Backbone, require) {
      * @param {String} action "add" | "edit" | "view" | etc...
      */
     create: function(def, action, form) {
-      var attrs,
+      var Forms = window.BlinkForms,
+          attrs,
           view,
           el,
           TypedElement,
@@ -39,12 +40,17 @@ define(['underscore', 'backbone', 'require'], function(_, Backbone, require) {
       // TODO: determine Element type and select sub-Prototype
       switch (attrs.type) {
         case 'text':
-          TypedElement = require('models/elements/text');
-          View = require('views/jqm/elements/text');
+          TypedElement = Forms._models.TextElement;
+          View = Forms._views.TextElement;
+          el = new TypedElement(attrs);
+          break;
+        case 'textarea':
+          TypedElement = Forms._models.TextAreaElement;
+          View = Forms._views.TextAreaElement;
           el = new TypedElement(attrs);
           break;
         default:
-          View = require('views/jqm/element');
+          View = Forms._views.Element;
           el = new Element(attrs);
       }
       view = new View({model: el});

@@ -1,8 +1,8 @@
 /*global suite:true, test:true, setup:true, teardown:true*/ // mocha
 
 define(['jquery', 'q', 'chai',
-      'text!/test/1/form.json', 'views/jqm/form'], // 'jquerymobile'
-      function($, Q, chai, json, View) {
+      'text!/test/1/form.json', 'views/jqm'], // 'jquerymobile'
+      function($, Q, chai, json, views) {
   'use strict';
 
   var assert = chai.assert;
@@ -46,6 +46,8 @@ define(['jquery', 'q', 'chai',
       test('initialise with form.json', function() {
         var Forms = window.BlinkForms,
             form;
+
+        Forms._views = views;
         Forms.initialize(obj);
         form = Forms.currentFormObject;
         assert.equal($.type(form), 'object');
@@ -58,7 +60,7 @@ define(['jquery', 'q', 'chai',
             form = Forms.currentFormObject,
             view;
 
-        view = new View({
+        view = new Forms._views.Form({
           $el: $form,
           el: $form[0],
           model: form

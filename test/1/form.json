@@ -33,8 +33,7 @@
         "default": {
           "name": "streetAddress",
           "label": "Street Address",
-          "type": "text",
-          "isMultiLine": true,
+          "type": "textarea",
           "page": 1
 
         }

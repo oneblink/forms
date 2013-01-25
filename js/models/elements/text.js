@@ -1,5 +1,5 @@
-define(['underscore', 'backbone', 'models/element', 'views/jqm/elements/text'],
-      function(_, Backbone, Element, TextElementView) {
+define(['underscore', 'backbone', 'models/element'],
+      function(_, Backbone, Element) {
   'use strict';
 
   var TextElement = Element.extend({

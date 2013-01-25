@@ -1,7 +1,21 @@
 
-define(['jquery', 'models/form', 'backbone'], function($, Form, Backbone) {
+define(['jquery', 'backbone',
+  'models/form',
+  'models/page',
+  'models/element',
+  'models/elements/text',
+  'models/elements/textarea'
+], function($, Backbone, Form, Page, Element, TextElement, TextAreaElement) {
   'use strict';
   var Forms = window.BlinkForms || {};
+
+  Forms._models = {
+    Form: Form,
+    Page: Page,
+    Element: Element,
+    TextElement: TextElement,
+    TextAreaElement: TextAreaElement
+  };
 
   // http://forrst.com/posts/Backbone_js_super_function-4co
   Backbone.Model.prototype._super = function(funcName) {
