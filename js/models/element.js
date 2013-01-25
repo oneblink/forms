@@ -2,6 +2,9 @@ define(['underscore', 'backbone'], function(_, Backbone) {
   'use strict';
 
   var Element = Backbone.Model.extend({
+    defaults: {
+      page: 0
+    },
     idAttribute: 'name',
     initialize: function() {
       var attrs = this.attributes,
@@ -39,6 +42,11 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       }
       // TODO: determine Element type and select sub-Prototype
       switch (attrs.type) {
+        case 'hidden':
+          TypedElement = Forms._models.HiddenElement;
+          View = Forms._views.HiddenElement;
+          el = new TypedElement(attrs);
+          break;
         case 'text':
           TypedElement = Forms._models.TextElement;
           View = Forms._views.TextElement;

@@ -14,15 +14,10 @@ define(['underscore', 'backbone', 'views/jqm/elements/text'],
 
       $input = $('<textarea />');
       $input.attr('name', name);
-      if (type === 'hidden') {
-        this.$el = $input;
-        this.el = $input[0];
-      } else {
-        this.$el.empty();
-        this.$el.append($label);
-        $fieldset.append($input);
-        this.$el.append($fieldset);
-      }
+      this.$el.empty();
+      this.$el.append($label);
+      $fieldset.append($input);
+      this.$el.append($fieldset);
     }
   });
 

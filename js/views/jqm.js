@@ -3,6 +3,7 @@ define([
   'views/jqm/form',
   'views/jqm/page',
   'views/jqm/element',
+  'views/jqm/elements/hidden',
   'views/jqm/elements/text',
   'views/jqm/elements/textarea'
 ], function(
@@ -10,6 +11,7 @@ define([
   FormView,
   PageView,
   ElementView,
+  HiddenElementView,
   TextElementView,
   TextAreaElementView
 ) {
@@ -17,6 +19,7 @@ define([
     Form: FormView,
     Page: PageView,
     Element: ElementView,
+    HiddenElement: HiddenElementView,
     TextElement: TextElementView,
     TextAreaElement: TextAreaElementView
   };

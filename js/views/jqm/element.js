@@ -33,20 +33,12 @@ define(['underscore', 'backbone'], function(_, Backbone) {
         case 'date':
           $input = $('<input type="date" />');
           break;
-        case 'hidden':
-          $input = $('<input type="hidden" />');
-          break;
       }
       $input.attr('name', name);
-      if (type === 'hidden') {
-        this.$el = $input;
-        this.el = $input[0];
-      } else {
-        this.$el.empty();
-        this.$el.append($label);
-        $fieldset.append($input);
-        this.$el.append($fieldset);
-      }
+      this.$el.empty();
+      this.$el.append($label);
+      $fieldset.append($input);
+      this.$el.append($fieldset);
     }
   });
 

@@ -5,6 +5,12 @@
     "_elements": [
       {
         "default": {
+          "name": "id",
+          "type": "hidden"
+        }
+      },
+      {
+        "default": {
           "name": "date",
           "label": "Date",
           "type": "date",

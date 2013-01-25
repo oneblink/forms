@@ -1,11 +1,20 @@
 
-define(['jquery', 'backbone',
+define(['jquery',
   'models/form',
   'models/page',
   'models/element',
+  'models/elements/hidden',
   'models/elements/text',
   'models/elements/textarea'
-], function($, Backbone, Form, Page, Element, TextElement, TextAreaElement) {
+], function(
+  $,
+  Form,
+  Page,
+  Element,
+  HiddenElement,
+  TextElement,
+  TextAreaElement
+) {
   'use strict';
   var Forms = window.BlinkForms || {};
 
@@ -13,6 +22,7 @@ define(['jquery', 'backbone',
     Form: Form,
     Page: Page,
     Element: Element,
+    HiddenElement: HiddenElement,
     TextElement: TextElement,
     TextAreaElement: TextAreaElement
   };
