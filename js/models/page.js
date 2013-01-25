@@ -15,9 +15,7 @@ define(['underscore', 'backbone', 'collections/elements'],
     initialize: function() {
       var Forms = window.BlinkForms;
       this.attributes.elements = new Elements();
-      if (Forms._views.Page) {
-        this.attributes._view = new Forms._views.Page({model: this});
-      }
+      this.attributes._view = new Forms._views.Page({model: this});
     },
     add: function(element) {
       this.attributes.elements.add(element);
