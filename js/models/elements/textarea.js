@@ -1,14 +1,14 @@
-define(['underscore', 'backbone', 'models/element'],
-      function(_, Backbone, Element) {
+define(['underscore', 'backbone', 'models/elements/text'],
+      function(_, Backbone, TextElement) {
   'use strict';
 
-  var TextElement = Element.extend({
+  var TextAreaElement = TextElement.extend({
     initialize: function() {
-      this._super('initialize');
+      TextElement.prototype.initialize.call(this);
     }
   });
 
-  return TextElement;
+  return TextAreaElement;
 });
 
 

@@ -17,11 +17,6 @@ define(['jquery', 'backbone',
     TextAreaElement: TextAreaElement
   };
 
-  // http://forrst.com/posts/Backbone_js_super_function-4co
-  Backbone.Model.prototype._super = function(funcName) {
-    return this.constructor.__super__[funcName].apply(this, _.rest(arguments));
-  };
-
   // set jQuery Mobile options
   $(document).on('mobileinit', function() {
     $.extend($.mobile, {

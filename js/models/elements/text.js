@@ -4,7 +4,7 @@ define(['underscore', 'backbone', 'models/element'],
 
   var TextElement = Element.extend({
     initialize: function() {
-      this._super('initialize');
+      Element.prototype.initialize.call(this);
     }
   });
 
