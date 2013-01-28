@@ -21,8 +21,7 @@ define(['underscore', 'backbone', 'views/jqm/element'],
       this.$el.append($label);
       $fieldset.append($input);
       this.$el.append($fieldset);
-      this.rivet.unbind();
-      this.rivet = rivets.bind(this.el, {m: this.model});
+      this.bindRivets();
     }
   });
 
