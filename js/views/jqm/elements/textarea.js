@@ -1,5 +1,5 @@
-define(['underscore', 'backbone', 'views/jqm/elements/text'],
-      function(_, Backbone, TextElementView) {
+define(['jquery', 'underscore', 'backbone', 'views/jqm/elements/text'],
+      function($, _, Backbone, TextElementView) {
   'use strict';
 
   var TextAreaElementView = TextElementView.extend({

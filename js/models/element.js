@@ -26,11 +26,10 @@ define(['underscore', 'backbone'], function(_, Backbone) {
      * official Blink API
      */
     val: function(value) {
-      if (typeof value === 'undefined') {
+      if (value === undefined) {
         return this.get('value');
-      } else {
-        this.set('value', value);
       }
+      this.set('value', value);
       return value;
     }
   }, {

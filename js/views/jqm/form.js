@@ -1,5 +1,7 @@
 define(['underscore', 'backbone'],
        function(_, Backbone) {
+  'use strict';
+
   var FormView = Backbone.View.extend({
     tagName: 'form',
     attributes: {

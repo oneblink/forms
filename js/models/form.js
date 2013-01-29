@@ -7,6 +7,23 @@ define(['underscore', 'backbone', 'q',
 
   Form = Backbone.Model.extend({
     initialize: function() {
+      var self = this,
+          Page = window.BlinkForms._models.Page,
+          action = this.attributes.action,
+          pages;
+
+      pages = this.attributes._pages;
+      delete this.attributes._pages;
+
+      if (pages && _.isArray(pages)) {
+        // TODO: allow pages to be redeclared per-action
+        pages = _.map(pages, function(p) {
+          return Page.create(p, action, self);
+        });
+      } else {
+        pages = [];
+      }
+      this.attributes.pages = pages;
     },
     /**
      * get a Page, creating it if necessary
@@ -68,19 +85,6 @@ define(['underscore', 'backbone', 'q',
       elements = attrs._elements;
       delete attrs._elements;
 
-      pages = attrs._pages;
-      delete attrs._elements;
-
-      if (pages && _.isArray(pages)) {
-        // TODO: allow pages to be redeclared per-action
-        pages = _.map(pages, function(p) {
-          return Page.create(p, action, self);
-        });
-      } else {
-        pages = [];
-      }
-      attrs.pages = pages;
-
       if (action && def[action]) {
         elNames = def[action]._elements;
         delete def[action]._elements;
@@ -93,7 +97,7 @@ define(['underscore', 'backbone', 'q',
           return elNames.indexOf(el.default.name) !== -1;
         });
         // sort elements as per the action-specific order
-        elements = _.sortBy(element, function(el) {
+        elements = _.sortBy(elements, function(el) {
           return elNames.indexOf(el.default.name);
         });
       } else {

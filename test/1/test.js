@@ -1,4 +1,5 @@
 /*global suite:true, test:true, setup:true, teardown:true*/ // mocha
+/*global suiteSetup:true, suiteTeardown:true*/ // mocha
 
 define(['jquery', 'q', 'chai',
       'text!/test/1/form.json', 'views/jqm'], // 'jquerymobile'

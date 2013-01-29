@@ -1,5 +1,5 @@
-define(['underscore', 'backbone', 'views/jqm/element'],
-      function(_, Backbone, ElementView) {
+define(['jquery', 'underscore', 'backbone', 'views/jqm/element'],
+      function($, _, Backbone, ElementView) {
   'use strict';
 
   var DateElementView = ElementView.extend({

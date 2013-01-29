@@ -1,5 +1,7 @@
 define(['underscore', 'backbone'],
        function(_, Backbone) {
+  'use strict';
+
   var PageView = Backbone.View.extend({
     tagName: 'section',
     attributes: {

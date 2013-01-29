@@ -21,6 +21,8 @@ define([
   TextElementView,
   TextAreaElementView
 ) {
+  'use strict';
+
   rivets.configure({
     prefix: 'rv',
     adapter: {

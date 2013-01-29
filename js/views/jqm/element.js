@@ -1,4 +1,5 @@
-define(['underscore', 'backbone', 'rivets'], function(_, Backbone, rivets) {
+define(['jquery', 'underscore', 'backbone', 'rivets'],
+      function($, _, Backbone, rivets) {
   'use strict';
 
   var ElementView = Backbone.View.extend({
@@ -48,7 +49,9 @@ define(['underscore', 'backbone', 'rivets'], function(_, Backbone, rivets) {
       this.bindRivets();
     },
     bindRivets: function() {
-      this.rivet && this.rivet.unbind();
+      if (this.rivet) {
+        this.rivet.unbind();
+      }
       this.rivet = rivets.bind(this.el, {m: this.model});
     }
   });

@@ -1,5 +1,5 @@
 
-define(['mocha', 'q'], function(mocha, Q) {
+define(['mocha', 'q', 'underscore'], function(mocha, Q, _) {
   'use strict';
   var tests = [],
       promises;
