@@ -12,6 +12,8 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
+    clean: ['js/build', 'js/*.min.js'],
+
     jslint: {
       files: [
         '**/*.js'
@@ -47,10 +49,16 @@ module.exports = function(grunt) {
           baseUrl: 'js',
           dir: 'js/build',
           mainConfigFile: 'js/config.js',
-          optimize: 'uglify',
+          optimize: 'uglify2',
 //          optimize: 'none', // debug-only
           uglify: {
             max_line_length: 80
+          },
+          uglify2: {
+            output: {
+              max_line_len: 80
+            },
+            warnings: false
           },
           paths: {
             backbone: 'empty:',
@@ -79,8 +87,6 @@ module.exports = function(grunt) {
       }
     },
 
-    clean: ['js/build'],
-
     copy: {
       main: {
         files: [
@@ -99,7 +105,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', 'jslint');
-  grunt.registerTask('build', 'jslint requirejs copy clean');
+  grunt.registerTask('build', 'clean jslint requirejs copy');
 
 };
 
