@@ -1,11 +1,12 @@
-define(['underscore', 'backbone', 'views/jqm/element'],
-      function(_, Backbone, ElementView) {
+define(['jquery', 'underscore', 'backbone', 'views/jqm/element'],
+      function($, _, Backbone, ElementView) {
   'use strict';
 
   var TextElementView = ElementView.extend({
-    tagName: 'input',
-    attributes: {
-      type: 'hidden'
+    initialize: function() {
+      // have to do this to stop Backbone from trying to change the "type"
+      this.setElement($('<input type="hidden" />')[0]);
+      ElementView.prototype.initialize.call(this);
     },
     render: function() {
       var name = this.model.get('name');
