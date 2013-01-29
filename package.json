@@ -4,6 +4,8 @@
   "dependencies": {
     "grunt": "~0.3",
     "grunt-jslint": "~0.2",
+    "grunt-contrib-clean": "~0.3",
+    "grunt-contrib-copy": "~0.3",
     "grunt-contrib-requirejs": "~0.3"
   }
 }
