@@ -21,6 +21,17 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       if (!this.attributes.label) {
         this.set('label', this.attributes.name);
       }
+    },
+    /**
+     * official Blink API
+     */
+    val: function(value) {
+      if (typeof value === 'undefined') {
+        return this.get('value');
+      } else {
+        this.set('value', value);
+      }
+      return value;
     }
   }, {
     // static properties
