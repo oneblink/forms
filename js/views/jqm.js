@@ -5,6 +5,7 @@ define([
   'views/jqm/form',
   'views/jqm/page',
   'views/jqm/element',
+  'views/jqm/elements/date',
   'views/jqm/elements/hidden',
   'views/jqm/elements/text',
   'views/jqm/elements/textarea'
@@ -15,6 +16,7 @@ define([
   FormView,
   PageView,
   ElementView,
+  DateElementView,
   HiddenElementView,
   TextElementView,
   TextAreaElementView
@@ -41,6 +43,7 @@ define([
     Form: FormView,
     Page: PageView,
     Element: ElementView,
+    DateElement: DateElementView,
     HiddenElement: HiddenElementView,
     TextElement: TextElementView,
     TextAreaElement: TextAreaElementView

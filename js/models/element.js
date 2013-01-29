@@ -59,6 +59,11 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       }
       // TODO: determine Element type and select sub-Prototype
       switch (attrs.type) {
+        case 'date':
+          TypedElement = Forms._models.DateElement;
+          View = Forms._views.DateElement;
+          el = new TypedElement(attrs);
+          break;
         case 'hidden':
           TypedElement = Forms._models.HiddenElement;
           View = Forms._views.HiddenElement;
