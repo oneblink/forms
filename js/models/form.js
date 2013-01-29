@@ -1,6 +1,6 @@
-define(['underscore', 'backbone', 'jquery',
+define(['underscore', 'backbone', 'q',
   'collections/elements'
-], function(_, Backbone, $, Elements) {
+], function(_, Backbone, Q, Elements) {
   'use strict';
 
   var Form;
@@ -22,8 +22,28 @@ define(['underscore', 'backbone', 'jquery',
       }
       return pages[index];
     },
+    /**
+     * official Blink API
+     */
     getElement: function(name) {
       return this.attributes.elements.get(name);
+    },
+    /**
+     * official Blink API
+     */
+    data: function() {
+      var dfrd = Q.defer(),
+          data = {};
+
+      this.attributes.elements.forEach(function(el) {
+        var val = el.val();
+
+        if (val || typeof val === 'number') {
+          data[el.attributes.name] = val;
+        }
+      });
+      dfrd.resolve(data);
+      return dfrd.promise;
     }
   }, {
     // static properties
