@@ -49,7 +49,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       if (!def || !_.isObject(def)) {
         return new Element();
       }
-      attrs = def.default;
+      attrs = def.default || {};
       if (action && def[action]) {
         _.extend(attrs, def[action]);
       }

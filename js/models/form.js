@@ -35,7 +35,7 @@ define(['underscore', 'backbone', 'q',
 
       // assume that by now it's okay to create vanilla Pages
       while (pages.length <= index) {
-        pages.push(Page.create());
+        pages.push(Page.create({}, null, this));
       }
       return pages[index];
     },
@@ -80,7 +80,7 @@ define(['underscore', 'backbone', 'q',
       if (!def || !_.isObject(def)) {
         return new Form();
       }
-      attrs = def.default;
+      attrs = def.default || {};
 
       elements = attrs._elements;
       delete attrs._elements;

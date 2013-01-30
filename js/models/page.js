@@ -33,7 +33,7 @@ define(['underscore', 'backbone', 'collections/elements'],
       if (!def || !_.isObject(def)) {
         return new Page();
       }
-      attrs = def.default;
+      attrs = def.default || {};
       if (action && def[action]) {
         _.extend(attrs, def[action]);
       }
