@@ -2,8 +2,8 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 
 define(['jquery', 'q', 'chai',
-      'text!/test/1/form.json', 'views/jqm'], // 'jquerymobile'
-      function($, Q, chai, json, views) {
+      'text!/test/1/form.json', 'jquerymobile', 'views/jqm'], // 'jquerymobile'
+      function($, Q, chai, json, jqm, views) {
   'use strict';
 
   var assert = chai.assert;
@@ -59,7 +59,8 @@ define(['jquery', 'q', 'chai',
       test('render form for jQuery Mobile', function() {
         var Forms = window.BlinkForms,
             form = Forms.currentFormObject,
-            view;
+            view,
+            $page;
 
         view = new Forms._views.Form({
           $el: $form,
@@ -67,10 +68,16 @@ define(['jquery', 'q', 'chai',
           model: form
         });
         view.render();
-/*        $.mobile.changePage($form.children('section').first(), {
-          pageContainer: $form,
+        $page = $form.children('section').first();
+        $.mobile.page({}, $page);
+        $page.trigger('pagecreate');
+        $page.show();
+/* // TODO: figure out how to get jQuery Mobile to change pages
+        $.mobile.changePage($page, {
+          pageContainer: $page,
           fromPage: $form.children('section').last()
-        }); */
+        });
+       */
       });
 
     }); // END: suite('Form', ...)

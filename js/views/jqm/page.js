@@ -1,5 +1,5 @@
-define(['underscore', 'backbone'],
-       function(_, Backbone) {
+define(['jquery', 'underscore', 'backbone'],
+       function($, _, Backbone) {
   'use strict';
 
   var PageView = Backbone.View.extend({
@@ -9,8 +9,15 @@ define(['underscore', 'backbone'],
     },
     events: {
     },
+    intialize: function() {
+    },
     render: function() {
-      var self = this;
+      var self = this,
+          $content = $('<div data-role="content"></div>'),
+          page = this.model,
+          form = page.attributes.form,
+          index;
+
       this.$el.empty();
       this.model.get('elements').forEach(function(el) {
         var view = el.attributes._view,
@@ -18,11 +25,12 @@ define(['underscore', 'backbone'],
 
         view.render();
         if (type === 'hidden') {
-          self.$el.prepend(view.el);
+          $content.prepend(view.el);
         } else {
-          self.$el.append(view.el);
+          $content.append(view.el);
         }
       });
+      this.$el.append($content);
     }
   });
 
