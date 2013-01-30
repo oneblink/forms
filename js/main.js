@@ -6,7 +6,9 @@ define(['jquery',
   'models/elements/date',
   'models/elements/hidden',
   'models/elements/text',
-  'models/elements/textarea'
+  'models/elements/textarea',
+  'models/elements/select',
+  'models/elements/multi'
 ], function(
   $,
   Form,
@@ -15,7 +17,9 @@ define(['jquery',
   DateElement,
   HiddenElement,
   TextElement,
-  TextAreaElement
+  TextAreaElement,
+  SelectElement,
+  MultiElement
 ) {
   'use strict';
   var Forms = window.BlinkForms || {};
@@ -27,7 +31,9 @@ define(['jquery',
     DateElement: DateElement,
     HiddenElement: HiddenElement,
     TextElement: TextElement,
-    TextAreaElement: TextAreaElement
+    TextAreaElement: TextAreaElement,
+    SelectElement: SelectElement,
+    MultiElement: MultiElement
   };
 
   /**

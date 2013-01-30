@@ -44,7 +44,8 @@ define(['underscore', 'backbone'], function(_, Backbone) {
           view,
           el,
           TypedElement,
-          View;
+          View,
+          mode;
 
       if (!def || !_.isObject(def)) {
         return new Element();
@@ -58,32 +59,41 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       }
       // TODO: determine Element type and select sub-Prototype
       switch (attrs.type) {
+        case 'select':
+          TypedElement = Forms._models.SelectElement;
+          mode = attrs.mode;
+          mode = mode[0].toUpperCase() + mode.substring(1);
+          View = Forms._views['Choice' + mode + 'Element'];
+          break;
+        case 'multi':
+          TypedElement = Forms._models.MultiElement;
+          mode = attrs.mode;
+          mode = mode[0].toUpperCase() + mode.substring(1);
+          View = Forms._views['Choice' + mode + 'Element'];
+          break;
         case 'time':
         case 'date':
         case 'datetime':
           TypedElement = Forms._models.DateElement;
           View = Forms._views.DateElement;
-          el = new TypedElement(attrs);
           break;
         case 'hidden':
           TypedElement = Forms._models.HiddenElement;
           View = Forms._views.HiddenElement;
-          el = new TypedElement(attrs);
           break;
         case 'text':
           TypedElement = Forms._models.TextElement;
           View = Forms._views.TextElement;
-          el = new TypedElement(attrs);
           break;
         case 'textarea':
           TypedElement = Forms._models.TextAreaElement;
           View = Forms._views.TextAreaElement;
-          el = new TypedElement(attrs);
           break;
         default:
+          TypedElement = Forms._models.Element;
           View = Forms._views.Element;
-          el = new Element(attrs);
       }
+      el = new TypedElement(attrs);
       view = new View({model: el});
       el.attributes._view = view;
       return el;

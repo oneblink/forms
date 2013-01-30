@@ -8,7 +8,9 @@ define([
   'views/jqm/elements/date',
   'views/jqm/elements/hidden',
   'views/jqm/elements/text',
-  'views/jqm/elements/textarea'
+  'views/jqm/elements/textarea',
+  'views/jqm/elements/choicecollapsed',
+  'views/jqm/elements/choiceexpanded'
 ], function(
   $,
   rivets,
@@ -19,7 +21,9 @@ define([
   DateElementView,
   HiddenElementView,
   TextElementView,
-  TextAreaElementView
+  TextAreaElementView,
+  ChoiceCollapsedElementView,
+  ChoiceExpandedElementView
 ) {
   'use strict';
 
@@ -48,6 +52,8 @@ define([
     DateElement: DateElementView,
     HiddenElement: HiddenElementView,
     TextElement: TextElementView,
-    TextAreaElement: TextAreaElementView
+    TextAreaElement: TextAreaElementView,
+    ChoiceCollapsedElement: ChoiceCollapsedElementView,
+    ChoiceExpandedElement: ChoiceExpandedElementView
   };
 });
