@@ -30,13 +30,6 @@ define(['jquery',
     TextAreaElement: TextAreaElement
   };
 
-  // set jQuery Mobile options
-  $(document).on('mobileinit', function() {
-    $.extend($.mobile, {
-      autoInitializePage: false
-    });
-  });
-
   /**
    * @param {Object} def definition of form to initialise.
    */
