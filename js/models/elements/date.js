@@ -5,55 +5,54 @@ define(['underscore', 'backbone', 'models/element'],
   var DateElement = Element.extend({
     initialize: function() {
       Element.prototype.initialize.call(this);
+      this.on('change:_date change:_time', this.prepareValue);
+      this.on('change:value', this.prepareDateTime);
     },
     /**
-     * override get to handle date formats
+     * update value to match _date and/or _time
      */
-    get: function(key) {
-      var val = Backbone.Model.prototype.get.call(this, key),
-          date;
-
-      if (key !== 'value') {
-        return val;
+    prepareValue: function() {
+      var type = this.attributes.type;
+      if (type === 'date') {
+        this.set('value', this.attributes._date);
+      } else if (type === 'time') {
+        this.set('value', this.attributes._time);
+      } else { // type === 'datetime'
+        // TODO: somehow stop this from firing twice
+        this.set('value', this.attributes._date + 'T' + this.attributes._time);
       }
-      // create complete ISO8601 string as per our legacy API
-      // TODO: fix this for legacy browsers lacking ISO8601 support
-      date = new Date(val);
-      if (!_.isNaN(date.valueOf())) {
-        val = date.toISOString().replace(/\.\d\d\d/, '');
-      }
-      return val;
     },
     /**
-     * override set to handle date formats
+     * update _date and/or _time to match value
      */
-    set: function(key, val, opts) {
-      var attrs,
-          date;
+    prepareDateTime: function() {
+      var type = this.attributes.type,
+          value = this.attributes.value,
+          time,
+          date,
+          parts;
 
-      if (key === null) {
-        return this;
-      }
-      if (typeof key === 'object') {
-        attrs = key;
-        opts = val;
-      } else {
-        (attrs = {})[key] = val;
-      }
-      opts = opts || {};
-      if (attrs.hasOwnProperty('value') && attrs.value) {
-        // check for valid date value
-        // TODO: fix this for legacy browsers lacking ISO8601 support
-        date = new Date(attrs.value);
-        if (_.isNaN(date.valueOf())) {
-          return this;
+      if (type === 'date') {
+        this.set('_date', value);
+      } else if (type === 'time') {
+        this.set('_time', value);
+      } else { // type === 'datetime'
+        time = this.attributes._time;
+        date = this.attributes._date;
+        parts = value.split('T');
+        if (parts[0]) {
+          this.set('_date', parts[0], {silent: true});
         }
-        // crop time and zone from date
-        /*jslint regexp: true*/
-        attrs.value = date.toISOString().replace(/T.*$/, '');
-        /*jslint regexp: false*/
+        if (parts[1]) {
+          this.set('_time', parts[1], {silent: true});
+        }
+        if (time !== this.attributes._time) {
+          this.trigger('change:_time');
+        }
+        if (date !== this.attributes._date) {
+          this.trigger('change:_date');
+        }
       }
-      return Backbone.Model.prototype.set.call(this, attrs, opts);
     }
   });
 

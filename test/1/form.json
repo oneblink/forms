@@ -13,8 +13,21 @@
         "default": {
           "name": "date",
           "label": "Date",
-          "type": "date",
-          "page": 0
+          "type": "date"
+        }
+      },
+      {
+        "default": {
+          "name": "time",
+          "label": "Time",
+          "type": "time"
+        }
+      },
+      {
+        "default": {
+          "name": "datetime",
+          "label": "Date + Time",
+          "type": "datetime"
         }
       },
       {
@@ -22,7 +35,6 @@
           "name": "url",
           "label": "URL",
           "type": "url",
-          "page": 0,
           "defaultValue": "https://blinkm.co/ron"
         }
       },
@@ -31,7 +43,6 @@
           "name": "email",
           "label": "Email",
           "type": "email",
-          "page": 0,
           "defaultValue": "ron@blinkmobile.com.au"
         }
       },
@@ -40,7 +51,6 @@
           "name": "streetAddress",
           "label": "Street Address",
           "type": "textarea",
-          "page": 1,
           "defaultValue": "Suite 2\r\n125 Donnison Street"
         }
       },
@@ -49,7 +59,6 @@
           "name": "city",
           "label": "City",
           "type": "text",
-          "page": 1,
           "defaultValue": "Gosford"
         }
       },
@@ -58,7 +67,6 @@
           "name": "postCode",
           "label": "Post Code",
           "type": "text",
-          "page": 1,
           "defaultValue": "2250"
         }
       },
@@ -67,7 +75,6 @@
           "name": "country",
           "label": "Country",
           "type": "text",
-          "page": 1,
           "defaultValue": "Australia"
         }
       },
@@ -75,18 +82,14 @@
         "default": {
           "name": "file",
           "label": "File",
-          "type": "file",
-          "page": 0
-
+          "type": "file"
         }
       },
       {
         "default": {
           "name": "image",
           "label": "Image",
-          "type": "image",
-          "page": 0
-
+          "type": "image"
         }
       }
     ]
