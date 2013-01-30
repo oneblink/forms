@@ -2,13 +2,13 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 
 define(['jquery', 'q', 'chai',
-      'text!/test/1/form.json', 'jquerymobile', 'views/jqm'], // 'jquerymobile'
+      'text!/test/2/form.json', 'jquerymobile', 'views/jqm'], // 'jquerymobile'
       function($, Q, chai, json, jqm, views) {
   'use strict';
 
   var assert = chai.assert;
 
-  suite('1', function() {
+  suite('2', function() {
     var obj,
         $form = $('form');
 
@@ -18,6 +18,7 @@ define(['jquery', 'q', 'chai',
     suiteSetup(function() {
       obj = JSON.parse(json);
       $form.empty();
+      delete window.BlinkForms.currentFormObject;
     });
 
     test('form.json is a JSON object', function() {
