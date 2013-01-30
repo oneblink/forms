@@ -12,16 +12,21 @@ define(['jquery', 'underscore', 'backbone', 'rivets'],
     initialize: function() {
       this.bindRivets();
     },
-    render: function() {
-      var $label = $(document.createElement('label')),
-          $input,
-          type = this.model.get('type'),
-          name = this.model.get('name');
-
+    renderLabel: function() {
+      var $label = $(document.createElement('label'));
       $label.attr({
         'data-rv-text': 'm.label',
         class: 'ui-input-text'
       });
+      this.$el.append($label);
+    },
+    render: function() {
+      var $input,
+          type = this.model.get('type'),
+          name = this.model.get('name');
+
+      this.$el.empty();
+      this.renderLabel();
 
       switch (type) {
         case 'file':
@@ -44,8 +49,6 @@ define(['jquery', 'underscore', 'backbone', 'rivets'],
         name: name,
         'data-rv-value': 'm.value'
       });
-      this.$el.empty();
-      this.$el.append($label);
       this.$el.append($input);
       this.bindRivets();
     },

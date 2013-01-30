@@ -32,18 +32,12 @@ define(['jquery', 'underscore', 'backbone', 'views/jqm/element'],
       return this;
     },
     render: function() {
-      var $label = $(document.createElement('label')),
-          $input,
+      var $input,
           type = this.model.get('type'),
           name = this.model.get('name');
 
-      $label.attr({
-        'data-rv-text': 'm.label',
-        class: 'ui-input-text'
-      });
-
       this.$el.empty();
-      this.$el.append($label);
+      this.renderLabel();
 
       if (type !== 'time') {
         this.renderDate();
