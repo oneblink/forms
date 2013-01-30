@@ -6,12 +6,14 @@ define(['jquery', 'underscore', 'backbone', 'views/jqm/element'],
     render: function() {
       // TODO: implement pre-HTML5 fallback
       var $label = $(document.createElement('label')),
-          $fieldset = $(document.createElement('fieldset')),
           $input,
           type = this.model.get('type'),
           name = this.model.get('name');
 
-      $label.attr('data-rv-text', 'm.label');
+      $label.attr({
+        'data-rv-text': 'm.label',
+        class: 'ui-input-text'
+      });
 
       $input = $('<input type="date" />');
       $input.attr({
@@ -20,8 +22,7 @@ define(['jquery', 'underscore', 'backbone', 'views/jqm/element'],
       });
       this.$el.empty();
       this.$el.append($label);
-      $fieldset.append($input);
-      this.$el.append($fieldset);
+      this.$el.append($input);
       this.bindRivets();
     }
   });

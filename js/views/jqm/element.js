@@ -14,12 +14,14 @@ define(['jquery', 'underscore', 'backbone', 'rivets'],
     },
     render: function() {
       var $label = $(document.createElement('label')),
-          $fieldset = $(document.createElement('fieldset')),
           $input,
           type = this.model.get('type'),
           name = this.model.get('name');
 
-      $label.attr('data-rv-text', 'm.label');
+      $label.attr({
+        'data-rv-text': 'm.label',
+        class: 'ui-input-text'
+      });
 
       switch (type) {
         case 'file':
@@ -44,8 +46,7 @@ define(['jquery', 'underscore', 'backbone', 'rivets'],
       });
       this.$el.empty();
       this.$el.append($label);
-      $fieldset.append($input);
-      this.$el.append($fieldset);
+      this.$el.append($input);
       this.bindRivets();
     },
     bindRivets: function() {
