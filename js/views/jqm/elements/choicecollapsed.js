@@ -25,6 +25,7 @@ define(['jquery', 'underscore', 'backbone', 'views/jqm/elements/choice'],
         $input.attr({
           name: name + '[]',
           multiple: 'multiple',
+          // TODO: detect if native menu actually works and enable it
           'data-native-menu': false
         });
         $input.append('<option>select one or more...</option>');
