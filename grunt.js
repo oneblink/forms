@@ -64,6 +64,7 @@ module.exports = function(grunt) {
             backbone: 'empty:',
             jquery: 'empty:',
             jquerymobile: 'empty:',
+            q: 'empty:',
             underscore: 'empty:',
             // testing libraries
             chai: 'empty:',

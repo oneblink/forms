@@ -6,7 +6,7 @@ require.config({
       'https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min',
       'https://d1c6dfkb81l78v.cloudfront.net/jquery/1.9.0/jquery.min'
     ],
-    q: 'lib/q-0.8.11.min',
+    q: 'https://d1c6dfkb81l78v.cloudfront.net/q/0.8.11/q.min',
     underscore: 'https://d1c6dfkb81l78v.cloudfront.net/underscorejs/1.4.3/u.min',
     jquerymobile: 'https://d1c6dfkb81l78v.cloudfront.net/jquery.mobile/1.2.0/jqm.min',
     jquerymigrate: 'lib/jquery-migrate-1.0.0',
