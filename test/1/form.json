@@ -29,54 +29,6 @@
           "label": "Date + Time",
           "type": "datetime"
         }
-      },
-      {
-        "default": {
-          "name": "url",
-          "label": "URL",
-          "type": "url",
-          "defaultValue": "https://blinkm.co/ron"
-        }
-      },
-      {
-        "default": {
-          "name": "email",
-          "label": "Email",
-          "type": "email",
-          "defaultValue": "ron@blinkmobile.com.au"
-        }
-      },
-      {
-        "default": {
-          "name": "streetAddress",
-          "label": "Street Address",
-          "type": "textarea",
-          "defaultValue": "Suite 2\r\n125 Donnison Street"
-        }
-      },
-      {
-        "default": {
-          "name": "city",
-          "label": "City",
-          "type": "text",
-          "defaultValue": "Gosford"
-        }
-      },
-      {
-        "default": {
-          "name": "postCode",
-          "label": "Post Code",
-          "type": "text",
-          "defaultValue": "2250"
-        }
-      },
-      {
-        "default": {
-          "name": "country",
-          "label": "Country",
-          "type": "text",
-          "defaultValue": "Australia"
-        }
       }
     ]
   }

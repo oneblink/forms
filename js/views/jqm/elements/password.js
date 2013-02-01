@@ -2,7 +2,7 @@ define(['jquery', 'underscore', 'backbone', 'views/jqm/elements/text'],
       function($, _, Backbone, TextElementView) {
   'use strict';
 
-  var TextAreaElementView = TextElementView.extend({
+  var PasswordElementView = TextElementView.extend({
     render: function() {
       var $input,
           name = this.model.get('name');
@@ -10,7 +10,7 @@ define(['jquery', 'underscore', 'backbone', 'views/jqm/elements/text'],
       this.$el.empty();
       this.renderLabel();
 
-      $input = $('<textarea />');
+      $input = $('<input type="password" />');
       $input.attr({
         name: name,
         'data-rv-value': 'm.value'
@@ -20,7 +20,8 @@ define(['jquery', 'underscore', 'backbone', 'views/jqm/elements/text'],
     }
   });
 
-  return TextAreaElementView;
+  return PasswordElementView;
 });
+
 
 

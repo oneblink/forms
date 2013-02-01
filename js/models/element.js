@@ -81,6 +81,18 @@ define(['underscore', 'backbone'], function(_, Backbone) {
           TypedElement = Forms._models.HiddenElement;
           View = Forms._views.HiddenElement;
           break;
+        case 'password':
+          TypedElement = Forms._models.PasswordElement;
+          View = Forms._views.PasswordElement;
+          break;
+        case 'email':
+          TypedElement = Forms._models.EmailElement;
+          View = Forms._views.EmailElement;
+          break;
+        case 'url':
+          TypedElement = Forms._models.URLElement;
+          View = Forms._views.URLElement;
+          break;
         case 'text':
           TypedElement = Forms._models.TextElement;
           View = Forms._views.TextElement;

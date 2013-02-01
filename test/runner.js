@@ -21,6 +21,13 @@ define(['mocha', 'q', 'underscore'], function(mocha, Q, _) {
     });
   });
 
+  tests.push(Q.defer());
+  tests[1].promise.fin(function() {
+    require(['../test/3/test'], function() {
+      tests[2].resolve();
+    });
+  });
+
   promises = _.map(tests, function(dfrd) {
     return dfrd.promise;
   });

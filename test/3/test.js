@@ -2,13 +2,13 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 
 define(['jquery', 'q', 'chai',
-      'text!/test/2/form.json', 'jquerymobile', 'views/jqm'], // 'jquerymobile'
-      function($, Q, chai, json, jqm, views) {
+      'text!/test/3/form.json', 'views/jqm'], // 'jquerymobile'
+      function($, Q, chai, json, views) {
   'use strict';
 
   var assert = chai.assert;
 
-  suite('2: options', function() {
+  suite('3: text', function() {
     var obj,
         $form = $('form');
 

@@ -35,15 +35,6 @@ define(['jquery', 'underscore', 'backbone', 'rivets'],
         case 'image':
           $input = $('<input type="file" />');
           break;
-        case 'url':
-          $input = $('<input type="url" />');
-          break;
-        case 'email':
-          $input = $('<input type="email" />');
-          break;
-        case 'date':
-          $input = $('<input type="date" />');
-          break;
       }
       $input.attr({
         name: name,

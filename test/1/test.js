@@ -8,7 +8,7 @@ define(['jquery', 'q', 'chai',
 
   var assert = chai.assert;
 
-  suite('1', function() {
+  suite('1: date/time', function() {
     var obj,
         $form = $('form');
 

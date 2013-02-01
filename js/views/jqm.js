@@ -1,6 +1,7 @@
 define(function(require) {
   'use strict';
   var $ = require('jquery'),
+      jqm = require('jquerymobile'),
       rivets = require('rivets');
 
   rivets.configure({
@@ -27,6 +28,9 @@ define(function(require) {
     Element: require('views/jqm/element'),
     DateElement: require('views/jqm/elements/date'),
     HiddenElement: require('views/jqm/elements/hidden'),
+    PasswordElement: require('views/jqm/elements/password'),
+    EmailElement: require('views/jqm/elements/email'),
+    URLElement: require('views/jqm/elements/url'),
     TextElement: require('views/jqm/elements/text'),
     TextAreaElement: require('views/jqm/elements/textarea'),
     ChoiceCollapsedElement: require('views/jqm/elements/choicecollapsed'),

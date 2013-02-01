@@ -5,7 +5,6 @@ define(['jquery', 'underscore', 'backbone', 'views/jqm/element'],
   var TextElementView = ElementView.extend({
     render: function() {
       var $input,
-          type = this.model.get('type'),
           name = this.model.get('name');
 
       this.$el.empty();
