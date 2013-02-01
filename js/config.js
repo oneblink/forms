@@ -9,7 +9,7 @@ require.config({
     q: 'https://d1c6dfkb81l78v.cloudfront.net/q/0.8.11/q.min',
     underscore: 'https://d1c6dfkb81l78v.cloudfront.net/underscorejs/1.4.3/u.min',
     jquerymobile: 'https://d1c6dfkb81l78v.cloudfront.net/jquery.mobile/1.2.0/jqm.min',
-    jquerymigrate: 'lib/jquery-migrate-1.0.0',
+    jquerymigrate: 'lib/jquery-migrate-1.1.0',
     rivets: 'lib/rivets-0.4.5',
     // require.js plugins
     domReady: 'lib/domReady-2.0.1',
