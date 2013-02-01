@@ -26,6 +26,8 @@ define(function(require) {
     Form: require('views/jqm/form'),
     Page: require('views/jqm/page'),
     Element: require('views/jqm/element'),
+    HeadingElement: require('views/jqm/elements/heading'),
+    MessageElement: require('views/jqm/elements/message'),
     DateElement: require('views/jqm/elements/date'),
     HiddenElement: require('views/jqm/elements/hidden'),
     NumberElement: require('views/jqm/elements/number'),

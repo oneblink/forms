@@ -74,6 +74,21 @@
           "maxDecimals": 2,
           "defaultValue": "876.54"
         }
+      },
+      {
+        "default": {
+          "name": "heading",
+          "type": "heading",
+          "level": 1,
+          "text": "Heading!"
+        }
+      },
+      {
+        "default": {
+          "name": "message",
+          "type": "message",
+          "html": "This is <strong>static</strong> text."
+        }
       }
     ]
   }

@@ -59,6 +59,14 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       }
       // TODO: determine Element type and select sub-Prototype
       switch (attrs.type) {
+        case 'heading':
+          TypedElement = Forms._models.HeadingElement;
+          View = Forms._views.HeadingElement;
+          break;
+        case 'message':
+          TypedElement = Forms._models.MessageElement;
+          View = Forms._views.MessageElement;
+          break;
         case 'select':
           TypedElement = Forms._models.SelectElement;
           mode = attrs.mode;

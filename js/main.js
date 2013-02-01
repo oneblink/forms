@@ -8,6 +8,8 @@ define(function(require) {
     Form: require('models/form'),
     Page: require('models/page'),
     Element: require('models/element'),
+    HeadingElement: require('models/elements/heading'),
+    MessageElement: require('models/elements/message'),
     DateElement: require('models/elements/date'),
     HiddenElement: require('models/elements/hidden'),
     NumberElement: require('models/elements/number'),
