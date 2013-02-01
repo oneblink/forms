@@ -10,6 +10,8 @@ define(function(require) {
     Element: require('models/element'),
     DateElement: require('models/elements/date'),
     HiddenElement: require('models/elements/hidden'),
+    NumberElement: require('models/elements/number'),
+    TelephoneElement: require('models/elements/telephone'),
     PasswordElement: require('models/elements/password'),
     EmailElement: require('models/elements/email'),
     URLElement: require('models/elements/url'),

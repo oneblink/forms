@@ -28,6 +28,8 @@ define(function(require) {
     Element: require('views/jqm/element'),
     DateElement: require('views/jqm/elements/date'),
     HiddenElement: require('views/jqm/elements/hidden'),
+    NumberElement: require('views/jqm/elements/number'),
+    TelephoneElement: require('views/jqm/elements/telephone'),
     PasswordElement: require('views/jqm/elements/password'),
     EmailElement: require('views/jqm/elements/email'),
     URLElement: require('views/jqm/elements/url'),

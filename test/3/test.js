@@ -8,7 +8,7 @@ define(['jquery', 'q', 'chai',
 
   var assert = chai.assert;
 
-  suite('3: text', function() {
+  suite('3: text/number', function() {
     var obj,
         $form = $('form');
 

@@ -48,6 +48,32 @@
           "type": "text",
           "defaultValue": "Gosford"
         }
+      },
+      {
+        "default": {
+          "name": "telephone",
+          "label": "Telephone",
+          "type": "telephone",
+          "defaultValue": "+61 439 901 787"
+        }
+      },
+      {
+        "default": {
+          "name": "number",
+          "label": "Number",
+          "type": "number",
+          "defaultValue": "12345"
+        }
+      },
+      {
+        "default": {
+          "name": "currency",
+          "label": "Currency",
+          "type": "number",
+          "minDecimals": 2,
+          "maxDecimals": 2,
+          "defaultValue": "876.54"
+        }
       }
     ]
   }
