@@ -1,7 +1,8 @@
 
 define(function(require) {
   'use strict';
-  var Forms = window.BlinkForms || {};
+  var $ = require('jquery'),
+      Forms = window.BlinkForms || {};
 
   Forms._models = {
     Form: require('models/form'),
@@ -31,7 +32,8 @@ define(function(require) {
   };
 
   // global exports
-  return window.BlinkForms = Forms;
+  window.BlinkForms = Forms;
+  return Forms;
 });
 
 
