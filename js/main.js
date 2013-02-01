@@ -1,39 +1,18 @@
 
-define(['jquery',
-  'models/form',
-  'models/page',
-  'models/element',
-  'models/elements/date',
-  'models/elements/hidden',
-  'models/elements/text',
-  'models/elements/textarea',
-  'models/elements/select',
-  'models/elements/multi'
-], function(
-  $,
-  Form,
-  Page,
-  Element,
-  DateElement,
-  HiddenElement,
-  TextElement,
-  TextAreaElement,
-  SelectElement,
-  MultiElement
-) {
+define(function(require) {
   'use strict';
   var Forms = window.BlinkForms || {};
 
   Forms._models = {
-    Form: Form,
-    Page: Page,
-    Element: Element,
-    DateElement: DateElement,
-    HiddenElement: HiddenElement,
-    TextElement: TextElement,
-    TextAreaElement: TextAreaElement,
-    SelectElement: SelectElement,
-    MultiElement: MultiElement
+    Form: require('models/form'),
+    Page: require('models/page'),
+    Element: require('models/element'),
+    DateElement: require('models/elements/date'),
+    HiddenElement: require('models/elements/hidden'),
+    TextElement: require('models/elements/text'),
+    TextAreaElement: require('models/elements/textarea'),
+    SelectElement: require('models/elements/select'),
+    MultiElement: require('models/elements/multi')
   };
 
   /**
@@ -44,7 +23,7 @@ define(['jquery',
     if (!$.isPlainObject(def) || $.type(def.default) !== 'object') {
       throw new Error('unexpected Form definition structure');
     }
-    form = Form.create(def, 'add');
+    form = Forms._models.Form.create(def, 'add');
     if (!Forms.currentFormObject) {
       // TODO: this is insufficient, needs a more thorough test
       Forms.currentFormObject = form;
@@ -52,7 +31,7 @@ define(['jquery',
   };
 
   // global exports
-  window.BlinkForms = Forms;
+  return window.BlinkForms = Forms;
 });
 
 

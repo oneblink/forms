@@ -1,31 +1,7 @@
-define([
-  'jquery',
-  'rivets',
-  'models/form',
-  'views/jqm/form',
-  'views/jqm/page',
-  'views/jqm/element',
-  'views/jqm/elements/date',
-  'views/jqm/elements/hidden',
-  'views/jqm/elements/text',
-  'views/jqm/elements/textarea',
-  'views/jqm/elements/choicecollapsed',
-  'views/jqm/elements/choiceexpanded'
-], function(
-  $,
-  rivets,
-  Form,
-  FormView,
-  PageView,
-  ElementView,
-  DateElementView,
-  HiddenElementView,
-  TextElementView,
-  TextAreaElementView,
-  ChoiceCollapsedElementView,
-  ChoiceExpandedElementView
-) {
+define(function(require) {
   'use strict';
+  var $ = require('jquery'),
+      rivets = require('rivets');
 
   rivets.configure({
     prefix: 'rv',
@@ -46,14 +22,14 @@ define([
   });
 
   return {
-    Form: FormView,
-    Page: PageView,
-    Element: ElementView,
-    DateElement: DateElementView,
-    HiddenElement: HiddenElementView,
-    TextElement: TextElementView,
-    TextAreaElement: TextAreaElementView,
-    ChoiceCollapsedElement: ChoiceCollapsedElementView,
-    ChoiceExpandedElement: ChoiceExpandedElementView
+    Form: require('views/jqm/form'),
+    Page: require('views/jqm/page'),
+    Element: require('views/jqm/element'),
+    DateElement: require('views/jqm/elements/date'),
+    HiddenElement: require('views/jqm/elements/hidden'),
+    TextElement: require('views/jqm/elements/text'),
+    TextAreaElement: require('views/jqm/elements/textarea'),
+    ChoiceCollapsedElement: require('views/jqm/elements/choicecollapsed'),
+    ChoiceExpandedElement: require('views/jqm/elements/choiceexpanded')
   };
 });
