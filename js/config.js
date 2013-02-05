@@ -1,19 +1,6 @@
 require.config({
   baseUrl: 'js',
   paths: {
-    backbone: 'https://d1c6dfkb81l78v.cloudfront.net/backbonejs/0.9.10/backbone.min',
-    jquery: [
-      'https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min',
-      'https://d1c6dfkb81l78v.cloudfront.net/jquery/1.9.0/jquery.min'
-    ],
-    q: 'https://d1c6dfkb81l78v.cloudfront.net/q/0.8.11/q.min',
-    underscore: 'https://d1c6dfkb81l78v.cloudfront.net/underscorejs/1.4.3/u.min',
-    jquerymobile: 'https://d1c6dfkb81l78v.cloudfront.net/jquery.mobile/1.2.0/jqm.min',
-    jquerymigrate: 'lib/jquery-migrate-1.1.0',
-    rivets: 'lib/rivets-0.4.5',
-    // require.js plugins
-    domReady: 'lib/domReady-2.0.1',
-    text: 'lib/text-2.0.3',
     // testing libraries
     chai: 'lib/chai-1.4.0',
     mocha: 'lib/mocha-1.7.4',
@@ -22,32 +9,13 @@ require.config({
     testRunner: '../test/runner'
   },
   shim: {
-    backbone: {
-      deps: ['underscore', 'jquery'],
-      exports: 'Backbone'
-    },
-    underscore: {
-      exports: '_'
-    },
     chai: {
       exports: 'chai'
     },
     mocha: {
       exports: 'mocha'
-    },
-    jquerymobile: {
-      deps: ['jquery', 'jquerymigrate'],
-      exports: '$'
-    },
-    jquerymigrate: {
-      deps: ['jquery'],
-      exports: '$'
-    },
-    rivets: {
-      exports: 'rivets'
     }
-  },
-  enforceDefine: true
+  }
 });
 
 define('js/config', function() {
