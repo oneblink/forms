@@ -66,6 +66,7 @@ module.exports = function(grunt) {
             jquerymobile: 'empty:',
             q: 'empty:',
             underscore: 'empty:',
+            rivets: 'empty:',
             // testing libraries
             chai: 'empty:',
             mocha: 'empty:',
@@ -75,12 +76,12 @@ module.exports = function(grunt) {
           modules: [
             {
               name: 'main',
-              include: ['config', 'boot'],
+              include: ['config'],
               out: 'js/build/main.min.js'
             },
             {
               name: 'views/jqm',
-              include: ['main', 'config', 'boot'],
+              include: ['main', 'config'],
               out: 'js/build/jqm.min.js'
             }
           ]

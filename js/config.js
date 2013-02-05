@@ -5,7 +5,7 @@ require.config({
     chai: 'lib/chai-1.4.0',
     mocha: 'lib/mocha-1.7.4',
     // boot / entry points
-    main: ['main.min', 'main'],
+    main: ['jqm.min', 'main'],
     testRunner: '../test/runner'
   },
   shim: {
