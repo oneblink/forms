@@ -5,7 +5,7 @@ require.config({
     chai: 'lib/chai-1.4.0',
     mocha: 'lib/mocha-1.7.4',
     // boot / entry points
-    main: ['jqm.min', 'main'],
+    BForms: ['BForms-jQM.min', 'BForms'],
     testRunner: '../test/runner'
   },
   shim: {

@@ -70,19 +70,18 @@ module.exports = function(grunt) {
             // testing libraries
             chai: 'empty:',
             mocha: 'empty:',
-            // boot / entry points
-            main: 'main'
+            // entry-point
+            BForms: '../BForms'
           },
           modules: [
             {
-              name: 'main',
-              include: ['config'],
-              out: 'js/build/main.min.js'
+              name: 'BForms',
+              out: 'js/build/BForms.js'
             },
             {
               name: 'views/jqm',
-              include: ['main', 'config'],
-              out: 'js/build/jqm.min.js'
+              include: ['BForms'],
+              out: 'js/build/views/jqm.js'
             }
           ]
         }
@@ -93,12 +92,12 @@ module.exports = function(grunt) {
       main: {
         files: [
           {
-            src: 'js/build/main.js',
-            dest: 'js/core.min.js'
+            src: 'js/build/BForms.js',
+            dest: 'js/BForms.min.js'
           },
           {
             src: 'js/build/views/jqm.js',
-            dest: 'js/jqm.min.js'
+            dest: 'js/BForms-jQM.min.js'
           }
         ]
       }
