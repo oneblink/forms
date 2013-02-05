@@ -71,7 +71,8 @@ module.exports = function(grunt) {
             chai: 'empty:',
             mocha: 'empty:',
             // entry-point
-            BForms: '../BForms'
+            BForms: 'BForms',
+            'BForms-jQM': 'BForms-jQM'
           },
           modules: [
             {
@@ -79,9 +80,9 @@ module.exports = function(grunt) {
               out: 'js/build/BForms.js'
             },
             {
-              name: 'views/jqm',
+              name: 'BForms-jQM',
               include: ['BForms'],
-              out: 'js/build/views/jqm.js'
+              out: 'js/build/BForms-jQM.js'
             }
           ]
         }
@@ -96,7 +97,7 @@ module.exports = function(grunt) {
             dest: 'js/BForms.min.js'
           },
           {
-            src: 'js/build/views/jqm.js',
+            src: 'js/build/BForms-jQM.js',
             dest: 'js/BForms-jQM.min.js'
           }
         ]

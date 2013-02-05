@@ -2,7 +2,7 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 
 define(['jquery', 'q', 'chai',
-      'text!/test/3/form.json', 'views/jqm'], // 'jquerymobile'
+      'text!/test/3/form.json', 'BForms-jQM'], // 'jquerymobile'
       function($, Q, chai, json, views) {
   'use strict';
 
