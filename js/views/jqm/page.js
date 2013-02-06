@@ -1,5 +1,4 @@
-define(['jquery', 'underscore', 'backbone'],
-       function($, _, Backbone) {
+define([], function() {
   'use strict';
 
   var PageView = Backbone.View.extend({

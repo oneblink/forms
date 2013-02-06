@@ -1,5 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'rivets'],
-      function($, _, Backbone, rivets) {
+define([], function() {
   'use strict';
 
   var ElementView = Backbone.View.extend({

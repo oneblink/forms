@@ -1,4 +1,4 @@
-define(['underscore', 'backbone'], function(_, Backbone) {
+define(function() {
   'use strict';
 
   var Element = Backbone.Model.extend({

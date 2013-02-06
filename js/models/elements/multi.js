@@ -1,5 +1,4 @@
-define(['underscore', 'backbone', 'models/elements/select'],
-      function(_, Backbone, SelectElement) {
+define(['models/elements/select'], function(SelectElement) {
   'use strict';
 
   var MultiElement = SelectElement.extend({

@@ -1,5 +1,4 @@
-define(['underscore', 'backbone', 'models/elements/text'],
-      function(_, Backbone, TextElement) {
+define(['models/elements/text'], function(TextElement) {
   'use strict';
 
   var EmailElement = TextElement.extend({

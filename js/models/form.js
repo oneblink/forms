@@ -1,6 +1,4 @@
-define(['underscore', 'backbone', 'q',
-  'collections/elements'
-], function(_, Backbone, Q, Elements) {
+define(['collections/elements'], function(Elements) {
   'use strict';
 
   var Form;

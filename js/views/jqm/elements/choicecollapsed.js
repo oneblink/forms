@@ -1,5 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'views/jqm/elements/choice'],
-      function($, _, Backbone, ChoiceElementView) {
+define(['views/jqm/elements/choice'], function(ChoiceElementView) {
   'use strict';
 
   var ChoiceCollapsedElementView = ChoiceElementView.extend({

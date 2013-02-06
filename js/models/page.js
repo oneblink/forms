@@ -3,8 +3,7 @@
  * - cannot be nested
  * - only used immediately within a form (not deeper in)
  */
-define(['underscore', 'backbone', 'collections/elements'],
-       function(_, Backbone, Elements) {
+define(['collections/elements'], function(Elements) {
   'use strict';
 
   var Page;

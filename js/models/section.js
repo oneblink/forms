@@ -1,5 +1,5 @@
-define(['underscore', 'backbone', 'models/form', 'collections/elements'],
-       function(_, Backbone, Form, Elements) {
+define(['models/form', 'collections/elements'],
+      function(Form, Elements) {
   'use strict';
 
   var Section = Backbone.Model.extend({

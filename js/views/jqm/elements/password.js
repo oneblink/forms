@@ -1,5 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'views/jqm/elements/text'],
-      function($, _, Backbone, TextElementView) {
+define(['views/jqm/elements/text'], function(TextElementView) {
   'use strict';
 
   var PasswordElementView = TextElementView.extend({

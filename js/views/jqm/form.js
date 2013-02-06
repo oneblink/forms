@@ -1,5 +1,4 @@
-define(['underscore', 'backbone'],
-       function(_, Backbone) {
+define([], function() {
   'use strict';
 
   var FormView = Backbone.View.extend({

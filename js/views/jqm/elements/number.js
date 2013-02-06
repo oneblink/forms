@@ -1,5 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'views/jqm/element'],
-      function($, _, Backbone, ElementView) {
+define(['views/jqm/element'], function(ElementView) {
   'use strict';
 
   var NumberElementView = ElementView.extend({
