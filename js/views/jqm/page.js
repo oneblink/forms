@@ -4,7 +4,7 @@ define([], function() {
   var PageView = Backbone.View.extend({
     tagName: 'section',
     attributes: {
-      'data-role': 'page'
+//      'data-role': 'page'
     },
     events: {
     },
@@ -12,7 +12,6 @@ define([], function() {
     },
     render: function() {
       var self = this,
-          $content = $('<div data-role="content"></div>'),
           page = this.model,
           form = page.attributes.form,
           index;
@@ -24,12 +23,11 @@ define([], function() {
 
         view.render();
         if (type === 'hidden') {
-          $content.prepend(view.el);
+          self.$el.prepend(view.el);
         } else {
-          $content.append(view.el);
+          self.$el.append(view.el);
         }
       });
-      this.$el.append($content);
     }
   });
 

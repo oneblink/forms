@@ -26,15 +26,17 @@ define(function(require) {
    * @param {Object} def definition of form to initialise.
    */
   Forms.initialize = function(def) {
-    var form;
+    var form,
+        view;
+
     if (!$.isPlainObject(def) || $.type(def.default) !== 'object') {
       throw new Error('unexpected Form definition structure');
     }
     form = Forms._models.Form.create(def, 'add');
-    if (!Forms.currentFormObject) {
-      // TODO: this is insufficient, needs a more thorough test
-      Forms.currentFormObject = form;
-    }
+    Forms.currentFormObject = form;
+    view = form.attributes._view = new Forms._views.Form({model: form});
+    form.$form = view.$el; // backwards-compatibility, convenience
+    view.render();
   };
 
   // global exports

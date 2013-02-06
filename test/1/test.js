@@ -9,14 +9,16 @@ define(['jquery', 'q', 'chai',
 
   suite('1: date/time', function() {
     var obj,
-        $form = $('form');
+        $page = $('[data-role=page]'),
+        $content = $page.find('[data-role=content]');
 
     /**
      * execute once before everything else in this suite
      */
     suiteSetup(function() {
       obj = JSON.parse(json);
-      $form.empty();
+      $content.empty();
+      delete window.BlinkForms.currentFormObject;
     });
 
     test('form.json is a JSON object', function() {
@@ -57,17 +59,10 @@ define(['jquery', 'q', 'chai',
 
       test('render form for jQuery Mobile', function() {
         var Forms = window.BlinkForms,
-            form = Forms.currentFormObject,
-            view,
-            $page;
+            form = Forms.currentFormObject;
 
-        view = new Forms._views.Form({
-          $el: $form,
-          el: $form[0],
-          model: form
-        });
-        view.render();
-        $page = $form.children('section').first();
+        $content.append(form.$form);
+
         $.mobile.page({}, $page);
         $page.trigger('pagecreate');
         $page.show();

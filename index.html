@@ -10,19 +10,30 @@
   body {
     padding: 0;
   }
-  section.ui-page {
-    margin-top: 10em;
-  }
   #mocha {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
     height: 10em;
-    overflow: scroll;
+    overflow-y: scroll;
+  }
+  #mocha h2 {
+    width: 90%;
+  }
+  #mocha-stats {
+    top: 0px;
+    right: 0px;
   }
   </style>
   <script src="js/lib/require.min.js"></script>
   <script src="js/config.js"></script>
 </head>
 <body>
-  <form action=""></form>
+  <div data-role="page" data-url="/">
+    <header data-role="header"></header>
+    <div data-role="content" role="main"></div>
+    <footer data-role="footer"></footer>
+  </div>
   <div id="mocha"></div>
   <script>
   require(['BlinkForms'], function() {
