@@ -62,7 +62,6 @@ module.exports = function(grunt) {
         options: {
           baseUrl: 'js',
           dir: 'js/build',
-          mainConfigFile: 'js/config.js',
 //          optimize: 'uglify2',
           optimize: 'none',
           uglify: {
