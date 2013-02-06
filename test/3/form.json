@@ -62,7 +62,10 @@
           "name": "number",
           "label": "Number",
           "type": "number",
-          "defaultValue": "12345"
+          "min": 15,
+          "max": 400,
+          "step": 5,
+          "defaultValue": 35
         }
       },
       {
