@@ -1,8 +1,7 @@
 
 define(function(require) {
   'use strict';
-  var $ = require('jquery'),
-      Forms = window.BlinkForms || {};
+  var Forms = window.BlinkForms || {};
 
   Forms._models = {
     Form: require('models/form'),

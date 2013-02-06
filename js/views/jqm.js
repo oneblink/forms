@@ -1,9 +1,5 @@
 define(function(require) {
   'use strict';
-  var $ = require('jquery'),
-      jqm = require('jquerymobile'),
-      rivets = require('rivets');
-
   rivets.configure({
     prefix: 'rv',
     adapter: {

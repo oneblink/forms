@@ -7,12 +7,18 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-jslint');
 
   grunt.initConfig({
 
-    clean: ['js/build', 'js/*.min.js'],
+    clean: {
+      build: {
+        src: ['BlinkForms.js', 'js/build', 'js/*.min.js']
+      }
+    },
 
     jslint: {
       files: [
@@ -23,7 +29,8 @@ module.exports = function(grunt) {
         'node_modules/**',
         'js/lib/**',
         '**/*.min.js',
-        'js/build/**'
+        'js/build/**',
+        'BlinkForms.*'
       ],
       directives: {
         browser: true,
@@ -35,7 +42,12 @@ module.exports = function(grunt) {
           // pre-defined globals
           'module',
           'define',
-          'require'
+          'require',
+          // globals we assume have been loaded
+          '$',
+          '_',
+          'Backbone',
+          'rivets'
         ]
       },
       options: {
@@ -49,8 +61,8 @@ module.exports = function(grunt) {
           baseUrl: 'js',
           dir: 'js/build',
           mainConfigFile: 'js/config.js',
-          optimize: 'uglify2',
-//          optimize: 'none', // debug-only
+//          optimize: 'uglify2',
+          optimize: 'none',
           uglify: {
             max_line_length: 80
           },
@@ -76,16 +88,26 @@ module.exports = function(grunt) {
           },
           modules: [
             {
-              name: 'BForms',
-              out: 'js/build/BForms.js'
+              name: 'main'
             },
             {
-              name: 'BForms-jQM',
-              include: ['BForms'],
-              out: 'js/build/BForms-jQM.js'
+              name: 'views/jqm'
             }
           ]
         }
+      }
+    },
+
+    concat: {
+      dist: {
+        src: [
+          'parts/1.frag',
+          'js/lib/almond-0.2.4.js',
+          'js/build/main.js',
+          'js/build/views/jqm.js',
+          'parts/2.frag'
+        ],
+        dest: 'BlinkForms.js'
       }
     },
 
@@ -107,7 +129,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', 'jslint');
-  grunt.registerTask('build', 'clean jslint requirejs copy');
+  grunt.registerTask('build', ['requirejs', 'concat']);
 
 };
 
