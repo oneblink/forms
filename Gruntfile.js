@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 
     clean: {
       build: {
-        src: ['BlinkForms.js', 'js/build', 'js/*.min.js']
+        src: ['BlinkForms*.js', 'js/build', 'js/*.min.js']
       }
     },
 
@@ -121,7 +121,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', 'jslint');
-  grunt.registerTask('build', ['requirejs', 'concat']);
+  grunt.registerTask('build', ['clean', 'requirejs', 'concat']);
 
 };
 
