@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 
     clean: {
       build: {
-        src: ['BlinkForms*.js', 'js/build', 'js/*.min.js']
+        src: ['BlinkForms*.js*', 'js/build', 'js/*.min.js']
       }
     },
 
@@ -116,12 +116,28 @@ module.exports = function(grunt) {
         ],
         dest: 'BlinkForms-jQueryMobile.js'
       }
+    },
+
+    uglify: {
+      default: {
+        options: {
+          sourceMap: 'BlinkForms-jQueryMobile.js.map',
+          beautify: {
+            width: 80,
+            max_line_len: 80
+          }
+        },
+        files: {
+          'BlinkForms-jQueryMobile.min.js': ['BlinkForms-jQueryMobile.js']
+        }
+      }
+
     }
 
   });
 
   grunt.registerTask('default', 'jslint');
-  grunt.registerTask('build', ['clean', 'requirejs', 'concat']);
+  grunt.registerTask('build', ['clean', 'requirejs', 'concat', 'uglify']);
 
 };
 
