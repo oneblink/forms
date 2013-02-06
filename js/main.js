@@ -1,7 +1,7 @@
 
 define(function(require) {
   'use strict';
-  var Forms = window.BlinkForms || {};
+  var Forms = BlinkForms;
 
   Forms._models = {
     Form: require('models/form'),

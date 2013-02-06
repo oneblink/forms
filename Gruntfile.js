@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         'js/lib/**',
         '**/*.min.js',
         'js/build/**',
-        'BlinkForms.*'
+        'BlinkForms*.js'
       ],
       directives: {
         browser: true,
@@ -47,7 +47,9 @@ module.exports = function(grunt) {
           '$',
           '_',
           'Backbone',
-          'rivets'
+          'rivets',
+          'BlinkForms',
+          'Q'
         ]
       },
       options: {
@@ -81,10 +83,7 @@ module.exports = function(grunt) {
             rivets: 'empty:',
             // testing libraries
             chai: 'empty:',
-            mocha: 'empty:',
-            // entry-point
-            BForms: 'BForms',
-            'BForms-jQM': 'BForms-jQM'
+            mocha: 'empty:'
           },
           modules: [
             {
@@ -99,30 +98,24 @@ module.exports = function(grunt) {
     },
 
     concat: {
-      dist: {
+      core: {
         src: [
-          'parts/1.frag',
+          'parts/00-start.frag',
+          'js/lib/almond-0.2.4.js',
+          'js/build/main.js',
+          'parts/99-end-core.frag'
+        ],
+        dest: 'BlinkForms.js'
+      },
+      jqm: {
+        src: [
+          'parts/00-start.frag',
           'js/lib/almond-0.2.4.js',
           'js/build/main.js',
           'js/build/views/jqm.js',
-          'parts/2.frag'
+          'parts/99-end-jqm.frag'
         ],
-        dest: 'BlinkForms.js'
-      }
-    },
-
-    copy: {
-      main: {
-        files: [
-          {
-            src: 'js/build/BForms.js',
-            dest: 'js/BForms.min.js'
-          },
-          {
-            src: 'js/build/BForms-jQM.js',
-            dest: 'js/BForms-jQM.min.js'
-          }
-        ]
+        dest: 'BlinkForms-jQueryMobile.js'
       }
     }
 

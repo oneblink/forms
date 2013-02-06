@@ -1,2 +1,0 @@
-(function() {
-  var factory = function() {
