@@ -15,9 +15,9 @@
 
   } else {
     // no Require.JS, no AMD modules
-    definition($, _, Backbone, rivets, Q, BlinkForms = {});
+    definition($, _, Backbone, rivets, Q);
   }
-}(function($, _, Backbone, rivets, Q, BlinkForms) {
+}(function($, _, Backbone, rivets, Q) {
   'use strict';
 /*jslint sloppy:false*/ // let JSLint bug us again about ES5 strict mode
-
+  var BlinkForms = window['BlinkForms'] = {};

@@ -2,4 +2,4 @@
 node_modules
 js/build
 *.min.js
-/BlinkForms.*js
+/BlinkForms*.js

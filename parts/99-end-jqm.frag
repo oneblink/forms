@@ -3,5 +3,6 @@
     BlinkForms._views = Views;
   });
 
+  return BlinkForms;
 }));
 
