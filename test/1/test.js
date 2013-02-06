@@ -2,8 +2,7 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 
 define(['jquery', 'q', 'chai',
-      'text!/test/1/form.json', 'jquerymobile', 'BForms-jQM'], // 'jquerymobile'
-      function($, Q, chai, json, jqm, views) {
+      'text!/test/1/form.json'], function($, Q, chai, json) {
   'use strict';
 
   var assert = chai.assert;
@@ -49,7 +48,6 @@ define(['jquery', 'q', 'chai',
         var Forms = window.BlinkForms,
             form;
 
-        Forms._views = views;
         Forms.initialize(obj);
         form = Forms.currentFormObject;
         assert.equal($.type(form), 'object');
