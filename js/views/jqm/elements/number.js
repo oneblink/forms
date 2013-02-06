@@ -20,7 +20,6 @@ define(['views/jqm/element'], function(ElementView) {
           max: max,
           'data-highlight': true
         });
-//        this.model.on('change:value', this.onValueChange, this);
 
         $(document).one('pageinit', $.proxy(this.bindRivets, this));
 
@@ -35,12 +34,6 @@ define(['views/jqm/element'], function(ElementView) {
       });
       this.$el.append($input);
       this.bindRivets();
-   },
-   onValueChange: function() {
-      var view = this,
-          $inputs = view.$el.find('input');
-
-      $inputs.slider('refresh');
    }
   });
 

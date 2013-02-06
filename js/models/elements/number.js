@@ -20,6 +20,7 @@ define(['models/element'], function(Element) {
 
       // tamper with 'value' if present
       if (attrs.value !== 'undefined' && attrs.value !== null) {
+        // TODO: round to 'step' if present with 'min' and/or 'max'
         attrs.value = Number(attrs.value);
       }
 
