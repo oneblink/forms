@@ -18,7 +18,7 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
       $fieldset = $('<fieldset></fieldset>').attr({
         'data-role': 'controlgroup'
       });
-      if (this.model.attributes.layout === 'horizontal') {
+      if (attrs.layout === 'horizontal') {
         $fieldset.attr({
           'data-type': 'horizontal'
         });
