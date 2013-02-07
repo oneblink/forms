@@ -6,7 +6,11 @@ define([], function() {
     },
     events: {
     },
-    intialize: function() {
+    initialize: function() {
+      var attrs = this.model.attributes;
+      if (attrs.class) {
+        this.$el.addClass(attrs.class);
+      }
     },
     render: function() {
       var self = this,

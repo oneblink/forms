@@ -97,6 +97,20 @@
           "html": "This is <strong>static</strong> text."
         }
       }
+    ],
+    "_sections": [
+      {
+        "default": {
+          "name": "account",
+          "class": "myClass"
+        }
+      },
+      {
+        "default": {
+          "name": "address",
+          "class": "myClass"
+        }
+      }
     ]
   }
 }
