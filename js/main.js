@@ -39,8 +39,6 @@ define(function(require) {
     view.render();
   };
 
-  // global exports
-  window.BlinkForms = Forms;
   return Forms;
 });
 
