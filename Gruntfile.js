@@ -37,6 +37,7 @@ module.exports = function(grunt) {
         es5: true,
         nomen: true,
         todo: true,
+        sloppy: true, // we force strict-mode separately
         white: true,
         predef: [
           // pre-defined globals

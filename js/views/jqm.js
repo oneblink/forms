@@ -1,5 +1,4 @@
 define(function(require) {
-  'use strict';
   rivets.configure({
     prefix: 'rv',
     adapter: {

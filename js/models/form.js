@@ -1,6 +1,4 @@
 define(['collections/elements'], function(Elements) {
-  'use strict';
-
   var Form;
 
   Form = Backbone.Model.extend({

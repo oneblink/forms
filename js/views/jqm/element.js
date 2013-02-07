@@ -1,6 +1,4 @@
 define([], function() {
-  'use strict';
-
   var ElementView = Backbone.View.extend({
     tagName: 'div',
     attributes: {

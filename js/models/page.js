@@ -3,8 +3,8 @@
  * - cannot be nested
  * - only used immediately within a form (not deeper in)
  */
-define(['collections/elements'], function(Elements) {
-  'use strict';
+define(['collections/elements', 'models/section'],
+      function(Elements, Section) {
 
   var Page;
 

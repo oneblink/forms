@@ -1,6 +1,5 @@
-define(['models/form', 'collections/elements'],
-      function(Form, Elements) {
-  'use strict';
+define(['collections/elements', 'models/element'],
+      function(Elements, Element) {
 
   var Section = Backbone.Model.extend({
     idAttribute: 'name',

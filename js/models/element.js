@@ -1,6 +1,4 @@
 define(function() {
-  'use strict';
-
   var Element = Backbone.Model.extend({
     defaults: {
       page: 0,

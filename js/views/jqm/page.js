@@ -1,6 +1,4 @@
 define([], function() {
-  'use strict';
-
   var PageView = Backbone.View.extend({
     tagName: 'section',
     attributes: {
