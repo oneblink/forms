@@ -42,6 +42,7 @@
           "label": "Select E",
           "type": "select",
           "mode": "expanded",
+          "layout": "horizontal",
           "options": {
             "a": "alpha",
             "b": "beta",

@@ -7,8 +7,9 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
       var self = this,
           $fieldset,
           $legend,
-          type = this.model.attributes.type,
-          name = this.model.attributes.name,
+          attrs = this.model.attributes,
+          type = attrs.type,
+          name = attrs.name,
           iType = type === 'select' ? 'radio' : 'checkbox',
           iName = type === 'select' ? name + '_' + self.cid : name + '[]';
 
@@ -17,10 +18,15 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
       $fieldset = $('<fieldset></fieldset>').attr({
         'data-role': 'controlgroup'
       });
-      $legend = $('<legend></legend>').text(this.model.attributes.label);
+      if (this.model.attributes.layout === 'horizontal') {
+        $fieldset.attr({
+          'data-type': 'horizontal'
+        });
+      }
+      $legend = $('<legend></legend>').text(attrs.label);
       $fieldset.prepend($legend);
 
-      _.forEach(this.model.attributes.options, function(label, value) {
+      _.forEach(attrs.options, function(label, value) {
         var $label = $('<label>' + label + '</label>'),
             $input = $('<input type="' + iType + '" />');
 
