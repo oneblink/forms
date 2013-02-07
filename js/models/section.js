@@ -1,30 +1,41 @@
 define(['collections/elements', 'models/element'],
       function(Elements, Element) {
+  var Section;
 
-  var Section = Backbone.Model.extend({
-    idAttribute: 'name',
+  Section = Element.extend({
+    initialize: function() {
+      var Forms = BlinkForms,
+          attrs = this.attributes,
+          form = attrs.form;
+
+      attrs.elements = new Elements();
+      attrs._view = new Forms._views.Section({model: this});
+    },
+    add: function(element) {
+      this.attributes.elements.add(element);
+    }
+  }, {
+    // static properties
     /**
      * @param {Object} def complete form definition.
      * @param {String} action "add" | "edit" | "view" | etc...
      */
-    constructor: function(def, action, form) {
-      var self = this,
-          pertinent = def.default,
-          contents = pertinent._contents,
-          elements;
+    create: function(def, action, form) {
+      var attrs,
+          section;
 
-      delete pertinent._contents;
-
-      if (_.isArray(contents) && contents.length && form instanceof Form) {
-        // TODO: deal with Sections within this Page
-        elements = _.map(contents, function(name) {
-          return form.attributes.elements.get(name);
-        });
-        elements = new Elements(elements);
+      if (!def || !_.isObject(def)) {
+        return new Section();
       }
-      pertinent.elements = elements;
-
-      this.attributes = pertinent;
+      attrs = def.default || {};
+      if (action && def[action]) {
+        _.extend(attrs, def[action]);
+      }
+      if (form) {
+        attrs.form = form;
+      }
+      section = new Section(attrs);
+      return section;
     }
   });
 

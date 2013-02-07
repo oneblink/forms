@@ -20,6 +20,7 @@ define(function(require) {
   return {
     Form: require('views/jqm/form'),
     Page: require('views/jqm/page'),
+    Section: require('views/jqm/section'),
     Element: require('views/jqm/element'),
     HeadingElement: require('views/jqm/elements/heading'),
     MessageElement: require('views/jqm/elements/message'),

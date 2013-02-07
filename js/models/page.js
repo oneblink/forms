@@ -5,19 +5,60 @@
  */
 define(['collections/elements', 'models/section'],
       function(Elements, Section) {
+  var Page,
+      Sections;
 
-  var Page;
+  Sections = Backbone.Collection.extend({
+    model: Section
+  });
 
   Page = Backbone.Model.extend({
     defaults: {
     },
     initialize: function() {
-      var Forms = window.BlinkForms;
-      this.attributes.elements = new Elements();
-      this.attributes._view = new Forms._views.Page({model: this});
+      var Forms = BlinkForms,
+          attrs = this.attributes,
+          form = attrs.form,
+          action = form.attributes.action,
+          sections;
+
+      attrs.elements = new Elements();
+      attrs._view = new Forms._views.Page({model: this});
+
+      sections = form.attributes._sections;
+
+      if (sections && _.isArray(sections)) {
+        sections = _.map(sections, function(s) {
+          return Section.create(s, action, form);
+        });
+        sections = new Sections(sections);
+      } else {
+        sections = new Sections();
+      }
+      attrs.sections = sections;
     },
     add: function(element) {
       this.attributes.elements.add(element);
+    },
+    getSection: function(name) {
+      var sections = this.attributes.sections,
+          elements = this.attributes.elements,
+          section;
+
+      section = sections.get(name);
+      if (!section) {
+        // assume that by now it's okay to create vanilla Sections
+        section = Section.create({
+          default: {
+            name: name
+          }
+        }, null, this);
+        sections.add(section);
+      }
+      if (!elements.get(name)) {
+        elements.add(section);
+      }
+      return section;
     }
   }, {
     // static properties

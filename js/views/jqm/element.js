@@ -7,6 +7,8 @@ define([], function() {
     events: {
     },
     initialize: function() {
+      var element = this.model;
+      this.$el.attr('data-name', element.attributes.name);
       this.bindRivets();
     },
     renderLabel: function() {

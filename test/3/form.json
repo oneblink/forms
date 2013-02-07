@@ -22,7 +22,8 @@
           "name": "email",
           "label": "Email",
           "type": "email",
-          "defaultValue": "ron@blinkmobile.com.au"
+          "defaultValue": "ron@blinkmobile.com.au",
+          "section": "account"
         }
       },
       {
@@ -30,23 +31,26 @@
           "name": "password",
           "label": "Password",
           "type": "password",
-          "defaultValue": "secret"
+          "defaultValue": "secret",
+          "section": "account"
         }
       },
       {
         "default": {
-          "name": "textarea",
-          "label": "Text Area",
+          "name": "streetAddress",
+          "label": "Street Address",
           "type": "textarea",
-          "defaultValue": "Suite 2\r\n125 Donnison Street"
+          "defaultValue": "Suite 2\r\n125 Donnison Street",
+          "section": "address"
         }
       },
       {
         "default": {
-          "name": "text",
-          "label": "Text",
+          "name": "city",
+          "label": "City",
           "type": "text",
-          "defaultValue": "Gosford"
+          "defaultValue": "Gosford",
+          "section": "address"
         }
       },
       {

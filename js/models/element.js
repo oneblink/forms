@@ -9,12 +9,20 @@ define(function() {
     initialize: function() {
       var attrs = this.attributes,
           form = attrs.form,
-          page = attrs.page;
+          page = attrs.page,
+          section = $.trim(attrs.section || '');
 
-      if (form && _.isNumber(attrs.page)) {
-        attrs.page = form.getPage(attrs.page);
-        attrs.page.add(this);
+      if (form) {
+        page = attrs.page = form.getPage(attrs.page);
+        if (page && section) {
+          section = attrs.section = page.getSection(section);
+          section.add(this);
+        } else {
+          page.add(this);
+          delete attrs.section;
+        }
       }
+
       this.set('value', this.attributes.defaultValue);
       if (!this.attributes.label) {
         this.set('label', this.attributes.name);

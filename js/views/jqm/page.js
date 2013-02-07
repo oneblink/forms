@@ -10,8 +10,7 @@ define([], function() {
     },
     render: function() {
       var self = this,
-          page = this.model,
-          form = page.attributes.form,
+          form = this.model.attributes.form,
           index;
 
       this.$el.empty();
