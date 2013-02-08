@@ -19,6 +19,7 @@ define(function(require) {
     URLElement: require('models/elements/url'),
     TextElement: require('models/elements/text'),
     TextAreaElement: require('models/elements/textarea'),
+    BooleanElement: require('models/elements/boolean'),
     SelectElement: require('models/elements/select'),
     MultiElement: require('models/elements/multi')
   };

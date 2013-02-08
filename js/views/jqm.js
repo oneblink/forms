@@ -33,6 +33,7 @@ define(function(require) {
     URLElement: require('views/jqm/elements/url'),
     TextElement: require('views/jqm/elements/text'),
     TextAreaElement: require('views/jqm/elements/textarea'),
+    BooleanElement: require('views/jqm/elements/boolean'),
     ChoiceCollapsedElement: require('views/jqm/elements/choicecollapsed'),
     ChoiceExpandedElement: require('views/jqm/elements/choiceexpanded')
   };

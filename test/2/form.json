@@ -75,6 +75,28 @@
             "g": "gamma"
           }
         }
+      },
+      {
+        "default": {
+          "name": "boolean",
+          "label": "Boolean",
+          "type": "boolean",
+          "options": {
+            "0": "false",
+            "1": "true"
+          }
+        }
+      },
+      {
+        "default": {
+          "name": "question",
+          "label": "Question",
+          "type": "boolean",
+          "options": {
+            "n": "no",
+            "y": "yes"
+          }
+        }
       }
     ]
   }

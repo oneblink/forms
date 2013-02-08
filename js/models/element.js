@@ -73,6 +73,10 @@ define(function() {
           TypedElement = Forms._models.MessageElement;
           View = Forms._views.MessageElement;
           break;
+        case 'boolean':
+          TypedElement = Forms._models.BooleanElement;
+          View = Forms._views.BooleanElement;
+          break;
         case 'select':
           TypedElement = Forms._models.SelectElement;
           mode = attrs.mode;
