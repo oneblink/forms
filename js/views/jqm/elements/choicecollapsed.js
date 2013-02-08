@@ -37,6 +37,10 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
 
       this.$el.append($input);
       this.bindRivets();
+      this.model.on('change:value', this.onValueChange, this);
+    },
+    onValueChange: function() {
+      this.$el.find('select').selectmenu('refresh');
     }
   });
 
