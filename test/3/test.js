@@ -19,22 +19,8 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
 
     suite('Form', function() {
 
-      test('wait for BlinkForms global', function(done) {
-        var dfrd = Q.defer(),
-            check = function() {
-              if (window.BlinkForms) {
-                dfrd.resolve();
-              } else {
-                setTimeout(check, 47);
-              }
-            };
-
-        check();
-        dfrd.promise.then(done);
-      });
-
       test('BlinkForms global is an Object', function() {
-        assert.equal($.type(Forms), 'object');
+        assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
       });
 
       test('initialise with form.json', function(done) {
@@ -61,12 +47,6 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
         $.mobile.page({}, $page);
         $page.trigger('pagecreate');
         $page.show();
-/* // TODO: figure out how to get jQuery Mobile to change pages
-        $.mobile.changePage($page, {
-          pageContainer: $page,
-          fromPage: $form.children('section').last()
-        });
-       */
       });
 
     }); // END: suite('Form', ...)
