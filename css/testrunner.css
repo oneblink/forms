@@ -5,7 +5,7 @@ body {
   position: fixed;
   width: 100%;
   bottom: 0px;
-  height: 10em;
+  height: 15em;
   overflow-y: scroll;
 }
 #mocha h2 {
