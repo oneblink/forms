@@ -1,5 +1,6 @@
 /*global suite:true, test:true, setup:true, teardown:true*/ // mocha
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
+/*global assert:true*/ // chai
 
 (function(window) {
   var Forms = window.BlinkForms;

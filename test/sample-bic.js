@@ -1,9 +1,14 @@
+/**
+ * This is a sample implementation of the API that the BIC must supply.
+ */
+
+/*jslint regexp:true*/ // allow insecure RegExp below
 (function(window) {
   var Forms = window.BlinkForms;
 
   Forms.getDefinition = function(name) {
     var dfrd = Q.defer(),
-        url = location.href.replace(/\/[^/]*$/, '/' + name + '.json');
+        url = location.href.replace(/\/[^\/]*$/, '/' + name + '.json');
 
     $.ajax({
       url: url

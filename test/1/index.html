@@ -33,7 +33,9 @@
   <div id="mocha"></div>
   <script src="test.js"></script>
   <script>
-    window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run();
+    if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+      window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run();
+    }
   </script>
 </body>
 </html>

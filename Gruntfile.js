@@ -11,6 +11,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-jslint');
+  grunt.loadNpmTasks('grunt-mocha');
 
   grunt.initConfig({
 
@@ -133,12 +134,27 @@ module.exports = function(grunt) {
         }
       }
 
+    },
+
+    mocha: {
+      all: {
+        src: ['test/*/index.html'],
+        options: {
+          run: true
+        }
+      }
     }
 
   });
 
-  grunt.registerTask('default', 'jslint');
-  grunt.registerTask('build', ['clean', 'requirejs', 'concat', 'uglify']);
+  grunt.registerTask('default', [
+    'jslint',
+    'clean',
+    'requirejs',
+    'concat',
+    'uglify',
+    'mocha'
+  ]);
 
 };
 
