@@ -140,7 +140,7 @@ module.exports = function(grunt) {
       all: {
         src: ['test/*/index.html'],
         options: {
-          run: true
+          run: false
         }
       }
     }

@@ -2,8 +2,7 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 /*global assert:true*/ // chai
 
-(function(window) {
-  var Forms = window.BlinkForms;
+define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
 
   suite('1: date/time', function() {
     var obj,
@@ -79,4 +78,4 @@
 
   }); // END: suite('1', ...)
 
-}(this));
+});

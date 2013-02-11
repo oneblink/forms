@@ -3,29 +3,22 @@
  */
 
 /*jslint regexp:true*/ // allow insecure RegExp below
-(function(window) {
-  var Forms = window.BlinkForms;
+define(['q', 'BlinkForms', 'definitions'], function(Q, Forms, defs) {
 
   Forms.getDefinition = function(name) {
     var dfrd = Q.defer(),
-        url = location.href.replace(/\/[^\/]*$/, '/' + name + '.json');
+        def;
 
-    $.ajax({
-      url: url
-    }).then(function(data) {
-      try {
-        if (_.isString(data)) {
-          data = $.parseJSON(data);
-        }
-      } finally {
-        if ($.isPlainObject(data)) {
-          dfrd.resolve(data);
-        } else {
-          dfrd.reject();
-        }
-      }
-    }).fail(dfrd.reject);
+    def = _.find(defs, function(def) {
+      return def && def.default && def.default.name === name;
+    });
+    if (def) {
+      dfrd.resolve(def);
+    } else {
+      dfrd.reject(def);
+    }
+
     return dfrd.promise;
   };
 
-}(this));
+});
