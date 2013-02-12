@@ -21,7 +21,7 @@ define(['views/jqm/element'], function(ElementView) {
           name = this.model.attributes.name;
 
       // TODO: implement pre-HTML5 fallback
-      $input = $('<input type="time" style="width: 8em" />');
+      $input = $('<input type="time" style="width: 9em" />');
       $input.attr({
         name: name + '_time',
         'data-rv-value': 'm._time'

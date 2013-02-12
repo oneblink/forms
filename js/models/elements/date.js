@@ -6,6 +6,10 @@ define(['models/element'], function(Element) {
       Element.prototype.initialize.call(this);
       this.on('change:_date change:_time', this.prepareValue);
       this.on('change:value', this.prepareDateTime);
+      if (this.attributes.defaultValue === 'now') {
+        // TODO: implement this more thoroughly
+        this.set('value', (new Date()).toISOString().replace(/\.\d{3}Z$/, ''));
+      }
     },
     /**
      * update value to match _date and/or _time
@@ -52,6 +56,23 @@ define(['models/element'], function(Element) {
           this.trigger('change:_date');
         }
       }
+    },
+    /**
+     * @return {Date} a JavaScript Date object.
+     */
+    toDate: function() {
+      var type = this.attributes.type,
+          iso;
+
+      if (type === 'date') {
+        return new Date(this.attributes._date);
+      }
+      if (type === 'time') {
+        iso = (new Date()).toISOString();
+        return iso.replace(/T[0-9.:Z+\-]*$/, 'T' + this.attributes._time);
+      }
+      // type === 'datetime'
+      return new Date(this.attributes._date + 'T' + this.attributes._time);
     }
   });
 
