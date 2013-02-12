@@ -10,6 +10,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jslint');
   grunt.loadNpmTasks('grunt-mocha');
 
@@ -26,10 +27,8 @@ module.exports = function(grunt) {
         '**/*.js'
       ],
       exclude: [
-        'js/config.js',
         'node_modules/**',
         'js/lib/**',
-        '**/*.min.js',
         'js/build/**',
         'BlinkForms*.js'
       ],
@@ -142,6 +141,13 @@ module.exports = function(grunt) {
         options: {
           run: false
         }
+      }
+    },
+
+    watch: {
+      src: {
+        files: ['js/**/*.js'],
+        tasks: 'default'
       }
     }
 
