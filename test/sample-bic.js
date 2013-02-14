@@ -13,7 +13,8 @@ define(['q', 'BlinkForms', 'definitions'], function(Q, Forms, defs) {
       return def && def.default && def.default.name === name;
     });
     if (def) {
-      dfrd.resolve(def);
+      // pass a clone back, for safety
+      dfrd.resolve($.parseJSON(JSON.stringify(def)));
     } else {
       dfrd.reject(def);
     }
