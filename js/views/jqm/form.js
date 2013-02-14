@@ -1,10 +1,6 @@
 define([], function() {
   var FormView = Backbone.View.extend({
     tagName: 'form',
-    attributes: {
-    },
-    events: {
-    },
     render: function() {
       var self = this,
           pages = this.model.attributes.pages;
