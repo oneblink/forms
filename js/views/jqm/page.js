@@ -1,11 +1,6 @@
 define([], function() {
   var PageView = Backbone.View.extend({
     tagName: 'section',
-    attributes: {
-//      'data-role': 'page'
-    },
-    events: {
-    },
     initialize: function() {
       var attrs = this.model.attributes;
       if (attrs.class) {

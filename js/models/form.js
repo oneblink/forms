@@ -4,7 +4,7 @@ define(['collections/elements'], function(Elements) {
   Form = Backbone.Model.extend({
     initialize: function() {
       var self = this,
-          Page = window.BlinkForms._models.Page,
+          Page = BlinkForms._models.Page,
           action = this.attributes.action,
           pages;
 
@@ -20,6 +20,18 @@ define(['collections/elements'], function(Elements) {
         pages = [];
       }
       this.attributes.pages = pages;
+    },
+    destroy: function(options) {
+      var attrs = this.attributes;
+      if (attrs._view) {
+        attrs._view.remove();
+        delete attrs._view;
+      }
+      delete this.$form;
+      attrs.pages.forEach(function(page) {
+        page.destroy(options);
+      });
+      return Backbone.Model.prototype.destroy.call(this, options);
     },
     /**
      * get a Page, creating it if necessary

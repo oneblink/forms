@@ -11,6 +11,18 @@ define(['collections/elements', 'models/element'],
       attrs.elements = new Elements();
       attrs._view = new Forms._views.Section({model: this});
     },
+    destroy: function(options) {
+      var attrs = this.attributes;
+      if (attrs._view) {
+        attrs._view.remove();
+        delete attrs._view;
+      }
+      delete attrs.form;
+      attrs.elements.forEach(function(element) {
+        element.destroy(options);
+      });
+      return Backbone.Model.prototype.destroy.call(this, options);
+    },
     add: function(element) {
       this.attributes.elements.add(element);
     }

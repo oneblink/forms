@@ -2,7 +2,13 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
   'use strict';
 
   var ChoiceExpandedElementView = ChoiceElementView.extend({
-    // TODO: fix bindings, the only thing that works is initial display :S
+    remove: function() {
+      var type = this.attributes.type;
+      if (type !== 'select') {
+        this.$el.find('input').off('click');
+      }
+      return ChoiceElementView.prototype.remove.call(this);
+    },
     render: function() {
       var self = this,
           $fieldset,

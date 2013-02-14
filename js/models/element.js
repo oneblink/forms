@@ -28,6 +28,18 @@ define(function() {
         this.set('label', this.attributes.name);
       }
     },
+    destroy: function(options) {
+      var attrs = this.attributes;
+      if (attrs._view) {
+        attrs._view.remove();
+        delete attrs._view;
+      }
+      delete attrs.form;
+      delete attrs.page;
+      delete attrs.section;
+      this.id = null; // to prevent "sync"
+      return Backbone.Model.prototype.destroy.call(this, options);
+    },
     /**
      * official Blink API
      */

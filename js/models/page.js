@@ -37,6 +37,18 @@ define(['collections/elements', 'models/section'],
       }
       attrs.sections = sections;
     },
+    destroy: function(options) {
+      var attrs = this.attributes;
+      if (attrs._view) {
+        attrs._view.remove();
+        delete attrs._view;
+      }
+      delete attrs.form;
+      attrs.elements.forEach(function(element) {
+        element.destroy(options);
+      });
+      return Backbone.Model.prototype.destroy.call(this, options);
+    },
     add: function(element) {
       this.attributes.elements.add(element);
     },

@@ -11,6 +11,13 @@ define([], function() {
       this.$el.attr('data-name', element.attributes.name);
       this.bindRivets();
     },
+    remove: function() {
+      this.model.off(null, null, this);
+      if (this.rivet) {
+        this.rivet.unbind();
+      }
+      return Backbone.View.prototype.remove.call(this);
+    },
     renderLabel: function() {
       var $label = $(document.createElement('label'));
       $label.attr({
