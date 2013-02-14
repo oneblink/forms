@@ -1,4 +1,6 @@
 define(function(require) {
+  var Forms = BlinkForms;
+
   rivets.configure({
     prefix: 'rv',
     adapter: {
@@ -16,6 +18,51 @@ define(function(require) {
       }
     }
   });
+
+  /**
+   * @param {DOMNode|jQuery} element where to start looking.
+   */
+  Forms.getForm = function(element) {
+    var cfo = Forms.currentFormObject,
+        $element = element instanceof $ ? element : $(element),
+        $next = $element.closest('[data-form]'),
+        form;
+
+    while ($next.length > 0) {
+      if ($.hasData($next[0])) {
+        form = $next.data('model');
+        if (form instanceof Forms._models.Form) {
+          return form;
+        }
+      }
+      $next = $element.parent().closest('[data-form]');
+    }
+    if (cfo && cfo.$form && cfo.$form.parent().length > 0) {
+      return Forms.currentFormObject;
+    }
+    return null;
+  };
+
+  /**
+   * @param {DOMNode|jQuery} element where to start looking.
+   */
+  Forms.getElement = function(element) {
+    var cfo = Forms.currentFormObject,
+        $element = element instanceof $ ? element : $(element),
+        $next = $element.closest('[data-name]'),
+        el;
+
+    while ($next.length > 0) {
+      if ($.hasData($next[0])) {
+        el = $next.data('model');
+        if (el instanceof Forms._models.Element) {
+          return el;
+        }
+      }
+      $next = $element.parent().closest('[data-name]');
+    }
+    return null;
+  };
 
   return {
     Form: require('views/jqm/form'),
