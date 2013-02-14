@@ -65,8 +65,8 @@ define(['collections/elements'], function(Elements) {
      * @param {String} action "add" | "edit" | "view" | etc...
      */
     create: function(def, action) {
-      var Page = window.BlinkForms._models.Page,
-          Element = window.BlinkForms._models.Element,
+      var Page = BlinkForms._models.Page,
+          Element = BlinkForms._models.Element,
           attrs,
           elements,
           pages,
