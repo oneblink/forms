@@ -65,6 +65,10 @@ define(function() {
       }
       // TODO: determine Element type and select sub-Prototype
       switch (attrs.type) {
+        case 'subForm':
+          TypedElement = Forms._models.SubFormElement;
+          View = Forms._views.SubFormElement;
+          break;
         case 'heading':
           TypedElement = Forms._models.HeadingElement;
           View = Forms._views.HeadingElement;

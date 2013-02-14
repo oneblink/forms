@@ -19,6 +19,8 @@ define(function(require) {
 
   return {
     Form: require('views/jqm/form'),
+    SubForm: require('views/jqm/subform'),
+    SubFormElement: require('views/jqm/elements/subform'),
     Page: require('views/jqm/page'),
     Section: require('views/jqm/section'),
     Element: require('views/jqm/element'),
