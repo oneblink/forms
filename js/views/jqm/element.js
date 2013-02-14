@@ -7,10 +7,11 @@ define([], function() {
     initialize: function() {
       var element = this.model;
       this.$el.attr('data-name', element.attributes.name);
-      this.$el.removeData('model');
+      this.$el.data('model', element);
       this.bindRivets();
     },
     remove: function() {
+      this.$el.removeData('model');
       this.model.off(null, null, this);
       if (this.rivet) {
         this.rivet.unbind();

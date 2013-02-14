@@ -38,8 +38,15 @@ define(['models/form', 'models/element'], function(Form, Element) {
      * @param {Number|DOMNode|jQuery} index or DOM element for the record.
      */
     remove: function(index) {
+      var $form;
       // TODO: skip placeholder "delete" records when counting
-      this.attributes.forms.at(index).destroy();
+      // TODO: create placeholder records on "edit"
+      if (typeof index === 'number') {
+        this.attributes.forms.at(index).destroy();
+        return;
+      }
+      $form = index instanceof $ ? index : $(index);
+      BlinkForms.getForm($form).destroy();
     }
   });
 

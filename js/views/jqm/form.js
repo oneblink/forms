@@ -1,6 +1,9 @@
 define([], function() {
   var FormView = Backbone.View.extend({
     tagName: 'form',
+    attributes: {
+      'novalidate': 'novalidate'
+    },
     remove: function() {
       this.$el.removeData('model');
       return Backbone.View.prototype.remove.call(this);
@@ -18,6 +21,7 @@ define([], function() {
         view.render();
         self.$el.append(view.el);
       });
+
     }
   });
 
