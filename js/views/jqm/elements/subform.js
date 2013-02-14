@@ -5,10 +5,8 @@ define(['views/jqm/element'], function(ElementView) {
 
   SubFormElementView = ElementView.extend({
     tagName: 'section',
-    attributes: {
-      'data-rv-data-form': 'm.subForm'
-    },
     render: function() {
+      this.$el.attr('data-form', this.model.attributes.subForm);
     }
   });
 

@@ -4,11 +4,10 @@ define([], function() {
     attributes: {
       'data-role': 'fieldcontain'
     },
-    events: {
-    },
     initialize: function() {
       var element = this.model;
       this.$el.attr('data-name', element.attributes.name);
+      this.$el.removeData('model');
       this.bindRivets();
     },
     remove: function() {

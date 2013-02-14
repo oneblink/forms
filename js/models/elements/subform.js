@@ -34,6 +34,9 @@ define(['models/form', 'models/element'], function(Form, Element) {
         view.$el.trigger('create');
       });
     },
+    /**
+     * @param {Number|DOMNode|jQuery} index or DOM element for the record.
+     */
     remove: function(index) {
       // TODO: skip placeholder "delete" records when counting
       this.attributes.forms.at(index).destroy();

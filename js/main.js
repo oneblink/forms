@@ -42,6 +42,30 @@ define(function(require) {
     view.render();
   };
 
+  /**
+   * @param {DOMNode|jQuery} element where to start looking.
+   */
+  Forms.getForm = function(element) {
+    var cfo = Forms.currentFormObject,
+        $element = element instanceof $ ? element : $(element),
+        $next = $element.closest('[data-form]'),
+        form;
+
+    while ($next.length > 0) {
+      if ($.hasData($next[0])) {
+        form = $next.data('model');
+        if (form instanceof Forms._models.Form) {
+          return form;
+        }
+      }
+      $next = $element.parent().closest('[data-form]');
+    }
+    if (cfo && cfo.$form && cfo.$form.parent().length > 0) {
+      return Forms.currentFormObject;
+    }
+    return null;
+  };
+
   return Forms;
 });
 
