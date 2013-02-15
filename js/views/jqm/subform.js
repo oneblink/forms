@@ -4,6 +4,7 @@ define(['views/jqm/form'], function(FormView) {
 
   SubFormView = FormView.extend({
     tagName: 'section',
+    attributes: {},
     remove: function() {
       this.$el.children('.ui-btn').children('button').off('click');
       return FormView.prototype.remove.call(this);
