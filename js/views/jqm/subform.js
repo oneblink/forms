@@ -5,25 +5,21 @@ define(['views/jqm/form'], function(FormView) {
   SubFormView = FormView.extend({
     tagName: 'section',
     remove: function() {
-      this.$el.children().children('button[data-action=remove]').off('click');
+      this.$el.children('.ui-btn').children('button').off('click');
       return FormView.prototype.remove.call(this);
     },
     render: function() {
-      var $label = $('<div></div>'),
-          $button = $('<button></button>').attr({
+      var $button = $('<button></button>').attr({
             type: 'button',
-            'data-icon': 'delete',
-            'data-iconpos': 'notext',
+            'data-icon': 'minus',
             'data-action': 'remove'
-          });
+          }).text(this.model.attributes.name);
 
       $button.on('click', this.onRemoveClick);
-      $label.append($button);
-      $label.append('<strong>' + this.model.attributes.name + '</strong>');
 
       FormView.prototype.render.call(this);
 
-      this.$el.prepend($label);
+      this.$el.prepend($button);
     },
     onRemoveClick: function() {
       var $form = Forms.getForm(this).$form;

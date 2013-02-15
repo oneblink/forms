@@ -14,10 +14,12 @@ define(['models/form', 'models/element'], function(Form, Element) {
       this.attributes.forms = new Forms();
     },
     add: function() {
+      // TODO: there is too much DOM stuff here to be in the model
       var attrs = this.attributes,
           name = attrs.subForm,
           forms = attrs.forms,
-          $el = attrs._view.$el;
+          $el = attrs._view.$el,
+          $button = $el.children('.ui-btn');
 
       BlinkForms.getDefinition(name).then(function(def) {
         var form,
@@ -30,7 +32,7 @@ define(['models/form', 'models/element'], function(Form, Element) {
         });
         form.$form = view.$el; // backwards-compatibility, convenience
         view.render();
-        $el.append(view.$el);
+        $button.before(view.$el);
         view.$el.trigger('create');
       });
     },
