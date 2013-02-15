@@ -49,6 +49,19 @@ define(['models/form', 'models/element'], function(Form, Element) {
       }
       $form = index instanceof $ ? index : $(index);
       BlinkForms.getForm($form).destroy();
+    },
+    data: function() {
+      var dfrd = Q.defer(),
+          promises;
+
+      promises = this.attributes.forms.map(function(form) {
+        return form.data();
+      });
+      Q.all(promises).spread(function() {
+        dfrd.resolve(_.toArray(arguments));
+      }).fail(dfrd.reject);
+
+      return dfrd.promise;
     }
   });
 

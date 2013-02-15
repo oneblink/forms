@@ -58,16 +58,31 @@ define(['collections/elements'], function(Elements) {
      */
     data: function() {
       var dfrd = Q.defer(),
-          data = {};
+          data = {},
+          promises = [];
 
       this.attributes.elements.forEach(function(el) {
-        var val = el.val();
+        var type = el.attributes.type,
+            val,
+            dfrd;
 
+        if (type === 'subForm') {
+          dfrd = Q.defer();
+          el.data().then(function(val) {
+            data[el.attributes.name] = val;
+            dfrd.resolve();
+          });
+          promises.push(dfrd.promise);
+          return;
+        }
+        val = el.val();
         if (val || typeof val === 'number') {
           data[el.attributes.name] = val;
         }
       });
-      dfrd.resolve(data);
+      Q.all(promises).then(function() {
+        dfrd.resolve(data);
+      });
       return dfrd.promise;
     }
   }, {
