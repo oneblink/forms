@@ -4,8 +4,9 @@
 
 define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
 
-  suite('1: date/time', function() {
+  suite('4: subForms', function() {
     var obj,
+        $doc = $(document),
         $page = $('[data-role=page]'),
         $content = $page.find('[data-role=content]');
 
@@ -39,10 +40,14 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
 
       });
 
-      test('render form for jQuery Mobile', function() {
+      test('render form for jQuery Mobile', function(done) {
         var form = Forms.currentFormObject;
 
         $content.append(form.$form);
+
+        $doc.one('pageinit', function() {
+          done();
+        });
 
         $.mobile.page({}, $page);
         $page.trigger('pagecreate');
@@ -50,6 +55,93 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
       });
 
     }); // END: suite('Form', ...)
+
+    suite('Sub-Forms', function() {
+
+      test('add 1st subForm', function(done) {
+        var subFormElement = Forms.currentFormObject.getElement('comments'),
+            $view = subFormElement.attributes._view.$el,
+            $add = $view.children('.ui-btn').children('button'),
+            subForms = subFormElement.attributes.forms;
+
+        assert.equal(subForms.length, 0, 'no subForms yet');
+        $add.trigger('click');
+        setTimeout(function() {
+          done();
+        }, 0);
+      });
+
+      test('add 2nd subForm', function(done) {
+        var subFormElement = Forms.currentFormObject.getElement('comments'),
+            $view = subFormElement.attributes._view.$el,
+            $add = $view.children('.ui-btn').children('button'),
+            subForms = subFormElement.attributes.forms;
+
+        assert.equal(subForms.length, 1, '1 subForm');
+        $add.trigger('click');
+        setTimeout(function() {
+          done();
+        }, 0);
+      });
+
+      test('test subForms', function(done) {
+        var subFormElement = Forms.currentFormObject.getElement('comments'),
+            $view = subFormElement.attributes._view.$el,
+            subForms = subFormElement.attributes.forms,
+            testData = [
+              { comment: 'abc' },
+              { comment: 'def' }
+            ];
+
+        assert.equal(subForms.length, 2, '2 subForms');
+        subForms.at(0).getElement('comment').val('abc');
+        subForms.at(1).getElement('comment').val('def');
+        subFormElement.data()
+        .then(function(d) {
+          assert.deepEqual(d, testData, 'subFormElement data');
+          return Forms.currentFormObject.data();
+        })
+        .then(function(d) {
+          assert.deepEqual(d.comments, testData, 'total form data');
+          done();
+        });
+      });
+
+      test('remove 1st subForm', function(done) {
+        var subFormElement = Forms.currentFormObject.getElement('comments'),
+            subForms = subFormElement.attributes.forms,
+            subForm = subForms.at(0),
+            $view = subForm.attributes._view.$el,
+            $remove = $view.children('.ui-btn').children('button');
+
+        $remove.trigger('click');
+        setTimeout(function() {
+          done();
+        }, 0);
+      });
+
+      test('test subForms', function(done) {
+        var subFormElement = Forms.currentFormObject.getElement('comments'),
+            $view = subFormElement.attributes._view.$el,
+            subForms = subFormElement.attributes.forms,
+            testData = [
+              { comment: 'def' }
+            ];
+
+        assert.equal(subForms.length, 1, '1 subForm');
+        subForms.at(0).getElement('comment').val('def');
+        subFormElement.data()
+        .then(function(d) {
+          assert.deepEqual(d, testData, 'subFormElement data');
+          return Forms.currentFormObject.data();
+        })
+        .then(function(d) {
+          assert.deepEqual(d.comments, testData, 'total form data');
+          done();
+        });
+      });
+
+    });
 
     /**
      * execute once after everything else in this suite
