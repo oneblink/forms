@@ -2,7 +2,7 @@
   "name": "bforms_v3",
   "version": "0.0.1",
   "dependencies": {
-    "chai": "~1.4",
+    "chai": "~1.5",
     "grunt": "~0.4",
     "grunt-jslint": "~0.2",
     "grunt-contrib-clean": "~0.4.0rc6",
@@ -12,6 +12,6 @@
     "grunt-contrib-requirejs": "~0.4",
     "grunt-contrib-watch": "~0.2",
     "grunt-mocha": "~0.2",
-    "mocha": "~1.7"
+    "mocha": "~1.8"
   }
 }
