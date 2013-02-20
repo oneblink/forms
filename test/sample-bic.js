@@ -2,8 +2,23 @@
  * This is a sample implementation of the API that the BIC must supply.
  */
 
-define(['underscore', 'q', 'BlinkForms', 'definitions'],
-      function(_, Q, Forms, defs) {
+define(['jquery', 'underscore', 'q', 'BlinkForms', 'definitions'],
+      function($, _, Q, Forms, defs) {
+
+  var $submitPopup = $('<div></div>').attr({
+        id: 'submitPopup',
+        'data-role': 'popup',
+        class: 'ui-content',
+        'data-overlay-theme': 'a'
+      }).appendTo(document.body),
+      $footer = $('footer'),
+      $grid = $('<fieldset class="ui-grid-a"></fieldset>').appendTo($footer),
+      $colA = $('<div class="ui-block-a"></div>').appendTo($grid),
+      $colB = $('<div class="ui-block-b"></div>').appendTo($grid),
+      $submitButton = $('<button></button>').attr({
+        'data-action': 'submit',
+        'data-role': 'button'
+      }).text('Submit').appendTo($colB);
 
   Forms.getDefinition = function(name, action) {
     var dfrd = Q.defer(),
@@ -66,5 +81,16 @@ define(['underscore', 'q', 'BlinkForms', 'definitions'],
 
     return dfrd.promise;
   };
+
+  $submitPopup.popup();
+
+  $(document.body).on('click', 'button[data-action=submit]', function() {
+    Forms.currentFormObject.data().then(function(data) {
+      var json = JSON.stringify(data, undefined, 2);
+      $submitPopup.empty();
+      $submitPopup.append('<pre>' + json + '</pre>');
+      $submitPopup.popup('open');
+    });
+  });
 
 });
