@@ -27,7 +27,7 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
       test('initialise with form.json', function(done) {
         var form;
 
-        Forms.getDefinition('form1').then(function(def) {
+        Forms.getDefinition('form1', 'add').then(function(def) {
           Forms.initialize(def);
           form = Forms.currentFormObject;
           assert.equal($.type(form), 'object');

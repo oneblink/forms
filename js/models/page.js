@@ -64,7 +64,7 @@ define(['collections/elements', 'models/section'],
           default: {
             name: name
           }
-        }, null, this);
+        }, this);
         sections.add(section);
       }
       if (!elements.get(name)) {
@@ -75,19 +75,13 @@ define(['collections/elements', 'models/section'],
   }, {
     // static properties
     /**
-     * @param {Object} def complete form definition.
-     * @param {String} action "add" | "edit" | "view" | etc...
+     * @param {Object} attrs attributes for this model.
      */
-    create: function(def, action, form) {
-      var attrs,
-          page;
+    create: function(attrs, form) {
+      var page;
 
-      if (!def || !_.isObject(def)) {
+      if (!attrs || !_.isObject(attrs)) {
         return new Page();
-      }
-      attrs = def.default || {};
-      if (action && def[action]) {
-        _.extend(attrs, def[action]);
       }
       if (form) {
         attrs.form = form;

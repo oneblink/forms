@@ -21,11 +21,11 @@ define(['models/form', 'models/element'], function(Form, Element) {
           $el = attrs._view.$el,
           $button = $el.children('.ui-btn');
 
-      BlinkForms.getDefinition(name).then(function(def) {
+      BlinkForms.getDefinition(name, 'add').then(function(def) {
         var form,
             view;
 
-        form = Form.create(def, 'add');
+        form = Form.create(def);
         forms.add(form);
         view = form.attributes._view = new BlinkForms._views.SubForm({
           model: form

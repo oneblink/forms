@@ -32,10 +32,10 @@ define(function(require) {
     var form,
         view;
 
-    if (!$.isPlainObject(def) || $.type(def.default) !== 'object') {
+    if (!$.isPlainObject(def)) {
       throw new Error('unexpected Form definition structure');
     }
-    form = Forms._models.Form.create(def, 'add');
+    form = Forms._models.Form.create(def);
     Forms.currentFormObject = form;
     view = form.attributes._view = new Forms._views.Form({model: form});
     form.$form = view.$el; // backwards-compatibility, convenience

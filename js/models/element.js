@@ -53,24 +53,18 @@ define(function() {
   }, {
     // static properties
     /**
-     * @param {Object} def complete form definition.
-     * @param {String} action "add" | "edit" | "view" | etc...
+     * @param {Object} attrs attributes for this model.
      */
-    create: function(def, action, form) {
+    create: function(attrs, form) {
       var Forms = window.BlinkForms,
-          attrs,
           view,
           el,
           TypedElement,
           View,
           mode;
 
-      if (!def || !_.isObject(def)) {
+      if (!attrs || !_.isObject(attrs)) {
         return new Element();
-      }
-      attrs = def.default || {};
-      if (action && def[action]) {
-        _.extend(attrs, def[action]);
       }
       if (form) {
         attrs.form = form;
