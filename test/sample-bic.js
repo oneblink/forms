@@ -26,11 +26,6 @@ define(['underscore', 'q', 'BlinkForms', 'definitions'],
       return dfrd.promise;
     }
     def = $.parseJSON(JSON.stringify(def));
-    if (!action) {
-      // pass a clone back, for safety
-      dfrd.resolve(def.default);
-      return dfrd.promise;
-    }
     // found definition, but need to collapse to specific action/view
     if (_.isArray(def.default._elements)) {
       def.default._elements = _.map(def.default._elements, collapseAction);
@@ -41,6 +36,13 @@ define(['underscore', 'q', 'BlinkForms', 'definitions'],
     if (_.isArray(def.default._pages)) {
       def.default._pages = _.map(def.default._pages, collapseAction);
     }
+
+    if (!action) {
+      // pass a clone back, for safety
+      dfrd.resolve(def.default);
+      return dfrd.promise;
+    }
+
     if (def[action] && def[action]._elements) {
       elements = def.default._elements;
       delete def.default._elements;
