@@ -2809,20 +2809,56 @@ define('domReady',[],function () {
 define('requirePlugins',['cs', 'text', 'domReady', 'i18n'], function() {});
 
 (function() {
+  var protocol = window.location.protocol === 'file:' ? 'http:' : '',
+      google = '//ajax.googleapis.com/ajax/libs/',
+      microsoft = '//ajax.aspnetcdn.com/ajax/',
+      jquery = '//code.jquery.com/',
+      cloudfront = '//d1c6dfkb81l78v.cloudfront.net/', // Blink
+      cloudflare = '//cdnjs.cloudflare.com/ajax/libs/';
+
   require.config({
     paths: {
-      angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min',
-      backbone: 'https://d1c6dfkb81l78v.cloudfront.net/backbonejs/0.9.10/backbone.min',
-      jquery: [
-        'https://d1c6dfkb81l78v.cloudfront.net/jquery/1.9.0/jquery.min',
-        'https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min'
+      angular: [
+        protocol + google + 'angularjs/1.0.4/angular.min',
+        protocol + cloudflare + 'angular.js/1.0.4/angular.min'
       ],
-      q: 'https://d1c6dfkb81l78v.cloudfront.net/q/0.8.11/q.min',
-      underscore: 'https://d1c6dfkb81l78v.cloudfront.net/underscorejs/1.4.3/u.min',
-      jquerymobile: 'https://d1c6dfkb81l78v.cloudfront.net/jquery.mobile/1.2.0/jqm.min',
-      jquerymigrate: 'https://d1c6dfkb81l78v.cloudfront.net/jquery-migrate/1.1.0/migrate-1.1.0.min',
-      rivets: 'https://d1c6dfkb81l78v.cloudfront.net/rivets/0.4.5/rivets.min',
-      mustache: 'https://d1c6dfkb81l78v.cloudfront.net/mustache/0.7.2/mustache.min'
+      backbone: [
+        protocol + cloudfront + 'backbonejs/0.9.10/backbone.min',
+        protocol + cloudflare + 'backbone.js/0.9.10/backbone-min'
+      ],
+      jquery: [
+        protocol + cloudfront + 'jquery/1.9.1/jquery.min',
+        protocol + google + 'jquery/1.9.1/jquery.min',
+        protocol + microsoft + 'jquery/jquery-1.9.1.min',
+        protocol + jquery + 'jquery-1.9.1.min',
+        protocol + cloudflare + 'jquery/1.9.1/jquery.min'
+      ],
+      jquerymigrate: [
+        protocol + cloudfront + 'jquery-migrate/1.1.1/migrate.min',
+        protocol + microsoft + 'jquery.migrate/jquery-migrate-1.1.1.min',
+        protocol + jquery + 'jquery-migrate-1.1.1.min',
+        protocol + cloudflare + 'jquery-migrate/1.1.1/jquery-migrate-1.1.1.min'
+      ],
+      jquerymobile: [
+        protocol + cloudfront + 'jquery.mobile/1.3.0/jqm.min',
+        protocol + microsoft + 'jquery.mobile/1.3.0/jquery.mobile-1.3.0.min',
+        protocol + jquery + 'mobile/1.3.0/jquery.mobile-1.3.0.min',
+        protocol + cloudflare + 'jquery-mobile/1.3.0/jquery.mobile.min'
+      ],
+      mustache: [
+        protocol + cloudfront + 'mustache/0.7.2/mustache.min',
+        protocol + cloudflare + 'mustache.js/0.7.2/mustache.min'
+      ],
+      q: [
+        protocol + cloudfront + 'q/0.8.11/q.min'
+      ],
+      rivets: [
+        protocol + cloudfront + 'rivets/0.4.5/rivets.min'
+      ],
+      underscore: [
+        protocol + cloudfront + 'underscorejs/1.4.3/u.min',
+        protocol + cloudflare + 'underscore.js/1.4.4/underscore-min'
+      ]
     },
     shim: {
       angular: {
@@ -2834,11 +2870,6 @@ define('requirePlugins',['cs', 'text', 'domReady', 'i18n'], function() {});
       },
       underscore: {
         exports: '_'
-      },
-      jquerymobile: {
-        // jQuery Mobile 1.2.0 doesn't work with jQuery 1.9 without Migrate
-        deps: ['jquery', 'jquerymigrate'],
-        exports: '$'
       },
       jquerymigrate: {
         deps: ['jquery'],

@@ -7,7 +7,7 @@ define(['views/jqm/element'], function(ElementView) {
           name = this.model.attributes.name;
 
       // TODO: implement pre-HTML5 fallback
-      $input = $('<input type="date" style="width: 10em" />');
+      $input = $('<input type="date" />');
       $input.attr({
         name: name + '_date',
         'data-rv-value': 'm._date'
@@ -21,7 +21,7 @@ define(['views/jqm/element'], function(ElementView) {
           name = this.model.attributes.name;
 
       // TODO: implement pre-HTML5 fallback
-      $input = $('<input type="time" style="width: 9em" />');
+      $input = $('<input type="time" />');
       $input.attr({
         name: name + '_time',
         'data-rv-value': 'm._time'

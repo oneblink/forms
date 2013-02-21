@@ -1,6 +1,8 @@
 define(function(require) {
   var Forms = BlinkForms;
 
+  $.mobile.page.prototype.options.keepNative = '[type^=time], [type^=date]';
+
   rivets.configure({
     prefix: 'rv',
     adapter: {
