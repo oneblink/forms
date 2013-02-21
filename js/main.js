@@ -3,6 +3,8 @@ define(function(require) {
   'use strict';
   var Forms = BlinkForms;
 
+  _.extend(Forms, Backbone.Events);
+
   Forms._models = {
     Form: require('models/form'),
     SubFormElement: require('models/elements/subform'),
