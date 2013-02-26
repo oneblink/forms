@@ -2,7 +2,8 @@ define([], function() {
   var ElementView = Backbone.View.extend({
     tagName: 'div',
     attributes: {
-      'data-role': 'fieldcontain'
+      'data-role': 'fieldcontain',
+      'data-rv-class': 'm.class'
     },
     initialize: function() {
       var element = this.model;
