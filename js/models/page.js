@@ -20,21 +20,39 @@ define(['collections/elements', 'models/section'],
           attrs = this.attributes,
           form = attrs.form,
           action = form.attributes.action,
+          elements,
           sections;
 
-      attrs.elements = new Elements();
+      // TODO: document that this now assumes all Sections are pre-declared
+
+      elements = attrs.elements = new Elements();
       attrs._view = new Forms._views.Page({model: this});
 
       sections = form.attributes._sections;
 
       if (sections && _.isArray(sections)) {
         sections = _.map(sections, function(s) {
-          return Section.create(s, action, form);
+          return Section.create(s, form);
         });
         sections = new Sections(sections);
       } else {
         sections = new Sections();
       }
+      sections.forEach(function(section) {
+        var attrs = section.attributes,
+            parent;
+
+        if (attrs.section) {
+          parent = sections.get(attrs.section);
+          if (parent) {
+            attrs.section = parent;
+            parent.add(section);
+          }
+        }
+        if (! attrs.section instanceof Section) {
+          delete attrs.section;
+        }
+      });
       attrs.sections = sections;
     },
     destroy: function(options) {
@@ -44,32 +62,28 @@ define(['collections/elements', 'models/section'],
         delete attrs._view;
       }
       delete attrs.form;
+      delete attrs.section;
       attrs.elements.forEach(function(element) {
         element.destroy(options);
       });
       return Backbone.Model.prototype.destroy.call(this, options);
     },
     add: function(element) {
-      this.attributes.elements.add(element);
+      if (element instanceof Section) {
+        this.attributes.sections.add(element);
+      }
+      if (element.attributes.section) {
+        this.add(element.attributes.section);
+      } else {
+        this.attributes.elements.add(element);
+      }
     },
     getSection: function(name) {
       var sections = this.attributes.sections,
-          elements = this.attributes.elements,
           section;
 
       section = sections.get(name);
-      if (!section) {
-        // assume that by now it's okay to create vanilla Sections
-        section = Section.create({
-          default: {
-            name: name
-          }
-        }, this);
-        sections.add(section);
-      }
-      if (!elements.get(name)) {
-        elements.add(section);
-      }
+      this.add(section);
       return section;
     }
   }, {
