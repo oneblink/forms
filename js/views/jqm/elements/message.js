@@ -4,7 +4,8 @@ define(['views/jqm/element'], function(ElementView) {
   var MessageElementView = ElementView.extend({
     tagName: 'div',
     attributes: {
-      'data-rv-html': 'm.html'
+      'data-rv-html': 'm.html',
+      'data-rv-class': 'm.class'
     },
     render: function() {
       this.bindRivets();
