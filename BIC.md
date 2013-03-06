@@ -25,7 +25,7 @@ The `current` property is a reference to the currently active Form object. It is
 
 `BlinkForms.initialize` uses the provided Form definition object to instantiate a Form object and all ensuing Element objects, etc.
 
-As documented elsewhere, the root DOM element for this new Form is referred to by Form#**$form** (the `$form` property on that instance of the Form Model).
+As documented elsewhere, the root DOM element for this new Form is referred to by form.**$form** (the `$form` property on that instance of the Form Model).
 
 
 ## BIC integration
