@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 
     clean: {
       build: {
-        src: ['BlinkForms*.js*', 'js/build', 'js/*.min.js']
+        src: ['BlinkForms*.js*', 'js/*.min.js']
       }
     },
 

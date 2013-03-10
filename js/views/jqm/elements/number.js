@@ -30,7 +30,7 @@ define(['views/jqm/element'], function(ElementView) {
       $input.attr({
         name: name,
         'data-rv-value': 'm.value',
-        step: step
+        'data-rv-step': 'm.step'
       });
       this.$el.append($input);
       this.bindRivets();

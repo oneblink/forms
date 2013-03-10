@@ -8,7 +8,7 @@ define(['views/jqm/element'], function(ElementView) {
 
       this.$el.empty();
       this.renderLabel();
-
+      this.renderToolTip();
       $input = $('<input type="text" />');
       $input.attr({
         name: name,

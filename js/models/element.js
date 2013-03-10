@@ -25,7 +25,24 @@ define(function() {
 
       this.set('value', this.attributes.defaultValue);
       if (!this.attributes.label) {
-        this.set('label', this.attributes.name);
+        if(this.attributes.prefix){
+           this.set('label', this.attributes.name + ' '+ this.attributes.prefix);       
+        }else{
+            this.set('label', this.attributes.name);
+        }
+      }
+    },
+    validate: function(attrs) {
+        var errors = {};
+      if (attrs === undefined) {
+        attrs = this.attributes;
+      }
+      if (attrs.required && !attrs.value) {
+        errors.value = errors.value || [];
+        errors.value.push({ code: "REQUIRED" });
+      }
+      if (!_.isEmpty(errors)) {
+        return errors;
       }
     },
     destroy: function(options) {
