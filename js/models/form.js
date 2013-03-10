@@ -79,7 +79,7 @@ define(['collections/elements'], function(Elements) {
           data[el.attributes.name] = val;
         }
       });
-      Q.all(promises).then(function() {
+      Q.all(promises).done(function() {
         dfrd.resolve(data);
       });
       return dfrd.promise;
