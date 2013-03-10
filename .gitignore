@@ -3,5 +3,6 @@ node_modules
 js/build
 /BlinkForms*.js*
 
-.idea
+.idea/jsLinters/gjslint.xml
+.idea/inspectionProfiles/Project_Default.xml
 /nbproject
