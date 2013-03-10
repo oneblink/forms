@@ -34,8 +34,7 @@ define([], function() {
 
       this.$el.empty();
       this.renderLabel();
-      this.renderToolTip();
-      
+
       switch (type) {
         case 'file':
           $input = $('<input type="file" />');
@@ -50,7 +49,7 @@ define([], function() {
       });
       this.$el.append($input);
       this.bindRivets();
-    }, 
+    },
     bindRivets: function() {
       if (this.rivet) {
         this.rivet.unbind();
