@@ -20,12 +20,11 @@ define(['collections/elements', 'models/section'],
           attrs = this.attributes,
           form = attrs.form,
           action = form.attributes.action,
-          elements,
           sections;
 
       // TODO: document that this now assumes all Sections are pre-declared
 
-      elements = attrs.elements = new Elements();
+      attrs.elements = new Elements();
       attrs._view = new Forms._views.Page({model: this});
 
       sections = form.attributes._sections;

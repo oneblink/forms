@@ -3,7 +3,7 @@ define(['views/jqm/element'], function(ElementView) {
 
   var DateElementView = ElementView.extend({
     renderDate: function() {
-      var $input = $(''),
+      var $input,
           name = this.model.attributes.name;
 
       // TODO: implement pre-HTML5 fallback
@@ -17,7 +17,7 @@ define(['views/jqm/element'], function(ElementView) {
       return this;
     },
     renderTime: function() {
-      var $input = $(''),
+      var $input,
           name = this.model.attributes.name;
 
       // TODO: implement pre-HTML5 fallback

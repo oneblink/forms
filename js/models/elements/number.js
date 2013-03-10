@@ -27,16 +27,17 @@ define(['models/element'], function(Element) {
       return Element.prototype.set.call(this, attrs, options);
     },
 
-    validators:{
-      minValue: function(value,minValue){
-         return value < minValue;   
+    validators: {
+      minValue: function(value, minValue) {
+        return value < minValue;
       },
-      maxValue: function(value,maxValue){
-          return value > maxValue;
+      maxValue: function(value, maxValue) {
+        return value > maxValue;
       },
-      maxDecimalPlaces: function(value,maxDecimalPlaces){
-           return (new RegExp('^(?:\\d*\\.\\d{1,'+maxDecimalPlaces+'}|\\d+)$')).test(value);
-       }
+      maxDecimalPlaces: function(value, maxDecimals) {
+        var regexp = new RegExp('^(?:\\d*\\.\\d{1,' + maxDecimals + '}|\\d+)$');
+        return regexp.test(value);
+      }
     },
     validate: function(attrs) {
       var errors = {};
@@ -46,15 +47,16 @@ define(['models/element'], function(Element) {
       if (attrs.value) {
         if (this.validators.maxValue(attrs.value, attrs.max)) {
           errors.value = errors.value || [];
-          errors.value.push({code: "max value error"});
+          errors.value.push({code: 'max value error'});
         }
         if (this.validators.minValue(attrs.value, attrs.min)) {
           errors.value = errors.value || [];
-          errors.value.push({code: "min value error"});
+          errors.value.push({code: 'min value error'});
         }
-        if (!this.validators.maxDecimalPlaces(attrs.value, attrs.maxDecimalPlaces)) {
+        if (!this.validators.maxDecimalPlaces(attrs.value,
+            attrs.maxDecimalPlaces)) {
           errors.value = errors.value || [];
-          errors.value.push({code: "maxinum decimal places error"});
+          errors.value.push({code: 'maximum decimal places error'});
         }
       }
       if (!_.isEmpty(errors)) {

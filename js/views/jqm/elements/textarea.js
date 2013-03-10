@@ -9,7 +9,7 @@ define(['views/jqm/elements/text'], function(TextElementView) {
       this.$el.empty();
       this.renderLabel();
 
-      $input = $('<textarea />');
+      $input = $('<textarea></textarea>');
       $input.attr({
         name: name,
         'data-rv-value': 'm.value'

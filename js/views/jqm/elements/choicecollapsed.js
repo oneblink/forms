@@ -10,7 +10,7 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
       this.$el.empty();
       this.renderLabel();
 
-      $input = $('<select />');
+      $input = $('<select></select>');
       $input.attr({
         'data-rv-value': 'm.value'
       });

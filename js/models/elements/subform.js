@@ -37,7 +37,7 @@ define(['models/form', 'models/element'], function(Form, Element) {
       });
     },
     /**
-     * @param {Number|DOMNode|jQuery} index or DOM element for the record.
+     * @param {Number|Node|jQuery} index or DOM element for the record.
      */
     remove: function(index) {
       var $form;

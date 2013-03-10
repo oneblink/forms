@@ -22,7 +22,7 @@ define(function(require) {
   });
 
   /**
-   * @param {DOMNode|jQuery} element where to start looking.
+   * @param {Node|jQuery} element where to start looking.
    */
   Forms.getForm = function(element) {
     var cfo = Forms.currentFormObject,
@@ -46,7 +46,7 @@ define(function(require) {
   };
 
   /**
-   * @param {DOMNode|jQuery} element where to start looking.
+   * @param {Node|jQuery} element where to start looking.
    */
   Forms.getElement = function(element) {
     var cfo = Forms.currentFormObject,

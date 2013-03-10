@@ -23,23 +23,23 @@ define(function() {
         }
       }
 
-      this.set('value', this.attributes.defaultValue);
-      if (!this.attributes.label) {
-        if(this.attributes.prefix){
-           this.set('label', this.attributes.name + ' '+ this.attributes.prefix);       
-        }else{
-            this.set('label', this.attributes.name);
+      this.set('value', attrs.defaultValue);
+      if (!attrs.label) {
+        if (attrs.prefix) {
+          this.set('label', attrs.name + ' ' + attrs.prefix);
+        } else {
+          this.set('label', attrs.name);
         }
       }
     },
     validate: function(attrs) {
-        var errors = {};
+      var errors = {};
       if (attrs === undefined) {
         attrs = this.attributes;
       }
       if (attrs.required && !attrs.value) {
         errors.value = errors.value || [];
-        errors.value.push({ code: "REQUIRED" });
+        errors.value.push({ code: 'REQUIRED' });
       }
       if (!_.isEmpty(errors)) {
         return errors;
@@ -74,6 +74,7 @@ define(function() {
      */
     create: function(attrs, form) {
       var Forms = window.BlinkForms,
+          dateTypes = ['date', 'time', 'datetime'],
           view,
           el,
           TypedElement,
@@ -116,12 +117,6 @@ define(function() {
           mode = mode[0].toUpperCase() + mode.substring(1);
           View = Forms._views['Choice' + mode + 'Element'];
           break;
-        case 'time':
-        case 'date':
-        case 'datetime':
-          TypedElement = Forms._models.DateElement;
-          View = Forms._views.DateElement;
-          break;
         case 'hidden':
           TypedElement = Forms._models.HiddenElement;
           View = Forms._views.HiddenElement;
@@ -155,8 +150,13 @@ define(function() {
           View = Forms._views.TextAreaElement;
           break;
         default:
-          TypedElement = Forms._models.Element;
-          View = Forms._views.Element;
+          if (_.indexOf(dateTypes, attrs.type) !== -1) {
+            TypedElement = Forms._models.DateElement;
+            View = Forms._views.DateElement;
+          } else {
+            TypedElement = Forms._models.Element;
+            View = Forms._views.Element;
+          }
       }
       el = new TypedElement(attrs);
       view = new View({model: el});
