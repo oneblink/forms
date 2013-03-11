@@ -8,9 +8,7 @@ define([], function() {
       }
     },
     render: function() {
-      var self = this,
-          form = this.model.attributes.form,
-          index;
+      var self = this;
 
       this.$el.empty();
       this.model.get('elements').forEach(function(el) {

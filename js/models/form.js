@@ -90,11 +90,8 @@ define(['collections/elements'], function(Elements) {
      * @param {Object} attrs attributes for this model.
      */
     create: function(attrs) {
-      var Page = BlinkForms._models.Page,
-          Element = BlinkForms._models.Element,
+      var Element = BlinkForms._models.Element,
           elements,
-          pages,
-          elNames,
           form;
 
       if (!attrs || !_.isObject(attrs)) {

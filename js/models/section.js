@@ -5,8 +5,7 @@ define(['collections/elements', 'models/element'],
   Section = Element.extend({
     initialize: function() {
       var Forms = BlinkForms,
-          attrs = this.attributes,
-          form = attrs.form;
+          attrs = this.attributes;
 
       attrs.elements = new Elements();
       attrs._view = new Forms._views.Section({model: this});
@@ -30,6 +29,8 @@ define(['collections/elements', 'models/element'],
     // static properties
     /**
      * @param {Object} attrs attributes for this model.
+     * @param {Form} form parent to associate with new Section.
+     * @returns {Section} new Section.
      */
     create: function(attrs, form) {
       var section;

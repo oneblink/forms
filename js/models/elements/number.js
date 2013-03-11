@@ -6,7 +6,7 @@ define(['models/element'], function(Element) {
       Element.prototype.initialize.call(this);
     },
     set: function(key, val, options) {
-      var attr, attrs, unset, changes, silent, changing, prev, current;
+      var attrs;
       if (key === null) {
         return this;
       }

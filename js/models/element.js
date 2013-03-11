@@ -71,6 +71,8 @@ define(function() {
     // static properties
     /**
      * @param {Object} attrs attributes for this model.
+     * @param {Form} form parent to associate with new Element.
+     * @returns {Element} new Element.
      */
     create: function(attrs, form) {
       var Forms = window.BlinkForms,

@@ -49,8 +49,7 @@ define(function(require) {
    * @param {Node|jQuery} element where to start looking.
    */
   Forms.getElement = function(element) {
-    var cfo = Forms.currentFormObject,
-        $element = element instanceof $ ? element : $(element),
+    var $element = element instanceof $ ? element : $(element),
         $next = $element.closest('[data-name]'),
         el;
 

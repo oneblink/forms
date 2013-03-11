@@ -3,9 +3,7 @@ define(['views/jqm/element'], function(ElementView) {
 
   var BooleanElementView = ElementView.extend({
     render: function() {
-      var $input,
-          type = this.model.attributes.type,
-          name = this.model.attributes.name;
+      var $input;
 
       this.$el.empty();
       this.renderLabel();

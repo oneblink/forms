@@ -19,7 +19,6 @@ define(['collections/elements', 'models/section'],
       var Forms = BlinkForms,
           attrs = this.attributes,
           form = attrs.form,
-          action = form.attributes.action,
           sections;
 
       // TODO: document that this now assumes all Sections are pre-declared
@@ -89,6 +88,8 @@ define(['collections/elements', 'models/section'],
     // static properties
     /**
      * @param {Object} attrs attributes for this model.
+     * @param {Form} form parent to associate with new Page.
+     * @returns {Page} new Page.
      */
     create: function(attrs, form) {
       var page;
