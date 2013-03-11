@@ -89,7 +89,7 @@ define(['collections/elements', 'models/section'],
     /**
      * @param {Object} attrs attributes for this model.
      * @param {Form} form parent to associate with new Page.
-     * @returns {Page} new Page.
+     * @return {Page} new Page.
      */
     create: function(attrs, form) {
       var page;

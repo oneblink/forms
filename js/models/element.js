@@ -41,9 +41,7 @@ define(function() {
         errors.value = errors.value || [];
         errors.value.push({ code: 'REQUIRED' });
       }
-      if (!_.isEmpty(errors)) {
-        return errors;
-      }
+      return _.isEmpty(errors) ? undefined : errors;
     },
     destroy: function(options) {
       var attrs = this.attributes;
@@ -72,7 +70,7 @@ define(function() {
     /**
      * @param {Object} attrs attributes for this model.
      * @param {Form} form parent to associate with new Element.
-     * @returns {Element} new Element.
+     * @return {Element} new Element.
      */
     create: function(attrs, form) {
       var Forms = window.BlinkForms,

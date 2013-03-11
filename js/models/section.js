@@ -30,7 +30,7 @@ define(['collections/elements', 'models/element'],
     /**
      * @param {Object} attrs attributes for this model.
      * @param {Form} form parent to associate with new Section.
-     * @returns {Section} new Section.
+     * @return {Section} new Section.
      */
     create: function(attrs, form) {
       var section;

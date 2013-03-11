@@ -59,9 +59,7 @@ define(['models/element'], function(Element) {
           errors.value.push({code: 'maximum decimal places error'});
         }
       }
-      if (!_.isEmpty(errors)) {
-        return errors;
-      }
+      return _.isEmpty(errors) ? undefined : errors;
     }
   });
 
