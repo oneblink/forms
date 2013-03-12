@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="JSLintConfiguration" json="true">
+  <component name="JSLintConfiguration">
     <option browser="true" />
     <option es5="true" />
     <option indent="2" />
