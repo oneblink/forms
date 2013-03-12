@@ -90,7 +90,8 @@ module.exports = function(grunt) {
               name: 'main'
             },
             {
-              name: 'views/jqm'
+              name: 'views/jqm',
+              exclude: ['main']
             }
           ]
         }
@@ -110,7 +111,7 @@ module.exports = function(grunt) {
       jqm: {
         src: [
           'parts/00-start.frag',
-          'js/lib/almond-0.2.4.js',
+          'js/lib/almond-0.2.5.js',
           'js/build/main.js',
           'js/build/views/jqm.js',
           'parts/99-end-jqm.frag'
