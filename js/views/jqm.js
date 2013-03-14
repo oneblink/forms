@@ -1,5 +1,5 @@
 define(function(require) {
-  var Forms = BlinkForms;
+  var Forms = require('main');
 
   $.mobile.page.prototype.options.keepNative = '[type^=time], [type^=date]';
 

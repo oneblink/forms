@@ -1,10 +1,12 @@
-define(['collections/elements'], function(Elements) {
-  var Form;
+define(function(require) {
+  var Elements = require('collections/elements'),
+      Form;
 
   Form = Backbone.Model.extend({
     initialize: function() {
-      var self = this,
-          Page = BlinkForms._models.Page,
+      var Forms = BMP.Forms,
+          self = this,
+          Page = Forms._models.Page,
           pages;
 
       pages = this.attributes._pages;
@@ -37,7 +39,8 @@ define(['collections/elements'], function(Elements) {
      * @param {Number} index desired Page index.
      */
     getPage: function(index) {
-      var Page = window.BlinkForms._models.Page,
+      var Forms = BMP.Forms,
+          Page = Forms._models.Page,
           pages = this.get('pages');
 
       // assume that by now it's okay to create vanilla Pages
@@ -90,7 +93,8 @@ define(['collections/elements'], function(Elements) {
      * @param {Object} attrs attributes for this model.
      */
     create: function(attrs) {
-      var Element = BlinkForms._models.Element,
+      var Forms = BMP.Forms,
+          Element = Forms._models.Element,
           elements,
           form;
 

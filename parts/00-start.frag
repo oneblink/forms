@@ -20,4 +20,6 @@
 }(function($, _, Backbone, rivets, Q) {
   'use strict';
 /*jslint sloppy:false*/ // let JSLint bug us again about ES5 strict mode
-  var BlinkForms = window['BlinkForms'] = {};
+  // establish globals
+  var BMP = window['BMP'] = window['BMP'] || {};
+  BMP.Forms = BMP.Forms || {};

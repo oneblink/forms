@@ -16,14 +16,14 @@ The **BlinkForms** global object is an event emitter, exposing the same API as o
 - BlinkForms.**listenTo(other, event, callback)**
 - BlinkForms.**stopListening([other], [event], [callback])**
 
-### BlinkForms.current
+### BMP.Forms.current
 
 The `current` property is a reference to the currently active Form object. It is defined as a side-effect of `BlinkForms.initialize` (below).
 
-### BlinkForms.initialize(definition)
-- **definition**: {Object} a form definition as a plain JavaScript object
+### BMP.Forms.initialize(definition)
+- **definition**: {Object} a (collapsed) form definition as a plain object
 
-`BlinkForms.initialize` uses the provided Form definition object to instantiate a Form object and all ensuing Element objects, etc.
+`BMP.Forms.initialize` uses the provided Form definition object to instantiate a Form object and all ensuing Element objects, etc.
 
 As documented elsewhere, the root DOM element for this new Form is referred to by form.**$form** (the `$form` property on that instance of the Form Model).
 
@@ -32,9 +32,17 @@ As documented elsewhere, the root DOM element for this new Form is referred to b
 
 Code that the BIC executes is expected to define these methods.
 
-### BlinkForms.getDefinition(name, [action])
+### BMP.Forms.getDefinition(name, [action])
 - **name**: {String} the name of the desired form
 - **action**: {String} the name of the desired action/view
-- *returns*: {Object} the definition in a plain JavaScript object
+- *returns*: {Object} the (collapsed) definition in a plain JavaScript object
 
-`BlinkForms.initialize` requires a definition to be passed to it. This method must be implemented so that it returns such a definition. This method is also used within the core in order to load sub-form definitions.
+`BMP.Forms.initialize` requires a definition to be passed to it. This method must be implemented so that it returns such a definition. This method is also used within the core in order to load sub-form definitions.
+
+`BMP.Forms.getDefinition` should retrieve the JSON definition from either client-side storage or via a server-request. Before returning this definition, any action-specific sections should be collapsed as per the desired action/view.
+
+### TODO: BMP.Forms.getRecord
+
+### TODO: BMP.Forms.saveRecord
+
+### TODO: BMP.Forms.listRecords

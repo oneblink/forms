@@ -49,7 +49,7 @@ module.exports = function(grunt) {
           '_',
           'Backbone',
           'rivets',
-          'BlinkForms',
+          'BMP',
           'Q'
         ]
       },

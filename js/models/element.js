@@ -1,5 +1,7 @@
-define(function() {
-  var Element = Backbone.Model.extend({
+define(function(require) {
+  var Element;
+
+  Element = Backbone.Model.extend({
     defaults: {
       page: 0,
       defaultValue: '',
@@ -73,7 +75,7 @@ define(function() {
      * @return {Element} new Element.
      */
     create: function(attrs, form) {
-      var Forms = window.BlinkForms,
+      var Forms = BMP.Forms,
           dateTypes = ['date', 'time', 'datetime'],
           view,
           el,

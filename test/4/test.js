@@ -15,7 +15,7 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
      */
     suiteSetup(function() {
       $content.empty();
-      delete window.BlinkForms.currentFormObject;
+      delete Forms.currentFormObject;
     });
 
     suite('Form', function() {
@@ -147,7 +147,7 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
      * execute once after everything else in this suite
      */
     suiteTeardown(function() {
-  //      delete window.BlinkForms.currentFormObject;
+  //      delete Forms.currentFormObject;
     });
 
   }); // END: suite('1', ...)

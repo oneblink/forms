@@ -1,5 +1,5 @@
-define([], function() {
-  var ElementView = Backbone.View.extend({
+define(function() {
+  return Backbone.View.extend({
     tagName: 'div',
     attributes: {
       'data-role': 'fieldcontain',
@@ -57,6 +57,4 @@ define([], function() {
       this.rivet = rivets.bind(this.el, {m: this.model});
     }
   });
-
-  return ElementView;
 });

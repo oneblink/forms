@@ -3,10 +3,11 @@
  * - cannot be nested
  * - only used immediately within a form (not deeper in)
  */
-define(['collections/elements', 'models/section'],
-      function(Elements, Section) {
-  var Page,
-      Sections;
+define(function(require) {
+  var Elements = require('collections/elements'),
+      Section = require('models/section'),
+      Sections,
+      Page;
 
   Sections = Backbone.Collection.extend({
     model: Section
@@ -16,7 +17,7 @@ define(['collections/elements', 'models/section'],
     defaults: {
     },
     initialize: function() {
-      var Forms = BlinkForms,
+      var Forms = BMP.Forms,
           attrs = this.attributes,
           form = attrs.form,
           sections;
