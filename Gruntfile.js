@@ -163,5 +163,17 @@ module.exports = function(grunt) {
     'mocha'
   ]);
 
+  grunt.registerTask('build', [
+    'clean',
+    'requirejs',
+    'concat',
+    'uglify'
+  ]);
+
+  grunt.registerTask('test', [
+    'build',
+    'mocha'
+  ]);
+
 };
 
