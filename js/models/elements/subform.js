@@ -1,33 +1,33 @@
 define(['models/form', 'models/element'], function(Form, Element) {
   'use strict';
 
-  var SubFormElement,
-      Forms;
+  var Forms;
 
   Forms = Backbone.Collection.extend({
     model: Form
   });
 
-  SubFormElement = Element.extend({
+  return Element.extend({
     initialize: function() {
       Element.prototype.initialize.call(this);
       this.attributes.forms = new Forms();
     },
     add: function() {
       // TODO: there is too much DOM stuff here to be in the model
-      var attrs = this.attributes,
+      var Forms = BMP.Forms,
+          attrs = this.attributes,
           name = attrs.subForm,
           forms = attrs.forms,
           $el = attrs._view.$el,
           $button = $el.children('.ui-btn');
 
-      BlinkForms.getDefinition(name, 'add').then(function(def) {
+      Forms.getDefinition(name, 'add').then(function(def) {
         var form,
             view;
 
         form = Form.create(def);
         forms.add(form);
-        view = form.attributes._view = new BlinkForms._views.SubForm({
+        view = form.attributes._view = new Forms._views.SubForm({
           model: form
         });
         form.$form = view.$el; // backwards-compatibility, convenience
@@ -40,7 +40,8 @@ define(['models/form', 'models/element'], function(Form, Element) {
      * @param {Number|Node|jQuery} index or DOM element for the record.
      */
     remove: function(index) {
-      var $form;
+      var Forms = BMP.Forms,
+          $form;
       // TODO: skip placeholder "delete" records when counting
       // TODO: create placeholder records on "edit"
       if (typeof index === 'number') {
@@ -48,7 +49,7 @@ define(['models/form', 'models/element'], function(Form, Element) {
         return;
       }
       $form = index instanceof $ ? index : $(index);
-      BlinkForms.getForm($form).destroy();
+      Forms.getForm($form).destroy();
     },
     data: function() {
       var dfrd = Q.defer(),
@@ -64,8 +65,6 @@ define(['models/form', 'models/element'], function(Form, Element) {
       return dfrd.promise;
     }
   });
-
-  return SubFormElement;
 });
 
 

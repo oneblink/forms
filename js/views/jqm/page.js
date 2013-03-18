@@ -1,4 +1,4 @@
-define([], function() {
+define(function() {
   var PageView = Backbone.View.extend({
     tagName: 'section',
     initialize: function() {

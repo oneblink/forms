@@ -1,8 +1,8 @@
-define(['views/jqm/form'], function(FormView) {
-  var Forms = BlinkForms,
-      SubFormView;
+define(function(require) {
+  var Forms = BMP.Forms,
+      FormView = require('views/jqm/form');
 
-  SubFormView = FormView.extend({
+  return FormView.extend({
     tagName: 'section',
     attributes: {},
     remove: function() {
@@ -27,6 +27,4 @@ define(['views/jqm/form'], function(FormView) {
       Forms.getElement($form).remove($form);
     }
   });
-
-  return SubFormView;
 });

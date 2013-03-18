@@ -1,6 +1,6 @@
 
   require(['main'], function() {});
 
-  return BlinkForms;
+  return BMP.Forms;
 }));
 

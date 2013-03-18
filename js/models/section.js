@@ -1,10 +1,11 @@
-define(['collections/elements', 'models/element'],
-      function(Elements, Element) {
-  var Section;
+define(function(require) {
+  var Element = require('models/element'),
+      Section;
 
-  Section = Element.extend({
+  Section =  Element.extend({
     initialize: function() {
-      var Forms = BlinkForms,
+      var Forms = BMP.Forms,
+          Elements = require('collections/elements'),
           attrs = this.attributes;
 
       attrs.elements = new Elements();
@@ -30,7 +31,7 @@ define(['collections/elements', 'models/element'],
     /**
      * @param {Object} attrs attributes for this model.
      * @param {Form} form parent to associate with new Section.
-     * @returns {Section} new Section.
+     * @return {Section} new Section.
      */
     create: function(attrs, form) {
       var section;

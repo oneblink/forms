@@ -1,9 +1,9 @@
-define(['views/jqm/element'], function(ElementView) {
+define(function(require) {
   'use strict';
 
-  var SubFormElementView;
+  var ElementView = require('views/jqm/element');
 
-  SubFormElementView = ElementView.extend({
+  return ElementView.extend({
     tagName: 'section',
     remove: function() {
       this.$el.children('.ui-btn').children('button').off('click');
@@ -23,11 +23,11 @@ define(['views/jqm/element'], function(ElementView) {
       this.$el.prepend($button);
     },
     onAddClick: function() {
-      var element = BlinkForms.getElement(this);
+      var Forms = BMP.Forms,
+          element = Forms.getElement(this);
+
       element.add();
     }
   });
-
-  return SubFormElementView;
 });
 

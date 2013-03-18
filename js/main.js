@@ -1,7 +1,7 @@
 
 define(function(require) {
   'use strict';
-  var Forms = BlinkForms;
+  var Forms = window.BMP.Forms;
 
   _.extend(Forms, Backbone.Events);
 

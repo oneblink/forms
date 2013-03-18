@@ -7,7 +7,7 @@
     <option maxerr="50" />
     <option maxlen="80" />
     <option nomen="true" />
-    <option predef="module, define, require, $, _, Backbone, rivets, BlinkForms, Q" />
+    <option predef="module, define, require, $, _, Backbone, rivets, Q, BMP" />
     <option sloppy="true" />
     <option todo="true" />
     <option white="true" />

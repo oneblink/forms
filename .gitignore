@@ -8,4 +8,5 @@ js/build
 .idea/workspace.xml
 .idea/jsLinters/gjslint.xml
 .idea/inspectionProfiles/Project_Default.xml
+.idea/dictionaries
 /nbproject

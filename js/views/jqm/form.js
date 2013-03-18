@@ -1,4 +1,4 @@
-define([], function() {
+define(function() {
   var FormView = Backbone.View.extend({
     tagName: 'form',
     attributes: {

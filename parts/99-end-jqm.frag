@@ -1,8 +1,8 @@
 
-  require(['main', 'views/jqm'], function(BlinkForms, Views) {
-    BlinkForms._views = Views;
+  require(['main', 'views/jqm'], function(Forms, Views) {
+    Forms._views = Views;
   });
 
-  return BlinkForms;
+  return BMP.Forms;
 }));
 
