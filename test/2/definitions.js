@@ -31,6 +31,7 @@ define(function() {
               label: 'Select C',
               type: 'select',
               mode: 'collapsed',
+              other: true,
               options: {
                 a: 'alpha',
                 b: 'beta',
@@ -45,6 +46,7 @@ define(function() {
               type: 'select',
               mode: 'expanded',
               layout: 'horizontal',
+              other: true,
               options: {
                 a: 'alpha',
                 b: 'beta',
@@ -58,6 +60,7 @@ define(function() {
               label: 'Multi C',
               type: 'multi',
               mode: 'collapsed',
+              other: true,
               options: {
                 a: 'alpha',
                 b: 'beta',
@@ -71,6 +74,7 @@ define(function() {
               label: 'Multi E',
               type: 'multi',
               mode: 'expanded',
+              other: true,
               options: {
                 a: 'alpha',
                 b: 'beta',

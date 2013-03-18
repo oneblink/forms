@@ -3,7 +3,7 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
 
   var ChoiceCollapsedElementView = ChoiceElementView.extend({
     render: function() {
-      var $input,
+      var $input,$otherOption,
           type = this.model.attributes.type,
           name = this.model.attributes.name;
 
@@ -34,13 +34,22 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
         var $option = $('<option value="' + value + '">' + label + '</option>');
         $input.append($option);
       });
-
+      if (this.model.attributes.other) {
+        $otherOption = $('<option value="other">other</option>');
+        $input.append($otherOption);
+      }
       this.$el.append($input);
+
       this.bindRivets();
       this.model.on('change:value', this.onValueChange, this);
     },
     onValueChange: function() {
       this.$el.find('select').selectmenu('refresh');
+      var $values = this.$el.find('.ui-btn-text').text().split(','),
+          $mapValues = $.map($values, function(val) {
+        return val.trim();
+      });
+      ChoiceElementView.prototype.renderOtherText.call(this, $mapValues);
     }
   });
 

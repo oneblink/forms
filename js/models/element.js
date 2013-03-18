@@ -3,7 +3,8 @@ define(function() {
     defaults: {
       page: 0,
       defaultValue: '',
-      value: ''
+      value: '',
+      pattern:''
     },
     idAttribute: 'name',
     initialize: function() {
@@ -39,7 +40,11 @@ define(function() {
       }
       if (attrs.required && !attrs.value) {
         errors.value = errors.value || [];
-        errors.value.push({ code: 'REQUIRED' });
+        errors.value.push({code: 'REQUIRED'});
+      }
+      if (attrs.pattern && attrs.value && !(new RegExp(attrs.pattern).test(attrs.value))) {
+        errors.value = errors.value || [];
+        errors.value.push({code: 'Pattern Mismatch error'});
       }
       if (!_.isEmpty(errors)) {
         return errors;
@@ -160,6 +165,7 @@ define(function() {
             View = Forms._views.Element;
           }
       }
+      // TODO: set View = read-only view for m.readOnly
       el = new TypedElement(attrs);
       view = new View({model: el});
       el.attributes._view = view;

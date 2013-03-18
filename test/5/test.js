@@ -59,7 +59,7 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function(_, Q, Forms) {
             requiredError;
 
         assert.isUndefined(element.validate(), 'no validation errors');
-        
+
         element.val('');
         assert.isObject(element.validate(), 'now has a validation error');
         assert.isArray(element.validate().value, 'something wrong with value');
@@ -68,7 +68,24 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function(_, Q, Forms) {
           return _.isObject(error) && error.code === 'REQUIRED';
         });
         assert.isObject(requiredError, 'contained REQUIRED error');
-        element.val('East Gosford');
+        element.val('Gosford');
+      });
+      test('max length test', function() {
+        var form = Forms.currentFormObject,
+            element = form.getElement('city');
+
+        element.val('GosfordGosfordGosfordGosford');//max length fixed is 20
+        assert.isObject(element.validate(), 'max length error');
+        element.val('Gosford');
+      });
+
+      test('pattern test', function() {
+        var form = Forms.currentFormObject,
+            element = form.getElement('city');
+
+        element.val('12Gosford');
+        assert.isObject(element.validate(), 'Pattern error');
+        element.val('Gosford');
       });
       
       test('Min/Max Value Check', function() {
@@ -76,29 +93,47 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function(_, Q, Forms) {
             element = form.getElement('number');
 
         assert.isUndefined(element.validate(), 'no validation error');
- 
+
         element.val(10);
         assert.isObject(element.validate(), 'minimum value error');
-        
+
         element.val(550);
         assert.isObject(element.validate(), 'maximum value error');
-      
+
       });
 
       test('Max Decimal Places Check', function() {
         var form = Forms.currentFormObject,
             element = form.getElement('number');
-            
-        element.val(45);
+
+        element.val(45.1);
         assert.isUndefined(element.validate(), 'no decimal place error');
-        
+
         element.val(45.25);
-        assert.isUndefined(element.validate(), 'no decimal place error');
-        
-        element.val(45.569);
-        assert.isObject(element.validate(), 'no decimal place error');
-        
+        assert.isUndefined(element.validate(), 'has correct decimal places');
+
+        element.val(45.5699);
+        assert.isObject(element.validate(), 'decimal place error');
+        element.val(100);
       });
+     
+      test('Min Decimal Places Check', function() {
+        var form = Forms.currentFormObject,
+            element = form.getElement('currency');
+         
+        element.val(45.163);
+        assert.isUndefined(element.validate(), 'no min decimal place error');
+        
+        element.val(45);
+        assert.isUndefined(element.validate(), 'has correct decimal places');
+        
+        element.val(45.3);
+        assert.isObject(element.validate(), 'min decimal places error');
+        
+        element.val(45.32365);
+        assert.isObject(element.validate(), 'max decimal places error');
+      });
+      
     }); // END: suite('Form', ...)
 
     /**

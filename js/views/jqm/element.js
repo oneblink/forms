@@ -10,6 +10,7 @@ define([], function() {
       this.$el.attr('data-name', element.attributes.name);
       this.$el.data('model', element);
       this.bindRivets();
+      element.on('change:value', this.renderErrors, this);
     },
     remove: function() {
       this.$el.removeData('model');
@@ -49,6 +50,31 @@ define([], function() {
       });
       this.$el.append($input);
       this.bindRivets();
+    },
+    renderErrors: function() {
+      var $errorList, errors, $errorElement, $el;
+      if (this.$el.children('ul').length > 0) {
+        this.$el.children('ul').remove();
+      }
+      $errorList = $(document.createElement('ul'));
+      errors = this.model.validate() || {};
+
+      if (!_.isEmpty(errors)) {
+        _.each(errors.value, function(error, key) {
+          $errorElement = $(document.createElement('li'));
+          $errorElement.text(error.code);
+          $errorList.append($errorElement);
+        });
+      }
+      $el = this.$el.find('[data-rv-value]');
+      if ($el.length && $el[0].checkValidity && !$el[0].checkValidity()) {
+        $errorElement = $(document.createElement('li'));
+        $errorElement.text('checkValidity error');
+        $errorList.append($errorElement);
+      }
+      if (this.$el.children('ul').length === 0 && !_.isEmpty(errors)) {
+        this.$el.append($errorList);
+      }
     },
     bindRivets: function() {
       if (this.rivet) {

@@ -16,6 +16,7 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
           attrs = this.model.attributes,
           type = attrs.type,
           name = attrs.name,
+          options = attrs.options,
           iType = type === 'select' ? 'radio' : 'checkbox',
           iName = type === 'select' ? name + '_' + self.cid : name + '[]';
 
@@ -32,7 +33,11 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
       $legend = $('<legend></legend>').text(attrs.label);
       $fieldset.prepend($legend);
 
-      _.forEach(attrs.options, function(label, value) {
+      if (this.model.attributes.other) {
+        options.other = 'other';
+      }
+
+      _.forEach(options, function(label, value) {
         var $label = $('<label>' + label + '</label>'),
             $input = $('<input type="' + iType + '" />');
 
@@ -72,7 +77,7 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
       model.set('value', val);
     },
     onMultiValueChange: function(event) {
-      var view = this,
+      var view = this, $values, $mapValues,
           model = this.model,
           $inputs = view.$el.find('input[type=radio],input[type=checkbox]'),
           value = model.attributes.value;
@@ -86,12 +91,24 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
       });
 
       $inputs.checkboxradio('refresh');
+      $values = this.$el.find('label[data-icon=checkbox-on]');
+
+      $mapValues = $.map($values, function(val) {
+        return $(val).text().trim();
+      });
+      ChoiceElementView.prototype.renderOtherText.call(this, $mapValues);
     },
     onSelectValueChange: function(event) {
-      var view = this,
+      var view = this, $values, $mapValues,
           $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
 
       $inputs.checkboxradio('refresh');
+      $values = this.$el.find('label[data-icon=radio-on]');
+
+      $mapValues = $.map($values, function(val) {
+        return $(val).text().trim();
+      });
+      ChoiceElementView.prototype.renderOtherText.call(this, $mapValues);
     }
   });
 

@@ -23,7 +23,6 @@ define(['models/element'], function(Element) {
         // TODO: round to 'step' if present with 'min' and/or 'max'
         attrs.value = Number(attrs.value);
       }
-
       return Element.prototype.set.call(this, attrs, options);
     },
 
@@ -34,8 +33,12 @@ define(['models/element'], function(Element) {
       maxValue: function(value, maxValue) {
         return value > maxValue;
       },
-      maxDecimalPlaces: function(value, maxDecimals) {
+      maxDecimals: function(value, maxDecimals) {
         var regexp = new RegExp('^(?:\\d*\\.\\d{1,' + maxDecimals + '}|\\d+)$');
+        return regexp.test(value);
+      },
+      minDecimals: function(value, minDecimals) {
+        var regexp = new RegExp('^(?:\\d*\\.\\d{' + minDecimals + ',}|\\d+)$');
         return regexp.test(value);
       }
     },
@@ -53,10 +56,15 @@ define(['models/element'], function(Element) {
           errors.value = errors.value || [];
           errors.value.push({code: 'min value error'});
         }
-        if (!this.validators.maxDecimalPlaces(attrs.value,
-            attrs.maxDecimalPlaces)) {
+        if (!this.validators.maxDecimals(attrs.value,
+            attrs.maxDecimals)) {
           errors.value = errors.value || [];
           errors.value.push({code: 'maximum decimal places error'});
+        }
+        if (attrs.minDecimals && !this.validators.minDecimals(attrs.value,
+            attrs.minDecimals)) {
+          errors.value = errors.value || [];
+          errors.value.push({code: 'minimum decimal places error'});
         }
       }
       if (!_.isEmpty(errors)) {
@@ -67,5 +75,3 @@ define(['models/element'], function(Element) {
 
   return NumberElement;
 });
-
-

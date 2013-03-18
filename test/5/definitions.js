@@ -54,7 +54,9 @@ define(function() {
               defaultValue: 'Gosford',
               section: 'address',
               toolTip: 'Enter City Name',
-              required: true
+              required: true,
+              pattern: '^[a-zA-Z]',
+              maxlength: 20
             }
           },
           {
@@ -74,7 +76,8 @@ define(function() {
               max: 400,
               step: 5,
               defaultValue: 35,
-              maxDecimalPlaces: 2,
+              maxDecimals: 2,
+              pattern: '^[0-9]$',
               prefix: '$'
               
             }
@@ -85,8 +88,8 @@ define(function() {
               label: 'Currency',
               type: 'number',
               minDecimals: 2,
-              maxDecimals: 2,
-              defaultValue: '876.54'
+              maxDecimals: 4,
+              defaultValue: '876.541'
             }
           },
           {
