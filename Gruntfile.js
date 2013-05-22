@@ -148,7 +148,12 @@ module.exports = function (grunt) {
 
     watch: {
       src: {
-        files: ['js/**/*.js'],
+        files: [
+          'Gruntfile.js',
+          'js/**/*.js',
+          'parts/*',
+          'test/**/*'
+        ],
         tasks: 'default'
       },
       options: {
