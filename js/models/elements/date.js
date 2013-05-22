@@ -1,8 +1,8 @@
-define(['models/element'], function(Element) {
+define(['models/element'], function (Element) {
   'use strict';
 
   var DateElement = Element.extend({
-    initialize: function() {
+    initialize: function () {
       Element.prototype.initialize.call(this);
       this.on('change:_date change:_time', this.prepareValue);
       this.on('change:value', this.prepareDateTime);
@@ -14,7 +14,7 @@ define(['models/element'], function(Element) {
     /**
      * update value to match _date and/or _time
      */
-    prepareValue: function() {
+    prepareValue: function () {
       var type = this.attributes.type;
       if (type === 'date') {
         this.set('value', this.attributes._date);
@@ -28,12 +28,12 @@ define(['models/element'], function(Element) {
     /**
      * update _date and/or _time to match value
      */
-    prepareDateTime: function() {
+    prepareDateTime: function () {
       var type = this.attributes.type,
-          value = this.attributes.value,
-          time,
-          date,
-          parts;
+        value = this.attributes.value,
+        time,
+        date,
+        parts;
 
       if (type === 'date') {
         this.set('_date', value);
@@ -60,9 +60,9 @@ define(['models/element'], function(Element) {
     /**
      * @return {Date} a JavaScript Date object.
      */
-    toDate: function() {
+    toDate: function () {
       var type = this.attributes.type,
-          iso;
+        iso;
 
       if (type === 'date') {
         return new Date(this.attributes._date);

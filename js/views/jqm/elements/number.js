@@ -1,14 +1,14 @@
-define(['views/jqm/element'], function(ElementView) {
+define(['views/jqm/element'], function (ElementView) {
   'use strict';
 
   var NumberElementView = ElementView.extend({
-    render: function() {
+    render: function () {
       var $input,
-          attrs = this.model.attributes,
-          name = attrs.name,
-          min = attrs.min,
-          max = attrs.max,
-          step = attrs.step || 1;
+        attrs = this.model.attributes,
+        name = attrs.name,
+        min = attrs.min,
+        max = attrs.max,
+        step = attrs.step || 1;
 
       this.$el.empty();
       this.renderLabel();
@@ -34,7 +34,7 @@ define(['views/jqm/element'], function(ElementView) {
       });
       this.$el.append($input);
       this.bindRivets();
-   }
+    }
   });
 
   return NumberElementView;

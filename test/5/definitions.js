@@ -1,4 +1,4 @@
-define(function() {
+define(function () {
   return [
     {
       default: {
@@ -79,7 +79,7 @@ define(function() {
               maxDecimals: 2,
               pattern: '^[0-9]$',
               prefix: '$'
-              
+
             }
           },
           {

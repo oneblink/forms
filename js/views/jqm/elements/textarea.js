@@ -1,10 +1,10 @@
-define(['views/jqm/elements/text'], function(TextElementView) {
+define(['views/jqm/elements/text'], function (TextElementView) {
   'use strict';
 
   var TextAreaElementView = TextElementView.extend({
-    render: function() {
+    render: function () {
       var $input,
-          name = this.model.get('name');
+        name = this.model.get('name');
 
       this.$el.empty();
       this.renderLabel();

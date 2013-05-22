@@ -1,29 +1,29 @@
-define(function(require) {
+define(function (require) {
   var Element = require('models/element'),
-      Section;
+    Section;
 
-  Section =  Element.extend({
-    initialize: function() {
+  Section = Element.extend({
+    initialize: function () {
       var Forms = BMP.Forms,
-          Elements = require('collections/elements'),
-          attrs = this.attributes;
+        Elements = require('collections/elements'),
+        attrs = this.attributes;
 
       attrs.elements = new Elements();
       attrs._view = new Forms._views.Section({model: this});
     },
-    destroy: function(options) {
+    destroy: function (options) {
       var attrs = this.attributes;
       if (attrs._view) {
         attrs._view.remove();
         delete attrs._view;
       }
       delete attrs.form;
-      attrs.elements.forEach(function(element) {
+      attrs.elements.forEach(function (element) {
         element.destroy(options);
       });
       return Backbone.Model.prototype.destroy.call(this, options);
     },
-    add: function(element) {
+    add: function (element) {
       this.attributes.elements.add(element);
     }
   }, {
@@ -33,7 +33,7 @@ define(function(require) {
      * @param {Form} form parent to associate with new Section.
      * @return {Section} new Section.
      */
-    create: function(attrs, form) {
+    create: function (attrs, form) {
       var section;
 
       if (!attrs || !_.isObject(attrs)) {

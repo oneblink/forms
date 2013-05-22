@@ -1,18 +1,18 @@
-define(function() {
+define(function () {
   return Backbone.View.extend({
     tagName: 'div',
     attributes: {
       'data-role': 'fieldcontain',
       'data-rv-class': 'm.class'
     },
-    initialize: function() {
+    initialize: function () {
       var element = this.model;
       this.$el.attr('data-name', element.attributes.name);
       this.$el.data('model', element);
       this.bindRivets();
       element.on('change:value', this.renderErrors, this);
     },
-    remove: function() {
+    remove: function () {
       this.$el.removeData('model');
       this.model.off(null, null, this);
       if (this.rivet) {
@@ -20,7 +20,7 @@ define(function() {
       }
       return Backbone.View.prototype.remove.call(this);
     },
-    renderLabel: function() {
+    renderLabel: function () {
       var $label = $(document.createElement('label'));
       $label.attr({
         'data-rv-text': 'm.label',
@@ -28,21 +28,21 @@ define(function() {
       });
       this.$el.append($label);
     },
-    render: function() {
+    render: function () {
       var $input,
-          type = this.model.get('type'),
-          name = this.model.get('name');
+        type = this.model.get('type'),
+        name = this.model.get('name');
 
       this.$el.empty();
       this.renderLabel();
 
       switch (type) {
-        case 'file':
-          $input = $('<input type="file" />');
-          break;
-        case 'image':
-          $input = $('<input type="file" />');
-          break;
+      case 'file':
+        $input = $('<input type="file" />');
+        break;
+      case 'image':
+        $input = $('<input type="file" />');
+        break;
       }
       $input.attr({
         name: name,
@@ -51,7 +51,7 @@ define(function() {
       this.$el.append($input);
       this.bindRivets();
     },
-    renderErrors: function() {
+    renderErrors: function () {
       var $errorList, errors, $errorElement, $el;
       if (this.$el.children('ul').length > 0) {
         this.$el.children('ul').remove();
@@ -60,7 +60,7 @@ define(function() {
       errors = this.model.validate() || {};
 
       if (!_.isEmpty(errors)) {
-        _.each(errors.value, function(error, key) {
+        _.each(errors.value, function (error, key) {
           $errorElement = $(document.createElement('li'));
           $errorElement.text(error.code);
           $errorList.append($errorElement);
@@ -76,7 +76,7 @@ define(function() {
         this.$el.append($errorList);
       }
     },
-    bindRivets: function() {
+    bindRivets: function () {
       if (this.rivet) {
         this.rivet.unbind();
       }

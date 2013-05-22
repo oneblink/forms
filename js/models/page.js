@@ -3,11 +3,11 @@
  * - cannot be nested
  * - only used immediately within a form (not deeper in)
  */
-define(function(require) {
+define(function (require) {
   var Elements = require('collections/elements'),
-      Section = require('models/section'),
-      Sections,
-      Page;
+    Section = require('models/section'),
+    Sections,
+    Page;
 
   Sections = Backbone.Collection.extend({
     model: Section
@@ -16,11 +16,11 @@ define(function(require) {
   Page = Backbone.Model.extend({
     defaults: {
     },
-    initialize: function() {
+    initialize: function () {
       var Forms = BMP.Forms,
-          attrs = this.attributes,
-          form = attrs.form,
-          sections;
+        attrs = this.attributes,
+        form = attrs.form,
+        sections;
 
       // TODO: document that this now assumes all Sections are pre-declared
 
@@ -30,16 +30,16 @@ define(function(require) {
       sections = form.attributes._sections;
 
       if (sections && _.isArray(sections)) {
-        sections = _.map(sections, function(s) {
+        sections = _.map(sections, function (s) {
           return Section.create(s, form);
         });
         sections = new Sections(sections);
       } else {
         sections = new Sections();
       }
-      sections.forEach(function(section) {
+      sections.forEach(function (section) {
         var attrs = section.attributes,
-            parent;
+          parent;
 
         if (attrs.section) {
           parent = sections.get(attrs.section);
@@ -48,13 +48,13 @@ define(function(require) {
             parent.add(section);
           }
         }
-        if (! attrs.section instanceof Section) {
+        if (!attrs.section instanceof Section) {
           delete attrs.section;
         }
       });
       attrs.sections = sections;
     },
-    destroy: function(options) {
+    destroy: function (options) {
       var attrs = this.attributes;
       if (attrs._view) {
         attrs._view.remove();
@@ -62,12 +62,12 @@ define(function(require) {
       }
       delete attrs.form;
       delete attrs.section;
-      attrs.elements.forEach(function(element) {
+      attrs.elements.forEach(function (element) {
         element.destroy(options);
       });
       return Backbone.Model.prototype.destroy.call(this, options);
     },
-    add: function(element) {
+    add: function (element) {
       if (element instanceof Section) {
         this.attributes.sections.add(element);
       }
@@ -77,9 +77,9 @@ define(function(require) {
         this.attributes.elements.add(element);
       }
     },
-    getSection: function(name) {
+    getSection: function (name) {
       var sections = this.attributes.sections,
-          section;
+        section;
 
       section = sections.get(name);
       this.add(section);
@@ -92,7 +92,7 @@ define(function(require) {
      * @param {Form} form parent to associate with new Page.
      * @return {Page} new Page.
      */
-    create: function(attrs, form) {
+    create: function (attrs, form) {
       var page;
 
       if (!attrs || !_.isObject(attrs)) {

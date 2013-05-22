@@ -1,5 +1,4 @@
-
-define(function(require) {
+define(function (require) {
   'use strict';
   var Forms = window.BMP.Forms;
 
@@ -30,9 +29,9 @@ define(function(require) {
   /**
    * @param {Object} def definition of form to initialise.
    */
-  Forms.initialize = function(def) {
+  Forms.initialize = function (def) {
     var form,
-        view;
+      view;
 
     if (!$.isPlainObject(def)) {
       throw new Error('unexpected Form definition structure');

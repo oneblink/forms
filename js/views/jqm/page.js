@@ -1,19 +1,19 @@
-define(function() {
+define(function () {
   var PageView = Backbone.View.extend({
     tagName: 'section',
-    initialize: function() {
+    initialize: function () {
       var attrs = this.model.attributes;
       if (attrs.class) {
         this.$el.addClass(attrs.class);
       }
     },
-    render: function() {
+    render: function () {
       var self = this;
 
       this.$el.empty();
-      this.model.get('elements').forEach(function(el) {
+      this.model.get('elements').forEach(function (el) {
         var view = el.attributes._view,
-            type = el.attributes.type;
+          type = el.attributes.type;
 
         view.render();
         if (type === 'hidden') {

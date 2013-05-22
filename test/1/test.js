@@ -2,33 +2,35 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 /*global assert:true*/ // chai
 
-define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
+define(['q', 'BlinkForms', 'BIC'], function (Q, Forms) {
 
-  suite('1: date/time', function() {
+  suite('1: date/time', function () {
     var obj,
-        $page = $('[data-role=page]'),
-        $content = $page.find('[data-role=content]');
+      $page = $('[data-role=page]'),
+      $content = $page.find('[data-role=content]');
 
     /**
      * execute once before everything else in this suite
      */
-    suiteSetup(function() {
+    suiteSetup(function () {
       $content.empty();
       delete Forms.currentFormObject;
     });
 
-    suite('Form', function() {
+    suite('Form', function () {
 
-      test('BlinkForms global is an Object', function() {
+      test('BlinkForms global is an Object', function () {
         assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
       });
 
-      test('initialise with form.json', function(done) {
-        var form;
+      test('initialise with form.json', function (done) {
+        var form, def;
 
-        Forms.getDefinition('form1', 'add').fail(function() {
+        def = Forms.getDefinition('form1', 'add');
+        def.fail(function () {
           assert.fail(true, false, 'getDefinition failed!');
-        }).done(function(def) {
+        });
+        def.done(function (def) {
           Forms.initialize(def);
           form = Forms.currentFormObject;
           assert.equal($.type(form), 'object');
@@ -39,7 +41,7 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
 
       });
 
-      test('render form for jQuery Mobile', function() {
+      test('render form for jQuery Mobile', function () {
         var form = Forms.currentFormObject;
 
         $content.append(form.$form);
@@ -54,8 +56,8 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
     /**
      * execute once after everything else in this suite
      */
-    suiteTeardown(function() {
-  //      delete Forms.currentFormObject;
+    suiteTeardown(function () {
+      //      delete Forms.currentFormObject;
     });
 
   }); // END: suite('1', ...)

@@ -1,10 +1,10 @@
-define(['views/jqm/element'], function(ElementView) {
+define(['views/jqm/element'], function (ElementView) {
   'use strict';
 
   var TelephoneElementView = ElementView.extend({
-    render: function() {
+    render: function () {
       var $input,
-          name = this.model.get('name');
+        name = this.model.get('name');
 
       this.$el.empty();
       this.renderLabel();

@@ -1,11 +1,11 @@
-define(['views/jqm/elements/choice'], function(ChoiceElementView) {
+define(['views/jqm/elements/choice'], function (ChoiceElementView) {
   'use strict';
 
   var ChoiceCollapsedElementView = ChoiceElementView.extend({
-    render: function() {
-      var $input,$otherOption,
-          type = this.model.attributes.type,
-          name = this.model.attributes.name;
+    render: function () {
+      var $input, $otherOption,
+        type = this.model.attributes.type,
+        name = this.model.attributes.name;
 
       this.$el.empty();
       this.renderLabel();
@@ -30,7 +30,7 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
         $input.append('<option>select one or more...</option>');
       }
 
-      _.forEach(this.model.attributes.options, function(label, value) {
+      _.forEach(this.model.attributes.options, function (label, value) {
         var $option = $('<option value="' + value + '">' + label + '</option>');
         $input.append($option);
       });
@@ -43,12 +43,12 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
       this.bindRivets();
       this.model.on('change:value', this.onValueChange, this);
     },
-    onValueChange: function() {
+    onValueChange: function () {
       this.$el.find('select').selectmenu('refresh');
       var $values = this.$el.find('.ui-btn-text').text().split(','),
-          $mapValues = $.map($values, function(val) {
-        return val.trim();
-      });
+        $mapValues = $.map($values, function (val) {
+          return val.trim();
+        });
       ChoiceElementView.prototype.renderOtherText.call(this, $mapValues);
     }
   });

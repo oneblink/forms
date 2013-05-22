@@ -1,4 +1,4 @@
-define(function(require) {
+define(function (require) {
   var Forms = require('main');
 
   $.mobile.page.prototype.options.keepNative = '[type^=time], [type^=date]';
@@ -6,16 +6,16 @@ define(function(require) {
   rivets.configure({
     prefix: 'rv',
     adapter: {
-      subscribe: function(obj, keypath, callback) {
+      subscribe: function (obj, keypath, callback) {
         obj.on('change:' + keypath, callback);
       },
-      unsubscribe: function(obj, keypath, callback) {
+      unsubscribe: function (obj, keypath, callback) {
         obj.off('change:' + keypath, callback);
       },
-      read: function(obj, keypath) {
+      read: function (obj, keypath) {
         return obj.get(keypath);
       },
-      publish: function(obj, keypath, value) {
+      publish: function (obj, keypath, value) {
         obj.set(keypath, value);
       }
     }
@@ -24,11 +24,11 @@ define(function(require) {
   /**
    * @param {Node|jQuery} element where to start looking.
    */
-  Forms.getForm = function(element) {
+  Forms.getForm = function (element) {
     var cfo = Forms.currentFormObject,
-        $element = element instanceof $ ? element : $(element),
-        $next = $element.closest('[data-form]'),
-        form;
+      $element = element instanceof $ ? element : $(element),
+      $next = $element.closest('[data-form]'),
+      form;
 
     while ($next.length > 0) {
       if ($.hasData($next[0])) {
@@ -48,10 +48,10 @@ define(function(require) {
   /**
    * @param {Node|jQuery} element where to start looking.
    */
-  Forms.getElement = function(element) {
+  Forms.getElement = function (element) {
     var $element = element instanceof $ ? element : $(element),
-        $next = $element.closest('[data-name]'),
-        el;
+      $next = $element.closest('[data-name]'),
+      el;
 
     while ($next.length > 0) {
       if ($.hasData($next[0])) {

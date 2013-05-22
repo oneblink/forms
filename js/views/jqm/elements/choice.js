@@ -1,16 +1,16 @@
-define(['views/jqm/element'], function(ElementView) {
+define(['views/jqm/element'], function (ElementView) {
   'use strict';
 
   var ChoiceElementView = ElementView.extend({
-    
-    renderOtherText: function($values) {
+
+    renderOtherText: function ($values) {
       var name = this.model.attributes.name,
-          type = this.model.attributes.type,
-          $Input = $('<input type="text" />'),
-          $label = '<label data-rv-text="m.label" class="ui-input-text"></label>',
-          $element = $('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br"></div>'),
-          $div = $('<div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c"></div>');
-         
+        type = this.model.attributes.type,
+        $Input = $('<input type="text" />'),
+        $label = '<label data-rv-text="m.label" class="ui-input-text"></label>',
+        $element = $('<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br"></div>'),
+        $div = $('<div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c"></div>');
+
       $Input.attr({
         name: name + '_other',
         class: 'ui-input-text ui-body-c'
@@ -24,7 +24,7 @@ define(['views/jqm/element'], function(ElementView) {
         this.$el.children('div[data-role=fieldcontain]').remove();
       }
     }
-    
+
   });
 
   return ChoiceElementView;

@@ -1,24 +1,24 @@
-define(['views/jqm/elements/choice'], function(ChoiceElementView) {
+define(['views/jqm/elements/choice'], function (ChoiceElementView) {
   'use strict';
 
   var ChoiceExpandedElementView = ChoiceElementView.extend({
-    remove: function() {
+    remove: function () {
       var type = this.attributes.type;
       if (type !== 'select') {
         this.$el.find('input').off('click');
       }
       return ChoiceElementView.prototype.remove.call(this);
     },
-    render: function() {
+    render: function () {
       var self = this,
-          $fieldset,
-          $legend,
-          attrs = this.model.attributes,
-          type = attrs.type,
-          name = attrs.name,
-          options = attrs.options,
-          iType = type === 'select' ? 'radio' : 'checkbox',
-          iName = type === 'select' ? name + '_' + self.cid : name + '[]';
+        $fieldset,
+        $legend,
+        attrs = this.model.attributes,
+        type = attrs.type,
+        name = attrs.name,
+        options = attrs.options,
+        iType = type === 'select' ? 'radio' : 'checkbox',
+        iName = type === 'select' ? name + '_' + self.cid : name + '[]';
 
       this.$el.empty();
 
@@ -37,9 +37,9 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
         options.other = 'other';
       }
 
-      _.forEach(options, function(label, value) {
+      _.forEach(options, function (label, value) {
         var $label = $('<label>' + label + '</label>'),
-            $input = $('<input type="' + iType + '" />');
+          $input = $('<input type="' + iType + '" />');
 
         $input.attr({
           name: iName,
@@ -65,27 +65,27 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
         this.model.on('change:value', this.onMultiValueChange, this);
       }
     },
-    onMultiInputClick: function(event) {
+    onMultiInputClick: function (event) {
       var view = event.data.view,
-          model = event.data.model,
-          $inputs = view.$el.find('input:checked'),
-          val;
+        model = event.data.model,
+        $inputs = view.$el.find('input:checked'),
+        val;
 
-      val = _.map($inputs, function(input) {
+      val = _.map($inputs, function (input) {
         return $(input).val();
       });
       model.set('value', val);
     },
-    onMultiValueChange: function(event) {
-      var view = this, $values, $mapValues,
-          model = this.model,
-          $inputs = view.$el.find('input[type=radio],input[type=checkbox]'),
-          value = model.attributes.value;
+    onMultiValueChange: function (event) {
+      var view = this, $values, values,
+        model = this.model,
+        $inputs = view.$el.find('input[type=radio],input[type=checkbox]'),
+        value = model.attributes.value;
 
       if (!_.isArray(value)) {
         value = [];
       }
-      $inputs.each(function(index, input) {
+      $inputs.each(function (index, input) {
         var $input = $(input);
         $input.prop('checked', _.indexOf(value, $input.val()) !== -1);
       });
@@ -93,22 +93,22 @@ define(['views/jqm/elements/choice'], function(ChoiceElementView) {
       $inputs.checkboxradio('refresh');
       $values = this.$el.find('label[data-icon=checkbox-on]');
 
-      $mapValues = $.map($values, function(val) {
+      values = $.map($values, function (val) {
         return $(val).text().trim();
       });
-      ChoiceElementView.prototype.renderOtherText.call(this, $mapValues);
+      ChoiceElementView.prototype.renderOtherText.call(this, values);
     },
-    onSelectValueChange: function(event) {
-      var view = this, $values, $mapValues,
-          $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
+    onSelectValueChange: function (event) {
+      var view = this, $values, values,
+        $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
 
       $inputs.checkboxradio('refresh');
       $values = this.$el.find('label[data-icon=radio-on]');
 
-      $mapValues = $.map($values, function(val) {
+      values = $.map($values, function (val) {
         return $(val).text().trim();
       });
-      ChoiceElementView.prototype.renderOtherText.call(this, $mapValues);
+      ChoiceElementView.prototype.renderOtherText.call(this, values);
     }
   });
 

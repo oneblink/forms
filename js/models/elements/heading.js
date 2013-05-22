@@ -1,8 +1,8 @@
-define(['models/element'], function(Element) {
+define(['models/element'], function (Element) {
   'use strict';
 
   var HeadingElement = Element.extend({
-    initialize: function() {
+    initialize: function () {
       Element.prototype.initialize.call(this);
     }
   });

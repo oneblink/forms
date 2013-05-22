@@ -2,33 +2,33 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 /*global assert:true*/ // chai
 
-define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
+define(['q', 'BlinkForms', 'BIC'], function (Q, Forms) {
 
-  suite('2: options', function() {
+  suite('2: options', function () {
     var obj,
-        $page = $('[data-role=page]'),
-        $content = $page.find('[data-role=content]');
+      $page = $('[data-role=page]'),
+      $content = $page.find('[data-role=content]');
 
     /**
      * execute once before everything else in this suite
      */
-    suiteSetup(function() {
+    suiteSetup(function () {
       $content.empty();
       delete Forms.currentFormObject;
     });
 
-    suite('Form', function() {
+    suite('Form', function () {
 
-      test('BlinkForms global is an Object', function() {
+      test('BlinkForms global is an Object', function () {
         assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
       });
 
-      test('initialise with form.json', function(done) {
+      test('initialise with form.json', function (done) {
         var form;
 
-        Forms.getDefinition('form1', 'add').fail(function() {
+        Forms.getDefinition('form1', 'add').fail(function () {
           assert.fail(true, false, 'getDefinition failed!');
-        }).done(function(def) {
+        }).done(function (def) {
           Forms.initialize(def);
           form = Forms.currentFormObject;
           assert.equal($.type(form), 'object');
@@ -39,7 +39,7 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
 
       });
 
-      test('render form for jQuery Mobile', function() {
+      test('render form for jQuery Mobile', function () {
         var form = Forms.currentFormObject;
 
         $content.append(form.$form);
@@ -49,11 +49,11 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
         $page.show();
       });
 
-      test('select-1 collapsed', function() {
+      test('select-1 collapsed', function () {
         var form = Forms.currentFormObject,
-            element = form.getElement('selectc'),
-            $fieldset = element.attributes._view.$el,
-            $span = $fieldset.find('.ui-btn-text');
+          element = form.getElement('selectc'),
+          $fieldset = element.attributes._view.$el,
+          $span = $fieldset.find('.ui-btn-text');
 
         element.val('');
         assert.equal(element.val(), '', 'model.value is ""');
@@ -69,11 +69,11 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
         // TODO: test UI causes side-effect in model
       });
 
-      test('select-multi collapsed', function() {
+      test('select-multi collapsed', function () {
         var form = Forms.currentFormObject,
-            element = form.getElement('multic'),
-            $fieldset = element.attributes._view.$el,
-            $span = $fieldset.find('.ui-btn-text');
+          element = form.getElement('multic'),
+          $fieldset = element.attributes._view.$el,
+          $span = $fieldset.find('.ui-btn-text');
 
         element.val([]);
         assert.deepEqual(element.val(), [], 'model.value is []');
@@ -89,10 +89,10 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
         // TODO: test UI causes side-effect in model
       });
 
-      test('select-1 expanded', function() {
+      test('select-1 expanded', function () {
         var form = Forms.currentFormObject,
-            element = form.getElement('selecte'),
-            $fieldset = element.attributes._view.$el;
+          element = form.getElement('selecte'),
+          $fieldset = element.attributes._view.$el;
 
         element.val('');
         assert.equal(element.val(), '', 'model.value is ""');
@@ -108,10 +108,10 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
         assert.equal(element.val(), 'g', 'model.value = "g"');
       });
 
-      test('select-multi expanded', function() {
+      test('select-multi expanded', function () {
         var form = Forms.currentFormObject,
-            element = form.getElement('multie'),
-            $fieldset = element.attributes._view.$el;
+          element = form.getElement('multie'),
+          $fieldset = element.attributes._view.$el;
 
         element.val('');
         assert.equal(element.val(), '', 'model.value is ""');
@@ -133,7 +133,7 @@ define(['q', 'BlinkForms', 'BIC'], function(Q, Forms) {
     /**
      * execute once after everything else in this suite
      */
-    suiteTeardown(function() {
+    suiteTeardown(function () {
 //      delete Forms.currentFormObject;
     });
 

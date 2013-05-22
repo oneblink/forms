@@ -1,4 +1,4 @@
-define(['models/form', 'models/element'], function(Form, Element) {
+define(['models/form', 'models/element'], function (Form, Element) {
   'use strict';
 
   var Forms;
@@ -8,22 +8,22 @@ define(['models/form', 'models/element'], function(Form, Element) {
   });
 
   return Element.extend({
-    initialize: function() {
+    initialize: function () {
       Element.prototype.initialize.call(this);
       this.attributes.forms = new Forms();
     },
-    add: function() {
+    add: function () {
       // TODO: there is too much DOM stuff here to be in the model
       var Forms = BMP.Forms,
-          attrs = this.attributes,
-          name = attrs.subForm,
-          forms = attrs.forms,
-          $el = attrs._view.$el,
-          $button = $el.children('.ui-btn');
+        attrs = this.attributes,
+        name = attrs.subForm,
+        forms = attrs.forms,
+        $el = attrs._view.$el,
+        $button = $el.children('.ui-btn');
 
-      Forms.getDefinition(name, 'add').then(function(def) {
+      Forms.getDefinition(name, 'add').then(function (def) {
         var form,
-            view;
+          view;
 
         form = Form.create(def);
         forms.add(form);
@@ -39,9 +39,9 @@ define(['models/form', 'models/element'], function(Form, Element) {
     /**
      * @param {Number|Node|jQuery} index or DOM element for the record.
      */
-    remove: function(index) {
+    remove: function (index) {
       var Forms = BMP.Forms,
-          $form;
+        $form;
       // TODO: skip placeholder "delete" records when counting
       // TODO: create placeholder records on "edit"
       if (typeof index === 'number') {
@@ -51,14 +51,14 @@ define(['models/form', 'models/element'], function(Form, Element) {
       $form = index instanceof $ ? index : $(index);
       Forms.getForm($form).destroy();
     },
-    data: function() {
+    data: function () {
       var dfrd = Q.defer(),
-          promises;
+        promises;
 
-      promises = this.attributes.forms.map(function(form) {
+      promises = this.attributes.forms.map(function (form) {
         return form.data();
       });
-      Q.all(promises).spread(function() {
+      Q.all(promises).spread(function () {
         dfrd.resolve(_.toArray(arguments));
       }).fail(dfrd.reject);
 

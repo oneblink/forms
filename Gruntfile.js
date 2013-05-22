@@ -2,7 +2,7 @@
  * module.exports ... is required for things to work
  * @param {Object} grunt instance of Grunt.
  */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   'use strict';
 
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -35,10 +35,10 @@ module.exports = function(grunt) {
       directives: {
         browser: true,
         es5: true,
+        indent: 2,
         nomen: true,
-        todo: true,
+        todo: true, // TODO: eventually drop this
         sloppy: true, // we force strict-mode separately
-        white: true,
         predef: [
           // pre-defined globals
           'module',
@@ -54,6 +54,7 @@ module.exports = function(grunt) {
         ]
       },
       options: {
+        errorsOnly: true,
         failOnError: true
       }
     },

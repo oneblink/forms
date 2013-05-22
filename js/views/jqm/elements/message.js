@@ -1,4 +1,4 @@
-define(['views/jqm/element'], function(ElementView) {
+define(['views/jqm/element'], function (ElementView) {
   'use strict';
 
   var MessageElementView = ElementView.extend({
@@ -7,7 +7,7 @@ define(['views/jqm/element'], function(ElementView) {
       'data-rv-html': 'm.html',
       'data-rv-class': 'm.class'
     },
-    render: function() {
+    render: function () {
       this.bindRivets();
     }
   });

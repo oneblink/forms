@@ -1,10 +1,10 @@
-define(['views/jqm/element'], function(ElementView) {
+define(['views/jqm/element'], function (ElementView) {
   'use strict';
 
   var DateElementView = ElementView.extend({
-    renderDate: function() {
+    renderDate: function () {
       var $input,
-          name = this.model.attributes.name;
+        name = this.model.attributes.name;
 
       // TODO: implement pre-HTML5 fallback
       $input = $('<input type="date" />');
@@ -16,9 +16,9 @@ define(['views/jqm/element'], function(ElementView) {
 
       return this;
     },
-    renderTime: function() {
+    renderTime: function () {
       var $input,
-          name = this.model.attributes.name;
+        name = this.model.attributes.name;
 
       // TODO: implement pre-HTML5 fallback
       $input = $('<input type="time" />');
@@ -30,9 +30,9 @@ define(['views/jqm/element'], function(ElementView) {
 
       return this;
     },
-    render: function() {
+    render: function () {
       var type = this.model.get('type'),
-          name = this.model.get('name');
+        name = this.model.get('name');
 
       this.$el.empty();
       this.renderLabel();

@@ -1,8 +1,8 @@
-define(['models/elements/select'], function(SelectElement) {
+define(['models/elements/select'], function (SelectElement) {
   'use strict';
 
   var MultiElement = SelectElement.extend({
-    initialize: function() {
+    initialize: function () {
       SelectElement.prototype.initialize.call(this);
     }
   });

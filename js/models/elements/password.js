@@ -1,8 +1,8 @@
-define(['models/elements/text'], function(TextElement) {
+define(['models/elements/text'], function (TextElement) {
   'use strict';
 
   var PasswordElement = TextElement.extend({
-    initialize: function() {
+    initialize: function () {
       TextElement.prototype.initialize.call(this);
     }
   });

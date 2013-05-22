@@ -1,11 +1,11 @@
-define(['views/jqm/element'], function(ElementView) {
+define(['views/jqm/element'], function (ElementView) {
   'use strict';
 
   var TextElementView = ElementView.extend({
     attributes: {
       'data-rv-text': 'm.text'
     },
-    initialize: function() {
+    initialize: function () {
       var $el;
       if (this.model && _.isNumber(this.model.attributes.level)) {
         this.tagName = 'h' + this.model.attributes.level;
@@ -15,7 +15,7 @@ define(['views/jqm/element'], function(ElementView) {
       }
       ElementView.prototype.initialize.call(this);
     },
-    render: function() {
+    render: function () {
       this.bindRivets();
     }
   });

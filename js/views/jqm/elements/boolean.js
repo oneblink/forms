@@ -1,8 +1,8 @@
-define(['views/jqm/element'], function(ElementView) {
+define(['views/jqm/element'], function (ElementView) {
   'use strict';
 
   var BooleanElementView = ElementView.extend({
-    render: function() {
+    render: function () {
       var $input;
 
       this.$el.empty();
@@ -14,7 +14,7 @@ define(['views/jqm/element'], function(ElementView) {
         'data-role': 'slider'
       });
 
-      _.forEach(this.model.attributes.options, function(label, value) {
+      _.forEach(this.model.attributes.options, function (label, value) {
         var $option = $('<option value="' + value + '">' + label + '</option>');
         $input.append($option);
       });
@@ -23,7 +23,7 @@ define(['views/jqm/element'], function(ElementView) {
       this.bindRivets();
       this.model.on('change:value', this.onValueChange, this);
     },
-    onValueChange: function() {
+    onValueChange: function () {
       this.$el.children('select').slider('refresh');
     }
   });
