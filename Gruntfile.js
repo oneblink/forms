@@ -149,19 +149,15 @@ module.exports = function(grunt) {
       src: {
         files: ['js/**/*.js'],
         tasks: 'default'
+      },
+      options: {
+        interrupt: true
       }
     }
 
   });
 
-  grunt.registerTask('default', [
-    'jslint',
-    'clean',
-    'requirejs',
-    'concat',
-    'uglify',
-    'mocha'
-  ]);
+  grunt.registerTask('default', ['test']);
 
   grunt.registerTask('build', [
     'clean',
@@ -171,6 +167,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('test', [
+    'jslint',
     'build',
     'mocha'
   ]);
