@@ -3,10 +3,8 @@ node_modules
 js/build
 /BlinkForms*.js*
 
-.idea/bforms_v3.iml
-.idea/jsLibraryMappings.xml
-.idea/workspace.xml
-.idea/jsLinters/gjslint.xml
-.idea/inspectionProfiles/Project_Default.xml
-.idea/dictionaries
+# JetBrains IntelliJ IDEA files
+/.idea
+/*.iml
+
 /nbproject
