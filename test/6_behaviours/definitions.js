@@ -145,8 +145,10 @@ define(function () {
               name: 'show_email',
               manipulations: [{
                 target: 'email',
-                hidden: false,
-                persist: true
+                properties: {
+                  hidden: false,
+                  persist: true
+                }
               }]
             }
           },
@@ -155,8 +157,10 @@ define(function () {
               name: 'show_number',
               manipulations: [{
                 target: 'number',
-                hidden: false,
-                persist: true
+                properties: {
+                  hidden: false,
+                  persist: true
+                }
               }]
             }
           }

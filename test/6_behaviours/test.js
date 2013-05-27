@@ -65,6 +65,11 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
 
     suite('Behaviours', function () {
 
+      test('per-definition, 3 Behaviours are defined', function () {
+        var form = BMP.Forms.currentFormObject;
+        assert.lengthOf(form.attributes.behaviours, 3);
+      });
+
       test('per-definition, Email is initially hidden', function () {});
 
       test('per-definition, Number is initially hidden', function () {});

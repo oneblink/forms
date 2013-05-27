@@ -7,6 +7,7 @@ define(function (require) {
   Forms._models = {
     Form: require('models/form'),
     SubFormElement: require('models/elements/subform'),
+    Behaviour: require('models/behaviour'),
     Page: require('models/page'),
     Section: require('models/section'),
     Element: require('models/element'),

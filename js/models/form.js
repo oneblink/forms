@@ -60,6 +60,9 @@ define(function (require) {
       attrs.pages.forEach(function (page) {
         page.destroy(options);
       });
+      attrs.behaviours.forEach(function (behaviour) {
+        behaviour.destroy(options);
+      });
       return Backbone.Model.prototype.destroy.call(this, options);
     },
     /**
