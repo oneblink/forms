@@ -6,7 +6,8 @@ define(function (require) {
       page: 0,
       defaultValue: '',
       value: '',
-      pattern: ''
+      pattern: '',
+      persist: true
     },
     idAttribute: 'name',
     initialize: function () {
