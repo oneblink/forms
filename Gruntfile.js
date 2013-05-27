@@ -1,3 +1,4 @@
+/*jslint es5:true, node:true*/
 /**
  * module.exports ... is required for things to work
  * @param {Object} grunt instance of Grunt.
@@ -185,4 +186,3 @@ module.exports = function (grunt) {
   ]);
 
 };
-
