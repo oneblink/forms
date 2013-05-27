@@ -151,10 +151,16 @@ module.exports = function (grunt) {
         files: [
           'Gruntfile.js',
           'js/**/*.js',
-          'parts/*',
-          'test/**/*'
+          '!js/build/**/*.js',
+          'parts/*'
         ],
         tasks: 'default'
+      },
+      tests: {
+        files: [
+          'test/**/*'
+        ],
+        tasks: ['jslint', 'mocha']
       },
       options: {
         interrupt: true
