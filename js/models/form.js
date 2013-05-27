@@ -7,11 +7,14 @@ define(function (require) {
       var Forms = BMP.Forms,
         self = this,
         Page = Forms._models.Page,
-        pages;
+        Element = Forms._models.Element,
+        Behaviour = Forms._models.Behaviour,
+        pages,
+        elements,
+        behaviours;
 
       pages = this.attributes._pages;
       delete this.attributes._pages;
-
       if (pages && _.isArray(pages)) {
         // TODO: allow pages to be redeclared per-action
         pages = _.map(pages, function (p) {
@@ -21,6 +24,31 @@ define(function (require) {
         pages = [];
       }
       this.attributes.pages = pages;
+
+      elements = this.attributes._elements;
+      delete this.attributes._elements;
+      if (elements && _.isArray(elements)) {
+        // TODO: allow pages to be redeclared per-action
+        elements = _.map(elements, function (e) {
+          return Element.create(e, self);
+        });
+      } else {
+        elements = [];
+      }
+      this.attributes.elements = new Elements(elements);
+
+
+      behaviours = this.attributes._behaviours;
+      delete this.attributes._behaviours;
+      if (behaviours && _.isArray(behaviours)) {
+        // TODO: allow behaviours to be redeclared per-action
+        behaviours = _.map(behaviours, function (b) {
+          return Behaviour.create(b, self);
+        });
+      } else {
+        behaviours = [];
+      }
+      this.attributes.behaviours = behaviours;
     },
     destroy: function (options) {
       var attrs = this.attributes;
@@ -93,28 +121,13 @@ define(function (require) {
      * @param {Object} attrs attributes for this model.
      */
     create: function (attrs) {
-      var Forms = BMP.Forms,
-        Element = Forms._models.Element,
-        elements,
-        form;
+      var form;
 
       if (!attrs || !_.isObject(attrs)) {
         return new Form();
       }
 
-      elements = attrs._elements;
-      delete attrs._elements;
-
       form = new Form(attrs);
-
-      // create models from element definitions
-      elements = _.map(elements, function (el) {
-        // TODO: merge in !element overrides
-        return Element.create(el, form);
-      });
-      // create collection
-      elements = new Elements(elements);
-      form.set('elements', elements);
 
       return form;
     }
