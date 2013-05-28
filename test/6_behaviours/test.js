@@ -251,7 +251,6 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
           element.val('');
         });
 
-        /*
         test('Number is hidden', function () {
           var form = BMP.Forms.currentFormObject,
             element = form.getElement('number'),
@@ -259,16 +258,8 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
 
           assert(view.isHidden());
         });
-        */
 
         /*
-        test('Number is hidden', function () {
-          var form = BMP.Forms.currentFormObject,
-            element = form.getElement('number');
-
-          assert(view.isHidden());
-        });
-
         test('calc1exp is zero', function () {});
 
         test('calc2exp is zero', function () {});
@@ -276,7 +267,7 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
 
       }); // END: after unset Email
 
-    }); // END: suite('Behaviours: one Element value at a time', ...)
+    }); // END: suite('Behaviours: unset middle Element value', ...)
 
     /**
      * execute once after everything else in this suite

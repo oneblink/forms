@@ -97,7 +97,7 @@ define(function (require) {
       if (Array.isArray(action.manipulations)) {
         action.manipulations.forEach(function (m) {
           // TODO: use computed manipulations
-          form.getElement(m.target).set(m.properties);
+          form.getElement(m.target).set(_.clone(m.properties));
         });
       }
     },
