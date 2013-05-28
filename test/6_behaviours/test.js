@@ -70,17 +70,48 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
         assert.lengthOf(form.attributes.behaviours, 3);
       });
 
-      test('per-definition, Email is initially hidden', function () {});
+      test('per-definition, Email is initially hidden', function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('email'),
+          view = element.attributes._view;
 
-      test('per-definition, Number is initially hidden', function () {});
+        assert(view.isHidden());
+      });
 
-      test('per-definition, calc1exp is empty', function () {});
+      test('per-definition, Number is initially hidden', function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('number'),
+          view = element.attributes._view;
 
-      test('per-definition, calc2exp is empty', function () {});
+        assert(view.isHidden());
+      });
+
+      test('per-definition, calc1exp is empty', function () {
+        test('per-definition, Number is initially hidden', function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('calc1exp');
+
+          assert(!element.val());
+        });
+      });
+
+      test('per-definition, calc2exp is empty', function () {
+        test('per-definition, Number is initially hidden', function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('calc2fn');
+
+          assert(!element.val());
+        });
+      });
 
       suite('after Text=abc', function () {
 
-        suiteSetup(function () {});
+        suiteSetup(function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('text');
+
+          element.val('abc');
+        });
 
         test('Email is visible', function () {});
 

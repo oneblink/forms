@@ -8,6 +8,16 @@ define(['models/element'], function (Element) {
     },
     initialize: function () {
       Element.prototype.initialize.call(this);
+    },
+    /**
+     * official Blink API
+     */
+    val: function (value) {
+      if (value === undefined) {
+        return this.get('html');
+      }
+      this.set('html', value);
+      return value;
     }
   });
 

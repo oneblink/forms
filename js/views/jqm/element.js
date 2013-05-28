@@ -11,6 +11,7 @@ define(function () {
       this.$el.data('model', element);
       this.bindRivets();
       element.on('change:value', this.renderErrors, this);
+      element.on('change:hidden', this.onChangeHidden, this);
     },
     remove: function () {
       this.$el.removeData('model');
@@ -75,6 +76,17 @@ define(function () {
       if (this.$el.children('ul').length === 0 && !_.isEmpty(errors)) {
         this.$el.append($errorList);
       }
+    },
+    onChangeHidden: function () {
+      var hidden = this.model.attributes.hidden;
+      if (hidden) {
+        this.$el.hide();
+      } else {
+        this.$el.show();
+      }
+    },
+    isHidden: function () {
+      return this.$el && this.$el.css('display') === 'none';
     },
     bindRivets: function () {
       if (this.rivet) {
