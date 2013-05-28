@@ -102,7 +102,10 @@ define(function () {
               name: 'text_not_empty',
               exp: {
                 operator: '!empty',
-                operands: ['text']
+                operands: [{
+                  operator: 'formElement.value',
+                  operands: ['text']
+                }]
               }
             }
           },
@@ -114,11 +117,17 @@ define(function () {
                 operands: [
                   {
                     operator: '!empty',
-                    operands: ['text']
+                    operands: [{
+                      operator: 'formElement.value',
+                      operands: ['text']
+                    }]
                   },
                   {
                     operator: '!empty',
-                    operands: ['email']
+                    operands: [{
+                      operator: 'formElement.value',
+                      operands: ['email']
+                    }]
                   }
                 ]
               }

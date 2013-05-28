@@ -63,7 +63,14 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
 
     }); // END: suite('Form', ...)
 
-    suite('Behaviours', function () {
+    suite('Behaviours: set one Element value at a time', function () {
+
+      suiteSetup(function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('text');
+
+        element.val('');
+      });
 
       test('per-definition, 3 Behaviours are defined', function () {
         var form = BMP.Forms.currentFormObject;
@@ -113,23 +120,61 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
           element.val('abc');
         });
 
-        test('Email is visible', function () {});
+        test('Email is visible', function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('email'),
+            view = element.attributes._view;
 
-        test('Number is still hidden', function () {});
+          assert(!view.isHidden());
+        });
 
-        test('calc1exp is still empty', function () {});
+        test('Number is still hidden', function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('number'),
+            view = element.attributes._view;
 
-        test('calc2exp is still empty', function () {});
+          assert(view.isHidden());
+        });
+
+        test('calc1exp is still empty', function () {
+          test('per-definition, Number is initially hidden', function () {
+            var form = BMP.Forms.currentFormObject,
+              element = form.getElement('calc1exp');
+
+            assert(!element.val());
+          });
+        });
+
+        test('calc2exp is still empty', function () {
+          test('per-definition, Number is initially hidden', function () {
+            var form = BMP.Forms.currentFormObject,
+              element = form.getElement('calc2fn');
+
+            assert(!element.val());
+          });
+        });
 
         suite('after Email=abc@abc.com', function () {
 
-          suiteSetup(function () {});
+          suiteSetup(function () {
+            var form = BMP.Forms.currentFormObject,
+              element = form.getElement('email');
 
-          test('Number is default value (zero)', function () {});
+            element.val('abc@abc.com');
+          });
 
+          test('Number is default value', function () {
+            var form = BMP.Forms.currentFormObject,
+              element = form.getElement('number');
+
+            assert(!element.val());
+          });
+
+          /*
           test('calc1exp is zero', function () {});
 
           test('calc2exp is zero', function () {});
+          */
 
           suite('after Number=123', function () {
 
@@ -137,9 +182,11 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
 
             test('Number is 123', function () {});
 
+            /*
             test('calc1exp is 123', function () {});
 
             test('calc2exp is 123', function () {});
+            */
 
           }); // END: after Number=123
 
@@ -147,7 +194,89 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
 
       }); // END: after Text=abc
 
-    }); // END: suite('Form', ...)
+    }); // END: suite('Behaviours: one Element value at a time', ...)
+
+    suite('Behaviours: unset middle Element value', function () {
+
+      suiteSetup(function () {
+        var form = BMP.Forms.currentFormObject;
+
+        form.getElement('text').val('abc');
+        form.getElement('email').val('abc@abc.com');
+        form.getElement('number').val(123);
+      });
+
+      test('per-definition, Email is initially visible', function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('email'),
+          view = element.attributes._view;
+
+        assert(!view.isHidden());
+      });
+
+      test('per-definition, Number is initially visible', function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('number'),
+          view = element.attributes._view;
+
+        assert(!view.isHidden());
+      });
+
+      /*
+      test('per-definition, calc1exp is empty', function () {
+        test('per-definition, Number is initially hidden', function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('calc1exp');
+
+          assert(!element.val());
+        });
+      });
+
+      test('per-definition, calc2exp is empty', function () {
+        test('per-definition, Number is initially hidden', function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('calc2fn');
+
+          assert(!element.val());
+        });
+      });
+      */
+
+      suite('after unset Email value', function () {
+
+        suiteSetup(function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('email');
+
+          element.val('');
+        });
+
+        /*
+        test('Number is hidden', function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('number'),
+            view = element.attributes._view;
+
+          assert(view.isHidden());
+        });
+        */
+
+        /*
+        test('Number is hidden', function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('number');
+
+          assert(view.isHidden());
+        });
+
+        test('calc1exp is zero', function () {});
+
+        test('calc2exp is zero', function () {});
+        */
+
+      }); // END: after unset Email
+
+    }); // END: suite('Behaviours: one Element value at a time', ...)
 
     /**
      * execute once after everything else in this suite

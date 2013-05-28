@@ -1,6 +1,11 @@
 define(function (require) {
   var Elements = require('collections/elements'),
-    Behaviour;
+    Behaviour,
+    Expression = require('models/expression');
+
+  Expression.fn['formelement.value'] = function (name) {
+    return this.getElement(name).val();
+  };
 
   Behaviour = Backbone.Model.extend({
     initialize: function () {
@@ -24,11 +29,22 @@ define(function (require) {
       elements.on('change', this.runCheck, this);
     },
     runCheck: function () {
-      var result;
+      var check, exp;
       if (!this.attributes.check) {
-        result = true;
+        this.runActions(true);
+        return;
       }
-      this.runActions(result);
+      if (this.attributes.check) {
+        check = this.getCheck(this.attributes.check);
+        if (check && check.exp) {
+          this.bindExpressions();
+          exp = new Expression(check.exp);
+          this.runActions(exp.evaluate());
+          this.unbindExpressions();
+          return;
+        }
+      }
+      // TODO: handle checks with functions
     },
     runActions: function (result) {
       var self = this;
@@ -85,6 +101,15 @@ define(function (require) {
         });
       }
     },
+    getCheck: function (name) {
+      try {
+        return this.attributes.form.attributes._checks.filter(function (c) {
+          return c.name === name;
+        })[0];
+      } catch (err) {
+        return null;
+      }
+    },
     getAction: function (name) {
       try {
         return this.attributes.form.attributes._actions.filter(function (a) {
@@ -121,6 +146,19 @@ define(function (require) {
     },
     destroy: function (options) {
       this.attributes.elements.off('change', this.runCheck);
+    },
+    bindExpressions: function () {
+      var unbound = Expression.fn['formelement.value'];
+      Expression.fn['formelement.value'] = _.bind(
+        Expression.fn['formelement.value'],
+        this.attributes.form
+      );
+      Expression.fn['formelement.value']._unbound = unbound;
+    },
+    unbindExpressions: function () {
+      var unbound = Expression.fn['formelement.value']._unbound;
+      delete Expression.fn['formelement.value']._unbound;
+      Expression.fn['formelement.value'] = unbound;
     }
   }, {
     // static properties
