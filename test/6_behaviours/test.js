@@ -53,13 +53,55 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
 
     suite('Message', function () {
 
-      test('no label gives full width output', function () {});
+      test('no label gives full width output', function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('message'),
+          view = element.attributes._view;
 
-      test('label set displays like an input formElement', function () {});
+        assert(view.$el.attr('data-rv-html'), 'whole View bound');
+      });
 
-      test('defaults to persist=false (no storage)', function () {});
+      test('label set displays like an input formElement', function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('message'),
+          view = element.attributes._view;
 
-      test('persist=true submits message HTML', function () {});
+        element.set('label', 'Message');
+        // TODO: asserts
+      });
+
+      test('defaults to persist=false (no storage)', function (done) {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('message');
+
+        assert.isFalse(element.get('persist'));
+
+        form.data().done(function (data) {
+          assert.notProperty(data, 'message');
+          done();
+        });
+      });
+
+      test('persist=true submits message HTML', function (done) {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('message');
+
+        element.set('persist', true);
+        form.data().done(function (data) {
+          assert.property(data, 'message');
+          assert.isString(data.message);
+          assert.match(data.message, /automatic calculations/);
+          done();
+        });
+      });
+
+      suiteTeardown(function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('message');
+
+        element.set('persist', false);
+        element.unset('label');
+      });
 
     }); // END: suite('Form', ...)
 
