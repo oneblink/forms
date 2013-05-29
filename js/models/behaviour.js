@@ -51,7 +51,7 @@ define(function (require) {
 
       if (Array.isArray(this.attributes.actions)) {
         this.attributes.actions.forEach(function (action) {
-          if (!action || !action.action) {
+          if (!action || (!_.isString(action) && !action.action)) {
             return;
           }
           if (result) {
@@ -84,7 +84,8 @@ define(function (require) {
     },
     runAction: function (name, isReversed) {
       var action = this.getAction(name),
-        form = this.attributes.form;
+        form = this.attributes.form,
+        result;
 
       if (isReversed) {
         action = this.getReversedAction(action);
@@ -92,13 +93,51 @@ define(function (require) {
       if (!action) {
         return;
       }
-      // TODO: run action.javascript
+      // run javascript
+      if (action.javascript) {
+        result = this.runJavaScript(form, action.javascript);
+      }
+      // run manipulations
       if (Array.isArray(action.manipulations)) {
         action.manipulations.forEach(function (m) {
           // TODO: use computed manipulations
           form.getElement(m.target).set(_.clone(m.properties));
         });
       }
+      // output result
+      if (result !== undefined && action.outputTarget) {
+        form.getElement(action.outputTarget).val(result);
+      }
+    },
+    runJavaScript: function (form, string) {
+      var js, result, placeholders, value;
+      placeholders = string.match(/\[[\w\/\[\]]+\]/g);
+      if (_.isArray(placeholders)) {
+        placeholders.forEach(function (placeholder) {
+          placeholder = placeholder.substring(1, placeholder.length - 1);
+          try {
+            value = form.getElement(placeholder).val();
+            string = string.replace('[' + placeholder + ']', value);
+          } catch (err) {
+            // TODO: output a warning or something
+            window.console.warn(err, string);
+          }
+        });
+      }
+      try {
+        /*jslint evil:true*/
+        eval('js = ' + string);
+        /*jslint evil:false*/
+        if (_.isFunction(js)) {
+          result = js.call(form);
+        } else {
+          result = js;
+        }
+      } catch (err) {
+        window.console.warn(err, string);
+        // TODO: output a warning or something
+      }
+      return result;
     },
     getCheck: function (name) {
       try {
