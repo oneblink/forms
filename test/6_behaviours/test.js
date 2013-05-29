@@ -111,6 +111,17 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
         });
       });
 
+      test('record data does not include hidden fields', function (done) {
+        var form = BMP.Forms.currentFormObject;
+        form.data().done(function (data) {
+          assert.notProperty(data, 'email');
+          assert.notProperty(data, 'number');
+          assert.notProperty(data, 'calc2exp');
+          assert.notProperty(data, 'calc2exp');
+          done();
+        });
+      });
+
       suite('after Text=abc', function () {
 
         suiteSetup(function () {
@@ -151,6 +162,16 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
               element = form.getElement('calc2fn');
 
             assert(!element.val());
+          });
+        });
+
+        test('record data does not include hidden fields', function (done) {
+          var form = BMP.Forms.currentFormObject;
+          form.data().done(function (data) {
+            assert.notProperty(data, 'number');
+            assert.notProperty(data, 'calc2exp');
+            assert.notProperty(data, 'calc2exp');
+            done();
           });
         });
 
@@ -242,6 +263,18 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
       });
       */
 
+      test('record data includes set values', function (done) {
+        var form = BMP.Forms.currentFormObject;
+        form.data().done(function (data) {
+          assert.equal(data.text, 'abc');
+          assert.equal(data.email, 'abc@abc.com');
+          assert.equal(data.number, 123);
+//          assert.notProperty(data, 'calc2exp');
+//          assert.notProperty(data, 'calc2exp');
+          done();
+        });
+      });
+
       suite('after unset Email value', function () {
 
         suiteSetup(function () {
@@ -265,7 +298,98 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
         test('calc2exp is zero', function () {});
         */
 
+        test('record data does not include hidden fields', function (done) {
+          var form = BMP.Forms.currentFormObject;
+          form.data().done(function (data) {
+            assert.equal(data.text, 'abc');
+            assert.notProperty(data, 'email');
+            assert.notProperty(data, 'number');
+            assert.notProperty(data, 'calc2exp');
+            assert.notProperty(data, 'calc2exp');
+            done();
+          });
+        });
+
       }); // END: after unset Email
+
+    }); // END: suite('Behaviours: unset middle Element value', ...)
+
+    suite('Behaviours: unset top Element value', function () {
+
+      suiteSetup(function () {
+        var form = BMP.Forms.currentFormObject;
+
+        form.getElement('text').val('abc');
+        form.getElement('email').val('abc@abc.com');
+        form.getElement('number').val(123);
+      });
+
+      test('per-definition, Email is initially visible', function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('email'),
+          view = element.attributes._view;
+
+        assert(!view.isHidden());
+      });
+
+      test('per-definition, Number is initially visible', function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('number'),
+          view = element.attributes._view;
+
+        assert(!view.isHidden());
+      });
+
+      test('record data includes set values', function (done) {
+        var form = BMP.Forms.currentFormObject;
+        form.data().done(function (data) {
+          assert.equal(data.text, 'abc');
+          assert.equal(data.email, 'abc@abc.com');
+          assert.equal(data.number, 123);
+//          assert.notProperty(data, 'calc2exp');
+//          assert.notProperty(data, 'calc2exp');
+          done();
+        });
+      });
+
+      suite('after unset Text value', function () {
+
+        suiteSetup(function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('text');
+
+          element.val('');
+        });
+
+        test('Email is hidden', function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('email'),
+            view = element.attributes._view;
+
+          assert(view.isHidden());
+        });
+
+        test('Number is hidden', function () {
+          var form = BMP.Forms.currentFormObject,
+            element = form.getElement('number'),
+            view = element.attributes._view;
+
+          assert(view.isHidden());
+        });
+
+        test('record data does not include hidden fields', function (done) {
+          var form = BMP.Forms.currentFormObject;
+          form.data().done(function (data) {
+            assert.notProperty(data, 'text');
+            assert.notProperty(data, 'email');
+            assert.notProperty(data, 'number');
+            assert.notProperty(data, 'calc2exp');
+            assert.notProperty(data, 'calc2exp');
+            done();
+          });
+        });
+
+      }); // END: after unset Text
 
     }); // END: suite('Behaviours: unset middle Element value', ...)
 

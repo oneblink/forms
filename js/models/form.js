@@ -95,10 +95,14 @@ define(function (require) {
         promises = [];
 
       this.attributes.elements.forEach(function (el) {
-        var type = el.attributes.type,
+        var attrs = el.attributes,
+          type = attrs.type,
           val,
           dfrd;
 
+        if (!attrs.persist) {
+          return;
+        }
         if (type === 'subForm') {
           dfrd = Q.defer();
           el.data().then(function (val) {

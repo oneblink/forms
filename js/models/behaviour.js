@@ -92,7 +92,6 @@ define(function (require) {
       if (!action) {
         return;
       }
-      window.console.log(action);
       // TODO: run action.javascript
       if (Array.isArray(action.manipulations)) {
         action.manipulations.forEach(function (m) {
