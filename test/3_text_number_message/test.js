@@ -58,6 +58,26 @@ define(['q', 'BlinkForms', 'BIC'], function (Q, Forms) {
 //      delete Forms.currentFormObject;
     });
 
+    suite('Message', function () {
+
+      test('no label gives full width output', function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('message'),
+          view = element.attributes._view;
+
+        assert(view.$el.attr('data-rv-html'), 'whole View bound');
+      });
+
+      test('label set displays like an input formElement', function () {
+        var form = BMP.Forms.currentFormObject,
+          element = form.getElement('calculation'),
+          view = element.attributes._view;
+
+        // TODO: asserts
+      });
+
+    }); // END: suite('Form', ...)
+
   }); // END: suite('1', ...)
 
 });

@@ -28,7 +28,7 @@ define(function (require) {
       }
 
       this.set('value', attrs.defaultValue);
-      if (!attrs.label) {
+      if (!attrs.label && attrs.type !== 'message') {
         if (attrs.prefix) {
           this.set('label', attrs.name + ' ' + attrs.prefix);
         } else {
@@ -45,7 +45,8 @@ define(function (require) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
       }
-      if (attrs.pattern && attrs.value && !(new RegExp(attrs.pattern).test(attrs.value))) {
+      if (attrs.pattern && attrs.value &&
+          !(new RegExp(attrs.pattern).test(attrs.value))) {
         errors.value = errors.value || [];
         errors.value.push({code: 'Pattern Mismatch error'});
       }
