@@ -14,7 +14,8 @@ define(['models/form', 'models/element'], function (Form, Element) {
     },
     add: function () {
       // TODO: there is too much DOM stuff here to be in the model
-      var Forms = BMP.Forms,
+      var dfrd = Q.defer(),
+        Forms = BMP.Forms,
         attrs = this.attributes,
         name = attrs.subForm,
         forms = attrs.forms,
@@ -34,7 +35,9 @@ define(['models/form', 'models/element'], function (Form, Element) {
         view.render();
         $button.before(view.$el);
         view.$el.trigger('create');
+        dfrd.resolve();
       });
+      return dfrd.promise;
     },
     /**
      * @param {Number|Node|jQuery} index or DOM element for the record.
@@ -51,7 +54,13 @@ define(['models/form', 'models/element'], function (Form, Element) {
       $form = index instanceof $ ? index : $(index);
       Forms.getForm($form).destroy();
     },
-    data: function () {
+    size: function () {
+      return this.attributes.forms.length;
+    },
+    getForm: function (index) {
+      return this.attributes.forms.at(index);
+    },
+    getRecord: function () {
       var dfrd = Q.defer(),
         promises;
 
@@ -63,6 +72,46 @@ define(['models/form', 'models/element'], function (Form, Element) {
       }).fail(dfrd.reject);
 
       return dfrd.promise;
+    },
+    /**
+     * @param {Array} data
+     * @returns {Promise}
+     */
+    setRecords: function (data) {
+      var dfrd = Q.defer(),
+        forms = this.attributes.forms,
+        addPromises = [],
+        promises;
+
+      if (!_.isArray(data)) {
+        dfrd.resolve();
+        return dfrd.promise;
+      }
+      while (forms.length + addPromises.length < data.length) {
+        addPromises.push(this.add());
+      }
+      while (forms.length > data.length) {
+        this.remove(forms.length - 1);
+      }
+      // wait for extra (blank) records to be added
+      Q.all(addPromises).spread(function () {
+        promises = [];
+        data.forEach(function (record, index) {
+          promises.push(forms.at(index).setRecord(record));
+        });
+
+        // wait for records to be populated
+        Q.all(promises).spread(function () {
+          dfrd.resolve(_.toArray(arguments));
+        }).fail(dfrd.reject);
+
+      }).fail(dfrd.reject);
+      return dfrd.promise;
+    },
+    data: function () {
+      if (!arguments.length) {
+        return this.getRecord();
+      }
     }
   });
 });

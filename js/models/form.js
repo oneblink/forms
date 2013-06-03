@@ -89,7 +89,7 @@ define(function (require) {
     /**
      * official Blink API
      */
-    data: function () {
+    getRecord: function () {
       var dfrd = Q.defer(),
         data = {},
         promises = [];
@@ -105,7 +105,7 @@ define(function (require) {
         }
         if (type === 'subForm') {
           dfrd = Q.defer();
-          el.data().then(function (val) {
+          el.getRecord().then(function (val) {
             data[el.attributes.name] = val;
             dfrd.resolve();
           });
@@ -121,6 +121,42 @@ define(function (require) {
         dfrd.resolve(data);
       });
       return dfrd.promise;
+    },
+    /**
+     * official Blink API
+     */
+    setRecord: function (data) {
+      var self = this,
+        dfrd = Q.defer(),
+        promises = [];
+
+      if (!_.isObject(data)) {
+        dfrd.reject();
+        return dfrd.promise;
+      }
+      _.each(data, function (value, key) {
+        var formElement = self.getElement(key);
+        if (!formElement) {
+          return;
+        }
+        if (formElement.attributes.type === 'subForm') {
+          promises.push(formElement.setRecords(value));
+        } else {
+          formElement.val(value);
+        }
+      });
+      Q.all(promises).done(function () {
+        dfrd.resolve(data);
+      });
+      return dfrd.promise;
+    },
+    /**
+     * official Blink API
+     */
+    data: function () {
+      if (!arguments.length) {
+        return this.getRecord();
+      }
     }
   }, {
     // static properties
