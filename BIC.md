@@ -3,22 +3,22 @@
 
 ## Functionality provided by the core
 
-The Blink Forms v3 library installs a global object: **BlinkForms**.
+The Blink Forms v3 library installs a global object: **BMP.Forms**.
 
 ### Events
 
-The **BlinkForms** global object is an event emitter, exposing the same API as other JavaScript objects employing the [Backbone.Events](http://backbonejs.org/#Events) mixin:
+The **BMP.Forms** global object is an event emitter, exposing the same API as other JavaScript objects employing the [Backbone.Events](http://backbonejs.org/#Events) mixin:
 
-- BlinkForms.**on(event, callback, [context])** *alias: bind*
-- BlinkForms.**off([event], [callback], [context])** *alias: unbind*
-- BlinkForms.**trigger(event, [args*])**
-- BlinkForms.**once(event, callback, [context])**
-- BlinkForms.**listenTo(other, event, callback)**
-- BlinkForms.**stopListening([other], [event], [callback])**
+- BMP.Forms.**on(event, callback, [context])** *alias: bind*
+- BMP.Forms.**off([event], [callback], [context])** *alias: unbind*
+- BMP.Forms.**trigger(event, [args*])**
+- BMP.Forms.**once(event, callback, [context])**
+- BMP.Forms.**listenTo(other, event, callback)**
+- BMP.Forms.**stopListening([other], [event], [callback])**
 
 ### BMP.Forms.current
 
-The `current` property is a reference to the currently active Form object. It is defined as a side-effect of `BlinkForms.initialize` (below).
+The `current` property is a reference to the currently active Form object. It is defined as a side-effect of `BMP.Forms.initialize` (below).
 
 ### BMP.Forms.initialize(definition)
 - **definition**: {Object} a (collapsed) form definition as a plain object
