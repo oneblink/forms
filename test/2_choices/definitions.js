@@ -13,20 +13,6 @@ define(function () {
           },
           {
             default: {
-              name: 'file',
-              label: 'File',
-              type: 'file'
-            }
-          },
-          {
-            default: {
-              name: 'image',
-              label: 'Image',
-              type: 'image'
-            }
-          },
-          {
-            default: {
               name: 'selectc',
               label: 'Select C',
               type: 'select',
