@@ -85,6 +85,7 @@ define(function (require) {
     TextAreaElement: require('views/jqm/elements/textarea'),
     BooleanElement: require('views/jqm/elements/boolean'),
     ChoiceCollapsedElement: require('views/jqm/elements/choicecollapsed'),
-    ChoiceExpandedElement: require('views/jqm/elements/choiceexpanded')
+    ChoiceExpandedElement: require('views/jqm/elements/choiceexpanded'),
+    FileElement: require('views/jqm/elements/file')
   };
 });
