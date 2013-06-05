@@ -30,27 +30,7 @@ define(function () {
       this.$el.append($label);
     },
     render: function () {
-      var $input,
-        type = this.model.get('type'),
-        name = this.model.get('name');
-
-      this.$el.empty();
-      this.renderLabel();
-
-      switch (type) {
-      case 'file':
-        $input = $('<input type="file" />');
-        break;
-      case 'image':
-        $input = $('<input type="file" />');
-        break;
-      }
-      $input.attr({
-        name: name,
-        'data-rv-value': 'm.value'
-      });
-      this.$el.append($input);
-      this.bindRivets();
+      throw new Error('Element.render is only an interface');
     },
     renderErrors: function () {
       var $errorList, errors, $errorElement, $el;
