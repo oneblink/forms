@@ -9,7 +9,14 @@
   window.require.config({
     paths: {
       BlinkForms: '../../BlinkForms-jQueryMobile',
-      BIC: '../sample-bic'
+      BIC: '../sample-bic',
+      'BMP.Blob': '../lib/bmp-blobs'
+    },
+    shim: {
+      'BMP.Blob': {
+        depends: ['jquery', 'underscore'],
+        exports: 'BMP'
+      }
     }
   });
 }(this));

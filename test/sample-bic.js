@@ -2,8 +2,8 @@
  * This is a sample implementation of the API that the BIC must supply.
  */
 
-define(['jquery', 'underscore', 'q', 'BlinkForms', 'definitions'],
-  function ($, _, Q, Forms, defs) {
+define(['jquery', 'underscore', 'q', 'BlinkForms', 'definitions', 'BMP.Blob'],
+  function ($, _, Q, Forms, defs, BMP) {
 
     var $submitPopup = $('<div></div>').attr({
         id: 'submitPopup',
@@ -101,5 +101,7 @@ define(['jquery', 'underscore', 'q', 'BlinkForms', 'definitions'],
         $submitPopup.popup('open');
       });
     });
+
+    BMP.FileInput.initialize();
 
   });
