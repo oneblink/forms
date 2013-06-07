@@ -7,8 +7,7 @@ define(['views/jqm/element'], function (ElementView) {
         attrs = this.model.attributes,
         name = attrs.name,
         min = attrs.min,
-        max = attrs.max,
-        step = attrs.step || 1;
+        max = attrs.max;
 
       this.$el.empty();
       this.renderLabel();
@@ -16,8 +15,6 @@ define(['views/jqm/element'], function (ElementView) {
       if (_.isNumber(min) && _.isNumber(max)) {
         $input = $('<input type="range" />');
         $input.attr({
-          min: min,
-          max: max,
           'data-highlight': true
         });
 
@@ -29,6 +26,8 @@ define(['views/jqm/element'], function (ElementView) {
       }
       $input.attr({
         name: name,
+        'data-rv-min': 'm.min',
+        'data-rv-max': 'm.max',
         'data-rv-value': 'm.value',
         'data-rv-step': 'm.step'
       });

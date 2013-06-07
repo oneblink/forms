@@ -1,7 +1,7 @@
 /*global suite, test, setup, teardown, suiteSetup, suiteTeardown*/ // mocha
 /*global assert:true*/ // chai
 
-define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
+define(['BlinkForms', 'BIC'], function (Forms) {
 
   suite('7: record population', function () {
     var $page = $('[data-role=page]'),
@@ -195,13 +195,6 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
         });
       }); // END: suite('comments.setRecord() with 3...', ...)
 
-    });
-
-    /**
-     * execute once after everything else in this suite
-     */
-    suiteTeardown(function () {
-//      delete Forms.currentFormObject;
     });
 
   }); // END: suite('1', ...)

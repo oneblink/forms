@@ -1,7 +1,7 @@
 /*global suite, test, setup, teardown, suiteSetup, suiteTeardown*/ // mocha
 /*global assert:true*/ // chai
 
-define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
+define(['BlinkForms', 'BIC'], function (Forms) {
 
   suite('8: blobs', function () {
     var $page = $('[data-role=page]'),
@@ -48,16 +48,6 @@ define(['underscore', 'q', 'BlinkForms', 'BIC'], function (_, Q, Forms) {
       });
 
     }); // END: suite('Form', ...)
-
-    suite('', function () {
-    });
-
-    /**
-     * execute once after everything else in this suite
-     */
-    suiteTeardown(function () {
-//      delete Forms.currentFormObject;
-    });
 
   }); // END: suite('1', ...)
 

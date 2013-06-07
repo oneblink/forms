@@ -1,4 +1,4 @@
-define(function (require) {
+define(function () {
   var Element;
 
   Element = Backbone.Model.extend({
@@ -163,10 +163,8 @@ define(function (require) {
     create: function (attrs, form) {
       var Forms = BMP.Forms,
         dateTypes = ['date', 'time', 'datetime'],
-        view,
         el,
-        TypedElement,
-        mode;
+        TypedElement;
 
       if (!attrs || !_.isObject(attrs)) {
         return new Element();

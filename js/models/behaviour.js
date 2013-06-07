@@ -111,6 +111,7 @@ define(function (require) {
     },
     runJavaScript: function (form, string) {
       var js, result, placeholders, value;
+      js = null;
       placeholders = string.match(/\[[\w\/\[\]]+\]/g);
       if (_.isArray(placeholders)) {
         placeholders.forEach(function (placeholder) {
@@ -182,7 +183,7 @@ define(function (require) {
       }
       return null;
     },
-    destroy: function (options) {
+    destroy: function () {
       this.attributes.elements.off('change', this.runCheck);
     },
     bindExpressions: function () {

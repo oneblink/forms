@@ -2,11 +2,10 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 /*global assert:true*/ // chai
 
-define(['q', 'BlinkForms', 'BIC'], function (Q, Forms) {
+define(['BlinkForms', 'BIC'], function (Forms) {
 
   suite('1: date/time', function () {
-    var obj,
-      $page = $('[data-role=page]'),
+    var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
 
     /**
@@ -52,13 +51,6 @@ define(['q', 'BlinkForms', 'BIC'], function (Q, Forms) {
       });
 
     }); // END: suite('Form', ...)
-
-    /**
-     * execute once after everything else in this suite
-     */
-    suiteTeardown(function () {
-      //      delete Forms.currentFormObject;
-    });
 
   }); // END: suite('1', ...)
 

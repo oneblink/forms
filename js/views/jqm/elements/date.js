@@ -31,8 +31,7 @@ define(['views/jqm/element'], function (ElementView) {
       return this;
     },
     render: function () {
-      var type = this.model.get('type'),
-        name = this.model.get('name');
+      var type = this.model.get('type');
 
       this.$el.empty();
       this.renderLabel();

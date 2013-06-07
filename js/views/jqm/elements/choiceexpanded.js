@@ -76,7 +76,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       });
       model.set('value', val);
     },
-    onMultiValueChange: function (event) {
+    onMultiValueChange: function () {
       var view = this, $values, values,
         model = this.model,
         $inputs = view.$el.find('input[type=radio],input[type=checkbox]'),
@@ -85,10 +85,12 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       if (!_.isArray(value)) {
         value = [];
       }
+      /*jslint unparam:true*/
       $inputs.each(function (index, input) {
         var $input = $(input);
         $input.prop('checked', _.indexOf(value, $input.val()) !== -1);
       });
+      /*jslint unparam:false*/
 
       $inputs.checkboxradio('refresh');
       $values = this.$el.find('label[data-icon=checkbox-on]');
@@ -98,7 +100,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       });
       ChoiceElementView.prototype.renderOtherText.call(this, values);
     },
-    onSelectValueChange: function (event) {
+    onSelectValueChange: function () {
       var view = this, $values, values,
         $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
 

@@ -31,7 +31,8 @@ module.exports = function (grunt) {
         'node_modules/**',
         'js/lib/**',
         'js/build/**',
-        'BlinkForms*.js'
+        'BlinkForms*.js',
+        'test/lib/*'
       ],
       directives: {
         browser: true,
@@ -104,11 +105,12 @@ module.exports = function (grunt) {
       core: {
         src: [
           'parts/00-start.frag',
-          'js/lib/almond-0.2.4.js',
+          'js/lib/almond-0.2.5.js',
           'js/build/main.js',
           'parts/99-end-core.frag'
         ],
-        dest: 'BlinkForms.js'
+        dest: 'BlinkForms.js',
+        nonull: true
       },
       jqm: {
         src: [
@@ -118,7 +120,8 @@ module.exports = function (grunt) {
           'js/build/views/jqm.js',
           'parts/99-end-jqm.frag'
         ],
-        dest: 'BlinkForms-jQueryMobile.js'
+        dest: 'BlinkForms-jQueryMobile.js',
+        nonull: true
       }
     },
 

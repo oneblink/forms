@@ -7,7 +7,6 @@ define(['models/element'], function (Element) {
     },
     initializeView: function () {
       var Forms = BMP.Forms,
-        attrs = this.attributes,
         view;
 
       this.removeView();

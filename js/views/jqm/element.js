@@ -41,7 +41,7 @@ define(function () {
       errors = this.model.validate() || {};
 
       if (!_.isEmpty(errors)) {
-        _.each(errors.value, function (error, key) {
+        _.each(errors.value, function (error) {
           $errorElement = $(document.createElement('li'));
           $errorElement.text(error.code);
           $errorList.append($errorElement);

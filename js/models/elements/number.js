@@ -14,7 +14,8 @@ define(['models/element'], function (Element) {
         attrs = key;
         options = val;
       } else {
-        (attrs = {})[key] = val;
+        attrs = {};
+        attrs[key] = val;
       }
       options = options || {};
 

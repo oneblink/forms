@@ -1,3 +1,4 @@
+/*jslint indent:2*/
 define(function (require) {
   var Forms = require('main');
 

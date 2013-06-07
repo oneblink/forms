@@ -2,11 +2,10 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 /*global assert:true*/ // chai
 
-define(['q', 'BlinkForms', 'BIC'], function (Q, Forms) {
+define(['BlinkForms', 'BIC'], function (Forms) {
 
   suite('4: subForms', function () {
-    var obj,
-      $doc = $(document),
+    var $doc = $(document),
       $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
 
@@ -86,7 +85,6 @@ define(['q', 'BlinkForms', 'BIC'], function (Q, Forms) {
 
       test('test subForms', function (done) {
         var subFormElement = Forms.currentFormObject.getElement('comments'),
-          $view = subFormElement.attributes._view.$el,
           subForms = subFormElement.attributes.forms,
           testData = [
             { comment: 'abc' },
@@ -122,7 +120,6 @@ define(['q', 'BlinkForms', 'BIC'], function (Q, Forms) {
 
       test('test subForms', function (done) {
         var subFormElement = Forms.currentFormObject.getElement('comments'),
-          $view = subFormElement.attributes._view.$el,
           subForms = subFormElement.attributes.forms,
           testData = [
             { comment: 'def' }
@@ -141,13 +138,6 @@ define(['q', 'BlinkForms', 'BIC'], function (Q, Forms) {
           });
       });
 
-    });
-
-    /**
-     * execute once after everything else in this suite
-     */
-    suiteTeardown(function () {
-      //      delete Forms.currentFormObject;
     });
 
   }); // END: suite('1', ...)

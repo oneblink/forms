@@ -5,20 +5,21 @@
 define(['jquery', 'underscore', 'q', 'BlinkForms', 'definitions', 'BMP.Blob'],
   function ($, _, Q, Forms, defs, BMP) {
 
-    var $submitPopup = $('<div></div>').attr({
-        id: 'submitPopup',
-        'data-role': 'popup',
-        class: 'ui-content',
-        'data-overlay-theme': 'a'
-      }).appendTo(document.body),
-      $footer = $('footer'),
-      $grid = $('<fieldset class="ui-grid-a"></fieldset>').appendTo($footer),
-      $colA = $('<div class="ui-block-a"></div>').appendTo($grid),
-      $colB = $('<div class="ui-block-b"></div>').appendTo($grid),
-      $submitButton = $('<button></button>').attr({
-        'data-action': 'submit',
-        'data-role': 'button'
-      }).text('Submit').appendTo($colB);
+    var $submitPopup, $footer, $grid, $colB;
+    $submitPopup = $('<div></div>').attr({
+      id: 'submitPopup',
+      'data-role': 'popup',
+      class: 'ui-content',
+      'data-overlay-theme': 'a'
+    }).appendTo(document.body);
+    $footer = $('footer');
+    $grid = $('<fieldset class="ui-grid-a"></fieldset>').appendTo($footer);
+    $('<div class="ui-block-a"></div>').appendTo($grid);
+    $colB = $('<div class="ui-block-b"></div>').appendTo($grid);
+    $('<button></button>').attr({
+      'data-action': 'submit',
+      'data-role': 'button'
+    }).text('Submit').appendTo($colB);
 
     Forms.getDefinition = function (name, action) {
       var dfrd = Q.defer(),
