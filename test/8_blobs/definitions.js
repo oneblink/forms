@@ -68,6 +68,13 @@ define(function () {
               type: 'file',
               accept: 'video/*'
             }
+          },
+          {
+            default: {
+              name: 'location',
+              label: 'Location',
+              type: 'location'
+            }
           }
         ]
       }

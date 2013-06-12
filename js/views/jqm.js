@@ -87,6 +87,7 @@ define(function (require) {
     BooleanElement: require('views/jqm/elements/boolean'),
     ChoiceCollapsedElement: require('views/jqm/elements/choicecollapsed'),
     ChoiceExpandedElement: require('views/jqm/elements/choiceexpanded'),
+    LocationElement: require('views/jqm/elements/location'),
     FileElement: require('views/jqm/elements/file')
   };
 });

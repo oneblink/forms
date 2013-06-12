@@ -177,6 +177,9 @@ define(function () {
       case 'file':
         TypedElement = Forms._models.FileElement;
         break;
+      case 'location':
+        TypedElement = Forms._models.LocationElement;
+        break;
       case 'subForm':
         TypedElement = Forms._models.SubFormElement;
         break;
