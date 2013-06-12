@@ -12,6 +12,7 @@ define(function () {
       this.bindRivets();
       // temporarily disable validation
       //element.on('change:value', this.renderErrors, this);
+      element.on('change:errors', this.renderErrors, this);
       element.on('change:hidden', this.onChangeHidden, this);
     },
     remove: function () {
@@ -35,16 +36,17 @@ define(function () {
     },
     renderErrors: function () {
       var $errorList, errors, $errorElement, $el;
+      // TODO: do this via bindings with rivets
       if (this.$el.children('ul').length > 0) {
         this.$el.children('ul').remove();
       }
       $errorList = $(document.createElement('ul'));
-      errors = this.model.validate() || {};
+      errors = this.model.attributes.errors || {};
 
       if (!_.isEmpty(errors)) {
         _.each(errors.value, function (error) {
           $errorElement = $(document.createElement('li'));
-          $errorElement.text(error.code);
+          $errorElement.text(error.code || error);
           $errorList.append($errorElement);
         });
       }
