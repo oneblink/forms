@@ -8,9 +8,6 @@ define(['underscore', 'BlinkForms', 'BIC'], function (_, Forms) {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
 
-    /**
-     * execute once before everything else in this suite
-     */
     suiteSetup(function () {
       $content.empty();
       delete Forms.currentFormObject;

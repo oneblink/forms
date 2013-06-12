@@ -10,7 +10,8 @@ define(function () {
       this.$el.attr('data-name', element.attributes.name);
       this.$el.data('model', element);
       this.bindRivets();
-      element.on('change:value', this.renderErrors, this);
+      // temporarily disable validation
+      //element.on('change:value', this.renderErrors, this);
       element.on('change:hidden', this.onChangeHidden, this);
     },
     remove: function () {
