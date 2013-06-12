@@ -65,7 +65,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           element = form.getElement('calculation'),
           view = element.attributes._view;
 
-        // TODO: asserts
+        assert.lengthOf(view.$el.children('label'), 1);
+        assert.lengthOf(view.$el.children('[data-rv-html]'), 1);
       });
 
     }); // END: suite('Form', ...)
