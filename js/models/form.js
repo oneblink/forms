@@ -95,10 +95,9 @@ define(function (require) {
         promises = [];
 
       this.attributes.elements.forEach(function (el) {
-        var attrs = el.attributes,
-          type = attrs.type,
-          val,
-          dfrd;
+        var attrs, type, val, dfrd, blob;
+        attrs = el.attributes;
+        type = attrs.type;
 
         if (!attrs.persist) {
           return;
@@ -110,6 +109,14 @@ define(function (require) {
             dfrd.resolve();
           });
           promises.push(dfrd.promise);
+          return;
+        }
+        if (type === 'file') {
+          blob = attrs.blob;
+          if (blob && blob.type && (blob.base64 || blob.text)) {
+            data[el.attributes.name] = blob.base64 || blob.text;
+            data[el.attributes.name + '_mimetype'] = blob.type;
+          }
           return;
         }
         val = el.val();
