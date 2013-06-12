@@ -119,6 +119,13 @@ define(function (require) {
           }
           return;
         }
+        if (type === 'location') {
+          val = attrs.value;
+          if (val) {
+            data[el.attributes.name] = JSON.stringify(val);
+          }
+          return;
+        }
         val = el.val();
         if (val || typeof val === 'number') {
           data[el.attributes.name] = val;
