@@ -1,7 +1,7 @@
 /*global suite, test, setup, teardown, suiteSetup, suiteTeardown*/ // mocha
 /*global assert:true*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'BIC', 'signaturePad'], function (Forms) {
 
   suite('8: blobs', function () {
     var $page = $('[data-role=page]'),

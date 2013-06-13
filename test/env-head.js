@@ -10,12 +10,17 @@
     paths: {
       BlinkForms: '../../BlinkForms-jQueryMobile',
       BIC: '../sample-bic',
-      'BMP.Blob': '../lib/bmp-blobs'
+      'BMP.Blob': '../lib/bmp-blobs',
+      signaturePad: 'http://cdnp.blinkm.co/signaturepad/2.3.0/jq.sig.min'
     },
     shim: {
       'BMP.Blob': {
         depends: ['jquery', 'underscore'],
         exports: 'BMP'
+      },
+      signaturePad: {
+        deps: ['jquery'],
+        exports: '$'
       }
     }
   });

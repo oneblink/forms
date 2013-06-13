@@ -32,7 +32,8 @@ module.exports = function (grunt) {
         'js/lib/**',
         'js/build/**',
         'BlinkForms*.js',
-        'test/lib/*'
+        'test/lib/**/*',
+        'vendor/**/*'
       ],
       directives: {
         browser: true,
@@ -86,7 +87,9 @@ module.exports = function (grunt) {
             rivets: 'empty:',
             // testing libraries
             chai: 'empty:',
-            mocha: 'empty:'
+            mocha: 'empty:',
+            // Require.JS plugins
+            text: '../vendor/text'
           },
           modules: [
             {
@@ -154,8 +157,8 @@ module.exports = function (grunt) {
       src: {
         files: [
           'Gruntfile.js',
-          'js/**/*.js',
-          '!js/build/**/*.js',
+          'js/**/*',
+          '!js/build/**/*',
           'parts/*'
         ],
         tasks: 'default'

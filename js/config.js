@@ -6,7 +6,7 @@ require.config({
     mocha: 'lib/mocha-1.7.4',
     // boot / entry points
     BlinkForms: '../BlinkForms-jQueryMobile.min',
-    testRunner: '../test/runner'
+    signaturePad: 'http://cdnp.blinkm.co/signaturepad/2.3.0/jq.sig.min'
   },
   shim: {
     chai: {
@@ -14,6 +14,10 @@ require.config({
     },
     mocha: {
       exports: 'mocha'
+    },
+    signaturePad: {
+      deps: ['jquery'],
+      exports: '$'
     }
   }
 });
