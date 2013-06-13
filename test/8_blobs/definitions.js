@@ -75,6 +75,14 @@ define(function () {
               label: 'Location',
               type: 'location'
             }
+          },
+          {
+            default: {
+              name: 'draw',
+              label: 'Sign',
+              type: 'draw',
+              size: 'signature'
+            }
           }
         ]
       }

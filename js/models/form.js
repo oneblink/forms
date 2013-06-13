@@ -111,7 +111,7 @@ define(function (require) {
           promises.push(dfrd.promise);
           return;
         }
-        if (type === 'file') {
+        if (type === 'file' || type === 'draw') {
           blob = attrs.blob;
           if (blob && blob.type && (blob.base64 || blob.text)) {
             data[el.attributes.name] = blob.base64 || blob.text;

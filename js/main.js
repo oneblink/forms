@@ -26,7 +26,8 @@ define(function (require) {
     SelectElement: require('models/elements/select'),
     MultiElement: require('models/elements/multi'),
     LocationElement: require('models/elements/location'),
-    FileElement: require('models/elements/file')
+    FileElement: require('models/elements/file'),
+    DrawElement: require('models/elements/draw')
   };
 
   /**

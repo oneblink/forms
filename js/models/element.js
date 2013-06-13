@@ -83,9 +83,6 @@ define(function () {
       this.removeView();
 
       switch (attrs.type) {
-      case 'file':
-        View = Forms._views.FileElement;
-        break;
       case 'subForm':
         View = Forms._views.SubFormElement;
         break;
@@ -174,6 +171,9 @@ define(function () {
       }
       // TODO: determine Element type and select sub-Prototype
       switch (attrs.type) {
+      case 'draw':
+        TypedElement = Forms._models.DrawElement;
+        break;
       case 'file':
         TypedElement = Forms._models.FileElement;
         break;
