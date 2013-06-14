@@ -1,0 +1,9 @@
+{
+  "MAX": "must not be higher than {MAX}",
+  "MIN": "must not be lower than {MIN}",
+  "MAXDECIMALS": "no more than {MAX} {MAX, plural, one{value} other{values}} after the decimal",
+  "MINDECIMALS": "needs at least {MIN} {MIN, plural, one{value} other{values}} after the decimal",
+  "MAXLENGTH": "no longer than {MAX} {MAX, plural, one{character} other{characters}}",
+  "PATTERN": "must match this pattern: {PATTERN}",
+  "REQUIRED": "must not be empty"
+}

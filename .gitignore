@@ -2,6 +2,7 @@
 node_modules
 js/build
 /BlinkForms*.js*
+i18n.js
 
 # JetBrains IntelliJ IDEA files
 /.idea

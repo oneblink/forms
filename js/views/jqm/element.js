@@ -10,8 +10,6 @@ define(function () {
       this.$el.attr('data-name', element.attributes.name);
       this.$el.data('model', element);
       this.bindRivets();
-      // temporarily disable validation
-      //element.on('change:value', this.renderErrors, this);
       element.on('change:errors', this.renderErrors, this);
       element.on('change:hidden', this.onChangeHidden, this);
     },
@@ -35,27 +33,37 @@ define(function () {
       throw new Error('Element.render is only an interface');
     },
     renderErrors: function () {
-      var $errorList, errors, $errorElement, $el;
+      var attrs, $errorList, errors, $errorElement, i18n;
+      attrs = this.model.attributes;
+      i18n = window.i18n['BMP/Forms/validation'];
       // TODO: do this via bindings with rivets
       if (this.$el.children('ul').length > 0) {
         this.$el.children('ul').remove();
       }
       $errorList = $(document.createElement('ul'));
-      errors = this.model.attributes.errors || {};
+      errors = attrs.errors || {};
 
       if (!_.isEmpty(errors)) {
         _.each(errors.value, function (error) {
+          var text, fn;
           $errorElement = $(document.createElement('li'));
-          $errorElement.text(error.code || error);
+          fn = _.isFunction(i18n[error.code]) && i18n[error.code];
+          if (error.code === 'PATTERN') {
+            text = attrs.hint || attrs.toolTip || attrs.title;
+          }
+          if (!text) {
+            text = fn ? fn(error) : JSON.stringify(error);
+          }
+          $errorElement.text(text);
           $errorList.append($errorElement);
         });
       }
-      $el = this.$el.find('[data-rv-value]');
-      if ($el.length && $el[0].checkValidity && !$el[0].checkValidity()) {
-        $errorElement = $(document.createElement('li'));
-        $errorElement.text('checkValidity error');
-        $errorList.append($errorElement);
-      }
+//      $el = this.$el.find('[data-rv-value]');
+//      if ($el.length && $el[0].checkValidity && !$el[0].checkValidity()) {
+//        $errorElement = $(document.createElement('li'));
+//        $errorElement.text('checkValidity error');
+//        $errorList.append($errorElement);
+//      }
       if (this.$el.children('ul').length === 0 && !_.isEmpty(errors)) {
         this.$el.append($errorList);
       }

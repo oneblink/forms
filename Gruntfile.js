@@ -13,6 +13,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jslint');
+  grunt.loadNpmTasks('grunt-messageformat');
   grunt.loadNpmTasks('grunt-mocha');
 
   grunt.initConfig({
@@ -25,12 +26,14 @@ module.exports = function (grunt) {
 
     jslint: {
       files: [
-        '**/*.js'
+        '**/*.js',
+        '**/*.json'
       ],
       exclude: [
         'node_modules/**',
         'js/lib/**',
         'js/build/**',
+        'js/locales/**/i18n.js',
         'BlinkForms*.js',
         'test/lib/**/*',
         'vendor/**/*'
@@ -59,6 +62,14 @@ module.exports = function (grunt) {
       options: {
         errorsOnly: true,
         failOnError: true
+      }
+    },
+
+    messageformat: {
+      en: {
+        locale: 'en',
+        inputdir: 'js/locales/en',
+        output: 'js/locales/en/i18n.js'
       }
     },
 
@@ -138,7 +149,10 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          'BlinkForms-jQueryMobile.min.js': ['BlinkForms-jQueryMobile.js']
+          'BlinkForms-jQueryMobile.min.js': [
+            'BlinkForms-jQueryMobile.js',
+            'js/locales/en/i18n.js'
+          ]
         }
       }
 
@@ -159,6 +173,7 @@ module.exports = function (grunt) {
           'Gruntfile.js',
           'js/**/*',
           '!js/build/**/*',
+          '!js/locales/**/i18n.js',
           'parts/*'
         ],
         tasks: 'default'
@@ -180,6 +195,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean',
+    'messageformat',
     'requirejs',
     'concat',
     'uglify'

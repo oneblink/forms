@@ -11,10 +11,10 @@ define(['models/element'], function (Element) {
         attrs = this.attributes;
       }
 
-      if (attrs.value) {
-        if (attrs.value.length > attrs.maxlength) {
+      if (attrs.value && attrs.maxLength) {
+        if (attrs.value.length > attrs.maxLength) {
           errors.value = errors.value || [];
-          errors.value.push({code: 'max length error'});
+          errors.value.push({code: 'MAXLENGTH', MAX: attrs.maxLength});
         }
       }
       if (!_.isEmpty(errors)) {

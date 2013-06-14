@@ -56,7 +56,7 @@ define(function () {
               toolTip: 'Enter City Name',
               required: true,
               pattern: '^[a-zA-Z]',
-              maxlength: 20
+              maxLength: 20
             }
           },
           {

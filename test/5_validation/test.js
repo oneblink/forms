@@ -2,7 +2,11 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 /*global assert:true*/ // chai
 
-define(['underscore', 'BlinkForms', 'BIC'], function (_, Forms) {
+define([
+  'underscore',
+  'BlinkForms',
+  'BIC'
+], function (_, Forms) {
 
   suite('5: validation', function () {
     var $page = $('[data-role=page]'),

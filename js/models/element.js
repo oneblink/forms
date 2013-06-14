@@ -37,6 +37,7 @@ define(function () {
           this.set('label', attrs.name);
         }
       }
+      this.on('change', this.updateErrors, this);
     },
     validate: function (attrs) {
       var errors = {};
@@ -50,9 +51,12 @@ define(function () {
       if (attrs.pattern && attrs.value &&
           !(new RegExp(attrs.pattern).test(attrs.value))) {
         errors.value = errors.value || [];
-        errors.value.push({code: 'Pattern Mismatch error'});
+        errors.value.push({code: 'PATTERN', PATTERN: attrs.pattern});
       }
       return _.isEmpty(errors) ? undefined : errors;
+    },
+    updateErrors: function () {
+      this.set('errors', this.validate());
     },
     removeView: function () {
       var attrs = this.attributes;
@@ -67,6 +71,7 @@ define(function () {
       delete attrs.page;
       delete attrs.section;
       this.id = null; // to prevent "sync"
+      this.off(null, null, this);
       return Backbone.Model.prototype.destroy.call(this, options);
     },
     /**

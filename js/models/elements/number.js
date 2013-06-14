@@ -52,20 +52,20 @@ define(['models/element'], function (Element) {
       if (attrs.value) {
         if (this.validators.maxValue(attrs.value, attrs.max)) {
           errors.value = errors.value || [];
-          errors.value.push({code: 'max value error'});
+          errors.value.push({code: 'MAX', MAX: attrs.max});
         }
         if (this.validators.minValue(attrs.value, attrs.min)) {
           errors.value = errors.value || [];
-          errors.value.push({code: 'min value error'});
+          errors.value.push({code: 'MIN', MIN: attrs.min});
         }
         if (!this.validators.maxDecimals(attrs.value, attrs.maxDecimals)) {
           errors.value = errors.value || [];
-          errors.value.push({code: 'maximum decimal places error'});
+          errors.value.push({code: 'MAXDECIMALS', MAX: attrs.maxDecimals});
         }
         if (attrs.minDecimals && !this.validators.minDecimals(attrs.value,
             attrs.minDecimals)) {
           errors.value = errors.value || [];
-          errors.value.push({code: 'minimum decimal places error'});
+          errors.value.push({code: 'MINDECIMALS', MIN: attrs.minDecimals});
         }
       }
       return _.isEmpty(errors) ? undefined : errors;
