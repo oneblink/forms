@@ -1,10 +1,12 @@
 
   require(['models/expression'], function (Expression) {
     BMP.Expression = Expression;
-  })
+  });
 
-  require(['main', 'views/jqm'], function(Forms, Views) {
-    Forms._views = Views;
+  require(['main'], function(Forms) {
+    try {
+      Forms._views = require('views/jqm');
+    } catch (err) {}
   });
 
   return BMP.Forms;

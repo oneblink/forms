@@ -18,7 +18,7 @@
     definition($, _, Backbone, rivets, Q);
   }
 }(function($, _, Backbone, rivets, Q) {
-  'use strict';
+  "use strict";
 /*jslint sloppy:false*/ // let JSLint bug us again about ES5 strict mode
   // establish globals
   var BMP = window['BMP'] = window['BMP'] || {};

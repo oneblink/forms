@@ -65,5 +65,5 @@ In the root of the project's working directory, run:
     grunt
 
 This installs the required plugins for Grunt, and then uses Grunt to
-build the project.
-
+build the project into `js/build`. For the jQueryMobile version of Forms v3,
+check the `js/build/views/` directory.

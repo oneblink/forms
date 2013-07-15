@@ -108,54 +108,40 @@ module.exports = function (grunt) {
             },
             {
               name: 'views/jqm',
-              exclude: ['main']
+              include: ['main']
             }
-          ]
+          ],
+          wrap: {
+            startFile: [
+              'parts/00-start.frag',
+              'js/lib/almond-0.2.5.js'
+            ],
+            endFile: [
+              'parts/99-end.frag',
+              'js/locales/en/i18n.js'
+            ]
+          }
         }
       }
     },
 
-    concat: {
-      core: {
-        src: [
-          'parts/00-start.frag',
-          'js/lib/almond-0.2.5.js',
-          'js/build/main.js',
-          'parts/99-end-core.frag'
-        ],
-        dest: 'BlinkForms.js',
-        nonull: true
-      },
-      jqm: {
-        src: [
-          'parts/00-start.frag',
-          'js/lib/almond-0.2.5.js',
-          'js/build/main.js',
-          'js/build/views/jqm.js',
-          'parts/99-end-jqm.frag'
-        ],
-        dest: 'BlinkForms-jQueryMobile.js',
-        nonull: true
-      }
-    },
-
     uglify: {
-      default: {
+      'Forms3+jQM': {
         options: {
-          sourceMap: 'BlinkForms-jQueryMobile.js.map',
+          sourceMap: 'js/build/views/jqm.js.map',
+          sourceMappingURL: 'jqm.js.map', // fix reference in .min.js
+          sourceMapPrefix: 3, // fix reference in .js.map
           beautify: {
             width: 80,
             max_line_len: 80
           }
         },
         files: {
-          'BlinkForms-jQueryMobile.min.js': [
-            'BlinkForms-jQueryMobile.js',
-            'js/locales/en/i18n.js'
+          'js/build/views/jqm.min.js': [
+            'js/build/views/jqm.js'
           ]
         }
       }
-
     },
 
     mocha: {
@@ -168,15 +154,26 @@ module.exports = function (grunt) {
     },
 
     watch: {
+      i18n: {
+        files: [
+          '!js/locales/**/*',
+          '!js/locales/**/i18n.js'
+        ],
+        tasks: 'messageformat'
+      },
       src: {
         files: [
           'Gruntfile.js',
           'js/**/*',
+          'js/locales/**/i18n.js',
           '!js/build/**/*',
-          '!js/locales/**/i18n.js',
           'parts/*'
         ],
-        tasks: 'default'
+        tasks: [
+          'clean',
+          'requirejs',
+          'uglify'
+        ]
       },
       tests: {
         files: [
@@ -197,7 +194,6 @@ module.exports = function (grunt) {
     'clean',
     'messageformat',
     'requirejs',
-    'concat',
     'uglify'
   ]);
 
