@@ -6,8 +6,8 @@ define(['models/page'], function (Page) {
       if (!_.isNumber(index)) {
         index = 0;
       }
+      self.current = null;
       this.forEach(function (page, number) {
-        self.current = null;
         if (number === index) {
           self.current = page;
           page.show();
@@ -18,5 +18,3 @@ define(['models/page'], function (Page) {
     }
   });
 });
-
-

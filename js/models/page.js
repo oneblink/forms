@@ -92,6 +92,12 @@ define(function (require) {
     hide: function () {
       var view = this.attributes._view;
       view.hide();
+    },
+    index: function () {
+      var form = this.attributes.form,
+        pages = form.attributes.pages;
+
+      return pages.indexOf(this);
     }
   }, {
     // static properties
