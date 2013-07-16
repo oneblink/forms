@@ -1,5 +1,6 @@
 define(function (require) {
   var Elements = require('collections/elements'),
+    Pages = require('collections/pages'),
     Form;
 
   Form = Backbone.Model.extend({
@@ -17,11 +18,11 @@ define(function (require) {
       delete this.attributes._pages;
       if (pages && _.isArray(pages)) {
         // TODO: allow pages to be redeclared per-action
-        pages = _.map(pages, function (p) {
+        pages = new Pages(_.map(pages, function (p) {
           return Page.create(p, self);
-        });
+        }));
       } else {
-        pages = [];
+        pages = new Pages();
       }
       this.attributes.pages = pages;
 
@@ -36,7 +37,6 @@ define(function (require) {
         elements = [];
       }
       this.attributes.elements = new Elements(elements);
-
 
       behaviours = this.attributes._behaviours;
       delete this.attributes._behaviours;
@@ -78,7 +78,7 @@ define(function (require) {
       while (pages.length <= index) {
         pages.push(Page.create({}, this));
       }
-      return pages[index];
+      return pages.at(index);
     },
     /**
      * official Blink API

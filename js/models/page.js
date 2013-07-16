@@ -84,6 +84,14 @@ define(function (require) {
       section = sections.get(name);
       this.add(section);
       return section;
+    },
+    show: function () {
+      var view = this.attributes._view;
+      view.show();
+    },
+    hide: function () {
+      var view = this.attributes._view;
+      view.hide();
     }
   }, {
     // static properties

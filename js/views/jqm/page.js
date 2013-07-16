@@ -1,30 +1,16 @@
-define(function () {
-  var PageView = Backbone.View.extend({
+define(['views/jqm/section'], function (SectionView) {
+  var PageView = SectionView.extend({
     tagName: 'section',
     initialize: function () {
-      var attrs = this.model.attributes;
-      if (attrs.class) {
-        this.$el.addClass(attrs.class);
-      }
+      var section = this.model;
+      this.$el.attr('data-name', section.attributes.name);
+      SectionView.prototype.initialize.call(this);
     },
     render: function () {
-      var self = this;
-
-      this.$el.empty();
-      this.model.get('elements').forEach(function (el) {
-        var view = el.attributes._view,
-          type = el.attributes.type;
-
-        view.render();
-        if (type === 'hidden') {
-          self.$el.prepend(view.el);
-        } else {
-          self.$el.append(view.el);
-        }
-      });
+      SectionView.prototype.render.call(this);
+      this.$el.hide();
     }
   });
 
   return PageView;
 });
-

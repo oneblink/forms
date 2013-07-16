@@ -15,13 +15,13 @@ define(function () {
       this.$el.empty();
       this.$el.attr('data-form', this.model.attributes.name);
       this.$el.data('model', this.model);
-      _.forEach(pages, function (page) {
+      pages.forEach(function (page) {
         var view = page.attributes._view;
 
         view.render();
         self.$el.append(view.el);
       });
-
+      pages.goto(0);
     }
   });
 
