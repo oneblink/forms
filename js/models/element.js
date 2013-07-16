@@ -101,12 +101,12 @@ define(function () {
         View = Forms._views.BooleanElement;
         break;
       case 'select':
-        mode = attrs.mode;
+        mode = attrs.mode || 'collapsed';
         mode = mode[0].toUpperCase() + mode.substring(1);
         View = Forms._views['Choice' + mode + 'Element'];
         break;
       case 'multi':
-        mode = attrs.mode;
+        mode = attrs.mode || 'collapsed';
         mode = mode[0].toUpperCase() + mode.substring(1);
         View = Forms._views['Choice' + mode + 'Element'];
         break;
