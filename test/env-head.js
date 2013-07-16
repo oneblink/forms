@@ -8,7 +8,7 @@
 
   window.require.config({
     paths: {
-      BlinkForms: '../../js/build/views/jqm.min',
+      BlinkForms: '../../js/build/views/forms3jqm.min',
       BIC: '../sample-bic',
       'BMP.Blob': '../lib/bmp-blobs',
       signaturePad: 'http://cdnp.blinkm.co/signaturepad/2.3.0/jq.sig.min'

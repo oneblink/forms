@@ -107,7 +107,7 @@ module.exports = function (grunt) {
               name: 'main'
             },
             {
-              name: 'views/jqm',
+              name: 'views/forms3jqm',
               include: ['main']
             }
           ],
@@ -128,8 +128,8 @@ module.exports = function (grunt) {
     uglify: {
       'Forms3+jQM': {
         options: {
-          sourceMap: 'js/build/views/jqm.js.map',
-          sourceMappingURL: 'jqm.js.map', // fix reference in .min.js
+          sourceMap: 'js/build/views/forms3jqm.js.map',
+          sourceMappingURL: 'forms3jqm.js.map', // fix reference in .min.js
           sourceMapPrefix: 3, // fix reference in .js.map
           beautify: {
             width: 80,
@@ -137,8 +137,8 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          'js/build/views/jqm.min.js': [
-            'js/build/views/jqm.js'
+          'js/build/views/forms3jqm.min.js': [
+            'js/build/views/forms3jqm.js'
           ]
         }
       }
