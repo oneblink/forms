@@ -95,7 +95,7 @@ define(['jquery', 'underscore', 'q', 'BlinkForms', 'definitions', 'BMP.Blob'],
     $submitPopup.popup();
 
     $(document.body).on('click', 'button[data-action=submit]', function () {
-      Forms.currentFormObject.data().then(function (data) {
+      Forms.current.data().then(function (data) {
         var json = JSON.stringify(data, undefined, 2);
         $submitPopup.empty();
         $submitPopup.append('<pre>' + json + '</pre>');

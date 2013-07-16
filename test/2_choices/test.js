@@ -13,7 +13,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
      */
     suiteSetup(function () {
       $content.empty();
-      delete Forms.currentFormObject;
+      delete Forms.current;
     });
 
     suite('Form', function () {
@@ -29,7 +29,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           assert.fail(true, false, 'getDefinition failed!');
         }).done(function (def) {
           Forms.initialize(def);
-          form = Forms.currentFormObject;
+          form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
           assert.equal(form.get('label'), 'Form 1');
@@ -39,7 +39,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('render form for jQuery Mobile', function () {
-        var form = Forms.currentFormObject;
+        var form = Forms.current;
 
         $content.append(form.$form);
 
@@ -49,7 +49,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('select-1 collapsed', function () {
-        var form = Forms.currentFormObject,
+        var form = Forms.current,
           element = form.getElement('selectc'),
           $fieldset = element.attributes._view.$el,
           $span = $fieldset.find('.ui-btn-text');
@@ -69,7 +69,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('select-multi collapsed', function () {
-        var form = Forms.currentFormObject,
+        var form = Forms.current,
           element = form.getElement('multic'),
           $fieldset = element.attributes._view.$el,
           $span = $fieldset.find('.ui-btn-text');
@@ -89,7 +89,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('select-1 expanded', function () {
-        var form = Forms.currentFormObject,
+        var form = Forms.current,
           element = form.getElement('selecte'),
           $fieldset = element.attributes._view.$el;
 
@@ -108,7 +108,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('select-multi expanded', function () {
-        var form = Forms.currentFormObject,
+        var form = Forms.current,
           element = form.getElement('multie'),
           $fieldset = element.attributes._view.$el;
 

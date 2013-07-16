@@ -26,7 +26,7 @@ define(function (require) {
    * @param {Node|jQuery} element where to start looking.
    */
   Forms.getForm = function (element) {
-    var cfo = Forms.currentFormObject,
+    var cfo = Forms.current,
       $element = element instanceof $ ? element : $(element),
       $next = $element.closest('[data-form]'),
       form;
@@ -41,7 +41,7 @@ define(function (require) {
       $next = $element.parent().closest('[data-form]');
     }
     if (cfo && cfo.$form && cfo.$form.parent().length > 0) {
-      return Forms.currentFormObject;
+      return Forms.current;
     }
     return null;
   };

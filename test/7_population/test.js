@@ -12,7 +12,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
      */
     suiteSetup(function () {
       $content.empty();
-      delete Forms.currentFormObject;
+      delete Forms.current;
     });
 
     suite('Form', function () {
@@ -28,7 +28,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           assert.fail(true, false, 'getDefinition failed!');
         }).done(function (def) {
           Forms.initialize(def);
-          form = Forms.currentFormObject;
+          form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
           assert.equal(form.get('label'), 'Form 1');
@@ -38,7 +38,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('render form for jQuery Mobile', function () {
-        var form = Forms.currentFormObject;
+        var form = Forms.current;
 
         $content.append(form.$form);
 
@@ -66,26 +66,26 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       };
 
       test('promise is resolved', function (done) {
-        Forms.currentFormObject.setRecord(record).done(function () {
+        Forms.current.setRecord(record).done(function () {
           assert(true, 'success handler for promise called');
           done();
         });
       });
 
       test('"name" element populated', function () {
-        var form = BMP.Forms.currentFormObject;
+        var form = BMP.Forms.current;
         assert.equal(form.getElement('name').val(), 'Harry Potter');
       });
 
       test('"comments" has 2 subRecords', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           comments = form.getElement('comments');
 
         assert.equal(comments.size(), 2);
       });
 
       test('"comment[0]" populated correctly', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           sub = form.getElement('comments').getForm(0),
           comment = sub.getElement('comment');
 
@@ -93,7 +93,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('"comment[1]" populated correctly', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           sub = form.getElement('comments').getForm(1),
           comment = sub.getElement('comment');
 
@@ -121,21 +121,21 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         };
 
         test('promise is resolved', function (done) {
-          Forms.currentFormObject.setRecord(record).done(function () {
+          Forms.current.setRecord(record).done(function () {
             assert(true, 'success handler for promise called');
             done();
           });
         });
 
         test('"comments" has 3 subRecords', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             comments = form.getElement('comments');
 
           assert.equal(comments.size(), 3);
         });
 
         test('"comment[0]" populated correctly', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             sub = form.getElement('comments').getForm(0),
             comment = sub.getElement('comment');
 
@@ -143,7 +143,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('"comment[1]" populated correctly', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             sub = form.getElement('comments').getForm(1),
             comment = sub.getElement('comment');
 
@@ -151,7 +151,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('"comment[2]" populated correctly', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             sub = form.getElement('comments').getForm(2),
             comment = sub.getElement('comment');
 
@@ -173,21 +173,21 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         };
 
         test('promise is resolved', function (done) {
-          Forms.currentFormObject.setRecord(record).done(function () {
+          Forms.current.setRecord(record).done(function () {
             assert(true, 'success handler for promise called');
             done();
           });
         });
 
         test('"comments" has 1 subRecord', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             comments = form.getElement('comments');
 
           assert.equal(comments.size(), 1);
         });
 
         test('"comment[0]" populated correctly', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             sub = form.getElement('comments').getForm(0),
             comment = sub.getElement('comment');
 

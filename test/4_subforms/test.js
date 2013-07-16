@@ -14,7 +14,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
      */
     suiteSetup(function () {
       $content.empty();
-      delete Forms.currentFormObject;
+      delete Forms.current;
     });
 
     suite('Form', function () {
@@ -30,7 +30,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           assert.fail(true, false, 'getDefinition failed!');
         }).done(function (def) {
           Forms.initialize(def);
-          form = Forms.currentFormObject;
+          form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
           assert.equal(form.get('label'), 'Form 1');
@@ -40,7 +40,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('render form for jQuery Mobile', function (done) {
-        var form = Forms.currentFormObject;
+        var form = Forms.current;
 
         $content.append(form.$form);
 
@@ -58,7 +58,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     suite('Sub-Forms', function () {
 
       test('add 1st subForm', function (done) {
-        var subFormElement = Forms.currentFormObject.getElement('comments'),
+        var subFormElement = Forms.current.getElement('comments'),
           $view = subFormElement.attributes._view.$el,
           $add = $view.children('.ui-btn').children('button'),
           subForms = subFormElement.attributes.forms;
@@ -71,7 +71,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('add 2nd subForm', function (done) {
-        var subFormElement = Forms.currentFormObject.getElement('comments'),
+        var subFormElement = Forms.current.getElement('comments'),
           $view = subFormElement.attributes._view.$el,
           $add = $view.children('.ui-btn').children('button'),
           subForms = subFormElement.attributes.forms;
@@ -84,7 +84,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('test subForms', function (done) {
-        var subFormElement = Forms.currentFormObject.getElement('comments'),
+        var subFormElement = Forms.current.getElement('comments'),
           subForms = subFormElement.attributes.forms,
           testData = [
             { comment: 'abc' },
@@ -97,7 +97,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         subFormElement.data()
           .then(function (d) {
             assert.deepEqual(d, testData, 'subFormElement data');
-            return Forms.currentFormObject.data();
+            return Forms.current.data();
           })
           .then(function (d) {
             assert.deepEqual(d.comments, testData, 'total form data');
@@ -106,7 +106,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('remove 1st subForm', function (done) {
-        var subFormElement = Forms.currentFormObject.getElement('comments'),
+        var subFormElement = Forms.current.getElement('comments'),
           subForms = subFormElement.attributes.forms,
           subForm = subForms.at(0),
           $view = subForm.attributes._view.$el,
@@ -119,7 +119,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('test subForms', function (done) {
-        var subFormElement = Forms.currentFormObject.getElement('comments'),
+        var subFormElement = Forms.current.getElement('comments'),
           subForms = subFormElement.attributes.forms,
           testData = [
             { comment: 'def' }
@@ -130,7 +130,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         subFormElement.data()
           .then(function (d) {
             assert.deepEqual(d, testData, 'subFormElement data');
-            return Forms.currentFormObject.data();
+            return Forms.current.data();
           })
           .then(function (d) {
             assert.deepEqual(d.comments, testData, 'total form data');

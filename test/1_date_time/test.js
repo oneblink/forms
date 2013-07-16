@@ -13,7 +13,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
      */
     suiteSetup(function () {
       $content.empty();
-      delete Forms.currentFormObject;
+      delete Forms.current;
     });
 
     suite('Form', function () {
@@ -31,7 +31,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
         def.done(function (def) {
           Forms.initialize(def);
-          form = Forms.currentFormObject;
+          form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
           assert.equal(form.get('label'), 'Form 1');
@@ -41,7 +41,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('render form for jQuery Mobile', function () {
-        var form = Forms.currentFormObject;
+        var form = Forms.current;
 
         $content.append(form.$form);
 

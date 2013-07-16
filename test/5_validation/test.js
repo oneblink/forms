@@ -14,7 +14,7 @@ define([
 
     suiteSetup(function () {
       $content.empty();
-      delete Forms.currentFormObject;
+      delete Forms.current;
     });
 
     suite('Form', function () {
@@ -30,7 +30,7 @@ define([
           assert.fail(true, false, 'getDefinition failed!');
         }).done(function (def) {
           Forms.initialize(def);
-          form = Forms.currentFormObject;
+          form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
           assert.equal(form.get('label'), 'Form 1');
@@ -40,7 +40,7 @@ define([
       });
 
       test('render form for jQuery Mobile', function () {
-        var form = Forms.currentFormObject;
+        var form = Forms.current;
 
         $content.append(form.$form);
 
@@ -54,7 +54,7 @@ define([
     suite('Validation', function () {
 
       test('required text', function () {
-        var form = Forms.currentFormObject,
+        var form = Forms.current,
           element = form.getElement('city'),
           requiredError;
 
@@ -71,7 +71,7 @@ define([
         element.val('Gosford');
       });
       test('max length test', function () {
-        var form = Forms.currentFormObject,
+        var form = Forms.current,
           element = form.getElement('city');
 
         element.val('GosfordGosfordGosfordGosford');//max length fixed is 20
@@ -80,7 +80,7 @@ define([
       });
 
       test('pattern test', function () {
-        var form = Forms.currentFormObject,
+        var form = Forms.current,
           element = form.getElement('city');
 
         element.val('12Gosford');
@@ -89,7 +89,7 @@ define([
       });
 
       test('Min/Max Value Check', function () {
-        var form = Forms.currentFormObject,
+        var form = Forms.current,
           element = form.getElement('number');
 
         assert.isUndefined(element.validate(), 'no validation error');
@@ -103,7 +103,7 @@ define([
       });
 
       test('Max Decimal Places Check', function () {
-        var form = Forms.currentFormObject,
+        var form = Forms.current,
           element = form.getElement('number');
 
         element.val(45.1);
@@ -118,7 +118,7 @@ define([
       });
 
       test('Min Decimal Places Check', function () {
-        var form = Forms.currentFormObject,
+        var form = Forms.current,
           element = form.getElement('currency');
 
         element.val(45.163);

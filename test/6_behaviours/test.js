@@ -13,7 +13,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
      */
     suiteSetup(function () {
       $content.empty();
-      delete Forms.currentFormObject;
+      delete Forms.current;
     });
 
     suite('Form', function () {
@@ -29,7 +29,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           assert.fail(true, false, 'getDefinition failed!');
         }).done(function (def) {
           Forms.initialize(def);
-          form = Forms.currentFormObject;
+          form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
           assert.equal(form.get('label'), 'Form 1');
@@ -39,7 +39,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('render form for jQuery Mobile', function () {
-        var form = Forms.currentFormObject;
+        var form = Forms.current;
 
         $content.append(form.$form);
 
@@ -53,7 +53,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     suite('Message', function () {
 
       test('defaults to persist=false (no storage)', function (done) {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('message');
 
         assert.isFalse(element.get('persist'));
@@ -65,7 +65,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('persist=true submits message HTML', function (done) {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('message');
 
         element.set('persist', true);
@@ -78,7 +78,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       suiteTeardown(function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('message');
 
         element.set('persist', false);
@@ -89,19 +89,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     suite('Behaviours: set one Element value at a time', function () {
 
       suiteSetup(function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('text');
 
         element.val('');
       });
 
       test('per-definition, 3 Behaviours are defined', function () {
-        var form = BMP.Forms.currentFormObject;
+        var form = BMP.Forms.current;
         assert.lengthOf(form.attributes.behaviours, 3);
       });
 
       test('Text is visible', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('text'),
           view = element.attributes._view;
 
@@ -109,7 +109,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('per-definition, Email is initially hidden', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('email'),
           view = element.attributes._view;
 
@@ -117,7 +117,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('per-definition, Number is initially hidden', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('number'),
           view = element.attributes._view;
 
@@ -125,7 +125,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('record data does not include hidden fields', function (done) {
-        var form = BMP.Forms.currentFormObject;
+        var form = BMP.Forms.current;
         form.data().done(function (data) {
           assert.notProperty(data, 'email');
           assert.notProperty(data, 'number');
@@ -136,14 +136,14 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       suite('after Text=abc', function () {
 
         suiteSetup(function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('text');
 
           element.val('abc');
         });
 
         test('Text is visible', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('text'),
             view = element.attributes._view;
 
@@ -151,7 +151,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('Email is visible', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('email'),
             view = element.attributes._view;
 
@@ -159,7 +159,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('Number is still hidden', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('number'),
             view = element.attributes._view;
 
@@ -167,7 +167,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('record data does not include hidden fields', function (done) {
-          var form = BMP.Forms.currentFormObject;
+          var form = BMP.Forms.current;
           form.data().done(function (data) {
             assert.notProperty(data, 'number');
             done();
@@ -177,14 +177,14 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         suite('after Email=abc@abc.com', function () {
 
           suiteSetup(function () {
-            var form = BMP.Forms.currentFormObject,
+            var form = BMP.Forms.current,
               element = form.getElement('email');
 
             element.val('abc@abc.com');
           });
 
           test('Text is visible', function () {
-            var form = BMP.Forms.currentFormObject,
+            var form = BMP.Forms.current,
               element = form.getElement('text'),
               view = element.attributes._view;
 
@@ -192,7 +192,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           });
 
           test('Email is visible', function () {
-            var form = BMP.Forms.currentFormObject,
+            var form = BMP.Forms.current,
               element = form.getElement('email'),
               view = element.attributes._view;
 
@@ -200,7 +200,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           });
 
           test('Number is visible', function () {
-            var form = BMP.Forms.currentFormObject,
+            var form = BMP.Forms.current,
               element = form.getElement('number'),
               view = element.attributes._view;
 
@@ -216,7 +216,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     suite('Behaviours: unset middle Element value', function () {
 
       suiteSetup(function () {
-        var form = BMP.Forms.currentFormObject;
+        var form = BMP.Forms.current;
 
         form.getElement('text').val('abc');
         form.getElement('email').val('abc@abc.com');
@@ -224,7 +224,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('Text is visible', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('text'),
           view = element.attributes._view;
 
@@ -232,7 +232,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('per-definition, Email is initially visible', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('email'),
           view = element.attributes._view;
 
@@ -240,7 +240,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('per-definition, Number is initially visible', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('number'),
           view = element.attributes._view;
 
@@ -248,7 +248,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('record data includes set values', function (done) {
-        var form = BMP.Forms.currentFormObject;
+        var form = BMP.Forms.current;
         form.data().done(function (data) {
           assert.equal(data.text, 'abc');
           assert.equal(data.email, 'abc@abc.com');
@@ -260,14 +260,14 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       suite('after unset Email value', function () {
 
         suiteSetup(function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('email');
 
           element.val('');
         });
 
         test('Text is visible', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('text'),
             view = element.attributes._view;
 
@@ -275,7 +275,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('Email is visible', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('email'),
             view = element.attributes._view;
 
@@ -283,7 +283,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('Number is hidden', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('number'),
             view = element.attributes._view;
 
@@ -291,7 +291,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('record data does not include hidden fields', function (done) {
-          var form = BMP.Forms.currentFormObject;
+          var form = BMP.Forms.current;
           form.data().done(function (data) {
             assert.equal(data.text, 'abc');
             assert.notProperty(data, 'email');
@@ -307,7 +307,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     suite('Behaviours: unset top Element value', function () {
 
       suiteSetup(function () {
-        var form = BMP.Forms.currentFormObject;
+        var form = BMP.Forms.current;
 
         form.getElement('text').val('abc');
         form.getElement('email').val('abc@abc.com');
@@ -315,7 +315,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('Text is visible', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('text'),
           view = element.attributes._view;
 
@@ -323,7 +323,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('per-definition, Email is initially visible', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('email'),
           view = element.attributes._view;
 
@@ -331,7 +331,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('per-definition, Number is initially visible', function () {
-        var form = BMP.Forms.currentFormObject,
+        var form = BMP.Forms.current,
           element = form.getElement('number'),
           view = element.attributes._view;
 
@@ -339,7 +339,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('record data includes set values', function (done) {
-        var form = BMP.Forms.currentFormObject;
+        var form = BMP.Forms.current;
         form.data().done(function (data) {
           assert.equal(data.text, 'abc');
           assert.equal(data.email, 'abc@abc.com');
@@ -351,14 +351,14 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       suite('after unset Text value', function () {
 
         suiteSetup(function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('text');
 
           element.val('');
         });
 
         test('Text is visible', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('text'),
             view = element.attributes._view;
 
@@ -366,7 +366,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('Email is hidden', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('email'),
             view = element.attributes._view;
 
@@ -374,7 +374,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('Number is hidden', function () {
-          var form = BMP.Forms.currentFormObject,
+          var form = BMP.Forms.current,
             element = form.getElement('number'),
             view = element.attributes._view;
 
@@ -382,7 +382,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
 
         test('record data does not include hidden fields', function (done) {
-          var form = BMP.Forms.currentFormObject;
+          var form = BMP.Forms.current;
           form.data().done(function (data) {
             assert.notProperty(data, 'text');
             assert.notProperty(data, 'email');
@@ -398,14 +398,14 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     suite('Behaviours: v2 Calculations', function () {
 
       suiteSetup(function () {
-        var form = BMP.Forms.currentFormObject;
+        var form = BMP.Forms.current;
 
         form.getElement('number').val(123);
       });
 
 
       test('record data includes set values', function (done) {
-        var form = BMP.Forms.currentFormObject;
+        var form = BMP.Forms.current;
         form.data().done(function (data) {
           assert.equal(data.calc1exp, 123);
           assert.equal(data.calc2fn, 123);
@@ -416,13 +416,13 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       suite('after unset Number value', function () {
 
         suiteSetup(function () {
-          var form = BMP.Forms.currentFormObject;
+          var form = BMP.Forms.current;
 
           form.getElement('number').val('');
         });
 
         test('record data includes Calculation fields', function (done) {
-          var form = BMP.Forms.currentFormObject;
+          var form = BMP.Forms.current;
           form.data().done(function (data) {
             assert.equal(data.calc1exp, 0);
             assert.equal(data.calc2fn, 0);

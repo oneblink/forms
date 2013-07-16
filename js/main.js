@@ -41,7 +41,7 @@ define(function (require) {
       throw new Error('unexpected Form definition structure');
     }
     form = Forms._models.Form.create(def);
-    Forms.currentFormObject = form;
+    Forms.current = form;
     view = form.attributes._view = new Forms._views.Form({model: form});
     form.$form = view.$el; // backwards-compatibility, convenience
     view.render();
