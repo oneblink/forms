@@ -7,11 +7,17 @@ define(['models/element'], function (Element) {
     },
     initializeView: function () {
       var Forms = BMP.Forms,
+        navigator = window.navigator,
         view;
 
       this.removeView();
 
-      view = new Forms._views.DrawElement({model: this});
+      if (navigator.bgtouchdraw && navigator.bgtouchdraw.getDrawing &&
+          window.BGTouchDraw) {
+        view = new Forms._views.BGDrawElement({model: this});
+      } else {
+        view = new Forms._views.DrawElement({model: this});
+      }
       this.set('_view', view);
     }
   });
