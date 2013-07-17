@@ -8,6 +8,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]'),
       getDrawingStub,
+      getPictureStub,
       getDrawingFn;
 
     getDrawingFn = function (onSuccess) {//, onError, options) {
@@ -26,6 +27,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       navigator.bgtouchdraw = {
         getDrawing: $.noop
       };
+      navigator.camera = {
+        getPicture: $.noop
+      };
 
       getDrawingStub = window.sinon.stub(navigator.bgtouchdraw, 'getDrawing',
         getDrawingFn);
@@ -33,6 +37,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         DestinationType: {},
         EncodingType: {}
       };
+
+      getPictureStub = window.sinon.stub(navigator.camera, 'getPicture',
+        getDrawingFn);
+      window.PictureSourceType = {};
 
       $content.empty();
       delete Forms.current;
@@ -82,6 +90,30 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         $button.trigger('click');
         assert(getDrawingStub.called);
+      });
+
+    }); // END: suite('', ...)
+
+    suite('Images', function () {
+
+      test('button[0] calls navigator.camera.getPicture', function () {
+        var form = Forms.current,
+          element = form.getElement('image_capture'),
+          view = element.get('_view'),
+          $button = view.$el.find('button').first();
+
+        $button.trigger('click');
+        assert(getPictureStub.called);
+      });
+
+      test('button[1] calls navigator.camera.getPicture', function () {
+        var form = Forms.current,
+          element = form.getElement('image'),
+          view = element.get('_view'),
+          $button = view.$el.find('button').last();
+
+        $button.trigger('click');
+        assert(getPictureStub.called);
       });
 
     }); // END: suite('', ...)

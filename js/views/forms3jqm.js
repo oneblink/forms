@@ -90,6 +90,7 @@ define(function (require) {
     LocationElement: require('views/jqm/elements/location'),
     FileElement: require('views/jqm/elements/file'),
     DrawElement: require('views/jqm/elements/draw'),
-    BGDrawElement: require('views/jqm/elements/bg_draw')
+    BGDrawElement: require('views/jqm/elements/bg_draw'),
+    BGImageElement: require('views/jqm/elements/bg_image')
   };
 });

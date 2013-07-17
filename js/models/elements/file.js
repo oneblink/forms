@@ -7,11 +7,17 @@ define(['models/element'], function (Element) {
     },
     initializeView: function () {
       var Forms = BMP.Forms,
-        view;
+        view,
+        accept = this.attributes.accept;
 
       this.removeView();
 
-      view = new Forms._views.FileElement({model: this});
+      if (window.PictureSourceType && window.navigator.camera &&
+          window.navigator.camera.getPicture && accept.indexOf('image') === 0) {
+        view = new Forms._views.BGImageElement({model: this});
+      } else {
+        view = new Forms._views.FileElement({model: this});
+      }
       this.set('_view', view);
     }
   });
