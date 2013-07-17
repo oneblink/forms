@@ -118,10 +118,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     }); // END: suite('', ...)
 
-    suiteTeardown(function () {
-      //delete window.navigator.bgtouchdraw;
-    });
-
   }); // END: suite('1', ...)
 
 });
