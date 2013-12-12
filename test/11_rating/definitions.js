@@ -20,7 +20,7 @@ define(function () {
               max: 5,
               step: 1,
               defaultValue: 0,
-              mode: "picker",
+              mode: "graphical",
               picker: {
                 active: {
                   ascii: "*"
@@ -40,7 +40,7 @@ define(function () {
               max: 10,
               step: 1,
               defaultValue: 0,
-              mode: "picker",
+              mode: "graphical",
               picker: {
                 active: {
                   image: "star.png"
@@ -60,7 +60,7 @@ define(function () {
               max: 5,
               step: 1,
               defaultValue: 0,
-              mode: "picker",
+              mode: "graphical",
               picker: {
                 active: {
                   utf8: "\u00a3"
