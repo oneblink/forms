@@ -4,7 +4,7 @@
 
 define(['BlinkForms', 'BIC'], function (Forms) {
 
-  suite('3: text/number/message', function () {
+  suite('11: rating', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
 
@@ -46,27 +46,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $.mobile.page({}, $page);
         $page.trigger('pagecreate');
         $page.show();
-      });
-
-    }); // END: suite('Form', ...)
-
-    suite('Message', function () {
-
-      test('no label gives full width output', function () {
-        var form = BMP.Forms.current,
-          element = form.getElement('message'),
-          view = element.attributes._view;
-
-        assert(view.$el.attr('data-rv-html'), 'whole View bound');
-      });
-
-      test('label set displays like an input formElement', function () {
-        var form = BMP.Forms.current,
-          element = form.getElement('calculation'),
-          view = element.attributes._view;
-
-        assert.lengthOf(view.$el.children('label'), 1);
-        assert.lengthOf(view.$el.children('[data-rv-html]'), 1);
       });
 
     }); // END: suite('Form', ...)
