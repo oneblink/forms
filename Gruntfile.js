@@ -10,8 +10,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-jslint');
-  grunt.loadNpmTasks('grunt-messageformat');
   grunt.loadNpmTasks('grunt-mocha');
 
   grunt.initConfig({
@@ -64,11 +64,9 @@ module.exports = function (grunt) {
 
     },
 
-    messageformat: {
-      en: {
-        locale: 'en',
-        inputdir: 'js/locales/en',
-        output: 'js/locales/en/i18n.js'
+    exec: {
+      messageformat: {
+        cmd: 'node_modules/messageformat/bin/messageformat.js -l en js/locales/en js/locales/en/i18n.js'
       }
     },
 
@@ -191,7 +189,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean',
-    'messageformat',
+    'exec:messageformat',
     'requirejs',
     'uglify'
   ]);
