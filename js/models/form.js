@@ -95,7 +95,7 @@ define(function (require) {
         promises = [];
 
       this.attributes.elements.forEach(function (el) {
-        var attrs, type, val, dfrd, blob;
+        var attrs, type, val, elementDfrd, blob;
         attrs = el.attributes;
         type = attrs.type;
 
@@ -103,12 +103,12 @@ define(function (require) {
           return;
         }
         if (type === 'subForm') {
-          dfrd = Q.defer();
+          elementDfrd = Q.defer();
           el.getRecord().then(function (val) {
             data[el.attributes.name] = val;
-            dfrd.resolve();
+            elementDfrd.resolve();
           });
-          promises.push(dfrd.promise);
+          promises.push(elementDfrd.promise);
           return;
         }
         if (type === 'file' || type === 'draw') {

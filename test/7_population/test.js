@@ -101,7 +101,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       suite('comments.setRecords() with 3 subForms', function () {
-        var record = {
+        record = {
           id: 'harry7',
           name: 'Harry Potter',
           comments: [
@@ -161,7 +161,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       }); // END: suite('comments.setRecord() with 3...', ...)
 
       suite('comments.setRecords() with 1 subForms', function () {
-        var record = {
+        record = {
           id: 'harry7',
           name: 'Harry Potter',
           comments: [

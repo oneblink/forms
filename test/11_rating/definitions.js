@@ -70,7 +70,7 @@ define(function () {
                 }
               }
             }
-          },
+          }
         ]
       }
     }

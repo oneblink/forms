@@ -1,4 +1,4 @@
-/*jslint es5:true, node:true*/
+/*jslint indent:2, node:true*/
 /**
  * module.exports ... is required for things to work
  * @param {Object} grunt instance of Grunt.
@@ -7,8 +7,6 @@ module.exports = function (grunt) {
   'use strict';
 
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -25,44 +23,45 @@ module.exports = function (grunt) {
     },
 
     jslint: {
-      files: [
-        '**/*.js',
-        '**/*.json'
-      ],
-      exclude: [
-        'node_modules/**',
-        'js/lib/**',
-        'js/build/**',
-        'js/locales/**/i18n.js',
-        'BlinkForms*.js',
-        'test/lib/**/*',
-        'vendor/**/*'
-      ],
-      directives: {
-        browser: true,
-        es5: true,
-        indent: 2,
-        nomen: true,
-        todo: true, // TODO: eventually drop this
-        sloppy: true, // we force strict-mode separately
-        predef: [
-          // pre-defined globals
-          'module',
-          'define',
-          'require',
-          // globals we assume have been loaded
-          '$',
-          '_',
-          'Backbone',
-          'rivets',
-          'BMP',
-          'Q'
-        ]
-      },
-      options: {
-        errorsOnly: true,
-        failOnError: true
+      all: {
+        src: [
+          '**/*.js',
+          '**/*.json',
+          '!node_modules/**',
+          '!js/lib/**',
+          '!js/build/**',
+          '!js/locales/**/i18n.js',
+          '!BlinkForms*.js',
+          '!test/lib/**/*',
+          '!vendor/**/*'
+        ],
+        directives: {
+          browser: true,
+          es5: true,
+          indent: 2,
+          nomen: true,
+          todo: true, // TODO: eventually drop this
+          sloppy: true, // we force strict-mode separately
+          predef: [
+            // pre-defined globals
+            'module',
+            'define',
+            'require',
+            // globals we assume have been loaded
+            '$',
+            '_',
+            'Backbone',
+            'rivets',
+            'BMP',
+            'Q'
+          ]
+        },
+        options: {
+          errorsOnly: true,
+          failOnError: true
+        }
       }
+
     },
 
     messageformat: {

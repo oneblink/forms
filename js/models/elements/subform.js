@@ -15,12 +15,13 @@ define(['models/form', 'models/element'], function (Form, Element) {
     add: function () {
       // TODO: there is too much DOM stuff here to be in the model
       var dfrd = Q.defer(),
-        Forms = BMP.Forms,
         attrs = this.attributes,
         name = attrs.subForm,
         forms = attrs.forms,
         $el = attrs._view.$el,
         $button = $el.children('.ui-btn');
+
+      Forms = BMP.Forms;
 
       Forms.getDefinition(name, 'add').then(function (def) {
         var form,
@@ -43,8 +44,10 @@ define(['models/form', 'models/element'], function (Form, Element) {
      * @param {Number|Node|jQuery} index or DOM element for the record.
      */
     remove: function (index) {
-      var Forms = BMP.Forms,
-        $form;
+      var $form;
+
+      Forms = BMP.Forms;
+
       // TODO: skip placeholder "delete" records when counting
       // TODO: create placeholder records on "edit"
       if (typeof index === 'number') {

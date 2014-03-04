@@ -2,15 +2,15 @@
   "name": "bforms_v3",
   "version": "0.0.1",
   "devDependencies": {
-    "chai": "~1.7",
+    "chai": "~1.9",
     "grunt": "~0.4",
-    "grunt-jslint": "~0.2",
-    "grunt-contrib-clean": "~0.4",
-    "grunt-contrib-uglify": "~0.2",
+    "grunt-jslint": "~1.1",
+    "grunt-contrib-clean": "~0.5",
+    "grunt-contrib-uglify": "~0.4",
     "grunt-contrib-requirejs": "~0.4",
-    "grunt-contrib-watch": "~0.4",
+    "grunt-contrib-watch": "~0.5",
     "grunt-messageformat": "~0.2",
-    "grunt-mocha": "~0.3",
-    "mocha": "~1.12"
+    "grunt-mocha": "~0.4",
+    "mocha": "~1.17"
   }
 }

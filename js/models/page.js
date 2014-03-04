@@ -38,18 +38,18 @@ define(function (require) {
         sections = new Sections();
       }
       sections.forEach(function (section) {
-        var attrs = section.attributes,
+        var sectionAttrs = section.attributes,
           parent;
 
-        if (attrs.section) {
-          parent = sections.get(attrs.section);
+        if (sectionAttrs.section) {
+          parent = sections.get(sectionAttrs.section);
           if (parent) {
-            attrs.section = parent;
+            sectionAttrs.section = parent;
             parent.add(section);
           }
         }
-        if (!attrs.section instanceof Section) {
-          delete attrs.section;
+        if (!sectionAttrs.section instanceof Section) {
+          delete sectionAttrs.section;
         }
       });
       attrs.sections = sections;
