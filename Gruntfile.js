@@ -53,7 +53,10 @@ module.exports = function (grunt) {
             'Backbone',
             'rivets',
             'BMP',
-            'Q'
+            'Q',
+            'moment',
+            'picker.date',
+            'picker.time'
           ]
         },
         options: {
@@ -92,6 +95,9 @@ module.exports = function (grunt) {
             jquerymobile: 'empty:',
             q: 'empty:',
             underscore: 'empty:',
+            moment: 'empty:',
+            'picker.date': 'empty:',
+            'picker.time': 'empty:',
             rivets: 'empty:',
             // testing libraries
             chai: 'empty:',
