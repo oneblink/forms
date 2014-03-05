@@ -79,7 +79,6 @@ define(function () {
      */
     initializeView: function () {
       var Forms = BMP.Forms,
-        dateTypes = ['date', 'time', 'datetime'],
         attrs = this.attributes,
         View,
         view,
@@ -135,11 +134,7 @@ define(function () {
         View = Forms._views.TextAreaElement;
         break;
       default:
-        if (_.indexOf(dateTypes, attrs.type) !== -1) {
-          View = Forms._views.DateElement;
-        } else {
-          View = Forms._views.Element;
-        }
+        View = Forms._views.Element;
       }
       view = new View({model: this});
       this.set('_view', view);

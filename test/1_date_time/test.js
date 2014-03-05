@@ -4,6 +4,26 @@
 
 define(['BlinkForms', 'BIC'], function (Forms) {
 
+  var nativedate = [
+    'date',
+    'datetime'
+  ], nativetime = [
+    'time',
+    'datetime'
+  ], pickadate = [
+    'datenow',
+    'datefromnowplus',
+    'datefromdate',
+    'datetimenow'
+  ], pickatime = [
+    'timenow',
+    'timenowplus',
+    'timenowtime',
+    'datetimenow'
+  ];
+
+
+
   suite('1: date/time', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
@@ -48,6 +68,30 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $.mobile.page({}, $page);
         $page.trigger('pagecreate');
         $page.show();
+      });
+
+      test('use native picker defaults to native picker', function (done) {
+        nativedate.forEach(function (fld) {
+          assert.equal($('input[name="' + fld + '_date"]').attr('type'), 'date');
+        });
+        nativetime.forEach(function (fld) {
+          assert.equal($('input[name="' + fld + '_time"]').attr('type'), 'time');
+        });
+        setTimeout(done, 197);
+      });
+
+      test('use pick-a-date picker where native picker is not checked', function () {
+        pickadate.forEach(function (fld) {
+          var $elem = $('input[name="' + fld + '_date"]');
+          assert.equal($elem.hasClass('picker__input'), true);
+          assert.equal($elem.next('div').hasClass('picker'), true);
+        });
+        pickatime.forEach(function (fld) {
+          var $elem = $('input[name="' + fld + '_time"]');
+          assert.equal($elem.hasClass('picker__input'), true);
+          assert.equal($elem.next('div').hasClass('picker'), true);
+          assert.equal($elem.next('div').hasClass('picker--time'), true);
+        });
       });
 
     }); // END: suite('Form', ...)

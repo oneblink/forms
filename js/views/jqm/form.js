@@ -20,6 +20,9 @@ define(function () {
 
         view.render();
         self.$el.append(view.el);
+        setTimeout(function () {
+          BMP.Forms.trigger('formReady', self.model);
+        }, 197);
       });
       pages.goto(0);
     }

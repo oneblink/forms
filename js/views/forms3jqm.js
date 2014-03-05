@@ -76,6 +76,7 @@ define(function (require) {
     HeadingElement: require('views/jqm/elements/heading'),
     MessageElement: require('views/jqm/elements/message'),
     DateElement: require('views/jqm/elements/date'),
+    DatePickadateElement: require('views/jqm/elements/date_pickadate'),
     HiddenElement: require('views/jqm/elements/hidden'),
     NumberElement: require('views/jqm/elements/number'),
     TelephoneElement: require('views/jqm/elements/telephone'),
