@@ -1,0 +1,20 @@
+body {
+  padding: 0;
+}
+#mocha {
+  position: fixed;
+  width: 100%;
+  bottom: 3em;
+  height: 15em;
+  overflow-y: scroll;
+}
+#mocha h2 {
+  width: 90%;
+}
+#mocha-stats {
+  top: auto;
+  bottom: 0px;
+  right: 0px;
+  height: 3em;
+}
+

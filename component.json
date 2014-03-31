@@ -1,0 +1,7 @@
+{
+  "name": "bforms_v3",
+  "version": "3.0.1",
+  "dependencies": {
+    "requirejs": "~2.1.2"
+  }
+}
