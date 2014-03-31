@@ -12,10 +12,10 @@
       BIC: '../sample-bic',
       'BMP.Blob': '../lib/bmp-blobs',
       signaturePad: 'http://cdnp.blinkm.co/signaturepad/2.3.0/jq.sig.min',
-      picker: '//amsul.ca/pickadate.js/lib/picker',
-      'picker.date': '//amsul.ca/pickadate.js/lib/picker.date',
-      'picker.time': '//amsul.ca/pickadate.js/lib/picker.time',
-      'moment': '//momentjs.com/downloads/moment.min'
+      picker: 'http://amsul.ca/pickadate.js/lib/picker',
+      'picker.date': 'http://amsul.ca/pickadate.js/lib/picker.date',
+      'picker.time': 'http://amsul.ca/pickadate.js/lib/picker.time',
+      'moment': 'http://momentjs.com/downloads/moment.min'
     },
     shim: {
       'BMP.Blob': {
