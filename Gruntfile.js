@@ -27,6 +27,7 @@ module.exports = function (grunt) {
         src: [
           '**/*.js',
           '**/*.json',
+          '!bower_components/**',
           '!node_modules/**',
           '!js/lib/**',
           '!js/build/**',
