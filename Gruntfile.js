@@ -90,6 +90,7 @@ module.exports = function (grunt) {
           },
           paths: {
             backbone: 'empty:',
+            bicyclepump: '../bower_components/bicyclepump/bicyclepump',
             jquery: 'empty:',
             jquerymobile: 'empty:',
             q: 'empty:',
