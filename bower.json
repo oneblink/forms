@@ -1,0 +1,10 @@
+{
+  "name": "bforms_v3",
+  "version": "3.0.2",
+  "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
+  "dependencies": {
+    "requirejs": "~2.1.2",
+    "almond": "~0.2.9",
+    "requirejs-text": "~2.0.10"
+  }
+}

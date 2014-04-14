@@ -27,13 +27,12 @@ module.exports = function (grunt) {
         src: [
           '**/*.js',
           '**/*.json',
+          '!bower_components/**',
           '!node_modules/**',
-          '!js/lib/**',
           '!js/build/**',
           '!js/locales/**/i18n.js',
           '!BlinkForms*.js',
-          '!test/lib/**/*',
-          '!vendor/**/*'
+          '!test/lib/**/*'
         ],
         directives: {
           browser: true,
@@ -103,7 +102,7 @@ module.exports = function (grunt) {
             chai: 'empty:',
             mocha: 'empty:',
             // Require.JS plugins
-            text: '../vendor/text'
+            text: '../bower_components/requirejs-text/text'
           },
           modules: [
             {
@@ -117,7 +116,7 @@ module.exports = function (grunt) {
           wrap: {
             startFile: [
               'parts/00-start.frag',
-              'js/lib/almond-0.2.5.js'
+              'bower_components/almond/almond.js'
             ],
             endFile: [
               'parts/99-end.frag',

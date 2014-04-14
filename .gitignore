@@ -1,11 +1,17 @@
 .DS_Store
+
+# 3rd-party / vendor
+bower_components
 node_modules
+
+# JetBrains IntelliJ IDEA files
+/.idea/workspace.xml
+/.idea/dictionaries
+/.idea/runConfigurations
+
+/nbproject
+
+# build output
 js/build
 /BlinkForms*.js*
 i18n.js
-
-# JetBrains IntelliJ IDEA files
-/.idea
-/*.iml
-
-/nbproject
