@@ -11,6 +11,7 @@
       BlinkForms: '../../js/build/views/forms3jqm',
       BIC: '../sample-bic',
       'BMP.Blob': '../lib/bmp-blobs',
+      rivets: '../../bower_components/rivets/lib/rivets.min',
       signaturePad: 'http://cdnp.blinkm.co/signaturepad/2.3.0/jq.sig.min',
       picker: '../../bower_components/pickadate/lib/picker',
       'picker.date': '../../bower_components/pickadate/lib/picker.date',

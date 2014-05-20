@@ -4,7 +4,8 @@
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
   "dependencies": {
     "pickadate": "~3.4.0",
-    "momentjs": "~2.5.1"
+    "momentjs": "~2.5.1",
+    "rivets": "~0.4.9"
   },
   "devDependencies": {
     "almond": "~0.2",
