@@ -3,7 +3,7 @@ define(function () {
     tagName: 'div',
     attributes: {
       'data-role': 'fieldcontain',
-      'data-rv-class': 'm.class'
+      'rv-class': 'm:class'
     },
     initialize: function () {
       var element = this.model;
@@ -24,7 +24,7 @@ define(function () {
     renderLabel: function () {
       var $label = $(document.createElement('label'));
       $label.attr({
-        'data-rv-text': 'm.label',
+        'rv-text': 'm:label',
         class: 'ui-input-text'
       });
       this.$el.append($label);
@@ -58,7 +58,7 @@ define(function () {
           $errorList.append($errorElement);
         });
       }
-//      $el = this.$el.find('[data-rv-value]');
+//      $el = this.$el.find('[rv-value]');
 //      if ($el.length && $el[0].checkValidity && !$el[0].checkValidity()) {
 //        $errorElement = $(document.createElement('li'));
 //        $errorElement.text('checkValidity error');

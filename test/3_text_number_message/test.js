@@ -57,7 +57,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           element = form.getElement('message'),
           view = element.attributes._view;
 
-        assert(view.$el.attr('data-rv-html'), 'whole View bound');
+        assert(view.$el.attr('rv-html'), 'whole View bound');
       });
 
       test('label set displays like an input formElement', function () {
@@ -66,7 +66,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           view = element.attributes._view;
 
         assert.lengthOf(view.$el.children('label'), 1);
-        assert.lengthOf(view.$el.children('[data-rv-html]'), 1);
+        assert.lengthOf(view.$el.children('[rv-html]'), 1);
       });
 
     }); // END: suite('Form', ...)

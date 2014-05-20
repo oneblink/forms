@@ -12,7 +12,7 @@ define(['views/jqm/elements/text'], function (TextElementView) {
       $input = $('<textarea></textarea>');
       $input.attr({
         name: name,
-        'data-rv-value': 'm.value'
+        'rv-value': 'm:value'
       });
       this.$el.append($input);
       this.bindRivets();

@@ -12,7 +12,7 @@ define(['views/jqm/element'], function (ElementView) {
       $input = $('<input type="text" />');
       $input.attr({
         name: name,
-        'data-rv-value': 'm.value'
+        'rv-value': 'm:value'
       });
       this.$el.append($input);
       this.bindRivets();
@@ -21,4 +21,3 @@ define(['views/jqm/element'], function (ElementView) {
 
   return TextElementView;
 });
-

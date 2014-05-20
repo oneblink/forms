@@ -33,7 +33,7 @@ define(['views/jqm/element'], function (ElementView) {
       $input = $('<input type="file" />');
       $input.attr({
         name: name,
-        'data-rv-accept': 'm.accept'
+        'rv-accept': 'm:accept'
       });
       $input.prop('capture', !!this.model.get('capture'));
       this.$el.append($input);

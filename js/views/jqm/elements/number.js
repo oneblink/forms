@@ -26,10 +26,10 @@ define(['views/jqm/element'], function (ElementView) {
       }
       $input.attr({
         name: name,
-        'data-rv-min': 'm.min',
-        'data-rv-max': 'm.max',
-        'data-rv-value': 'm.value',
-        'data-rv-step': 'm.step'
+        'rv-min': 'm:min',
+        'rv-max': 'm:max',
+        'rv-value': 'm:value',
+        'rv-step': 'm:step'
       });
       this.$el.append($input);
       this.bindRivets();

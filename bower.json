@@ -5,7 +5,7 @@
   "dependencies": {
     "pickadate": "~3.4.0",
     "momentjs": "~2.5.1",
-    "rivets": "~0.4.9"
+    "rivets": "~0.6.8"
   },
   "devDependencies": {
     "almond": "~0.2",
