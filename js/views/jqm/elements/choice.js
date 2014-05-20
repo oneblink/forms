@@ -6,7 +6,7 @@ define(['views/jqm/element'], function (ElementView) {
     renderOtherText: function ($values) {
       var name = this.model.attributes.name,
         $input = $('<input type="text" />'),
-        $label = '<label data-rv-text="m.label" class="ui-input-text"></label>',
+        $label = '<label rv-text="m:label" class="ui-input-text"></label>',
         $element = $('<div data-role="fieldcontain"></div>'),
         $div = $('<div class="ui-input-text"></div>'),
         isOtherRendered = !!this.$el.find('div[data-role=fieldcontain]').length;
@@ -32,4 +32,3 @@ define(['views/jqm/element'], function (ElementView) {
 
   return ChoiceElementView;
 });
-

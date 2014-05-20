@@ -12,7 +12,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
       $input = $('<select></select>');
       $input.attr({
-        'data-rv-value': 'm.value'
+        'rv-value': 'm:value'
       });
 
       if (type === 'select') {

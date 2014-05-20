@@ -19,6 +19,28 @@ define(function (require) {
     }
   };
 
+  // https://github.com/mikeric/rivets/blob/master/src/binders.coffee
+  // re-declare this binder to use jQuery events
+  rivets.binders.checked = {
+    publishes: true,
+    bind: function (el) {
+      return $(el).on('change', this.publish);
+    },
+    unbind: function (el) {
+      return $(el).off('change', this.publish);
+    },
+    routine: function (el, value) {
+      var _ref1;
+      if (el.type === 'radio') {
+        _ref1 = el.value;
+        el.checked = (_ref1 !== null ? _ref1.toString() : undefined) === (value !== null ? value.toString() : undefined);
+        return el.checked;
+      }
+      el.checked = !!value;
+      return el.checked;
+    }
+  };
+
   /**
    * @param {Node|jQuery} element where to start looking.
    */
