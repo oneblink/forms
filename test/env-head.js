@@ -1,4 +1,5 @@
 /*jslint indent:2*/
+/*global define, require*/ // AMD / Require.JS
 
 (function (window) {
   'use strict';
@@ -6,7 +7,7 @@
   window.mocha.ui('tdd');
   window.assert = window.chai.assert;
 
-  window.require.config({
+  require.config({
     paths: {
       BlinkForms: '../../js/build/views/forms3jqm',
       BIC: '../sample-bic',
@@ -15,7 +16,10 @@
       picker: '../../bower_components/pickadate/lib/picker',
       'picker.date': '../../bower_components/pickadate/lib/picker.date',
       'picker.time': '../../bower_components/pickadate/lib/picker.time',
-      'moment': '../../bower_components/momentjs/min/moment.min'
+      'moment': '../../bower_components/momentjs/min/moment.min',
+      bluebird: '../../bower_components/bluebird/js/browser/bluebird',
+      feature: '../../bower_components/amd-feature/feature',
+      implementations: '../lib/implementations'
     },
     shim: {
       'BMP.Blob': {

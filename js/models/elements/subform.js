@@ -14,8 +14,7 @@ define(['models/form', 'models/element'], function (Form, Element) {
     },
     add: function () {
       // TODO: there is too much DOM stuff here to be in the model
-      var dfrd = Q.defer(),
-        attrs = this.attributes,
+      var attrs = this.attributes,
         name = attrs.subForm,
         forms = attrs.forms,
         $el = attrs._view.$el,
@@ -23,22 +22,23 @@ define(['models/form', 'models/element'], function (Form, Element) {
 
       Forms = BMP.Forms;
 
-      Forms.getDefinition(name, 'add').then(function (def) {
-        var form,
-          view;
+      return new Promise(function (resolve) {
+        Forms.getDefinition(name, 'add').then(function (def) {
+          var form,
+            view;
 
-        form = Form.create(def);
-        forms.add(form);
-        view = form.attributes._view = new Forms._views.SubForm({
-          model: form
+          form = Form.create(def);
+          forms.add(form);
+          view = form.attributes._view = new Forms._views.SubForm({
+            model: form
+          });
+          form.$form = view.$el; // backwards-compatibility, convenience
+          view.render();
+          $button.before(view.$el);
+          view.$el.trigger('create');
+          resolve();
         });
-        form.$form = view.$el; // backwards-compatibility, convenience
-        view.render();
-        $button.before(view.$el);
-        view.$el.trigger('create');
-        dfrd.resolve();
       });
-      return dfrd.promise;
     },
     /**
      * @param {Number|Node|jQuery} index or DOM element for the record.
@@ -64,52 +64,59 @@ define(['models/form', 'models/element'], function (Form, Element) {
       return this.attributes.forms.at(index);
     },
     getRecord: function () {
-      var dfrd = Q.defer(),
-        promises;
+      var promises;
 
       promises = this.attributes.forms.map(function (form) {
         return form.data();
       });
-      Q.all(promises).spread(function () {
-        dfrd.resolve(_.toArray(arguments));
-      }).fail(dfrd.reject);
 
-      return dfrd.promise;
+      return new Promise(function (resolve, reject) {
+        Promise.all(promises).then(function (values) {
+          resolve(values);
+        }, function () {
+          reject();
+        });
+      });
     },
     /**
      * @param {Array} data
      * @returns {Promise}
      */
     setRecords: function (data) {
-      var dfrd = Q.defer(),
+      var me = this,
         forms = this.attributes.forms,
         addPromises = [],
         promises;
 
-      if (!_.isArray(data)) {
-        dfrd.resolve();
-        return dfrd.promise;
-      }
-      while (forms.length + addPromises.length < data.length) {
-        addPromises.push(this.add());
-      }
-      while (forms.length > data.length) {
-        this.remove(forms.length - 1);
-      }
-      // wait for extra (blank) records to be added
-      Q.all(addPromises).spread(function () {
-        promises = [];
-        data.forEach(function (record, index) {
-          promises.push(forms.at(index).setRecord(record));
+      return new Promise(function (resolve, reject) {
+        if (!_.isArray(data)) {
+          resolve();
+          return;
+        }
+        while (forms.length > data.length) {
+          this.remove(forms.length - 1);
+        }
+        while (forms.length + addPromises.length < data.length) {
+          addPromises.push(me.add());
+        }
+        // wait for extra (blank) records to be added
+        Promise.all(addPromises).then(function () {
+          promises = [];
+          data.forEach(function (record, index) {
+            promises.push(forms.at(index).setRecord(record));
+          });
+
+          // wait for records to be populated
+          Promise.all(promises).then(function (values) {
+            resolve(values);
+          }, function () {
+            reject();
+          });
+
+        }, function () {
+          reject();
         });
-
-        // wait for records to be populated
-        Q.all(promises).spread(function () {
-          dfrd.resolve(_.toArray(arguments));
-        }).fail(dfrd.reject);
-
-      }).fail(dfrd.reject);
-      return dfrd.promise;
+      });
     },
     data: function () {
       if (!arguments.length) {
@@ -118,5 +125,3 @@ define(['models/form', 'models/element'], function (Form, Element) {
     }
   });
 });
-
-

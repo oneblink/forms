@@ -5,12 +5,14 @@
   "dependencies": {
     "pickadate": "~3.4.0",
     "momentjs": "~2.5.1",
-    "rivets": "~0.6.8"
+    "rivets": "~0.6.8",
+    "bluebird": "~1.2.4"
   },
   "devDependencies": {
     "almond": "~0.2",
     "bicyclepump": "~1.0.0",
     "requirejs": "~2.1",
-    "requirejs-text": "~2.0"
+    "requirejs-text": "~2.0",
+    "amd-feature": "~1.1.0"
   }
 }
