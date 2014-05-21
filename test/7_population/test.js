@@ -101,24 +101,27 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       suite('comments.setRecords() with 3 subForms', function () {
-        record = {
-          id: 'harry7',
-          name: 'Harry Potter',
-          comments: [
-            {
-              id: '1',
-              comment: 'what a whiner'
-            },
-            {
-              id: '2',
-              comment: 'get a comb'
-            },
-            {
-              id: '3',
-              comment: 'nice scar'
-            }
-          ]
-        };
+
+        suiteSetup(function () {
+          record = {
+            id: 'harry7',
+            name: 'Harry Potter',
+            comments: [
+              {
+                id: '1',
+                comment: 'what a whiner'
+              },
+              {
+                id: '2',
+                comment: 'get a comb'
+              },
+              {
+                id: '3',
+                comment: 'nice scar'
+              }
+            ]
+          };
+        });
 
         test('promise is resolved', function (done) {
           Forms.current.setRecord(record).then(function () {
@@ -161,16 +164,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       }); // END: suite('comments.setRecord() with 3...', ...)
 
       suite('comments.setRecords() with 1 subForms', function () {
-        record = {
-          id: 'harry7',
-          name: 'Harry Potter',
-          comments: [
-            {
-              id: '3',
-              comment: 'nice scar'
-            }
-          ]
-        };
+
+        suiteSetup(function () {
+          record = {
+            id: 'harry7',
+            name: 'Harry Potter',
+            comments: [
+              {
+                id: '3',
+                comment: 'nice scar'
+              }
+            ]
+          };
+        });
 
         test('promise is resolved', function (done) {
           Forms.current.setRecord(record).then(function () {
