@@ -96,7 +96,7 @@ define(['models/form', 'models/element'], function (Form, Element) {
         while (forms.length > data.length) {
           this.remove(forms.length - 1);
         }
-        while (forms.length + addPromises.length < data.length) {
+        while (forms.length + addPromises.length <= data.length) {
           addPromises.push(me.add());
         }
         // wait for extra (blank) records to be added
