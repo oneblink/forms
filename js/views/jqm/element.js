@@ -1,4 +1,4 @@
-define(function () {
+define(['rivets'], function (rivets) {
   return Backbone.View.extend({
     tagName: 'div',
     attributes: {

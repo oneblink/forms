@@ -98,7 +98,7 @@ module.exports = function (grunt) {
             moment: 'empty:',
             'picker.date': 'empty:',
             'picker.time': 'empty:',
-            rivets: 'empty:',
+            rivets: '../bower_components/rivets/dist/rivets',
             // testing libraries
             chai: 'empty:',
             mocha: 'empty:',

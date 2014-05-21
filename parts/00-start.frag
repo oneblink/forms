@@ -8,7 +8,6 @@
       'jquery',
       'underscore',
       'backbone',
-      'rivets',
       'q',
       'moment',
       'picker.date',
@@ -18,9 +17,9 @@
 
   } else {
     // no Require.JS, no AMD modules
-    definition($, _, Backbone, rivets, Q, moment);
+    definition($, _, Backbone, Q, moment);
   }
-}(function($, _, Backbone, rivets, Q, moment) {
+}(function($, _, Backbone, Q, moment) {
   "use strict";
 /*jslint sloppy:false*/ // let JSLint bug us again about ES5 strict mode
   // establish globals
