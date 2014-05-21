@@ -12,7 +12,7 @@ define(['views/jqm/elements/date'], function (DateView) {
       $input = $('<input type="text" />');
       $input.attr({
         name: name + '_date',
-        'data-rv-value': 'm._date'
+        'rv-value': 'm:_date'
       });
       this.$el.append($input);
       BMP.Forms.once('formReady', function () {
@@ -30,7 +30,7 @@ define(['views/jqm/elements/date'], function (DateView) {
       $input = $('<input type="text" />');
       $input.attr({
         name: name + '_time',
-        'data-rv-value': 'm._time'
+        'rv-value': 'm:_time'
       });
       this.$el.append($input);
       BMP.Forms.once('formReady', function () {

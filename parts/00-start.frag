@@ -5,11 +5,10 @@
   if (typeof define === "function" && define.amd) {
     // Require.JS
     define([
+      'feature!promises',
       'jquery',
       'underscore',
       'backbone',
-      'rivets',
-      'q',
       'moment',
       'picker.date',
       'picker.time',
@@ -18,9 +17,9 @@
 
   } else {
     // no Require.JS, no AMD modules
-    definition($, _, Backbone, rivets, Q, moment);
+    definition(Promise, $, _, Backbone, moment);
   }
-}(function($, _, Backbone, rivets, Q, moment) {
+}(function(Promise, $, _, Backbone, moment) {
   "use strict";
 /*jslint sloppy:false*/ // let JSLint bug us again about ES5 strict mode
   // establish globals

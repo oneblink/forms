@@ -46,6 +46,7 @@ module.exports = function (grunt) {
             'module',
             'define',
             'require',
+            'Promise',
             // globals we assume have been loaded
             '$',
             '_',
@@ -90,6 +91,7 @@ module.exports = function (grunt) {
           },
           paths: {
             backbone: 'empty:',
+            bluebird: 'empty:',
             jquery: 'empty:',
             jquerymobile: 'empty:',
             q: 'empty:',
@@ -97,7 +99,9 @@ module.exports = function (grunt) {
             moment: 'empty:',
             'picker.date': 'empty:',
             'picker.time': 'empty:',
-            rivets: 'empty:',
+            // libraries to be built-in
+            bicyclepump: '../bower_components/bicyclepump/bicyclepump',
+            rivets: '../bower_components/rivets/dist/rivets',
             // testing libraries
             chai: 'empty:',
             mocha: 'empty:',

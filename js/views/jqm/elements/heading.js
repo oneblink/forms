@@ -3,7 +3,7 @@ define(['views/jqm/element'], function (ElementView) {
 
   var TextElementView = ElementView.extend({
     attributes: {
-      'data-rv-text': 'm.text'
+      'rv-text': 'm:text'
     },
     initialize: function () {
       var $el;

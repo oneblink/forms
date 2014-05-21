@@ -4,7 +4,7 @@ define(['views/jqm/element'], function (ElementView) {
   var MessageElementView = ElementView.extend({
     tagName: 'div',
     attributes: {
-      'data-rv-class': 'm.class'
+      'rv-class': 'm:class'
     },
     render: function () {
       var element = this.model,
@@ -17,7 +17,7 @@ define(['views/jqm/element'], function (ElementView) {
         this.$el.empty();
         this.renderLabel();
         $div = $('<div></div>').attr({
-          'data-rv-html': 'm.html',
+          'rv-html': 'm:html',
           class: 'ui-input-text'
         });
 
@@ -25,7 +25,7 @@ define(['views/jqm/element'], function (ElementView) {
 
       } else {
         this.$el.attr({
-          'data-rv-html': 'm.html'
+          'rv-html': 'm:html'
         });
       }
 
@@ -35,4 +35,3 @@ define(['views/jqm/element'], function (ElementView) {
 
   return MessageElementView;
 });
-

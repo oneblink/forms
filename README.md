@@ -3,6 +3,10 @@
 This is a prototype and testing ground for the next evolution of the
 Blink Forms UI implementation.
 
+## Version Numbers
+
+This project is NOT versioned according to Semantic Versioning. Rather, it is versioned according to our [Shifted Semantic Versioning](https://github.com/blinkmobile/docs/wiki/Process:-Semantic-Versioning#shifted-semantic-versioning).
+
 ## Modular approach
 
 A high-priority goal for this library is that it be possible to extend. We will not be able to anticipate all the ways customers will wish to use Blink Forms, so it is important that such customers are able to integrate with and extend core functionality.

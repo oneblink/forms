@@ -25,17 +25,17 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       test('initialise with form.json', function (done) {
         var form;
 
-        Forms.getDefinition('form1', 'add').fail(function () {
-          assert.fail(true, false, 'getDefinition failed!');
-        }).done(function (def) {
+        Forms.getDefinition('form1', 'add').then(function (def) {
           Forms.initialize(def);
           form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
           assert.equal(form.get('label'), 'Form 1');
           done();
+        }, function () {
+          assert.fail(true, false, 'getDefinition failed!');
+          done();
         });
-
       });
 
       test('render form for jQuery Mobile', function () {
@@ -125,6 +125,58 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $fieldset.find('.ui-btn-text:contains(beta)').trigger('click');
         $fieldset.find('.ui-btn-text:contains(gamma)').trigger('click');
         assert.deepEqual(element.val(), ['a', 'g'], 'model.value = ["a", "g"]');
+      });
+
+      test('boolean 0/1', function (done) {
+        var form = Forms.current,
+          element = form.getElement('boolean'),
+          $fieldset = element.attributes._view.$el;
+
+        element.val('');
+        assert.equal(element.val(), '', 'model.value is ""');
+        assert.equal($fieldset.find('ui-btn-active').length, 0, 'jQM is blank');
+
+        element.val(0);
+        assert.equal(element.val(), 0, 'model.value = 0');
+
+        setTimeout(function () {
+          element.val(1);
+          assert.equal(element.val(), 1, 'model.value = 1');
+
+          setTimeout(function () {
+            $fieldset.find('div.ui-slider-switch').trigger('mousedown').trigger('mouseup').trigger('click');
+            assert.equal(element.val(), 0, 'model.value = 0');
+            done();
+          }, 500);
+
+        }, 500);
+
+
+      });
+
+      test('boolean n/y', function (done) {
+        var form = Forms.current,
+          element = form.getElement('question'),
+          $fieldset = element.attributes._view.$el;
+
+        element.val('');
+        assert.equal(element.val(), '', 'model.value is ""');
+        assert.equal($fieldset.find('ui-btn-active').length, 0, 'jQM is blank');
+
+        element.val('n');
+        assert.equal(element.val(), 'n', 'model.value = "n"');
+
+        setTimeout(function () {
+          element.val('y');
+          assert.equal(element.val(), 'y', 'model.value = "y"');
+
+          setTimeout(function () {
+            $fieldset.find('div.ui-slider-switch').trigger('mousedown').trigger('mouseup').trigger('click');
+            assert.equal(element.val(), 'n', 'model.value = "n"');
+            done();
+          }, 500);
+        }, 500);
+
       });
 
     }); // END: suite('Form', ...)

@@ -12,7 +12,7 @@ define(['views/jqm/element'], function (ElementView) {
 
       this.$el.attr({
         name: name,
-        'data-rv-value': 'm.value'
+        'rv-value': 'm:value'
       });
       this.bindRivets();
     }

@@ -1,6 +1,9 @@
 define(function (require) {
   'use strict';
-  var Forms = window.BMP.Forms;
+  var Forms, BicyclePump;
+
+  BicyclePump = require('bicyclepump');
+  Forms = window.BMP.Forms;
 
   _.extend(Forms, Backbone.Events);
 
@@ -29,6 +32,9 @@ define(function (require) {
     FileElement: require('models/elements/file'),
     DrawElement: require('models/elements/draw')
   };
+
+  Forms.models = new BicyclePump();
+  Forms.views = new BicyclePump();
 
   /**
    * @param {Object} def definition of form to initialise.

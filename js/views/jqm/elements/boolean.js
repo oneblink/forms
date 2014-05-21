@@ -10,7 +10,7 @@ define(['views/jqm/element'], function (ElementView) {
 
       $input = $('<select></select>');
       $input.attr({
-        'data-rv-value': 'm.value',
+        'rv-value': 'm:value',
         'data-role': 'slider'
       });
 

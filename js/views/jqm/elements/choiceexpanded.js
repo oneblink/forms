@@ -43,7 +43,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
         $input.attr({
           name: iName,
-          'data-rv-checked': 'm.value',
+          'rv-checked': 'm:value',
           value: value
         });
         $label.prepend($input);

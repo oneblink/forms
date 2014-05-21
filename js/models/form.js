@@ -90,79 +90,80 @@ define(function (require) {
      * official Blink API
      */
     getRecord: function () {
-      var dfrd = Q.defer(),
+      var me = this,
         data = {},
         promises = [];
 
-      this.attributes.elements.forEach(function (el) {
-        var attrs, type, val, elementDfrd, blob;
-        attrs = el.attributes;
-        type = attrs.type;
+      return new Promise(function (resolve) {
+        me.attributes.elements.forEach(function (el) {
+          var attrs, type, val, blob;
+          attrs = el.attributes;
+          type = attrs.type;
 
-        if (!attrs.persist) {
-          return;
-        }
-        if (type === 'subForm') {
-          elementDfrd = Q.defer();
-          el.getRecord().then(function (val) {
+          if (!attrs.persist) {
+            return;
+          }
+          if (type === 'subForm') {
+            promises.push(new Promise(function (subResolve) {
+              el.getRecord().then(function (val) {
+                data[el.attributes.name] = val;
+                subResolve();
+              });
+            }));
+            return;
+          }
+          if (type === 'file' || type === 'draw') {
+            blob = attrs.blob;
+            if (blob && blob.type && (blob.base64 || blob.text)) {
+              data[el.attributes.name] = blob.base64 || blob.text;
+              data[el.attributes.name + '_mimetype'] = blob.type;
+            }
+            return;
+          }
+          if (type === 'location') {
+            val = attrs.value;
+            if (val) {
+              data[el.attributes.name] = JSON.stringify(val);
+            }
+            return;
+          }
+          val = el.val();
+          if (val || typeof val === 'number') {
             data[el.attributes.name] = val;
-            elementDfrd.resolve();
-          });
-          promises.push(elementDfrd.promise);
-          return;
-        }
-        if (type === 'file' || type === 'draw') {
-          blob = attrs.blob;
-          if (blob && blob.type && (blob.base64 || blob.text)) {
-            data[el.attributes.name] = blob.base64 || blob.text;
-            data[el.attributes.name + '_mimetype'] = blob.type;
           }
-          return;
-        }
-        if (type === 'location') {
-          val = attrs.value;
-          if (val) {
-            data[el.attributes.name] = JSON.stringify(val);
-          }
-          return;
-        }
-        val = el.val();
-        if (val || typeof val === 'number') {
-          data[el.attributes.name] = val;
-        }
+        });
+        Promise.all(promises).then(function () {
+          resolve(data);
+        });
       });
-      Q.all(promises).done(function () {
-        dfrd.resolve(data);
-      });
-      return dfrd.promise;
     },
     /**
      * official Blink API
      */
     setRecord: function (data) {
       var self = this,
-        dfrd = Q.defer(),
         promises = [];
 
-      if (!_.isObject(data)) {
-        dfrd.reject();
-        return dfrd.promise;
-      }
-      _.each(data, function (value, key) {
-        var formElement = self.getElement(key);
-        if (!formElement) {
+      return new Promise(function (resolve, reject) {
+        if (!_.isObject(data)) {
+          reject();
           return;
         }
-        if (formElement.attributes.type === 'subForm') {
-          promises.push(formElement.setRecords(value));
-        } else {
-          formElement.val(value);
-        }
+        _.each(data, function (value, key) {
+          var formElement = self.getElement(key);
+          if (!formElement) {
+            return;
+          }
+          if (formElement.attributes.type === 'subForm') {
+            promises.push(formElement.setRecords(value));
+          } else {
+            formElement.val(value);
+          }
+        });
+        Promise.all(promises).then(function () {
+          resolve(data);
+        });
       });
-      Q.all(promises).done(function () {
-        dfrd.resolve(data);
-      });
-      return dfrd.promise;
     },
     /**
      * official Blink API

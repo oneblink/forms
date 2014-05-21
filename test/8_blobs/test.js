@@ -24,17 +24,17 @@ define(['BlinkForms', 'BIC', 'signaturePad'], function (Forms) {
       test('initialise with form.json', function (done) {
         var form;
 
-        Forms.getDefinition('form1', 'add').fail(function () {
-          assert.fail(true, false, 'getDefinition failed!');
-        }).done(function (def) {
+        Forms.getDefinition('form1', 'add').then(function (def) {
           Forms.initialize(def);
           form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
           assert.equal(form.get('label'), 'Form 1');
           done();
+        }, function () {
+          assert.fail(true, false, 'getDefinition failed!');
+          done();
         });
-
       });
 
       test('render form for jQuery Mobile', function () {
