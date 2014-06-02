@@ -154,7 +154,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('BMP.Forms.current.data() returns everything', function (done) {
-        Forms.current.data().done(function (data) {
+        Forms.current.data().then(function (data) {
           assert.equal(data.url, 'https://blinkm.co/ron');
           assert.equal(data.email, 'ron@blinkmobile.com.au');
           assert.equal(data.password, 'secret');

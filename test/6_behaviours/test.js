@@ -58,7 +58,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         assert.isFalse(element.get('persist'));
 
-        form.data().done(function (data) {
+        form.data().then(function (data) {
           assert.notProperty(data, 'message');
           done();
         });
@@ -69,7 +69,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           element = form.getElement('message');
 
         element.set('persist', true);
-        form.data().done(function (data) {
+        form.data().then(function (data) {
           assert.property(data, 'message');
           assert.isString(data.message);
           assert.match(data.message, /automatic calculations/);
@@ -126,7 +126,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       test('record data does not include hidden fields', function (done) {
         var form = BMP.Forms.current;
-        form.data().done(function (data) {
+        form.data().then(function (data) {
           assert.notProperty(data, 'email');
           assert.notProperty(data, 'number');
           done();
@@ -168,7 +168,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         test('record data does not include hidden fields', function (done) {
           var form = BMP.Forms.current;
-          form.data().done(function (data) {
+          form.data().then(function (data) {
             assert.notProperty(data, 'number');
             done();
           });
@@ -249,7 +249,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       test('record data includes set values', function (done) {
         var form = BMP.Forms.current;
-        form.data().done(function (data) {
+        form.data().then(function (data) {
           assert.equal(data.text, 'abc');
           assert.equal(data.email, 'abc@abc.com');
           assert.equal(data.number, 123);
@@ -292,7 +292,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         test('record data does not include hidden fields', function (done) {
           var form = BMP.Forms.current;
-          form.data().done(function (data) {
+          form.data().then(function (data) {
             assert.equal(data.text, 'abc');
             assert.notProperty(data, 'email');
             assert.notProperty(data, 'number');
@@ -340,7 +340,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       test('record data includes set values', function (done) {
         var form = BMP.Forms.current;
-        form.data().done(function (data) {
+        form.data().then(function (data) {
           assert.equal(data.text, 'abc');
           assert.equal(data.email, 'abc@abc.com');
           assert.equal(data.number, 123);
@@ -383,7 +383,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         test('record data does not include hidden fields', function (done) {
           var form = BMP.Forms.current;
-          form.data().done(function (data) {
+          form.data().then(function (data) {
             assert.notProperty(data, 'text');
             assert.notProperty(data, 'email');
             assert.notProperty(data, 'number');
@@ -406,7 +406,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       test('record data includes set values', function (done) {
         var form = BMP.Forms.current;
-        form.data().done(function (data) {
+        form.data().then(function (data) {
           assert.equal(data.calc1exp, 123);
           assert.equal(data.calc2fn, 123);
           done();
@@ -423,7 +423,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         test('record data includes Calculation fields', function (done) {
           var form = BMP.Forms.current;
-          form.data().done(function (data) {
+          form.data().then(function (data) {
             assert.equal(data.calc1exp, 0);
             assert.equal(data.calc2fn, 0);
             done();
