@@ -76,11 +76,11 @@ define(['feature!promises', 'jquery', 'underscore', 'BlinkForms', 'definitions',
 
           // remove all elements not needed for this action
           elements = _.filter(elements, function (el) {
-            return elNames.indexOf(el.default.name) !== -1;
+            return elNames.indexOf(el.name) !== -1;
           });
           // sort elements as per the action-specific order
           elements = _.sortBy(elements, function (el) {
-            return elNames.indexOf(el.default.name);
+            return elNames.indexOf(el.name);
           });
 
           def.default._elements = elements;
