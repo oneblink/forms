@@ -15,7 +15,7 @@ define(['views/jqm/elements/date'], function (DateView) {
         'rv-value': 'm:_date'
       });
       this.$el.append($input);
-      BMP.Forms.once('formReady', function () {
+      BMP.Forms.once('formInjected', function () {
         $input.pickadate(self.prepareDateSettings());
       });
       return this;
@@ -33,7 +33,7 @@ define(['views/jqm/elements/date'], function (DateView) {
         'rv-value': 'm:_time'
       });
       this.$el.append($input);
-      BMP.Forms.once('formReady', function () {
+      BMP.Forms.once('formInjected', function () {
         $input.pickatime(self.prepareTimeSettings());
       });
       return this;
@@ -117,5 +117,3 @@ define(['views/jqm/elements/date'], function (DateView) {
 
   return DatePickadateElement;
 });
-
-

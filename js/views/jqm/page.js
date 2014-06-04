@@ -8,7 +8,7 @@ define(['views/jqm/section'], function (SectionView) {
     },
     render: function () {
       SectionView.prototype.render.call(this);
-      this.$el.hide();
+      //this.$el.hide();
     }
   });
 
