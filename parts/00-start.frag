@@ -12,7 +12,8 @@
       'moment',
       'picker.date',
       'picker.time',
-      'jquerymobile'
+      'jquerymobile',
+      'signaturepad'
     ], definition);
 
   } else {
