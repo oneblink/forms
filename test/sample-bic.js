@@ -16,10 +16,18 @@ define(['feature!promises', 'jquery', 'underscore', 'BlinkForms', 'definitions',
     $grid = $('<fieldset class="ui-grid-a"></fieldset>').appendTo($footer);
     $('<div class="ui-block-a"></div>').appendTo($grid);
     $colB = $('<div class="ui-block-b"></div>').appendTo($grid);
+    $('<a></a>').attr({
+      'id': 'previousFormPage',
+      'data-role': 'button'
+    }).text('Previous').appendTo($colB);
     $('<button></button>').attr({
       'data-action': 'submit',
       'data-role': 'button'
     }).text('Submit').appendTo($colB);
+    $('<a></a>').attr({
+      'id': 'nextFormPage',
+      'data-role': 'button'
+    }).text('Next').appendTo($colB);
 
     Forms.getDefinition = function (name, action) {
       var elNames,
@@ -76,11 +84,11 @@ define(['feature!promises', 'jquery', 'underscore', 'BlinkForms', 'definitions',
 
           // remove all elements not needed for this action
           elements = _.filter(elements, function (el) {
-            return elNames.indexOf(el.default.name) !== -1;
+            return elNames.indexOf(el.name) !== -1;
           });
           // sort elements as per the action-specific order
           elements = _.sortBy(elements, function (el) {
-            return elNames.indexOf(el.default.name);
+            return elNames.indexOf(el.name);
           });
 
           def.default._elements = elements;
@@ -99,6 +107,22 @@ define(['feature!promises', 'jquery', 'underscore', 'BlinkForms', 'definitions',
         $submitPopup.append('<pre>' + json + '</pre>');
         $submitPopup.popup('open');
       });
+    });
+
+    $(document.body).on('click', '#previousFormPage', function () {
+      var index = Forms.current.get('pages').current.index();
+
+      if (index > 0) {
+        Forms.current.get('pages').goto(index - 1);
+      }
+    });
+
+    $(document.body).on('click', '#nextFormPage', function () {
+      var index = Forms.current.get('pages').current.index();
+
+      if (index < Forms.current.get('pages').length - 1) {
+        Forms.current.get('pages').goto(index + 1);
+      }
     });
 
     BMP.FileInput.initialize();

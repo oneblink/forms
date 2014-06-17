@@ -85,89 +85,32 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
       });
 
-      test('go to page 1', function () {
+      test('go t page 2 and check datepicker element', function (done) {
         var form = Forms.current,
           pages = form.attributes.pages,
-          page;
-
-        pages.goto(1);
-        page = pages.current;
-        assert.equal(page.index(), 1);
-      });
-
-      test('page 1 elements are visible', function () {
-        var form = Forms.current,
-          names = ['streetAddress', 'city'];
-
-        names.forEach(function (name) {
-          var element = form.getElement(name),
-            view = element.get('_view');
-
-          assert.isTrue(view.$el.is(':visible'), name + ' is visible');
-        });
-      });
-
-      test('page 0,2 elements are not present', function () {
-        var form = Forms.current,
-          names = ['url', 'email', 'password', 'telephone', 'number',
-            'currency'];
-
-        names.forEach(function (name) {
-          var element = form.getElement(name),
-            view = element.get('_view'),
-            body$ = view.$el.closest('body');
-
-          assert(!body$.length || document.body !== body$[0], name + ' is not present');
-        });
-      });
-
-      test('go to page 2', function () {
-        var form = Forms.current,
-          pages = form.attributes.pages,
-          page;
+          page,
+          element,
+          view,
+          $input,
+          picker;
 
         pages.goto(2);
         page = pages.current;
         assert.equal(page.index(), 2);
-      });
 
-      test('page 2 elements are visible', function () {
-        var form = Forms.current,
-          names = ['telephone', 'number', 'currency'];
-
-        names.forEach(function (name) {
-          var element = form.getElement(name),
-            view = element.get('_view');
-
-          assert.isTrue(view.$el.is(':visible'), name + ' is visible');
-        });
-      });
-
-      test('page 0,1 elements are not present', function () {
-        var form = Forms.current,
-          names = ['url', 'email', 'password', 'streetAddress', 'city'];
-
-        names.forEach(function (name) {
-          var element = form.getElement(name),
-            view = element.get('_view'),
-            body$ = view.$el.closest('body');
-
-          assert(!body$.length || document.body !== body$[0], name + ' is not present');
-        });
-      });
-
-      test('BMP.Forms.current.data() returns everything', function (done) {
-        Forms.current.data().then(function (data) {
-          assert.equal(data.url, 'https://blinkm.co/ron');
-          assert.equal(data.email, 'ron@blinkmobile.com.au');
-          assert.equal(data.password, 'secret');
-          assert.equal(data.streetAddress, 'Suite 2\r\n125 Donnison Street');
-          assert.equal(data.city, 'Gosford');
-          assert.equal(data.telephone, '+61 439 901 787');
-          assert.equal(data.number, 35);
-          assert.equal(data.currency, 876.54);
+        element = form.getElement('datefromdate');
+        view = element.get('_view');
+        $input = view.$el.find('input');
+        assert.equal($input.hasClass('picker__input'), true);
+        $input.trigger('click');
+        setTimeout(function () {
+          assert.equal($input.hasClass('picker__input--active'), true);
+          picker = $('div[class="picker__holder"]');
+          picker.trigger('click');
           done();
-        });
+        }, 500);
+
+        //assert.equal($input.hasClass('picker__input'), true);
       });
 
     }); // END: suite('Pages', ...)
