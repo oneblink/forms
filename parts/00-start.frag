@@ -13,7 +13,8 @@
       'picker.date',
       'picker.time',
       'jquerymobile',
-      'feature!es5'
+      'feature!es5',
+      'signaturepad'
     ], definition);
 
   } else {
