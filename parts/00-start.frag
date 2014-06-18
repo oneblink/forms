@@ -12,7 +12,8 @@
       'moment',
       'picker.date',
       'picker.time',
-      'jquerymobile'
+      'jquerymobile',
+      'feature!es5'
     ], definition);
 
   } else {

@@ -9,6 +9,7 @@
 
   require.config({
     paths: {
+      jquery: 'http://cdnp.blinkm.co/jquery/1.11.1/jquery-1.11.1',
       BlinkForms: '../../js/build/views/forms3jqm',
       BIC: '../sample-bic',
       'BMP.Blob': '../lib/bmp-blobs',
@@ -19,6 +20,7 @@
       'moment': '../../bower_components/momentjs/min/moment.min',
       bluebird: '../../bower_components/bluebird/js/browser/bluebird',
       feature: '../../bower_components/amd-feature/feature',
+      'es5-shim': '../../bower_components/es5-shim/es5-shim.min',
       implementations: '../lib/implementations'
     },
     shim: {
