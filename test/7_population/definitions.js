@@ -1,18 +1,18 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'datetime',
               label: 'Date + Time',
               type: 'datetime',
@@ -20,14 +20,14 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'name',
               label: 'Name',
               type: 'text'
             }
           },
           {
-            default: {
+            'default': {
               name: 'age',
               label: 'Age',
               type: 'number',
@@ -35,7 +35,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'weight',
               label: 'Weight',
               type: 'number',
@@ -43,7 +43,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'comments',
               label: 'Comments',
               type: 'subForm',
@@ -53,22 +53,22 @@ define(function () {
         ],
         _sections: [
           {
-            default: {
+            'default': {
               name: 'grid',
-              class: 'ui-responsive ui-grid-a'
+              'class': 'ui-responsive ui-grid-a'
             }
           },
           {
-            default: {
+            'default': {
               name: 'col1',
-              class: 'ui-block-a',
+              'class': 'ui-block-a',
               section: 'grid'
             }
           },
           {
-            default: {
+            'default': {
               name: 'col2',
-              class: 'ui-block-b',
+              'class': 'ui-block-b',
               section: 'grid'
             }
           }
@@ -76,18 +76,18 @@ define(function () {
       }
     },
     {
-      default: {
+      'default': {
         name: 'form2',
         label: 'Form 2',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'comment',
               label: 'Comment',
               type: 'textarea'

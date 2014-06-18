@@ -18,7 +18,7 @@ define(['views/jqm/element'], function (ElementView) {
         this.renderLabel();
         $div = $('<div></div>').attr({
           'rv-html': 'm:html',
-          class: 'ui-input-text'
+          'class': 'ui-input-text'
         });
 
         this.$el.append($div);

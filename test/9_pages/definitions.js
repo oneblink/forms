@@ -1,18 +1,18 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'url',
               label: 'URL',
               type: 'url',
@@ -21,7 +21,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'email',
               label: 'Email',
               type: 'email',
@@ -31,7 +31,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'password',
               label: 'Password',
               type: 'password',
@@ -41,7 +41,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'streetAddress',
               label: 'Street Address',
               type: 'textarea',
@@ -51,7 +51,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'city',
               label: 'City',
               type: 'text',
@@ -61,7 +61,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'telephone',
               label: 'Telephone',
               type: 'telephone',
@@ -70,7 +70,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'number',
               label: 'Number',
               type: 'number',
@@ -82,7 +82,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'currency',
               label: 'Currency',
               type: 'number',
@@ -95,15 +95,15 @@ define(function () {
         ],
         _sections: [
           {
-            default: {
+            'default': {
               name: 'account',
-              class: 'myClass'
+              'class': 'myClass'
             }
           },
           {
-            default: {
+            'default': {
               name: 'address',
-              class: 'myClass'
+              'class': 'myClass'
             }
           }
         ]

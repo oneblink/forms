@@ -22,25 +22,30 @@ define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
     });
 
     suite('Form', function () {
+      var definition;
 
       test('BlinkForms global is an Object', function () {
         assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
       });
 
-      test('initialise with form.json', function (done) {
-        var form;
-
+      test('Forms.getDefinition()', function (done) {
         Forms.getDefinition('form1', 'add').then(function (def) {
-          Forms.initialize(def);
-          form = Forms.current;
-          assert.equal($.type(form), 'object');
-          assert.equal(form.get('name'), 'form1');
-          assert.equal(form.get('label'), 'Form 1');
+          definition = def;
+          assert(true, 'getDefinition succeeded!');
           done();
         }, function () {
           assert.fail(true, false, 'getDefinition failed!');
           done();
         });
+      });
+
+      test('Forms.initialize(definition)', function () {
+        var form;
+        Forms.initialize(definition);
+        form = Forms.current;
+        assert.equal($.type(form), 'object');
+        assert.equal(form.get('name'), 'form1');
+        assert.equal(form.get('label'), 'Form 1');
       });
 
       test('render form for jQuery Mobile', function () {
