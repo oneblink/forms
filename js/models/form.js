@@ -132,6 +132,7 @@ define(function (require) {
             data[el.attributes.name] = val;
           }
         });
+        data["_action"] = me.attributes._action;
         Promise.all(promises).then(function () {
           resolve(data);
         });
@@ -178,13 +179,14 @@ define(function (require) {
     /**
      * @param {Object} attrs attributes for this model.
      */
-    create: function (attrs) {
+    create: function (attrs, action) {
       var form;
 
       if (!attrs || !_.isObject(attrs)) {
         return new Form();
       }
 
+      attrs._action = action;
       form = new Form(attrs);
 
       return form;

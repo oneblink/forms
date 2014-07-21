@@ -27,7 +27,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         var form;
 
         Forms.getDefinition('form1', 'add').then(function (def) {
-          Forms.initialize(def);
+          Forms.initialize(def, 'add');
           form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
@@ -68,6 +68,15 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         setTimeout(function () {
           done();
         }, 0);
+      });
+
+      test('Data has _action set properly', function (done) {
+
+        BMP.Forms.current.data().then(function(data) {
+          assert.equal(data._action, "add");
+          assert.equal(data.comments[0]._action, "add");
+          done();
+        });
       });
 
       test('add 2nd subForm', function (done) {
