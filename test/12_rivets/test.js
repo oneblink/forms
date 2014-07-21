@@ -1,5 +1,5 @@
 /*jslint browser:true, indent:2, devel:true*/
-/*global suite, test, setup, teardown, suiteSetup, suiteTeardown*/ // mocha
+/*global console, suite, test, setup, teardown, suiteSetup, suiteTeardown*/ // mocha
 /*global assert*/ // chai
 /*global define, require*/ // AMD / Require.JS
 
@@ -187,6 +187,15 @@ define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
       });
 
     }); // END: suite('Form', ...)
+
+    suite('Message and Headings', function () {
+      test('Message field with old-definition structure', function () {
+        assert.equal($('[data-name="_message_1"]').html(), "Message using <em><strong>old definition<strong> structure</strong></strong></em>");
+      });
+      test('Heading field with old-definition structure', function () {
+        assert.equal($('[data-name="_heading_1"]').html(), "Heading using old definition");
+      });
+    });
 
   }); // END: suite('12', ...)
 
