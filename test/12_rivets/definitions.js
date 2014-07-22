@@ -86,10 +86,28 @@ define(function () {
           },
           {
             'default': {
+              name: "_heading_1",
+              type: "heading",
+              headingText: "Heading using old definition",
+              headingPosition: "left",
+              headingFontFace: "arial",
+              page: 0
+            }
+          },
+          {
+            'default': {
               name: 'heading',
               type: 'heading',
               level: 1,
               text: 'Heading!'
+            }
+          },
+          {
+            "default": {
+              name: "_message_1",
+              type: "message",
+              messageText: "Message using <em><strong>old definition<strong> structure</em>",
+              page: 0
             }
           },
           {

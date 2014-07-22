@@ -19,8 +19,9 @@ The **BMP.Forms** global object is an event emitter, exposing the same API as ot
 
 The `current` property is a reference to the currently active Form object. It is defined as a side-effect of `BMP.Forms.initialize` (below).
 
-### BMP.Forms.initialize(definition)
+### BMP.Forms.initialize(definition, action)
 - **definition**: {Object} a (collapsed) form definition as a plain object
+- **action**: {string} 'add', 'update' or 'delete'
 
 `BMP.Forms.initialize` uses the provided Form definition object to instantiate a Form object and all ensuing Element objects, etc.
 
