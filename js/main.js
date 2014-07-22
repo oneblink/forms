@@ -46,7 +46,7 @@ define(function (require) {
     if (!$.isPlainObject(def)) {
       throw new Error('unexpected Form definition structure');
     }
-    if (!action || _.isEmpty(action) || ['add', 'update', 'delete'].indexOf(action) < 0) {
+    if (!action || _.isEmpty(action) || ['add', 'edit', 'delete'].indexOf(action) < 0) {
       action = "add";
     }
 
