@@ -132,7 +132,7 @@ define(function (require) {
             data[el.attributes.name] = val;
           }
         });
-        data["_action"] = me.attributes._action;
+        data._action = me.attributes._action;
         Promise.all(promises).then(function () {
           resolve(data);
         });

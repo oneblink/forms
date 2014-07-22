@@ -72,7 +72,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       test('Data has _action set properly', function (done) {
 
-        BMP.Forms.current.data().then(function(data) {
+        BMP.Forms.current.data().then(function (data) {
           assert.equal(data._action, "add");
           assert.equal(data.comments[0]._action, "add");
           done();
@@ -147,6 +147,29 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           });
       });
 
+    });
+
+    suite('incomplete: Edit Form', function () {
+
+      test('initialise with form.json', function (done) {
+        var form = Forms.current;
+        $.get("getformrecord.xml").then(
+          function (data) {
+            var record = {}, node, nodes;
+            nodes = data.evaluate('//' + form.attributes.name, data);
+            node = nodes.iterateNext();
+            _.each(node.children, function (key) {
+              record[key.nodeName] = key.innerHTML;
+            });
+            form.setRecord(record).then(function () {
+              form.data().then(function (formdata) {
+                assert.deepEqual(formdata, record, 'form data');
+              });
+            });
+          }
+        );
+        done();
+      });
     });
 
   }); // END: suite('1', ...)
