@@ -10,18 +10,18 @@ define(function () {
     },
     render: function () {
       var pages = this.model.attributes.pages,
-      $header = $('<header></header>'),
-      $footer = $('<footer></footer>');
-      
+        $header = $('<header></header>'),
+        $footer = $('<footer></footer>');
+
       this.$el.empty();
       this.$el.attr('data-form', this.model.attributes.name);
       this.$el.data('model', this.model);
-      if(this.model.attributes.header) {
+      if (this.model.attributes.header) {
         $header.append(this.model.attributes.header);
         this.$el.append($header);
       }
       pages.goto(0);
-      if(this.model.attributes.footer){
+      if (this.model.attributes.footer) {
         $footer.append(this.model.attributes.footer);
         this.$el.append($footer);
       }
