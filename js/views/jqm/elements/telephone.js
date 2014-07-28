@@ -12,7 +12,8 @@ define(['views/jqm/element'], function (ElementView) {
       $input = $('<input type="tel" />');
       $input.attr({
         name: name,
-        'rv-value': 'm:value'
+        'rv-value': 'm:value',
+        'rv-placeholder': 'm:placeholderText'
       });
       this.$el.append($input);
       this.bindRivets();

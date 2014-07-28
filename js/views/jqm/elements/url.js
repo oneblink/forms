@@ -12,7 +12,8 @@ define(['views/jqm/elements/text'], function (TextElementView) {
       $input = $('<input type="text" />');
       $input.attr({
         name: name,
-        'rv-value': 'm:value'
+        'rv-value': 'm:value',
+        'rv-placeholder': 'm:placeholderText'
       });
       this.$el.append($input);
       this.bindRivets();
@@ -21,5 +22,3 @@ define(['views/jqm/elements/text'], function (TextElementView) {
 
   return URLElementView;
 });
-
-

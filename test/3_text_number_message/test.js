@@ -71,6 +71,26 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     }); // END: suite('Form', ...)
 
+    suite('placeholder', function () {
+
+      test('placeholderText settings are set in attributes', function () {
+        var form, elements;
+        form = BMP.Forms.current;
+        elements = form.get('elements');
+        elements.each(function (element) {
+          var placeholder, el$, input$, name;
+          placeholder = element.get('placeholderText');
+          if (placeholder !== undefined) {
+            name = element.get('name');
+            el$ = element.get('_view').$el;
+            input$ = el$.find('[placeholder="' + placeholder + '"]');
+            assert.lengthOf(input$, 1, name + ' has placeholder');
+          }
+        });
+      });
+
+    }); // END: suite('Form', ...)
+
   }); // END: suite('1', ...)
 
 });

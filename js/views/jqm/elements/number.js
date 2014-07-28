@@ -29,7 +29,8 @@ define(['views/jqm/element'], function (ElementView) {
         'rv-min': 'm:min',
         'rv-max': 'm:max',
         'rv-value': 'm:value',
-        'rv-step': 'm:step'
+        'rv-step': 'm:step',
+        'rv-placeholder': 'm:placeholderText'
       });
       this.$el.append($input);
       this.bindRivets();
@@ -38,4 +39,3 @@ define(['views/jqm/element'], function (ElementView) {
 
   return NumberElementView;
 });
-
