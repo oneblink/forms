@@ -50,8 +50,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       test('render form with header and footer', function () {
         var form = Forms.current,
-        header = form.attributes._view.$el.find('header'),
-        footer = form.attributes._view.$el.find('footer');
+          header = form.attributes._view.$el.find('header'),
+          footer = form.attributes._view.$el.find('footer');
 
         assert(header);
         assert.equal(header.text(), 'Heading........');

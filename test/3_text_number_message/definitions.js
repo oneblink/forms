@@ -16,7 +16,8 @@ define(function () {
               name: 'url',
               label: 'URL',
               type: 'url',
-              defaultValue: 'https://blinkm.co/ron'
+              defaultValue: 'https://blinkm.co/ron',
+              placeholderText: 'http://host/path?query'
             }
           },
           {
@@ -25,6 +26,7 @@ define(function () {
               label: 'Email',
               type: 'email',
               defaultValue: 'ron@blinkmobile.com.au',
+              placeholderText: 'user@host',
               section: 'account'
             }
           },
@@ -34,6 +36,7 @@ define(function () {
               label: 'Password',
               type: 'password',
               defaultValue: 'secret',
+              placeholderText: 'password',
               section: 'account'
             }
           },
@@ -43,6 +46,7 @@ define(function () {
               label: 'Street Address',
               type: 'textarea',
               defaultValue: 'Suite 2\r\n125 Donnison Street',
+              placeholderText: 'cupboard under the stairs',
               section: 'address'
             }
           },
@@ -52,6 +56,7 @@ define(function () {
               label: 'City',
               type: 'text',
               defaultValue: 'Gosford',
+              placeholderText: 'city',
               section: 'address'
             }
           },
@@ -60,7 +65,8 @@ define(function () {
               name: 'telephone',
               label: 'Telephone',
               type: 'telephone',
-              defaultValue: '+61 439 901 787'
+              defaultValue: '+61 439 901 787',
+              placeholderText: '+61 412 345 678'
             }
           },
           {
@@ -71,7 +77,8 @@ define(function () {
               min: 15,
               max: 400,
               step: 5,
-              defaultValue: 35
+              defaultValue: 35,
+              placeholderText: '20'
             }
           },
           {
@@ -81,7 +88,8 @@ define(function () {
               type: 'number',
               minDecimals: 2,
               maxDecimals: 2,
-              defaultValue: '876.54'
+              defaultValue: '876.54',
+              placeholderText: '20.00'
             }
           },
           {
