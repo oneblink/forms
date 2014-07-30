@@ -7,12 +7,6 @@ define(function () {
         _elements: [
           {
             'default': {
-              name: 'id',
-              type: 'hidden'
-            }
-          },
-          {
-            'default': {
               name: 'datetime',
               label: 'Date + Time',
               type: 'datetime',
