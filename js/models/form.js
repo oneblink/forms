@@ -150,13 +150,19 @@ define(function (require) {
           reject();
           return;
         }
+
         _.each(data, function (value, key) {
-          var formElement = self.getElement(key);
+          var formElement = self.getElement(key), result;
           if (!formElement) {
             return;
           }
+
           if (formElement.attributes.type === 'subForm') {
-            promises.push(formElement.setRecords(value));
+              if(typeof value === 'string') {
+                result = '<' + key + '>' + value + '</' + key + '>',
+                value = Form.toJSON($.parseXML(result));
+              }
+              promises.push(formElement.setRecords(value));
           } else {
             formElement.val(value);
           }
@@ -190,6 +196,23 @@ define(function (require) {
       form = new Form(attrs);
 
       return form;
+    },
+    toJSON: function (xml) {
+      var result = [], element;
+      if (xml.childElementCount >0 ) { //xml is main subform
+          _.each(xml.firstElementChild.childNodes, function (node) { // subforms object
+            if (node.childElementCount > 0) {
+              element = {};
+              _.each(node.children, function (ele) { //fields
+                if (ele.childElementCount === 0) {
+                  element[ele.nodeName] =  ele.firstChild.nodeValue;
+                }
+              });
+              result.push(element);
+            }
+          });
+      }
+      return result;
     }
   });
 
