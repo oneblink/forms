@@ -3,7 +3,6 @@
 /*global assert:true*/ // chai
 
 define(['BlinkForms', 'BIC'], function (Forms) {
-
   suite('4: subForms', function () {
     var $doc = $(document),
       $page = $('[data-role=page]'),
@@ -121,8 +120,11 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $view = subForm.attributes._view.$el,
           $remove = $view.children('.ui-btn').children('button');
 
+        assert.equal(subForms.length, 2);
+
         $remove.trigger('click');
         setTimeout(function () {
+          assert.equal(subForms.length, 1);
           done();
         }, 0);
       });
@@ -145,6 +147,24 @@ define(['BlinkForms', 'BIC'], function (Forms) {
             assert.deepEqual(d.comments, testData, 'total form data');
             done();
           });
+      });
+
+      test('remove edit subForm (leaving placeholder)', function (done) {
+        var subFormElement = Forms.current.getElement('comments'),
+          subForms = subFormElement.attributes.forms,
+          subForm = subForms.at(0),
+          $view = subForm.attributes._view.$el,
+          $remove = $view.children('.ui-btn').children('button');
+
+        assert.equal(subForms.length, 1);
+
+        subForm.set('_action', 'edit');
+
+        $remove.trigger('click');
+        setTimeout(function () {
+          assert.equal(subForms.length, 1);
+          done();
+        }, 0);
       });
 
     });

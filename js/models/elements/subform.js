@@ -45,18 +45,25 @@ define(['models/form', 'models/element'], function (Form, Element) {
      * @param {Number|Node|jQuery} index or DOM element for the record.
      */
     remove: function (index) {
-      var $form;
+      var form;
 
       Forms = BMP.Forms;
 
       // TODO: skip placeholder "delete" records when counting
-      // TODO: create placeholder records on "edit"
       if (typeof index === 'number') {
-        this.attributes.forms.at(index).destroy();
-        return;
+        form = this.attributes.forms.at(index);
+      } else {
+        form = index instanceof $ ? index : $(index);
+        form = Forms.getForm(form);
       }
-      $form = index instanceof $ ? index : $(index);
-      Forms.getForm($form).destroy();
+      if (form.get('_action') === 'edit') {
+        form.attributes = {
+          _action: 'remove',
+          id: form.attributes.id
+        };
+      } else {
+        form.destroy();
+      }
     },
     size: function () {
       return this.attributes.forms.length;
