@@ -4,7 +4,7 @@
 
 define(['BlinkForms', 'BIC'], function (Forms) {
 
-  suite('15: subForms render', function () {
+  suite('16: subForms render', function () {
     var $doc = $(document),
       $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
@@ -51,6 +51,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $.mobile.page({}, $page);
         $page.trigger('pagecreate');
         $page.show();
+
       });
 
       // test('promise is resolved', function (done) {
@@ -84,6 +85,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
             _.each(node.children, function (key) {
               record[key.nodeName] = key.innerHTML;
             });
+
             form.setRecord(record).then(function () {
               form.data().then(function (formdata) {
                 assert.deepEqual(formdata, record, 'form data');

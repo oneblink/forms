@@ -1,0 +1,37 @@
+<xml>
+<Test>
+    <id>41</id>
+    <Name>Dasy</Name>
+    <Address>
+        <Address>
+            <id>51</id>
+            <Detail>Great work</Detail>
+            <Exp>
+                <Exp>
+                    <id>1</id>
+                    <Rank>45</Rank>
+                </Exp>
+            </Exp>
+        </Address>
+        <Address>
+            <id>52</id>
+            <Detail>Bad news</Detail>
+            <Exp>
+                <Exp>
+                    <id>2</id>
+                    <Rank>89</Rank>
+                </Exp>
+                <Exp>
+                    <id>3</id>
+                    <Rank>88</Rank>
+                </Exp>
+            </Exp>
+        </Address>
+        <Address>
+            <id>53</id>
+            <Detail>Quite Day</Detail>
+            <Exp />
+        </Address>
+    </Address>
+</Test>
+</xml>

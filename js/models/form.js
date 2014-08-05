@@ -152,17 +152,19 @@ define(function (require) {
         }
 
         _.each(data, function (value, key) {
-          var formElement = self.getElement(key), result;
+          var formElement = self.getElement(key), result, xml;
           if (!formElement) {
             return;
           }
 
           if (formElement.attributes.type === 'subForm') {
-              if(typeof value === 'string') {
-                result = '<' + key + '>' + value + '</' + key + '>',
-                value = Form.toJSON($.parseXML(result));
-              }
-              promises.push(formElement.setRecords(value));
+            if (typeof value === 'string') {
+              result = '<' + key + '>' + value + '</' + key + '>';
+              xml = $.parseXML(result);
+              value = Form.xmlToJson(xml.firstElementChild);
+              value = value[key];
+            }
+            promises.push(formElement.setRecords(value));
           } else {
             formElement.val(value);
           }
@@ -197,23 +199,40 @@ define(function (require) {
 
       return form;
     },
-    toJSON: function (xml) {
-      var result = [], element;
-      if (xml.childElementCount >0 ) { //xml is main subform
-          _.each(xml.firstElementChild.childNodes, function (node) { // subforms object
-            if (node.childElementCount > 0) {
-              element = {};
-              _.each(node.children, function (ele) { //fields
-                if (ele.childElementCount === 0) {
-                  element[ele.nodeName] =  ele.firstChild.nodeValue;
-                }
-              });
-              result.push(element);
-            }
-          });
+    xmlToJson: function (xml) {
+      var result = {},
+        nodes,
+        object = [],
+        subform,
+        childItems,
+        nodeName,
+        json = {};
+
+      if (xml.hasChildNodes()) {
+        nodes = xml.childNodes;
+        /*jslint unparam: true*/
+        _.each(nodes, function (item, key) {
+          if (item.hasChildNodes()) {
+            childItems = item.childNodes;
+            nodeName = item.nodeName;
+            /*jslint unparam: true*/
+            _.each(childItems, function (childItem, key) {
+              if (childItem.childElementCount > 0) {
+                subform = Form.xmlToJson(childItem);
+                json[childItem.nodeName] = subform[childItem.nodeName];
+              } else if (childItem.firstChild !== null) {
+                json[childItem.nodeName] = childItem.firstChild.nodeValue;
+              }
+            });// 2nd for loop
+
+            object.push(json);
+          }
+        });//1st for loop
       }
+      result[nodeName] = object;
       return result;
     }
+
   });
 
   return Form;
