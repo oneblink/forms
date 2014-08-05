@@ -84,7 +84,15 @@ define(function (require) {
      * official Blink API
      */
     getElement: function (name) {
-      return this.attributes.elements.get(name);
+      var element = this.attributes.elements.get(name);
+      if (!element && name === 'id') {
+        element = this.attributes.elements.add({
+          name: name,
+          type: 'hidden'
+        });
+        element = this.attributes.elements.get(name);
+      }
+      return element;
     },
     /**
      * official Blink API
