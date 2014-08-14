@@ -13,17 +13,68 @@ define(function () {
           },
           {
             'default': {
+              characterLimit: "10",
+              label: "Text Box, Required, Char Limit 10",
+              labelPlacement: "default",
+              labelStyle: "Plain",
+              maxWidthPrefix: "characters",
+              name: "textBox1",
+              page: 0,
+              required: true,
+              type: "text"
+            }
+          },
+          {
+            'default': {
+              label: "Number, Required, Max 100, Min 0, Min Decimals 2, Max Decimals 3",
+              labelPlacement: "default",
+              labelStyle: "Plain",
+              max: "100",
+              min: "0",
+              maxDecimalPlaces: "3",
+              minDecimalPlaces: "2",
+              name: "number1",
+              page: 0,
+              required: "1",
+              type: "number"
+            }
+          },
+          {
+            'default': {
+              characterLimit: "10",
+              label: "Password, Required, Char Limit 10",
+              labelPlacement: "default",
+              labelStyle: "Plain",
+              maxWidthPrefix: "characters",
+              name: "password1",
+              page: 0,
+              required: "1",
+              type: "password"
+            }
+          },
+          {
+            'default': {
+              name: 'text',
+              label: 'TEXT',
+              type: 'text',
+              required: true
+            }
+          },
+          {
+            'default': {
               name: 'url',
-              label: 'URL',
+              label: 'URL required',
               type: 'url',
-              defaultValue: 'https://blinkm.co/ron'
+              defaultValue: 'https://blinkm.co/ron',
+              required: "1"
             }
           },
           {
             'default': {
               name: 'email',
-              label: 'Email',
+              label: 'Email Required',
               type: 'email',
+              required: "1",
               defaultValue: 'ron@blinkmobile.com.au',
               section: 'account'
             }
@@ -62,9 +113,10 @@ define(function () {
           {
             'default': {
               name: 'telephone',
-              label: 'Telephone',
+              label: 'Telephone Required',
               type: 'telephone',
-              defaultValue: '+61 439 901 787'
+              defaultValue: '+61 439 901 787',
+              required: "1"
             }
           },
           {
