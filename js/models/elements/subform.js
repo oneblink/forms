@@ -1,3 +1,4 @@
+/*global console*/
 define(['models/form', 'models/element'], function (Form, Element) {
   'use strict';
 
@@ -136,6 +137,26 @@ define(['models/form', 'models/element'], function (Form, Element) {
     data: function () {
       if (!arguments.length) {
         return this.getRecord();
+      }
+    },
+    validate: function (attrs) {
+      var forms = this.attributes.forms,
+        err,
+        errors = {};
+      if (attrs === undefined) {
+        attrs = this.attributes;
+      }
+
+      forms.models.forEach(function (frm, index) {
+        err = frm.getErrors();
+        if (err) {
+          errors.value = errors.value || {};
+          errors.value[index] = err;
+        }
+      });
+
+      if (!_.isEmpty(errors)) {
+        return errors;
       }
     }
   });

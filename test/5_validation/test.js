@@ -135,6 +135,22 @@ define([
         runTests(cases, element);
       });
 
+      test('subform validations test', function (done) {
+        var subFormElement = Forms.current.getElement('comments'),
+          $view = subFormElement.attributes._view.$el,
+          $add = $view.children('.ui-btn').children('button'),
+          subForms = subFormElement.attributes.forms;
+
+        assert.equal(subForms.length, 0, 'no subForms yet');
+        $add.trigger('click');
+        setTimeout(function () {
+          assert.isObject(subFormElement.validate(), "subform validation fails");
+          subForms.at(0).getElement('comment').val('def');
+          assert.isUndefined(subFormElement.validate(), "subform validation passes");
+          done();
+        }, 0);
+      });
+
       test('required text', function () {
         var form = Forms.current,
           element = form.getElement('city'),

@@ -158,6 +158,14 @@ define(function () {
               type: 'message',
               html: 'This is <strong>static</strong> text.'
             }
+          },
+          {
+            'default': {
+              name: 'comments',
+              label: 'Comments',
+              type: 'subForm',
+              subForm: 'form2'
+            }
           }
         ],
         _sections: [
@@ -171,6 +179,28 @@ define(function () {
             'default': {
               name: 'address',
               'class': 'myClass'
+            }
+          }
+        ]
+      }
+    },
+    {
+      'default': {
+        name: 'form2',
+        label: 'Form 2',
+        _elements: [
+          {
+            'default': {
+              name: 'id',
+              type: 'hidden'
+            }
+          },
+          {
+            'default': {
+              name: 'comment',
+              label: 'Comment',
+              type: 'textarea',
+              required: '1'
             }
           }
         ]

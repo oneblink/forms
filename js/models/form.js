@@ -189,6 +189,21 @@ define(function (require) {
       if (!arguments.length) {
         return this.getRecord();
       }
+    },
+    /**
+     * official Blink API
+     */
+    getErrors: function () {
+      var me = this,
+        err,
+        errors = {};
+      me.attributes.elements.forEach(function (el) {
+        err = el.validate();
+        if (err) {
+          errors[el.attributes.name] = err.value;
+        }
+      });
+      return _.isEmpty(errors) ? undefined : errors;
     }
   }, {
     // static properties
