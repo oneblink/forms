@@ -10,7 +10,21 @@ define([
 
   suite('5: validation', function () {
     var $page = $('[data-role=page]'),
-      $content = $page.find('[data-role=content]');
+      $content = $page.find('[data-role=content]'),
+      runTests = function (cases, element) {
+        var error;
+
+        _.each(cases, function (v, i) {
+          element.val(v);
+          assert.isObject(element.validate(), 'now has a validation error');
+          assert.isArray(element.validate().value, 'something wrong with value');
+          error = _.find(element.validate().value, function (error) {
+            return _.isObject(error) && error.code === i;
+          });
+
+          assert.isObject(error, 'contained ' + i + ' error');
+        });
+      };
 
     suiteSetup(function () {
       $content.empty();
@@ -52,6 +66,90 @@ define([
     }); // END: suite('Form', ...)
 
     suite('Validation', function () {
+
+      test('textbox required/char-limit=10 test', function () {
+        var form = Forms.current,
+          element = form.getElement('textBox1'),
+          cases = {
+            "REQUIRED": "",
+            "MAXLENGTH": "abcdefghijk"
+          };
+
+        element.val('test');
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        runTests(cases, element);
+
+      });
+
+      test('number required/max=100/min=0/max-decimals=3/min-decimals=2 test', function () {
+        var form = Forms.current,
+          element = form.getElement('number1'),
+          cases = {
+            "MIN" : "-1",
+            "MAX" : "101",
+            "MINDECIMALS": "100.1",
+            "MAXDECIMALS": "100.1111"
+          };
+
+        element.val('0');
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        runTests(cases, element);
+      });
+
+      test('email required test', function () {
+        var form = Forms.current,
+          element = form.getElement('email'),
+          cases = {
+            "REQUIRED" : "",
+            "EMAIL" : "test@test"
+          };
+
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        runTests(cases, element);
+      });
+
+      test('URL required test', function () {
+        var form = Forms.current,
+          element = form.getElement('url'),
+          cases = {
+            "REQUIRED" : ""
+          };
+
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        runTests(cases, element);
+      });
+
+      test('telephone required test', function () {
+        var form = Forms.current,
+          element = form.getElement('telephone'),
+          cases = {
+            "REQUIRED" : ""
+          };
+
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        runTests(cases, element);
+      });
+
+      test('subform validations test', function (done) {
+        var subFormElement = Forms.current.getElement('comments'),
+          $view = subFormElement.attributes._view.$el,
+          $add = $view.children('.ui-btn').children('button'),
+          subForms = subFormElement.attributes.forms;
+
+        assert.equal(subForms.length, 0, 'no subForms yet');
+        $add.trigger('click');
+        setTimeout(function () {
+          assert.isObject(subFormElement.validate(), "subform validation fails");
+          subForms.at(0).getElement('comment').val('def');
+          assert.isUndefined(subFormElement.validate(), "subform validation passes");
+          done();
+        }, 0);
+      });
 
       test('required text', function () {
         var form = Forms.current,

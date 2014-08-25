@@ -3,7 +3,6 @@
 /*global assert:true*/ // chai
 
 define(['BlinkForms', 'BIC'], function (Forms) {
-
   suite('4: subForms', function () {
     var $doc = $(document),
       $page = $('[data-role=page]'),
@@ -27,7 +26,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         var form;
 
         Forms.getDefinition('form1', 'add').then(function (def) {
-          Forms.initialize(def);
+          Forms.initialize(def, 'add');
           form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
@@ -68,6 +67,15 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         setTimeout(function () {
           done();
         }, 0);
+      });
+
+      test('Data has _action set properly', function (done) {
+
+        BMP.Forms.current.data().then(function (data) {
+          assert.equal(data._action, "add");
+          assert.equal(data.comments[0]._action, "add");
+          done();
+        });
       });
 
       test('add 2nd subForm', function (done) {
@@ -112,8 +120,11 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $view = subForm.attributes._view.$el,
           $remove = $view.children('.ui-btn').children('button');
 
+        assert.equal(subForms.length, 2);
+
         $remove.trigger('click');
         setTimeout(function () {
+          assert.equal(subForms.length, 1);
           done();
         }, 0);
       });
@@ -138,6 +149,47 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           });
       });
 
+      test('remove edit subForm (leaving placeholder)', function (done) {
+        var subFormElement = Forms.current.getElement('comments'),
+          subForms = subFormElement.attributes.forms,
+          subForm = subForms.at(0),
+          $view = subForm.attributes._view.$el,
+          $remove = $view.children('.ui-btn').children('button');
+
+        assert.equal(subForms.length, 1);
+
+        subForm.set('_action', 'edit');
+
+        $remove.trigger('click');
+        setTimeout(function () {
+          assert.equal(subForms.length, 1);
+          done();
+        }, 0);
+      });
+
+    });
+
+    suite('incomplete: Edit Form', function () {
+
+      test('initialise with form.json', function (done) {
+        var form = Forms.current;
+        $.get("getformrecord.xml").then(
+          function (data) {
+            var record = {}, node, nodes;
+            nodes = data.evaluate('//' + form.attributes.name, data);
+            node = nodes.iterateNext();
+            _.each(node.children, function (key) {
+              record[key.nodeName] = key.innerHTML;
+            });
+            form.setRecord(record).then(function () {
+              form.data().then(function (formdata) {
+                assert.deepEqual(formdata, record, 'form data');
+              });
+            });
+          }
+        );
+        done();
+      });
     });
 
   }); // END: suite('1', ...)

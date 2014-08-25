@@ -1,18 +1,18 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'star_rating',
               label: 'Star Rating',
               type: 'number',
@@ -32,7 +32,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'star_rating2',
               label: 'Star Rating2',
               type: 'number',
@@ -52,7 +52,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'star_rating3',
               label: 'Star Rating3',
               type: 'number',

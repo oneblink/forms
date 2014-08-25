@@ -1,46 +1,46 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'text',
               label: 'Text',
               type: 'text'
             }
           },
           {
-            default: {
+            'default': {
               name: 'email',
               label: 'Email',
               type: 'email'
             }
           },
           {
-            default: {
+            'default': {
               name: 'number',
               label: 'Number',
               type: 'number'
             }
           },
           {
-            default: {
+            'default': {
               name: 'message',
               type: 'message',
               html: '<p>Output from automatic calculations shown below...</p>'
             }
           },
           {
-            default: {
+            'default': {
               name: 'calc1exp',
               label: 'calc1 expression',
               type: 'message',
@@ -49,7 +49,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'calc2fn',
               label: 'calc2 function',
               type: 'message',
@@ -60,7 +60,7 @@ define(function () {
         ],
         _behaviours: [
           {
-            default: {
+            'default': {
               name: 'auto_calculations',
               formElements: "*",
               check: null,
@@ -72,7 +72,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'auto_condition_email',
               formElements: "*",
               check: 'text_not_empty',
@@ -84,7 +84,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'auto_condition_number',
               formElements: "*",
               check: 'text_not_empty_and_email_not_empty',
@@ -98,7 +98,7 @@ define(function () {
         ],
         _checks: [
           {
-            default: {
+            'default': {
               name: 'text_not_empty',
               exp: {
                 operator: '!empty',
@@ -110,7 +110,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'text_not_empty_and_email_not_empty',
               exp: {
                 operator: 'and',
@@ -136,21 +136,21 @@ define(function () {
         ],
         _actions: [
           {
-            default: {
+            'default': {
               name: 'set_calc1exp',
               javascript: "[number]",
               outputTarget: 'calc1exp'
             }
           },
           {
-            default: {
+            'default': {
               name: 'set_calc2fn',
               javascript: "function () { return [number]; }",
               outputTarget: 'calc2fn'
             }
           },
           {
-            default: {
+            'default': {
               name: 'show_email',
               manipulations: [{
                 target: 'email',
@@ -162,7 +162,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'show_number',
               manipulations: [{
                 target: 'number',

@@ -1,35 +1,86 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
-              name: 'url',
-              label: 'URL',
-              type: 'url',
-              defaultValue: 'https://blinkm.co/ron'
+            'default': {
+              characterLimit: "10",
+              label: "Text Box, Required, Char Limit 10",
+              labelPlacement: "default",
+              labelStyle: "Plain",
+              maxWidthPrefix: "characters",
+              name: "textBox1",
+              page: 0,
+              required: true,
+              type: "text"
             }
           },
           {
-            default: {
+            'default': {
+              label: "Number, Required, Max 100, Min 0, Min Decimals 2, Max Decimals 3",
+              labelPlacement: "default",
+              labelStyle: "Plain",
+              max: "100",
+              min: "0",
+              maxDecimalPlaces: "3",
+              minDecimalPlaces: "2",
+              name: "number1",
+              page: 0,
+              required: "1",
+              type: "number"
+            }
+          },
+          {
+            'default': {
+              characterLimit: "10",
+              label: "Password, Required, Char Limit 10",
+              labelPlacement: "default",
+              labelStyle: "Plain",
+              maxWidthPrefix: "characters",
+              name: "password1",
+              page: 0,
+              required: "1",
+              type: "password"
+            }
+          },
+          {
+            'default': {
+              name: 'text',
+              label: 'TEXT',
+              type: 'text',
+              required: true
+            }
+          },
+          {
+            'default': {
+              name: 'url',
+              label: 'URL required',
+              type: 'url',
+              defaultValue: 'https://blinkm.co/ron',
+              required: "1"
+            }
+          },
+          {
+            'default': {
               name: 'email',
-              label: 'Email',
+              label: 'Email Required',
               type: 'email',
+              required: "1",
               defaultValue: 'ron@blinkmobile.com.au',
               section: 'account'
             }
           },
           {
-            default: {
+            'default': {
               name: 'password',
               label: 'Password',
               type: 'password',
@@ -38,7 +89,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'streetAddress',
               label: 'Street Address',
               type: 'textarea',
@@ -47,7 +98,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'city',
               label: 'City',
               type: 'text',
@@ -60,15 +111,16 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'telephone',
-              label: 'Telephone',
+              label: 'Telephone Required',
               type: 'telephone',
-              defaultValue: '+61 439 901 787'
+              defaultValue: '+61 439 901 787',
+              required: "1"
             }
           },
           {
-            default: {
+            'default': {
               name: 'number',
               label: 'Number',
               type: 'number',
@@ -83,7 +135,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'currency',
               label: 'Currency',
               type: 'number',
@@ -93,7 +145,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'heading',
               type: 'heading',
               level: 1,
@@ -101,24 +153,54 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'message',
               type: 'message',
               html: 'This is <strong>static</strong> text.'
+            }
+          },
+          {
+            'default': {
+              name: 'comments',
+              label: 'Comments',
+              type: 'subForm',
+              subForm: 'form2'
             }
           }
         ],
         _sections: [
           {
-            default: {
+            'default': {
               name: 'account',
-              class: 'myClass'
+              'class': 'myClass'
             }
           },
           {
-            default: {
+            'default': {
               name: 'address',
-              class: 'myClass'
+              'class': 'myClass'
+            }
+          }
+        ]
+      }
+    },
+    {
+      'default': {
+        name: 'form2',
+        label: 'Form 2',
+        _elements: [
+          {
+            'default': {
+              name: 'id',
+              type: 'hidden'
+            }
+          },
+          {
+            'default': {
+              name: 'comment',
+              label: 'Comment',
+              type: 'textarea',
+              required: '1'
             }
           }
         ]

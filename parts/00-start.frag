@@ -13,6 +13,7 @@
       'picker.date',
       'picker.time',
       'jquerymobile',
+      'feature!es5',
       'signaturepad'
     ], definition);
 

@@ -39,21 +39,25 @@ define(function (require) {
   /**
    * @param {Object} def definition of form to initialise.
    */
-  Forms.initialize = function (def) {
+  Forms.initialize = function (def, action) {
     var form,
       view;
 
     if (!$.isPlainObject(def)) {
       throw new Error('unexpected Form definition structure');
     }
-    form = Forms._models.Form.create(def);
+    if (!action || _.isEmpty(action) || ['add', 'edit', 'delete'].indexOf(action) < 0) {
+      action = "add";
+    }
+
+    form = Forms._models.Form.create(def, action);
     Forms.current = form;
     view = form.attributes._view = new Forms._views.Form({model: form});
     form.$form = view.$el; // backwards-compatibility, convenience
     view.render();
   };
 
+  Forms.version = '3.1.2';
+
   return Forms;
 });
-
-

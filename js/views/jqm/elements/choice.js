@@ -16,7 +16,7 @@ define(['views/jqm/element'], function (ElementView) {
 
       $input.attr({
         name: name + '_other',
-        class: 'ui-input-text ui-body-c'
+        'class': 'ui-input-text ui-body-c'
       });
       if ($.inArray('other', $values) >= 0 && !isOtherRendered) {
         $element.append($label);

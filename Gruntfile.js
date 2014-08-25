@@ -94,7 +94,6 @@ module.exports = function (grunt) {
             bluebird: 'empty:',
             jquery: 'empty:',
             jquerymobile: 'empty:',
-            q: 'empty:',
             underscore: 'empty:',
             moment: 'empty:',
             'picker.date': 'empty:',
@@ -102,9 +101,6 @@ module.exports = function (grunt) {
             // libraries to be built-in
             bicyclepump: '../bower_components/bicyclepump/bicyclepump',
             rivets: '../bower_components/rivets/dist/rivets',
-            // testing libraries
-            chai: 'empty:',
-            mocha: 'empty:',
             // Require.JS plugins
             text: '../bower_components/requirejs-text/text'
           },

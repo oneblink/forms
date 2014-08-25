@@ -1,18 +1,18 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'url',
               label: 'URL',
               type: 'url',
@@ -20,7 +20,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'email',
               label: 'Email',
               type: 'email',
@@ -29,7 +29,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'password',
               label: 'Password',
               type: 'password',
@@ -38,7 +38,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'streetAddress',
               label: 'Street Address',
               type: 'textarea',
@@ -47,7 +47,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'city',
               label: 'City',
               type: 'text',
@@ -56,7 +56,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'telephone',
               label: 'Telephone',
               type: 'telephone',
@@ -64,7 +64,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'number',
               label: 'Number',
               type: 'number',
@@ -75,7 +75,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'currency',
               label: 'Currency',
               type: 'number',
@@ -85,7 +85,17 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
+              name: "_heading_1",
+              type: "heading",
+              headingText: "Heading using old definition",
+              headingPosition: "left",
+              headingFontFace: "arial",
+              page: 0
+            }
+          },
+          {
+            'default': {
               name: 'heading',
               type: 'heading',
               level: 1,
@@ -93,14 +103,22 @@ define(function () {
             }
           },
           {
-            default: {
+            "default": {
+              name: "_message_1",
+              type: "message",
+              messageText: "Message using <em><strong>old definition<strong> structure</em>",
+              page: 0
+            }
+          },
+          {
+            'default': {
               name: 'message',
               type: 'message',
               html: 'This is <strong>static</strong> text.'
             }
           },
           {
-            default: {
+            'default': {
               name: 'calculation',
               label: 'Calculation',
               type: 'message',
@@ -111,15 +129,15 @@ define(function () {
         ],
         _sections: [
           {
-            default: {
+            'default': {
               name: 'account',
-              class: 'myClass'
+              'class': 'myClass'
             }
           },
           {
-            default: {
+            'default': {
               name: 'address',
-              class: 'myClass'
+              'class': 'myClass'
             }
           }
         ]

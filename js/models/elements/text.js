@@ -16,6 +16,11 @@ define(['models/element'], function (Element) {
           errors.value = errors.value || [];
           errors.value.push({code: 'MAXLENGTH', MAX: attrs.maxLength});
         }
+      } else if (attrs.value && attrs.characterLimit) {
+        if (attrs.value.length > attrs.characterLimit) {
+          errors.value = errors.value || [];
+          errors.value.push({code: 'MAXLENGTH', MAX: attrs.characterLimit});
+        }
       }
       if (!_.isEmpty(errors)) {
         return errors;

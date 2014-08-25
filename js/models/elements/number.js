@@ -3,6 +3,18 @@ define(['models/element'], function (Element) {
 
   var NumberElement = Element.extend({
     initialize: function () {
+      var self = this,
+        schemaMap = {
+          'maxDecimalPlaces': 'maxDecimals',
+          'minDecimalPlaces': 'minDecimals'
+        };
+
+      Object.keys(schemaMap).forEach(function (key) {
+        if (schemaMap[key] && self.attributes[key]) {
+          self.attributes[schemaMap[key]] = self.attributes[key];
+        }
+      });
+
       Element.prototype.initialize.call(this);
     },
     set: function (key, val, options) {
@@ -36,11 +48,12 @@ define(['models/element'], function (Element) {
         return value > maxValue;
       },
       maxDecimals: function (value, maxDecimals) {
-        var regexp = new RegExp('^(?:\\d*\\.\\d{1,' + maxDecimals + '}|\\d+)$');
+        var regexp = new RegExp('^(?:(-)?\\d*\\.\\d{1,' + maxDecimals + '}|\\d+)$');
         return regexp.test(value);
       },
       minDecimals: function (value, minDecimals) {
-        var regexp = new RegExp('^(?:\\d*\\.\\d{' + minDecimals + ',}|\\d+)$');
+        //todo: int validates against min-decimals, regexp needs to be fixed
+        var regexp = new RegExp('^(?:(-)?\\d*\\.\\d{' + minDecimals + ',}|\\d+)$');
         return regexp.test(value);
       }
     },
@@ -58,7 +71,8 @@ define(['models/element'], function (Element) {
           errors.value = errors.value || [];
           errors.value.push({code: 'MIN', MIN: attrs.min});
         }
-        if (!this.validators.maxDecimals(attrs.value, attrs.maxDecimals)) {
+        if (attrs.maxDecimals && !this.validators.maxDecimals(attrs.value,
+            attrs.maxDecimals)) {
           errors.value = errors.value || [];
           errors.value.push({code: 'MAXDECIMALS', MAX: attrs.maxDecimals});
         }

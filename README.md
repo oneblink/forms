@@ -66,6 +66,7 @@ for JavaScript.
 In the root of the project's working directory, run:
 
     npm update
+    bower install
     grunt
 
 This installs the required plugins for Grunt, and then uses Grunt to

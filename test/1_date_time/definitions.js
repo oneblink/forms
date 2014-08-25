@@ -1,18 +1,18 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'date',
               label: 'Date',
               type: 'date',
@@ -20,7 +20,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'time',
               label: 'Time',
               type: 'time',
@@ -28,7 +28,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'datetime',
               label: 'Date + Time',
               type: 'datetime',

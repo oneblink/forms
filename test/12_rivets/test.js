@@ -1,5 +1,5 @@
 /*jslint browser:true, indent:2, devel:true*/
-/*global suite, test, setup, teardown, suiteSetup, suiteTeardown*/ // mocha
+/*global console, suite, test, setup, teardown, suiteSetup, suiteTeardown*/ // mocha
 /*global assert*/ // chai
 /*global define, require*/ // AMD / Require.JS
 
@@ -22,25 +22,30 @@ define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
     });
 
     suite('Form', function () {
+      var definition;
 
       test('BlinkForms global is an Object', function () {
         assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
       });
 
-      test('initialise with form.json', function (done) {
-        var form;
-
+      test('Forms.getDefinition()', function (done) {
         Forms.getDefinition('form1', 'add').then(function (def) {
-          Forms.initialize(def);
-          form = Forms.current;
-          assert.equal($.type(form), 'object');
-          assert.equal(form.get('name'), 'form1');
-          assert.equal(form.get('label'), 'Form 1');
+          definition = def;
+          assert(true, 'getDefinition succeeded!');
           done();
         }, function () {
           assert.fail(true, false, 'getDefinition failed!');
           done();
         });
+      });
+
+      test('Forms.initialize(definition)', function () {
+        var form;
+        Forms.initialize(definition);
+        form = Forms.current;
+        assert.equal($.type(form), 'object');
+        assert.equal(form.get('name'), 'form1');
+        assert.equal(form.get('label'), 'Form 1');
       });
 
       test('render form for jQuery Mobile', function () {
@@ -182,6 +187,15 @@ define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
       });
 
     }); // END: suite('Form', ...)
+
+    suite('Message and Headings', function () {
+      test('Message field with old-definition structure', function () {
+        assert.equal($('[data-name="_message_1"]').html(), "Message using <em><strong>old definition<strong> structure</strong></strong></em>");
+      });
+      test('Heading field with old-definition structure', function () {
+        assert.equal($('[data-name="_heading_1"]').html(), "Heading using old definition");
+      });
+    });
 
   }); // END: suite('12', ...)
 

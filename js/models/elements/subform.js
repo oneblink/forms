@@ -1,16 +1,17 @@
+/*global console*/
 define(['models/form', 'models/element'], function (Form, Element) {
   'use strict';
 
-  var Forms;
+  var SubForms;
 
-  Forms = Backbone.Collection.extend({
+  SubForms = Backbone.Collection.extend({
     model: Form
   });
 
   return Element.extend({
     initialize: function () {
       Element.prototype.initialize.call(this);
-      this.attributes.forms = new Forms();
+      this.attributes.forms = new SubForms();
     },
     add: function () {
       // TODO: there is too much DOM stuff here to be in the model
@@ -18,25 +19,34 @@ define(['models/form', 'models/element'], function (Form, Element) {
         name = attrs.subForm,
         forms = attrs.forms,
         $el = attrs._view.$el,
-        $button = $el.children('.ui-btn');
+        $button = $el.children('.ui-btn'),
+        action = attrs.form.attributes._action,
+        Forms = BMP.Forms;
 
-      Forms = BMP.Forms;
-
-      return new Promise(function (resolve) {
-        Forms.getDefinition(name, 'add').then(function (def) {
+      return new Promise(function (resolve, reject) {
+        Forms.getDefinition(name, action).then(function (def) {
           var form,
             view;
 
-          form = Form.create(def);
-          forms.add(form);
-          view = form.attributes._view = new Forms._views.SubForm({
-            model: form
-          });
-          form.$form = view.$el; // backwards-compatibility, convenience
-          view.render();
-          $button.before(view.$el);
-          view.$el.trigger('create');
-          resolve();
+          try {
+            form = Form.create(def, action);
+            if (forms) {
+              forms.add(form);
+            }
+            view = form.attributes._view = new Forms._views.SubForm({
+              model: form
+            });
+            form.$form = view.$el; // backwards-compatibility, convenience
+            view.render();
+            $button.before(view.$el);
+            view.$el.trigger('create');
+            resolve();
+          } catch (err) {
+            reject(err);
+          }
+        }, function (err) {
+          // reject
+          reject(err);
         });
       });
     },
@@ -44,18 +54,24 @@ define(['models/form', 'models/element'], function (Form, Element) {
      * @param {Number|Node|jQuery} index or DOM element for the record.
      */
     remove: function (index) {
-      var $form;
-
-      Forms = BMP.Forms;
+      var form,
+        Forms = BMP.Forms;
 
       // TODO: skip placeholder "delete" records when counting
-      // TODO: create placeholder records on "edit"
       if (typeof index === 'number') {
-        this.attributes.forms.at(index).destroy();
-        return;
+        form = this.attributes.forms.at(index);
+      } else {
+        form = index instanceof $ ? index : $(index);
+        form = Forms.getForm(form);
       }
-      $form = index instanceof $ ? index : $(index);
-      Forms.getForm($form).destroy();
+      if (form.get('_action') === 'edit') {
+        form.attributes = {
+          _action: 'remove',
+          id: form.attributes.id
+        };
+      } else {
+        form.destroy();
+      }
     },
     size: function () {
       return this.attributes.forms.length;
@@ -121,6 +137,26 @@ define(['models/form', 'models/element'], function (Form, Element) {
     data: function () {
       if (!arguments.length) {
         return this.getRecord();
+      }
+    },
+    validate: function (attrs) {
+      var forms = this.attributes.forms,
+        err,
+        errors = {};
+      if (attrs === undefined) {
+        attrs = this.attributes;
+      }
+
+      forms.models.forEach(function (frm, index) {
+        err = frm.getErrors();
+        if (err) {
+          errors.value = errors.value || {};
+          errors.value[index] = err;
+        }
+      });
+
+      if (!_.isEmpty(errors)) {
+        return errors;
       }
     }
   });

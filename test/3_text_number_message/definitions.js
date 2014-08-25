@@ -1,91 +1,99 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'url',
               label: 'URL',
               type: 'url',
-              defaultValue: 'https://blinkm.co/ron'
+              defaultValue: 'https://blinkm.co/ron',
+              placeholderText: 'http://host/path?query'
             }
           },
           {
-            default: {
+            'default': {
               name: 'email',
               label: 'Email',
               type: 'email',
               defaultValue: 'ron@blinkmobile.com.au',
+              placeholderText: 'user@host',
               section: 'account'
             }
           },
           {
-            default: {
+            'default': {
               name: 'password',
               label: 'Password',
               type: 'password',
               defaultValue: 'secret',
+              placeholderText: 'password',
               section: 'account'
             }
           },
           {
-            default: {
+            'default': {
               name: 'streetAddress',
               label: 'Street Address',
               type: 'textarea',
               defaultValue: 'Suite 2\r\n125 Donnison Street',
+              placeholderText: 'cupboard under the stairs',
               section: 'address'
             }
           },
           {
-            default: {
+            'default': {
               name: 'city',
               label: 'City',
               type: 'text',
               defaultValue: 'Gosford',
+              placeholderText: 'city',
               section: 'address'
             }
           },
           {
-            default: {
+            'default': {
               name: 'telephone',
               label: 'Telephone',
               type: 'telephone',
-              defaultValue: '+61 439 901 787'
+              defaultValue: '+61 439 901 787',
+              placeholderText: '+61 412 345 678'
             }
           },
           {
-            default: {
+            'default': {
               name: 'number',
               label: 'Number',
               type: 'number',
               min: 15,
               max: 400,
               step: 5,
-              defaultValue: 35
+              defaultValue: 35,
+              placeholderText: '20'
             }
           },
           {
-            default: {
+            'default': {
               name: 'currency',
               label: 'Currency',
               type: 'number',
               minDecimals: 2,
               maxDecimals: 2,
-              defaultValue: '876.54'
+              defaultValue: '876.54',
+              placeholderText: '20.00'
             }
           },
           {
-            default: {
+            'default': {
               name: 'heading',
               type: 'heading',
               level: 1,
@@ -93,14 +101,14 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'message',
               type: 'message',
               html: 'This is <strong>static</strong> text.'
             }
           },
           {
-            default: {
+            'default': {
               name: 'calculation',
               label: 'Calculation',
               type: 'message',
@@ -111,15 +119,15 @@ define(function () {
         ],
         _sections: [
           {
-            default: {
+            'default': {
               name: 'account',
-              class: 'myClass'
+              'class': 'myClass'
             }
           },
           {
-            default: {
+            'default': {
               name: 'address',
-              class: 'myClass'
+              'class': 'myClass'
             }
           }
         ]

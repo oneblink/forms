@@ -1,25 +1,25 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'file',
               label: 'File',
               type: 'file'
             }
           },
           {
-            default: {
+            'default': {
               name: 'image_capture',
               label: 'Take Photo',
               type: 'file',
@@ -28,7 +28,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'image',
               label: 'Find Photo',
               type: 'file',
@@ -36,7 +36,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'audio_capture',
               label: 'Record Sound',
               type: 'file',
@@ -45,7 +45,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'audio',
               label: 'Find Sound',
               type: 'file',
@@ -53,7 +53,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'video_capture',
               label: 'Record Video',
               type: 'file',
@@ -62,7 +62,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'video',
               label: 'Find Video',
               type: 'file',
@@ -70,14 +70,14 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'location',
               label: 'Location',
               type: 'location'
             }
           },
           {
-            default: {
+            'default': {
               name: 'draw',
               label: 'Sign',
               type: 'draw',

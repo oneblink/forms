@@ -1,18 +1,18 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'selectc',
               label: 'Select C',
               type: 'select',
@@ -26,7 +26,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'selecte',
               label: 'Select E',
               type: 'select',
@@ -41,7 +41,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'multic',
               label: 'Multi C',
               type: 'multi',
@@ -55,7 +55,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'multie',
               label: 'Multi E',
               type: 'multi',
@@ -69,7 +69,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'boolean',
               label: 'Boolean',
               type: 'boolean',
@@ -80,7 +80,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'question',
               label: 'Question',
               type: 'boolean',

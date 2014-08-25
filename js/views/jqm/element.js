@@ -25,7 +25,7 @@ define(['rivets'], function (rivets) {
       var $label = $(document.createElement('label'));
       $label.attr({
         'rv-text': 'm:label',
-        class: 'ui-input-text'
+        'class': 'ui-input-text'
       });
       this.$el.append($label);
     },

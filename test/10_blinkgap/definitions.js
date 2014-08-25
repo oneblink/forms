@@ -1,18 +1,18 @@
 define(function () {
   return [
     {
-      default: {
+      'default': {
         name: 'form1',
         label: 'Form 1',
         _elements: [
           {
-            default: {
+            'default': {
               name: 'id',
               type: 'hidden'
             }
           },
           {
-            default: {
+            'default': {
               name: 'image_capture',
               label: 'Take Photo',
               type: 'file',
@@ -21,7 +21,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'image',
               label: 'Find Photo',
               type: 'file',
@@ -29,7 +29,7 @@ define(function () {
             }
           },
           {
-            default: {
+            'default': {
               name: 'draw',
               label: 'Sign',
               type: 'draw',

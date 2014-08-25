@@ -84,7 +84,15 @@ define(function (require) {
      * official Blink API
      */
     getElement: function (name) {
-      return this.attributes.elements.get(name);
+      var element = this.attributes.elements.get(name);
+      if (!element && name === 'id') {
+        element = this.attributes.elements.add({
+          name: name,
+          type: 'hidden'
+        });
+        element = this.attributes.elements.get(name);
+      }
+      return element;
     },
     /**
      * official Blink API
@@ -132,6 +140,7 @@ define(function (require) {
             data[el.attributes.name] = val;
           }
         });
+        data._action = me.attributes._action;
         Promise.all(promises).then(function () {
           resolve(data);
         });
@@ -149,12 +158,20 @@ define(function (require) {
           reject();
           return;
         }
+
         _.each(data, function (value, key) {
-          var formElement = self.getElement(key);
+          var formElement = self.getElement(key), result, xml;
           if (!formElement) {
             return;
           }
+
           if (formElement.attributes.type === 'subForm') {
+            if (typeof value === 'string') {
+              result = '<' + key + '>' + value + '</' + key + '>';
+              xml = $.parseXML(result);
+              value = Form.xmlToJson(xml.firstElementChild);
+              value = value[key];
+            }
             promises.push(formElement.setRecords(value));
           } else {
             formElement.val(value);
@@ -172,23 +189,73 @@ define(function (require) {
       if (!arguments.length) {
         return this.getRecord();
       }
+    },
+    /**
+     * official Blink API
+     */
+    getErrors: function () {
+      var me = this,
+        err,
+        errors = {};
+      me.attributes.elements.forEach(function (el) {
+        err = el.validate();
+        if (err) {
+          errors[el.attributes.name] = err.value;
+        }
+      });
+      return _.isEmpty(errors) ? undefined : errors;
     }
   }, {
     // static properties
     /**
      * @param {Object} attrs attributes for this model.
      */
-    create: function (attrs) {
+    create: function (attrs, action) {
       var form;
 
       if (!attrs || !_.isObject(attrs)) {
         return new Form();
       }
 
+      attrs._action = action;
       form = new Form(attrs);
 
       return form;
+    },
+    xmlToJson: function (xml) {
+      var result = {},
+        nodes,
+        object = [],
+        subform,
+        childItems,
+        nodeName,
+        json = {};
+
+      if (xml.hasChildNodes()) {
+        nodes = xml.childNodes;
+        /*jslint unparam: true*/
+        _.each(nodes, function (item, key) {
+          if (item.hasChildNodes()) {
+            childItems = item.childNodes;
+            nodeName = item.nodeName;
+            /*jslint unparam: true*/
+            _.each(childItems, function (childItem, key) {
+              if (childItem.childElementCount > 0) {
+                subform = Form.xmlToJson(childItem);
+                json[childItem.nodeName] = subform[childItem.nodeName];
+              } else if (childItem.firstChild !== null) {
+                json[childItem.nodeName] = childItem.firstChild.nodeValue;
+              }
+            });// 2nd for loop
+
+            object.push(json);
+          }
+        });//1st for loop
+      }
+      result[nodeName] = object;
+      return result;
     }
+
   });
 
   return Form;

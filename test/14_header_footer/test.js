@@ -48,48 +48,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.show();
       });
 
-    }); // END: suite('Form', ...)
+      test('render form with header and footer', function () {
+        var form = Forms.current,
+          header = form.attributes._view.$el.find('header'),
+          footer = form.attributes._view.$el.find('footer');
 
-    suite('Message', function () {
-
-      test('no label gives full width output', function () {
-        var form = BMP.Forms.current,
-          element = form.getElement('message'),
-          view = element.attributes._view;
-
-        assert(view.$el.attr('rv-html'), 'whole View bound');
-      });
-
-      test('label set displays like an input formElement', function () {
-        var form = BMP.Forms.current,
-          element = form.getElement('calculation'),
-          view = element.attributes._view;
-
-        assert.lengthOf(view.$el.children('label'), 1);
-        assert.lengthOf(view.$el.children('[rv-html]'), 1);
+        assert(header);
+        assert.equal(header.text(), 'Heading........');
+        assert(footer);
+        assert.equal(footer.text(), 'Footer........');
       });
 
     }); // END: suite('Form', ...)
 
-    suite('placeholder', function () {
-
-      test('placeholderText settings are set in attributes', function () {
-        var form, elements;
-        form = BMP.Forms.current;
-        elements = form.get('elements');
-        elements.each(function (element) {
-          var placeholder, el$, input$, name;
-          placeholder = element.get('placeholderText');
-          if (placeholder !== undefined) {
-            name = element.get('name');
-            el$ = element.get('_view').$el;
-            input$ = el$.find('[placeholder="' + placeholder + '"]');
-            assert.lengthOf(input$, 1, name + ' has placeholder');
-          }
-        });
-      });
-
-    }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)
 

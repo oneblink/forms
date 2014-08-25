@@ -77,6 +77,11 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.equal(form.getElement('name').val(), 'Harry Potter');
       });
 
+      test('"id" element created and populated', function () {
+        var form = BMP.Forms.current;
+        assert.equal(form.getElement('id').val(), 'harry7');
+      });
+
       test('"comments" has 2 subRecords', function () {
         var form = BMP.Forms.current,
           comments = form.getElement('comments');

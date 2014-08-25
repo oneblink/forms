@@ -3,9 +3,36 @@
 
 /*global Promise*/ // ECMAScript 6
 
+// https://github.com/blinkmobile/bic-v3/blob/develop/scripts/frag/05-implementations.js
+
 define(function () {
   'use strict';
   return {
+    'es5': [
+      {
+        isAvailable: function () {
+          // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/es5/array.js
+          return !(Array.prototype &&
+            Array.prototype.every &&
+            Array.prototype.filter &&
+            Array.prototype.forEach &&
+            Array.prototype.indexOf &&
+            Array.prototype.lastIndexOf &&
+            Array.prototype.map &&
+            Array.prototype.some &&
+            Array.prototype.reduce &&
+            Array.prototype.reduceRight &&
+            Array.isArray);
+        },
+        implementation: 'es5-shim'
+      },
+      {
+        isAvailable: function () { return true; },
+        module: function () {
+          return {};
+        }
+      }
+    ],
     promises: [
       {
         // native ES6 Promises

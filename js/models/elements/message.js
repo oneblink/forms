@@ -7,6 +7,17 @@ define(['models/element'], function (Element) {
       persist: false
     },
     initialize: function () {
+      var self = this,
+        schemaMap = {
+          'messageText': 'html'
+        };
+
+      Object.keys(schemaMap).forEach(function (key) {
+        if (schemaMap[key] && self.attributes[key]) {
+          self.attributes[schemaMap[key]] = self.attributes[key];
+        }
+      });
+
       Element.prototype.initialize.call(this);
     },
     /**
