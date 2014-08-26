@@ -23,7 +23,7 @@ define(function (require) {
         elements = attrs.elements;
 
       elements.off('change', this.runCheck, this);
-      if (attrs.formElements === '*') {
+      if (attrs.trigger.formElements === '*') {
         elements.set(form.attributes.elements.models);
       }
       elements.on('change', this.runCheck, this);

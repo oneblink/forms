@@ -62,7 +62,9 @@ define(function () {
           {
             'default': {
               name: 'auto_calculations',
-              formElements: "*",
+              "trigger": {
+                "formElements": "*"
+              },
               check: null,
               actions: [
                 'set_calc1exp',
@@ -74,7 +76,9 @@ define(function () {
           {
             'default': {
               name: 'auto_condition_email',
-              formElements: "*",
+              "trigger": {
+                "formElements": "*"
+              },
               check: 'text_not_empty',
               actions: [{
                 action: 'show_email',
@@ -86,7 +90,9 @@ define(function () {
           {
             'default': {
               name: 'auto_condition_number',
-              formElements: "*",
+              "trigger": {
+                "formElements": "*"
+              },
               check: 'text_not_empty_and_email_not_empty',
               actions: [{
                 action: 'show_number',
