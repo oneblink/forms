@@ -60,6 +60,7 @@ define(function (require) {
       attrs.pages.forEach(function (page) {
         page.destroy(options);
       });
+      attrs.pages.reset();
       attrs.behaviours.forEach(function (behaviour) {
         behaviour.destroy(options);
       });
