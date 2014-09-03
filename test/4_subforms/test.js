@@ -171,6 +171,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     suite('incomplete: Edit Form', function () {
 
+      test('initialise with form.json');
+
+/*
       test('initialise with form.json', function (done) {
         var form = Forms.current;
         $.get("getformrecord.xml").then(
@@ -190,6 +193,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         );
         done();
       });
+    */
     });
 
   }); // END: suite('1', ...)
