@@ -25,8 +25,11 @@ define(['models/page', 'waitfor'], function (Page, waitFor) {
       currentform = currentPage.attributes.form;
 
       waitFor(function () {
-        var aBody$ = currentPage.attributes._view.$el.closest('body');
-        return aBody$.length && aBody$[0] === document.body;
+        var aBody$;
+        if (currentPage.attributes._view) {
+          aBody$ = currentPage.attributes._view.$el.closest('body');
+        }
+        return aBody$ && aBody$.length && aBody$[0] === document.body;
       }, null, function () {
         BMP.Forms.trigger('formInjected', currentform.model);
       });
