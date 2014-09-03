@@ -63,8 +63,13 @@ define(function (require) {
       delete attrs.form;
       delete attrs.section;
       attrs.elements.forEach(function (element) {
-        element.destroy(options);
+        // some combinations of lo-dash and backbone have broken .length
+        // so we need to double-check that .forEach actually yielded something
+        if (element) {
+          element.destroy(options);
+        }
       });
+      attrs.elements.reset();
       return Backbone.Model.prototype.destroy.call(this, options);
     },
     add: function (element) {
@@ -123,5 +128,3 @@ define(function (require) {
 
   return Page;
 });
-
-

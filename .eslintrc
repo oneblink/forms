@@ -1,0 +1,20 @@
+{
+  "env": {
+    "amd": true,
+    "browser": true,
+    "mocha": false,
+    "node": false
+  },
+  "globals": {
+    "$": false,
+    "_": false,
+    "Backbone": false,
+    "BMP": true,
+    "Promise": false
+  },
+  "rules": {
+    "no-mixed-spaces-and-tabs": [2],
+    "no-underscore-dangle": 0,
+    "quotes": [1, "single", "avoid-escape"]
+  }
+}
