@@ -4,6 +4,22 @@ define(['models/element'], function (Element) {
   var FileElement = Element.extend({
     initialize: function () {
       Element.prototype.initialize.call(this);
+
+      this.on('change:value', function () {
+        // if (BMP.Forms.supports.blob) {
+          var value, blob;
+          value = this.get('value');
+          if (value) {
+            //blob = BMP.Blob.fromDataURI('data:image/jpeg;base64,' + value);
+            blob = BMP.Blob.fromDataURI(value);
+            this.set('blob', blob);
+          } else {
+            this.unset('blob');
+          }
+        // } else {
+        //    this.updateWarning();
+        // }
+      }, this);
     },
     initializeView: function () {
       var Forms = BMP.Forms,
@@ -11,7 +27,6 @@ define(['models/element'], function (Element) {
         accept = this.attributes.accept;
 
       this.removeView();
-
       if (window.PictureSourceType && window.navigator.camera &&
           window.navigator.camera.getPicture && accept.indexOf('image') === 0) {
         view = new Forms._views.BGImageElement({model: this});

@@ -11,6 +11,7 @@ define(['rivets'], function (rivets) {
       this.$el.data('model', element);
       this.bindRivets();
       element.on('change:errors', this.renderErrors, this);
+      //element.on('change:warning', this.renderWarning, this);
       element.on('change:hidden', this.onChangeHidden, this);
     },
     remove: function () {
@@ -31,6 +32,34 @@ define(['rivets'], function (rivets) {
     },
     render: function () {
       throw new Error('Element.render is only an interface');
+    },
+    renderWarning: function () {
+      console.log('renderwarning............'+this.model.attributes.name);
+      var attrs, $warningList, warning, $warningElement, i18n;
+      attrs = this.model.attributes;
+      i18n = window.i18n['BMP/Forms/warning'];
+      // TODO: do this via bindings with rivets
+      if (this.$el.children('ul').length > 0) {
+        this.$el.children('ul').remove();
+      }
+      $warningList = $(document.createElement('ul'));
+      warning = attrs.warning || {};
+
+      if (!_.isEmpty(warning)) {
+        _.each(warning.value, function (val) {
+          var text, fn;
+          fn = _.isFunction(i18n[val.code]) && i18n[val.code];
+          if (!text) {
+            text = fn ? fn(val) : JSON.stringify(val);
+          }
+          $warningElement = $(document.createElement('li'));
+          $warningElement.text(text);
+          $warningList.append($warningElement);
+        });
+      }
+      if (this.$el.children('ul').length === 0 && !_.isEmpty(warning)) {
+        this.$el.append($warningList);
+      }
     },
     renderErrors: function () {
       var attrs, $errorList, errors, $errorElement, i18n;

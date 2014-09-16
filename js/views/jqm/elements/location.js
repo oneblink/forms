@@ -22,7 +22,11 @@ define(['views/jqm/element'], function (ElementView) {
     },
     renderFigure: function () {
       var $figure, $figcaption, loc, $img, caption, staticMap;
-      loc = this.model.attributes.value;
+      if (typeof this.model.attributes.value === 'string') {
+        loc = JSON.parse(this.model.attributes.value);
+      } else {
+        loc = this.model.attributes.value;
+      }
       this.$el.children('figure').remove();
       if (!loc || !loc.latitude || !loc.longitude) {
         return;
@@ -62,4 +66,3 @@ define(['views/jqm/element'], function (ElementView) {
 
   return LocationElementView;
 });
-

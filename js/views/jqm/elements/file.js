@@ -40,11 +40,28 @@ define(['views/jqm/element'], function (ElementView) {
 
       this.bindRivets();
       $input.on('change', function (event) {
-        self.onInputChange(event);
+        // if (BMP.Forms.supports.blob) {
+          self.onInputChange(event);
+        // } else {
+        //   //$input.val('');
+        //   event.preventDefault();
+        //   self.model.updateWarning();
+        // }
       });
-      this.model.on('change:blob', this.renderFigure, this);
+      this.model.on('change:blob', function() {
+        this.model.updateWarning();
+                    console.log('change Blob............'+this.model.attributes.name);
+                    // console.log(this.model.attributes.warning);
+        if(_.isEmpty(this.model.attributes.warning)){
+          this.renderFigure();
+        } else {
+          this.renderWarning();
+        }
+
+      }, this);
     },
     renderFigure: function () {
+            console.log('renderFigure............'+this.model.attributes.name);
       var $figure, $figcaption, blob, caption, $img;
       blob = this.model.attributes.blob;
       this.$el.children('figure').remove();
@@ -92,4 +109,3 @@ define(['views/jqm/element'], function (ElementView) {
 
   return FileElementView;
 });
-

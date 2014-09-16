@@ -57,7 +57,16 @@ define(function (require) {
     view.render();
   };
 
+  Forms.supports = {};
+
+  Forms.supports.blob = (function () {
+    var blob;
+    try {
+      blob = new Blob();
+      return typeof blob.size === 'number';
+    } catch (ignore) {}
+    return false;
+  }());
+
   return Forms;
 });
-
-

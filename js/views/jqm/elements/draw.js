@@ -24,7 +24,17 @@ define([
       $button.on('click', $.proxy(DrawElementView.onButtonClick, this));
 
       this.bindRivets();
-      this.model.on('change:blob', this.renderFigure, this);
+      this.model.on('change:blob', function() {
+        this.model.updateWarning();
+                    console.log('change Blob...11.........'+this.model.attributes.name);
+                    // console.log(this.model.attributes.warning);
+        if(_.isEmpty(this.model.attributes.warning)){
+          this.renderFigure();
+        } else {
+          this.renderWarning();
+        }
+
+      }, this);
     },
     remove: function () {
       this.$el.children('button').off('click');
@@ -104,4 +114,3 @@ define([
 
   return DrawElementView;
 });
-
