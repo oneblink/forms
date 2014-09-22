@@ -64,6 +64,9 @@ define(['models/form', 'models/element'], function (Form, Element) {
         form = index instanceof $ ? index : $(index);
         form = Forms.getForm(form);
       }
+      if (form.attributes._view) {
+        form.attributes._view.remove();
+      }
       if (form.get('_action') === 'edit') {
         form.attributes = {
           _action: 'remove',

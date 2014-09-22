@@ -154,14 +154,59 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           subForms = subFormElement.attributes.forms,
           subForm = subForms.at(0),
           $view = subForm.attributes._view.$el,
-          $remove = $view.children('.ui-btn').children('button');
+          $remove = $view.children('.ui-btn').children('button'),
+          testData = {
+            _action: "remove",
+            id: 1
+          };
 
+        assert.equal($view.children('section').length, 1);
         assert.equal(subForms.length, 1);
 
         subForm.set('_action', 'edit');
+        subForm.set('id', 1);
 
         $remove.trigger('click');
         setTimeout(function () {
+          subFormElement = Forms.current.getElement('comments');
+          subForms = subFormElement.attributes.forms;
+          subForm = subForms.at(0);
+
+          assert.deepEqual(subForm.attributes, testData, "attributes set correctly");
+          assert.equal(subForms.length, 1);
+          done();
+        }, 0);
+      });
+
+      //FORMS-98 # Forms 3: Subform minus button doesn't work
+      test('test add subform', function (done) {
+        var subFormElement = Forms.current.getElement('comments'),
+          $view = subFormElement.attributes._view.$el,
+          $add = $view.children('.ui-btn').children('button'),
+          subForms = subFormElement.attributes.forms;
+
+        assert.equal(subForms.length, 1, 'no subForms yet');
+        $add.trigger('click');
+        setTimeout(function () {
+          done();
+        }, 0);
+      });
+
+      test('remove subForm (leaving no placeholders)', function (done) {
+        var subFormElement = Forms.current.getElement('comments'),
+          subForms = subFormElement.attributes.forms,
+          subForm = subForms.at(1),
+          $view = subForm.attributes._view.$el,
+          $remove = $view.children('.ui-btn').children('button');
+
+        //will have one section available in DOM
+        assert.equal($view.children('section').length, 1);
+        assert.equal(subForms.length, 2);
+        $remove.trigger('click');
+
+        setTimeout(function () {
+          //will have zero section available in DOM
+          assert.equal($view.children('section').length, 0);
           assert.equal(subForms.length, 1);
           done();
         }, 0);

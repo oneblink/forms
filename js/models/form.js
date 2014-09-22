@@ -57,13 +57,17 @@ define(function (require) {
         delete attrs._view;
       }
       delete this.$form;
-      attrs.pages.forEach(function (page) {
-        page.destroy(options);
-      });
-      attrs.pages.reset();
-      attrs.behaviours.forEach(function (behaviour) {
-        behaviour.destroy(options);
-      });
+      if (attrs.pages) {
+        attrs.pages.forEach(function (page) {
+          page.destroy(options);
+        });
+        attrs.pages.reset();
+      }
+      if (attrs.behaviours) {
+        attrs.behaviours.forEach(function (behaviour) {
+          behaviour.destroy(options);
+        });
+      }
       return Backbone.Model.prototype.destroy.call(this, options);
     },
     /**
@@ -104,43 +108,51 @@ define(function (require) {
         promises = [];
 
       return new Promise(function (resolve) {
-        me.attributes.elements.forEach(function (el) {
-          var attrs, type, val, blob;
-          attrs = el.attributes;
-          type = attrs.type;
+        if (me.attributes.elements) {
+          me.attributes.elements.forEach(function (el) {
+            var attrs, type, val, blob;
+            attrs = el.attributes;
+            type = attrs.type;
 
-          if (!attrs.persist) {
-            return;
-          }
-          if (type === 'subForm') {
-            promises.push(new Promise(function (subResolve) {
-              el.getRecord().then(function (val) {
-                data[el.attributes.name] = val;
-                subResolve();
-              });
-            }));
-            return;
-          }
-          if (type === 'file' || type === 'draw') {
-            blob = attrs.blob;
-            if (blob && blob.type && (blob.base64 || blob.text)) {
-              data[el.attributes.name] = blob.base64 || blob.text;
-              data[el.attributes.name + '_mimetype'] = blob.type;
+            if (!attrs.persist) {
+              return;
             }
-            return;
-          }
-          if (type === 'location') {
-            val = attrs.value;
-            if (val) {
-              data[el.attributes.name] = JSON.stringify(val);
+            if (type === 'subForm') {
+              promises.push(new Promise(function (subResolve) {
+                el.getRecord().then(function (val) {
+                  data[el.attributes.name] = val;
+                  subResolve();
+                });
+              }));
+              return;
             }
-            return;
-          }
-          val = el.val();
-          if (val || typeof val === 'number') {
-            data[el.attributes.name] = val;
-          }
-        });
+            if (type === 'file' || type === 'draw') {
+              blob = attrs.blob;
+              if (blob && blob.type && (blob.base64 || blob.text)) {
+                data[el.attributes.name] = blob.base64 || blob.text;
+                data[el.attributes.name + '_mimetype'] = blob.type;
+              }
+              return;
+            }
+            if (type === 'location') {
+              val = attrs.value;
+              if (val) {
+                data[el.attributes.name] = JSON.stringify(val);
+              }
+              return;
+            }
+            val = el.val();
+            if (val || typeof val === 'number') {
+              data[el.attributes.name] = val;
+            }
+          });
+        } else if (me.attributes.id) {
+          //this should be executed when all of following is correct
+          //1. user is editing record
+          //2. user has deleted a subform record
+          //3. me.attributes don't have `elements` element
+          data.id = me.attributes.id;
+        }
         data._action = me.attributes._action;
         Promise.all(promises).then(function () {
           resolve(data);
