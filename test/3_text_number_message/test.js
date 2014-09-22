@@ -91,6 +91,37 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     }); // END: suite('Form', ...)
 
+    suite('headings', function () {
+
+      test('1st heading is an h1', function () {
+        var form, element, view;
+        form = BMP.Forms.current;
+        element = form.getElement('heading');
+        view = element.get('_view');
+        assert.lengthOf(view.$el, 1);
+        assert.equal(view.$el[0].nodeName, 'H1');
+      });
+
+      test('2nd heading is an h2', function () {
+        var form, element, view;
+        form = BMP.Forms.current;
+        element = form.getElement('heading2');
+        view = element.get('_view');
+        assert.lengthOf(view.$el, 1);
+        assert.equal(view.$el[0].nodeName, 'H2');
+      });
+
+      test('3rd heading is an h3', function () {
+        var form, element, view;
+        form = BMP.Forms.current;
+        element = form.getElement('heading3');
+        view = element.get('_view');
+        assert.lengthOf(view.$el, 1);
+        assert.equal(view.$el[0].nodeName, 'H3');
+      });
+
+    });
+
   }); // END: suite('1', ...)
 
 });

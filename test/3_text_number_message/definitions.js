@@ -102,6 +102,22 @@ define(function () {
           },
           {
             'default': {
+              name: 'heading2',
+              type: 'heading',
+              level: 2,
+              text: 'h2'
+            }
+          },
+          {
+            'default': {
+              name: 'heading3',
+              type: 'heading',
+              headingType: 2,
+              text: 'h3'
+            }
+          },
+          {
+            'default': {
               name: 'message',
               type: 'message',
               html: 'This is <strong>static</strong> text.'
