@@ -162,6 +162,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         assert.equal($view.children('section').length, 1);
         assert.equal(subForms.length, 1);
+        assert.equal(subForms.size(), 1);
 
         subForm.set('_action', 'edit');
         subForm.set('id', 1);
@@ -174,6 +175,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
           assert.deepEqual(subForm.attributes, testData, "attributes set correctly");
           assert.equal(subForms.length, 1);
+          assert.equal(subForms.size(), 1);
           done();
         }, 0);
       });
@@ -186,6 +188,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           subForms = subFormElement.attributes.forms;
 
         assert.equal(subForms.length, 1, 'no subForms yet');
+        assert.equal(subForms.size(), 1);
         $add.trigger('click');
         setTimeout(function () {
           done();
@@ -202,12 +205,15 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         //will have one section available in DOM
         assert.equal($view.children('section').length, 1);
         assert.equal(subForms.length, 2);
+        assert.equal(subForms.size(), 2);
+
         $remove.trigger('click');
 
         setTimeout(function () {
           //will have zero section available in DOM
           assert.equal($view.children('section').length, 0);
           assert.equal(subForms.length, 1);
+          assert.equal(subForms.size(), 1);
           done();
         }, 0);
       });
