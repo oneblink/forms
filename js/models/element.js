@@ -65,11 +65,10 @@ define(function () {
       if (!BMP.Forms.supports.blob) {
         warning.value.push({code: 'NO_BLOB_PREVIEW'});
       }
-      var a = _.isEmpty(warning) ? undefined : warning;
-      console.log(a);
       return _.isEmpty(warning) ? undefined : warning;
     },
     updateWarning: function () {
+      console.log('updatewarning............'+this.get('name'));
       this.set('warning', this.warn());
     },
     removeView: function () {

@@ -6,9 +6,9 @@ define(['models/element'], function (Element) {
       Element.prototype.initialize.call(this);
 
       this.on('change:value', function () {
-        // if (BMP.Forms.supports.blob) {
           var value, blob;
           value = this.get('value');
+
           if (value) {
             //blob = BMP.Blob.fromDataURI('data:image/jpeg;base64,' + value);
             blob = BMP.Blob.fromDataURI(value);
@@ -16,9 +16,6 @@ define(['models/element'], function (Element) {
           } else {
             this.unset('blob');
           }
-        // } else {
-        //    this.updateWarning();
-        // }
       }, this);
     },
     initializeView: function () {

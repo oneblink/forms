@@ -34,7 +34,6 @@ define(['rivets'], function (rivets) {
       throw new Error('Element.render is only an interface');
     },
     renderWarning: function () {
-      console.log('renderwarning............'+this.model.attributes.name);
       var attrs, $warningList, warning, $warningElement, i18n;
       attrs = this.model.attributes;
       i18n = window.i18n['BMP/Forms/warning'];

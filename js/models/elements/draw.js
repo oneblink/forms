@@ -5,7 +5,6 @@ define(['models/element'], function (Element) {
     initialize: function () {
       Element.prototype.initialize.call(this);
       this.on('change:value', function () {
-        // if (BMP.Forms.supports.blob) {
           var value, blob;
           value = this.get('value');
           if (value) {
@@ -15,9 +14,6 @@ define(['models/element'], function (Element) {
           } else {
             this.unset('blob');
           }
-        // } else {
-        //   //  this.updateWarning();
-        // }
       }, this);
     },
     initializeView: function () {

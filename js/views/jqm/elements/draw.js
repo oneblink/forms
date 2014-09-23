@@ -26,12 +26,10 @@ define([
       this.bindRivets();
       this.model.on('change:blob', function() {
         this.model.updateWarning();
-                    console.log('change Blob...11.........'+this.model.attributes.name);
-                    // console.log(this.model.attributes.warning);
         if(_.isEmpty(this.model.attributes.warning)){
-          this.renderFigure();
-        } else {
           this.renderWarning();
+        } else {
+          this.renderFigure();
         }
 
       }, this);

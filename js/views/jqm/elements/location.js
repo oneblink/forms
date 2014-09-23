@@ -27,6 +27,7 @@ define(['views/jqm/element'], function (ElementView) {
       } else {
         loc = this.model.attributes.value;
       }
+
       this.$el.children('figure').remove();
       if (!loc || !loc.latitude || !loc.longitude) {
         return;
