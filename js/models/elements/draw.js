@@ -8,8 +8,8 @@ define(['models/element'], function (Element) {
           var value, blob;
           value = this.get('value');
           if (value) {
-            blob = BMP.Blob.fromDataURI('data:image/jpeg;base64,' + value);
-            //blob = BMP.Blob.fromDataURI(value);
+            //blob = BMP.Blob.fromDataURI('data:image/jpeg;base64,' + value);
+            blob = BMP.Blob.fromDataURI(value);
             this.set('blob', blob);
           } else {
             this.unset('blob');

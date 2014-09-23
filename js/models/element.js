@@ -68,7 +68,6 @@ define(function () {
       return _.isEmpty(warning) ? undefined : warning;
     },
     updateWarning: function () {
-      console.log('updatewarning............'+this.get('name'));
       this.set('warning', this.warn());
     },
     removeView: function () {
