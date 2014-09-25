@@ -58,7 +58,7 @@ define(['models/element'], function (Element) {
       }
     },
     validate: function (attrs) {
-      var errors = {};
+      var errors = Element.prototype.validate.call(this) || {};
       if (attrs === undefined) {
         attrs = this.attributes;
       }

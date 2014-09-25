@@ -92,7 +92,7 @@ define([
             "MAXDECIMALS": "100.1111"
           };
 
-        element.val('0');
+        element.val('1');
         assert.isUndefined(element.validate(), 'no validation errors');
 
         runTests(cases, element);
@@ -188,21 +188,26 @@ define([
 
       test('Min/Max Value Check', function () {
         var form = Forms.current,
-          element = form.getElement('number');
+          element = form.getElement('number'),
+          cases = {
+            'PATTERN': 35,
+            'MIN': 10,
+            'MAX': 550
+          };
 
-        assert.isUndefined(element.validate(), 'no validation error');
+        assert.isDefined(element.validate(), 'no validation error');
 
-        element.val(10);
-        assert.isObject(element.validate(), 'minimum value error');
-
-        element.val(550);
-        assert.isObject(element.validate(), 'maximum value error');
+        //default value is 35 which doesnot match pattern
+        runTests(cases, element);
 
       });
 
       test('Max Decimal Places Check', function () {
         var form = Forms.current,
           element = form.getElement('number');
+
+        //removed pattern in order to test decimal places
+        delete element.attributes.pattern;
 
         element.val(45.1);
         assert.isUndefined(element.validate(), 'no decimal place error');

@@ -32,8 +32,23 @@ define(['views/jqm/element'], function (ElementView) {
         'rv-step': 'm:step',
         'rv-placeholder': 'm:placeholderText'
       });
+      $input.on('keyup', function () {
+        if (this.hasOwnProperty('valueAsNumber')) {
+          if (isNaN(this.valueAsNumber)) {
+            $input.prop("value", "");
+            $(this).trigger('change');
+          }
+        } else if (typeof this.value === 'string' && !this.value.length) {
+          $input.prop("value", "");
+          $(this).trigger('change');
+        }
+      });
       this.$el.append($input);
       this.bindRivets();
+    },
+    remove: function () {
+      this.$el.children('input').off('keyup');
+      return ElementView.prototype.remove.call(this);
     }
   });
 
