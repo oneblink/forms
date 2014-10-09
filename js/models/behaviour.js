@@ -23,8 +23,16 @@ define(function (require) {
         elements = attrs.elements;
 
       elements.off('change', this.runCheck, this);
-      if (attrs.trigger.formElements === '*') {
+
+      if (!Array.isArray(attrs.trigger.formElements)) {
+        attrs.trigger.formElements = [attrs.trigger.formElements];
+      }
+      if (attrs.trigger.formElements.indexOf('*') !== -1) {
         elements.set(form.attributes.elements.models);
+      } else {
+        attrs.trigger.formElements.forEach(function (name) {
+          elements.add(form.getElement(name));
+        });
       }
       elements.on('change', this.runCheck, this);
     },
@@ -185,6 +193,7 @@ define(function (require) {
     },
     destroy: function () {
       this.attributes.elements.off('change', this.runCheck);
+      this.attributes.elements.reset();
     },
     bindExpressions: function () {
       var unbound = Expression.fn['formelement.value'];

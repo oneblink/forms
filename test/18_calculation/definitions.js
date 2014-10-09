@@ -8,8 +8,7 @@ define(function () {
           {
             "default": {
               "name": "id",
-              "type": "text",
-              "page": 0
+              "type": "hidden"
             }
           },
           {
@@ -17,6 +16,7 @@ define(function () {
               "name": "test1",
               "type": "text",
               "label": "Test1",
+              "defaultValue": "test1",
               "page": 0
             }
           },
@@ -25,6 +25,16 @@ define(function () {
               "name": "test2",
               "type": "text",
               "label": "Test2",
+              "defaultValue": "test2",
+              "page": 0
+            }
+          },
+          {
+            "default": {
+              "name": "calc_button",
+              "type": "button",
+              "label": "Calculate",
+              "persist": false,
               "page": 0
             }
           },
@@ -38,35 +48,7 @@ define(function () {
               "showTextbox": "show",
               "calculationType": "manual",
               "buttonText": "Calculate",
-              "page": 0
-            }
-          },
-          {
-            "default": {
-              "name": "subform",
-              "type": "subForm",
-              "subForm": "subform",
-              "_elements": {
-                "subtext1": {
-                  "hide": "",
-                  "override": "",
-                  "type": "textbox",
-                  "id": "subtext1"
-                },
-                "subtext2": {
-                  "hide": "",
-                  "override": "",
-                  "type": "textbox",
-                  "id": "subtext2"
-                }
-              },
-              "plusButtonLabel": "PLUS",
-              "minusButtonLabel": "MINUS",
-              "labelPlacement": "default",
-              "labelStyle": "Plain",
-              "subformControlPos": "below",
-              "subformPerms": "allow_add",
-              "preload": "no",
+              "persist": true,
               "page": 0
             }
           }
@@ -88,7 +70,7 @@ define(function () {
             "default": {
               "name": "auto_calculations",
               "trigger": {
-                "formElements": "*"
+                "formElements": ["calc_button"]
               },
               "actions": [
                 "CALC_calc"
