@@ -30,7 +30,8 @@ define(function (require) {
     MultiElement: require('models/elements/multi'),
     LocationElement: require('models/elements/location'),
     FileElement: require('models/elements/file'),
-    DrawElement: require('models/elements/draw')
+    DrawElement: require('models/elements/draw'),
+    ButtonElement: require('models/elements/button')
   };
 
   Forms.models = new BicyclePump();

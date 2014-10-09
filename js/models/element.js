@@ -133,6 +133,9 @@ define(function () {
       case 'textarea':
         View = Forms._views.TextAreaElement;
         break;
+      case 'button':
+        View = Forms._views.ButtonElement;
+        break;
       default:
         View = Forms._views.Element;
       }
@@ -218,6 +221,9 @@ define(function () {
         break;
       case 'text':
         TypedElement = Forms._models.TextElement;
+        break;
+      case 'button':
+        TypedElement = Forms._models.ButtonElement;
         break;
       case 'textarea':
         TypedElement = Forms._models.TextAreaElement;
