@@ -91,6 +91,24 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     }); // END: suite('Form', ...)
 
+
+    suite('hidden', function () {
+
+      test('hidden field is actually hidden', function (done) {
+        var form = BMP.Forms.current,
+          element = form.getElement('hiddentext'),
+          view = element.attributes._view;
+
+        assert(view.$el.attr('style'), 'display: none; ', 'field is not hidden');
+        form.data().then(function (data) {
+          assert.equal(data.hiddentext, "Test", "mismatch hidden field value");
+          done();
+        });
+
+      });
+
+    }); // END: suite('Form', ...)
+
     suite('headings', function () {
 
       test('1st heading is an h1', function () {

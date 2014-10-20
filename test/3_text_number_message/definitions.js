@@ -22,6 +22,15 @@ define(function () {
           },
           {
             'default': {
+              name: 'hiddentext',
+              label: 'Hidden Field',
+              type: 'text',
+              hidden: true,
+              defaultValue: "Test"
+            }
+          },
+          {
+            'default': {
               name: 'email',
               label: 'Email',
               type: 'email',
