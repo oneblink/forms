@@ -1,11 +1,10 @@
-/*global console*/
-define(['models/form', 'models/element'], function (Form, Element) {
+define(['models/subform', 'models/element'], function (SubForm, Element) {
   'use strict';
 
   var SubForms;
 
   SubForms = Backbone.Collection.extend({
-    model: Form
+    model: SubForm
   });
 
   return Element.extend({
@@ -15,7 +14,8 @@ define(['models/form', 'models/element'], function (Form, Element) {
     },
     add: function () {
       // TODO: there is too much DOM stuff here to be in the model
-      var attrs = this.attributes,
+      var self = this,
+        attrs = self.attributes,
         name = attrs.subForm,
         forms = attrs.forms,
         $el = attrs._view.$el,
@@ -29,7 +29,8 @@ define(['models/form', 'models/element'], function (Form, Element) {
             view;
 
           try {
-            form = Form.create(def, action);
+            form = SubForm.create(def, action);
+            form.parentElement = self;
             if (forms) {
               forms.add(form);
             }

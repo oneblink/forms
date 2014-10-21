@@ -10,12 +10,22 @@ define(function (require) {
       return ElementView.prototype.remove.call(this);
     },
     render: function () {
-      var name = this.model.attributes.subForm,
-        $button = $('<button></button>').attr({
-          type: 'button',
-          'data-icon': 'plus',
-          'data-action': 'add'
-        }).text(name);
+      var name = this.model.attributes.plusButtonLabel,
+        $button;
+
+      if (_.isEmpty(name) && this.model.attributes.label) {
+        name = this.model.attributes.label;
+      }
+
+      if (_.isEmpty(name)) {
+        name = this.model.attributes.name;
+      }
+
+      $button = $('<button></button>').attr({
+        type: 'button',
+        'data-icon': 'plus',
+        'data-action': 'add'
+      }).text(name);
 
       $button.on('click', this.onAddClick);
 

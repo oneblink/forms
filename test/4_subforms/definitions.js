@@ -47,6 +47,23 @@ define(function () {
               name: 'comments',
               label: 'Comments',
               type: 'subForm',
+              subForm: 'form2',
+              plusButtonLabel: "PLUS",
+              minusButtonLabel: "MINUS"
+            }
+          },
+          {
+            'default': {
+              name: 'notes',
+              label: 'Notes',
+              type: 'subForm',
+              subForm: 'form2'
+            }
+          },
+          {
+            'default': {
+              name: 'reviews',
+              type: 'subForm',
               subForm: 'form2'
             }
           }

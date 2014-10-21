@@ -10,11 +10,23 @@ define(function (require) {
       return FormView.prototype.remove.call(this);
     },
     render: function () {
-      var $button = $('<button></button>').attr({
+      var parentElement = this.model.parentElement,
+        name = parentElement.attributes.minusButtonLabel,
+        $button;
+
+      if (_.isEmpty(name) && parentElement.attributes.label) {
+        name = parentElement.attributes.label;
+      }
+
+      if (_.isEmpty(name)) {
+        name = parentElement.attributes.name;
+      }
+
+      $button = $('<button></button>').attr({
         type: 'button',
         'data-icon': 'minus',
         'data-action': 'remove'
-      }).text(this.model.attributes.name);
+      }).text(name);
 
       $button.on('click', this.onRemoveClick);
 
