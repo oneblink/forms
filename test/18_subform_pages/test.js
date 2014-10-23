@@ -50,21 +50,21 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       test('testing subform paging', function (done) {
         var form = Forms.current,
-        pages = form.attributes.pages,
-        subFormElement,
-        $view,
-        $add,
-        subForms,
-        testData = [
-          { Rank: '1', _action: "add"},
-          { Rank: '2', _action: "add" },
-          { Rank: '3', _action: "add" }
-        ];
+          pages = form.attributes.pages,
+          subFormElement,
+          $view,
+          $add,
+          subForms,
+          testData = [
+            { Rank: '1', _action: "add"},
+            { Rank: '2', _action: "add" },
+            { Rank: '3', _action: "add" }
+          ];
 
         //move to page 1 (page having subform)
         pages.goto(1);
-        subFormElement = Forms.current.getElement('subform01'),
-        $view = subFormElement.attributes._view.$el,
+        subFormElement = Forms.current.getElement('subform01');
+        $view = subFormElement.attributes._view.$el;
         $add = $view.children('.ui-btn').children('button');
         //adding 1st subform
         $add.trigger('click');
@@ -84,25 +84,25 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           assert.equal(subForms.at(1).attributes._view.$el.find('input[name="Rank"]').val(), 2);
           assert.equal(subForms.at(2).attributes._view.$el.find('input[name="Rank"]').val(), 3);
 
-        //check the data of subform element
-        subFormElement.data()
-          .then(function (d) {
-            assert.deepEqual(d, testData, 'subFormElement data');
-            done();
-          });
+          //check the data of subform element
+          subFormElement.data()
+            .then(function (d) {
+              assert.deepEqual(d, testData, 'subFormElement data');
+              done();
+            });
         }, 0);
 
       });
 
       test('Coming back to page with subform', function (done) {
         var form = Forms.current,
-        pages = form.attributes.pages,
-        subFormElement,
-        testData = [
-          { Rank: '1', _action: "add"},
-          { Rank: '2', _action: "add" },
-          { Rank: '3', _action: "add" }
-        ];
+          pages = form.attributes.pages,
+          subFormElement,
+          testData = [
+            { Rank: '1', _action: "add"},
+            { Rank: '2', _action: "add" },
+            { Rank: '3', _action: "add" }
+          ];
 
         subFormElement = Forms.current.getElement('subform01');
         //go to page 2
@@ -112,21 +112,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         //check the data of subform element again
         subFormElement.data()
-        .then(function (d) {
-          assert.deepEqual(d, testData, 'subFormElement data');
-          done();
-        });
+          .then(function (d) {
+            assert.deepEqual(d, testData, 'subFormElement data');
+            done();
+          });
       });
 
       test('comparing pages sections', function () {
         var form = Forms.current,
-        pages = form.attributes.pages,
-        page1,
-        newPage,
-        section1,
-        section2,
-        section3,
-        newSection;
+          pages = form.attributes.pages,
+          section1,
+          section2,
+          section3,
+          newSection;
 
         pages.goto(0);
         section1 = pages.current.attributes._view.el;
