@@ -78,10 +78,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         names.forEach(function (name) {
           var element = form.getElement(name),
-            view = element.get('_view'),
-            body$ = view.$el.closest('body');
+            view = element.get('_view');
 
-          assert(!body$.length || document.body !== body$[0], name + ' is not present');
+          assert(!view, name + ' is not present');
         });
       });
 
@@ -114,10 +113,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         names.forEach(function (name) {
           var element = form.getElement(name),
-            view = element.get('_view'),
-            body$ = view.$el.closest('body');
+            view = element.get('_view');
 
-          assert(!body$.length || document.body !== body$[0], name + ' is not present');
+          assert(!view, name + ' is not present');
         });
       });
 
@@ -149,10 +147,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         names.forEach(function (name) {
           var element = form.getElement(name),
-            view = element.get('_view'),
-            body$ = view.$el.closest('body');
+            view = element.get('_view');
 
-          assert(!body$.length || document.body !== body$[0], name + ' is not present');
+          assert(!view, name + ' is not present');
         });
       });
 

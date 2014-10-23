@@ -17,15 +17,15 @@ define(function (require) {
     defaults: {
     },
     initialize: function () {
-      var Forms = BMP.Forms,
-        attrs = this.attributes,
+      var attrs = this.attributes,
         form = attrs.form,
         sections;
 
       // TODO: document that this now assumes all Sections are pre-declared
 
       attrs.elements = new Elements();
-      attrs._view = new Forms._views.Page({model: this});
+      // attrs._view = new Forms._views.Page({model: this});
+      this.initializeView();
 
       sections = form.attributes._sections;
 
@@ -53,6 +53,13 @@ define(function (require) {
         }
       });
       attrs.sections = sections;
+    },
+    initializeView: function () {
+      var Forms = BMP.Forms,
+        view;
+
+      view = new Forms._views.Page({model: this});
+      this.set('_view', view);
     },
     destroy: function (options) {
       var attrs = this.attributes;

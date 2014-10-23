@@ -18,28 +18,18 @@ define(['models/form', 'models/element'], function (Form, Element) {
       var attrs = this.attributes,
         name = attrs.subForm,
         forms = attrs.forms,
-        $el = attrs._view.$el,
-        $button = $el.children('.ui-btn'),
         action = attrs.form.attributes._action,
         Forms = BMP.Forms;
 
       return new Promise(function (resolve, reject) {
         Forms.getDefinition(name, action).then(function (def) {
-          var form,
-            view;
+          var form;
 
           try {
             form = Form.create(def, action);
             if (forms) {
               forms.add(form);
             }
-            view = form.attributes._view = new Forms._views.SubForm({
-              model: form
-            });
-            form.$form = view.$el; // backwards-compatibility, convenience
-            view.render();
-            $button.before(view.$el);
-            view.$el.trigger('create');
             resolve();
           } catch (err) {
             reject(err);

@@ -196,11 +196,11 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('remove subForm (leaving no placeholders)', function (done) {
-        var subFormElement = Forms.current.getElement('comments'),
-          subForms = subFormElement.attributes.forms,
-          subForm = subForms.at(1),
-          $view = subForm.attributes._view.$el,
-          $remove = $view.children('.ui-btn').children('button');
+        var subFormElement = Forms.current.getElement('comments');
+        subForms = subFormElement.attributes.forms;
+        subForm = subForms.at(1);
+        $view = subForm.attributes._view.$el;
+        $remove = $view.children('.ui-btn').children('button');
 
         //will have one section available in DOM
         assert.equal($view.children('section').length, 1);
@@ -208,7 +208,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.equal(subForms.size(), 2);
 
         $remove.trigger('click');
-
         setTimeout(function () {
           //will have zero section available in DOM
           assert.equal($view.children('section').length, 0);

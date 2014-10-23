@@ -6,6 +6,7 @@ define(function () {
     },
     remove: function () {
       this.$el.removeData('model');
+      this.model.unset('_view');
       return Backbone.View.prototype.remove.call(this);
     },
     render: function () {
@@ -20,7 +21,11 @@ define(function () {
         $header.append(this.model.attributes.header);
         this.$el.append($header);
       }
-      pages.goto(0);
+
+      if (pages && typeof pages.goto === 'function') {
+        pages.goto(0);
+      }
+
       if (this.model.attributes.footer) {
         $footer.append(this.model.attributes.footer);
         this.$el.append($footer);
