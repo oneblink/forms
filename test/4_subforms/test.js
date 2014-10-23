@@ -286,7 +286,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.equal(subForms.size(), 2);
 
         $remove.trigger('click');
-
         setTimeout(function () {
           //will have zero section available in DOM
           assert.equal($view.children('section').length, 0);

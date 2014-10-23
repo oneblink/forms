@@ -20,6 +20,7 @@ define(['rivets'], function (rivets) {
       if (this.rivet) {
         this.rivet.unbind();
       }
+      this.model.unset('_view');
       return Backbone.View.prototype.remove.call(this);
     },
     renderLabel: function () {

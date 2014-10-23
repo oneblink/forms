@@ -10,15 +10,21 @@ define(['models/page', 'waitfor'], function (Page, waitFor) {
       self.current = null;
       this.forEach(function (page, number) {
         var form = page.attributes.form,
-          view = page.attributes._view;
+          view;
 
         if (number === index) {
           self.current = page;
+          page.initializeView();
+          view = page.attributes._view;
           view.render();
           form.attributes._view.$el.append(view.el);
           form.attributes._view.$el.trigger('create');
         } else {
-          $(view.el).remove();
+          view = page.attributes._view;
+          if (view) {
+            view.remove();
+            page.unset('_view');
+          }
         }
       });
       currentPage = self.current;
