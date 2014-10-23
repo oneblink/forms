@@ -54,7 +54,7 @@ define(function (require) {
           view.render();
           body$ = view.$el.closest('body');
 
-          if (!body$.length || body$[0] !== document.body && action !== 'remove') {
+          if (!body$.length || body$[0] !== document.body) {
             // make sure all SubFormViews related to the SubForm models are appended to the DOM
             previous$ = me.children('section[data-form]').last();
             if (!previous$.length) {
