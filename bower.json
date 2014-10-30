@@ -1,6 +1,6 @@
 {
   "name": "bforms_v3",
-  "version": "3.1.3",
+  "version": "3.1.4",
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
   "dependencies": {
     "pickadate": "~3.4.0",
