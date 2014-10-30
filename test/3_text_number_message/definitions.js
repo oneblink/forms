@@ -22,6 +22,15 @@ define(function () {
           },
           {
             'default': {
+              name: 'hiddentext',
+              label: 'Hidden Field',
+              type: 'text',
+              hidden: true,
+              defaultValue: "Test"
+            }
+          },
+          {
+            'default': {
               name: 'email',
               label: 'Email',
               type: 'email',
@@ -98,6 +107,22 @@ define(function () {
               type: 'heading',
               level: 1,
               text: 'Heading!'
+            }
+          },
+          {
+            'default': {
+              name: 'heading2',
+              type: 'heading',
+              level: 2,
+              text: 'h2'
+            }
+          },
+          {
+            'default': {
+              name: 'heading3',
+              type: 'heading',
+              headingType: 2,
+              text: 'h3'
             }
           },
           {

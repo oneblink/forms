@@ -14,9 +14,12 @@ define(function () {
 
       this.$el.empty();
       this.model.get('elements').forEach(function (el) {
-        var view = el.attributes._view,
-          type = el.attributes.type;
-
+        var view, type;
+        type = el.attributes.type;
+        if (!el.attributes._view && typeof el.initializeView === 'function') {
+          el.initializeView();
+        }
+        view = el.attributes._view;
         view.render();
         if (type === 'hidden') {
           self.$el.prepend(view.el);
@@ -30,6 +33,18 @@ define(function () {
     },
     hide: function () {
       this.$el.hide();
+    },
+    remove: function () {
+      var result;
+      this.model.get('elements').forEach(function (el) {
+        el.attributes._view.remove();
+      });
+      this.model.unset('_view');
+      result = Backbone.View.prototype.remove.call(this);
+      delete this.model;
+      delete this.$el;
+      delete this.el;
+      return result;
     }
   });
 

@@ -56,6 +56,83 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     suite('Sub-Forms', function () {
 
+      //------------------------------------------------------------------------
+      // subform: field: assigned label, plus/minus buttons: no label
+      //------------------------------------------------------------------------
+      test('check `notes` subform PLUS button label', function () {
+        var subFormElement = Forms.current.getElement('notes'),
+          $view = subFormElement.attributes._view.$el,
+          $add = $view.children('.ui-btn').children('button');
+        assert($add.html(), "Notes", "label for PLUS `Notes` subForm not set properly");
+      });
+
+      test('add 1st `notes` subForm', function (done) {
+        var subFormElement = Forms.current.getElement('notes'),
+          $view = subFormElement.attributes._view.$el,
+          $add = $view.children('.ui-btn').children('button'),
+          subForms = subFormElement.attributes.forms;
+
+        assert.equal(subForms.length, 0, 'no subForms yet');
+        $add.trigger('click');
+        setTimeout(function () {
+          done();
+        }, 0);
+      });
+
+      test('remove 1st `notes` subForm + check MINUS button label', function (done) {
+        var subFormElement = Forms.current.getElement('notes'),
+          subForms = subFormElement.attributes.forms,
+          subForm = subForms.at(0),
+          $view = subForm.attributes._view.$el,
+          $remove = $view.children('.ui-btn').children('button');
+
+        assert($remove.html(), "Notes", "label for MINUS `Notes` subForm not set properly");
+        $remove.trigger('click');
+        setTimeout(function () {
+          done();
+        }, 0);
+      });
+
+      //------------------------------------------------------------------------
+      // subform: field: no label, plus/minus buttons: no label
+      //------------------------------------------------------------------------
+      test('check `reviews` subform PLUS button label', function () {
+        var subFormElement = Forms.current.getElement('reviews'),
+          $view = subFormElement.attributes._view.$el,
+          $add = $view.children('.ui-btn').children('button');
+        assert($add.html(), "reviews", "label for PLUS `reviews` subForm not set properly");
+      });
+
+      test('add 1st `reviews` subForm', function (done) {
+        var subFormElement = Forms.current.getElement('reviews'),
+          $view = subFormElement.attributes._view.$el,
+          $add = $view.children('.ui-btn').children('button'),
+          subForms = subFormElement.attributes.forms;
+
+        assert.equal(subForms.length, 0, 'no subForms yet');
+        $add.trigger('click');
+        setTimeout(function () {
+          done();
+        }, 0);
+      });
+
+      test('remove 1st `reviews` subForm + check MINUS button label', function (done) {
+        var subFormElement = Forms.current.getElement('reviews'),
+          subForms = subFormElement.attributes.forms,
+          subForm = subForms.at(0),
+          $view = subForm.attributes._view.$el,
+          $remove = $view.children('.ui-btn').children('button');
+
+        assert($remove.html(), "reviews", "label for MINUS `reviews` subForm not set properly");
+        $remove.trigger('click');
+        setTimeout(function () {
+          done();
+        }, 0);
+      });
+
+      //------------------------------------------------------------------------
+      //------------------------------------------------------------------------
+
       test('add 1st subForm', function (done) {
         var subFormElement = Forms.current.getElement('comments'),
           $view = subFormElement.attributes._view.$el,
@@ -63,6 +140,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           subForms = subFormElement.attributes.forms;
 
         assert.equal(subForms.length, 0, 'no subForms yet');
+        assert($add.html(), "PLUS", "label for ADD `Comments` subForm not set properly");
         $add.trigger('click');
         setTimeout(function () {
           done();
@@ -121,7 +199,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $remove = $view.children('.ui-btn').children('button');
 
         assert.equal(subForms.length, 2);
-
+        assert($remove.html(), "MINUS", "label for MINUS `comments` subForm not set properly");
         $remove.trigger('click');
         setTimeout(function () {
           assert.equal(subForms.length, 1);
@@ -154,15 +232,65 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           subForms = subFormElement.attributes.forms,
           subForm = subForms.at(0),
           $view = subForm.attributes._view.$el,
-          $remove = $view.children('.ui-btn').children('button');
+          $remove = $view.children('.ui-btn').children('button'),
+          testData = {
+            _action: "remove",
+            id: 1
+          };
 
+        assert.equal($view.children('section').length, 1);
         assert.equal(subForms.length, 1);
+        assert.equal(subForms.size(), 1);
 
         subForm.set('_action', 'edit');
+        subForm.set('id', 1);
 
         $remove.trigger('click');
         setTimeout(function () {
+          subFormElement = Forms.current.getElement('comments');
+          subForms = subFormElement.attributes.forms;
+          subForm = subForms.at(0);
+
+          assert.deepEqual(subForm.attributes, testData, "attributes set correctly");
           assert.equal(subForms.length, 1);
+          assert.equal(subForms.size(), 1);
+          done();
+        }, 0);
+      });
+
+      //FORMS-98 # Forms 3: Subform minus button doesn't work
+      test('test add subform', function (done) {
+        var subFormElement = Forms.current.getElement('comments'),
+          $view = subFormElement.attributes._view.$el,
+          $add = $view.children('.ui-btn').children('button'),
+          subForms = subFormElement.attributes.forms;
+
+        assert.equal(subForms.length, 1, 'no subForms yet');
+        assert.equal(subForms.size(), 1);
+        $add.trigger('click');
+        setTimeout(function () {
+          done();
+        }, 0);
+      });
+
+      test('remove subForm (leaving no placeholders)', function (done) {
+        var subFormElement = Forms.current.getElement('comments'),
+          subForms = subFormElement.attributes.forms,
+          subForm = subForms.at(1),
+          $view = subForm.attributes._view.$el,
+          $remove = $view.children('.ui-btn').children('button');
+
+        //will have one section available in DOM
+        assert.equal($view.children('section').length, 1);
+        assert.equal(subForms.length, 2);
+        assert.equal(subForms.size(), 2);
+
+        $remove.trigger('click');
+        setTimeout(function () {
+          //will have zero section available in DOM
+          assert.equal($view.children('section').length, 0);
+          assert.equal(subForms.length, 1);
+          assert.equal(subForms.size(), 1);
           done();
         }, 0);
       });

@@ -9,6 +9,7 @@ define(function (require) {
 
   Forms._models = {
     Form: require('models/form'),
+    SubForm: require('models/subform'),
     SubFormElement: require('models/elements/subform'),
     Behaviour: require('models/behaviour'),
     Page: require('models/page'),
@@ -30,7 +31,8 @@ define(function (require) {
     MultiElement: require('models/elements/multi'),
     LocationElement: require('models/elements/location'),
     FileElement: require('models/elements/file'),
-    DrawElement: require('models/elements/draw')
+    DrawElement: require('models/elements/draw'),
+    ButtonElement: require('models/elements/button')
   };
 
   Forms.models = new BicyclePump();
@@ -57,7 +59,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.1.3';
+  Forms.version = '3.1.4';
 
   return Forms;
 });

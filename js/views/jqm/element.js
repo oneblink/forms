@@ -10,6 +10,7 @@ define(['rivets'], function (rivets) {
       this.$el.attr('data-name', element.attributes.name);
       this.$el.data('model', element);
       this.bindRivets();
+      this.onChangeHidden();
       element.on('change:errors', this.renderErrors, this);
       element.on('change:hidden', this.onChangeHidden, this);
     },
@@ -19,6 +20,7 @@ define(['rivets'], function (rivets) {
       if (this.rivet) {
         this.rivet.unbind();
       }
+      this.model.unset('_view');
       return Backbone.View.prototype.remove.call(this);
     },
     renderLabel: function () {

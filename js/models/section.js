@@ -4,12 +4,18 @@ define(function (require) {
 
   Section = Element.extend({
     initialize: function () {
-      var Forms = BMP.Forms,
-        Elements = require('collections/elements'),
+      var Elements = require('collections/elements'),
         attrs = this.attributes;
 
       attrs.elements = new Elements();
-      attrs._view = new Forms._views.Section({model: this});
+      this.initializeView();
+    },
+    initializeView: function () {
+      var Forms = BMP.Forms,
+        view;
+
+      view = new Forms._views.Section({model: this});
+      this.set('_view', view);
     },
     destroy: function (options) {
       var attrs = this.attributes;

@@ -8,18 +8,29 @@ define(['models/element'], function (Element) {
       level: 1
     },
     initialize: function () {
-      var self = this,
-        schemaMap = {
-          'headingText': 'text',
-          'headingPosition': 'position',
-          'headingFontFace': 'fontFace'
-        };
+      var self, schemaMap, headingType;
+      self = this;
+      schemaMap = {
+        'headingText': 'text',
+        'headingPosition': 'position',
+        'headingFontFace': 'fontFace'
+      };
 
       Object.keys(schemaMap).forEach(function (key) {
         if (schemaMap[key] && self.attributes[key]) {
           self.attributes[schemaMap[key]] = self.attributes[key];
         }
       });
+      if (self.attributes.hasOwnProperty('headingType')) {
+        // migrate old headingType setting to level
+        headingType = self.attributes.headingType;
+        if (typeof headingType !== 'number') {
+          headingType = parseInt(headingType, 10);
+        }
+        if (typeof headingType === 'number' && !isNaN(headingType)) {
+          self.attributes.level = headingType + 1;
+        }
+      }
 
       Element.prototype.initialize.call(this);
     }
@@ -27,5 +38,3 @@ define(['models/element'], function (Element) {
 
   return HeadingElement;
 });
-
-
