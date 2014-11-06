@@ -95,9 +95,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         element.val('');
       });
 
-      test('per-definition, 3 Behaviours are defined', function () {
+      test('per-definition, 4 Behaviours are defined', function () {
         var form = BMP.Forms.current;
-        assert.lengthOf(form.attributes.behaviours, 3);
+        assert.lengthOf(form.attributes.behaviours, 4);
       });
 
       test('Text is visible', function () {

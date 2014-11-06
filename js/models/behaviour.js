@@ -24,6 +24,9 @@ define(function (require) {
 
       elements.off('change', this.runCheck, this);
 
+      if (!attrs.trigger && attrs.formElements) {
+        attrs.trigger = { formElements: attrs.formElements };
+      }
       if (!Array.isArray(attrs.trigger.formElements)) {
         attrs.trigger.formElements = [attrs.trigger.formElements];
       }
@@ -231,4 +234,3 @@ define(function (require) {
 
   return Behaviour;
 });
-

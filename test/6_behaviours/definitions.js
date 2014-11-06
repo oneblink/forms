@@ -100,6 +100,15 @@ define(function () {
               }],
               actionsIfFalse: []
             }
+          }, {
+            'default': {
+              name: 'auto_calculations_old',
+              formElements: '*',
+              actions: [
+                'set_calc1exp',
+                'set_calc2fn'
+              ]
+            }
           }
         ],
         _checks: [
