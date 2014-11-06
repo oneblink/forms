@@ -19,8 +19,8 @@ Generally, this is the smallest component of a Form, either:
 
 ## Section
 
-This provides a way to group Elements together for layout and other purposes.
-Sections are an optional component in a Form.
+This is a special Element that provides a way to group other Elements together
+for layout and other purposes.
 
 Sections may contain Elements, and they may also contain other Sections.
 Caution: avoid defining circular references.
