@@ -38,6 +38,7 @@ define(['models/page', 'waitfor'], function (Page, waitFor) {
         return aBody$ && aBody$.length && aBody$[0] === document.body;
       }, null, function () {
         BMP.Forms.trigger('formInjected', currentform.model);
+        BMP.Forms.trigger('pageInjected', currentPage);
       });
     }
   });
