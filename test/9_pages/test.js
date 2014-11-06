@@ -1,6 +1,6 @@
-/*global suite:true, test:true, setup:true, teardown:true*/ // mocha
-/*global suiteSetup:true, suiteTeardown:true*/ // mocha
-/*global assert:true*/ // chai
+/*global suite, test, setup, teardown*/ // mocha
+/*global suiteSetup, suiteTeardown*/ // mocha
+/*global assert*/ // chai
 
 define(['BlinkForms', 'BIC'], function (Forms) {
 
@@ -84,14 +84,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
       });
 
-      test('go to page 1', function () {
+      test('go to page 1, triggers event', function (done) {
         var form = Forms.current,
           pages = form.attributes.pages,
           page;
 
+        Forms.once('pageInjected', function (p) {
+          page = pages.current;
+          assert.equal(page, p);
+          assert.equal(page.index(), 1);
+          done();
+        });
+
         pages.goto(1);
-        page = pages.current;
-        assert.equal(page.index(), 1);
       });
 
       test('page 1 elements are visible', function () {
@@ -119,14 +124,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
       });
 
-      test('go to page 2', function () {
+      test('go to page 2, triggers event', function (done) {
         var form = Forms.current,
           pages = form.attributes.pages,
           page;
 
+        Forms.once('pageInjected', function (p) {
+          page = pages.current;
+          assert.equal(page, p);
+          assert.equal(page.index(), 2);
+          done();
+        });
+
         pages.goto(2);
-        page = pages.current;
-        assert.equal(page.index(), 2);
       });
 
       test('page 2 elements are visible', function () {
