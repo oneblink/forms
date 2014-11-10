@@ -39,7 +39,8 @@ define(['views/jqm/elements/date'], function (DateView) {
       return this;
     },
     render: function () {
-      var type = this.model.get('type');
+      var type = this.model.get('type'),
+        $label;
 
       this.$el.empty();
       this.renderLabel();
@@ -47,6 +48,16 @@ define(['views/jqm/elements/date'], function (DateView) {
       if (type !== 'time') {
         this.renderDate();
       }
+
+      /* FORMS-108: keep date and time fields in line */
+      if (type === 'datetime') {
+        $label = $(document.createElement('label'));
+        $label.attr({
+          'class': 'ui-input-text'
+        });
+        this.$el.append($label);
+      }
+
       if (type !== 'date') {
         this.renderTime();
       }
