@@ -2,8 +2,9 @@
  * This is a sample implementation of the API that the BIC must supply.
  */
 
-define(['feature!promises', 'jquery', 'underscore', 'BlinkForms', 'definitions', 'BMP.Blob'],
+define(['feature!promises', 'jquery', 'underscore', 'BlinkForms', 'definitions', 'BMP.Blob', 'feature!es5'],
   function (Promise, $, _, Forms, defs, BMP) {
+    'use strict';
 
     var $submitPopup, $footer, $grid, $colB;
     $submitPopup = $('<div></div>').attr({
@@ -30,16 +31,6 @@ define(['feature!promises', 'jquery', 'underscore', 'BlinkForms', 'definitions',
     }).text('Next').appendTo($colB);
 
     Forms.getDefinition = function (name, action) {
-      var elNames,
-        elements,
-        collapseAction = function (d) {
-          var attrs = d['default'] || {};
-          if (action && d[action]) {
-            _.extend(attrs, d[action]);
-          }
-          return attrs;
-        };
-
       return new Promise(function (resolve, reject) {
         var def = _.find(defs, function (def) {
           return def && def['default'] && def['default'].name === name;
@@ -48,53 +39,12 @@ define(['feature!promises', 'jquery', 'underscore', 'BlinkForms', 'definitions',
           reject(def);
           return;
         }
-        def = $.parseJSON(JSON.stringify(def));
-        // found definition, but need to collapse to specific action/view
-        if (_.isArray(def['default']._elements)) {
-          def['default']._elements = _.map(def['default']._elements, collapseAction);
-        }
-        if (_.isArray(def['default']._sections)) {
-          def['default']._sections = _.map(def['default']._sections, collapseAction);
-        }
-        if (_.isArray(def['default']._pages)) {
-          def['default']._pages = _.map(def['default']._pages, collapseAction);
-        }
-        if (_.isArray(def['default']._behaviours)) {
-          def['default']._behaviours = _.map(def['default']._behaviours, collapseAction);
-        }
-        if (_.isArray(def['default']._checks)) {
-          def['default']._checks = _.map(def['default']._checks, collapseAction);
-        }
-        if (_.isArray(def['default']._actions)) {
-          def['default']._actions = _.map(def['default']._actions, collapseAction);
-        }
 
-        if (!action) {
-          // pass a clone back, for safety
-          resolve(def['default']);
-          return;
+        try {
+          resolve(Forms.flattenDefinition(def, action));
+        } catch (err) {
+          reject(err);
         }
-
-        if (def[action] && def[action]._elements) {
-          elements = def['default']._elements;
-          delete def['default']._elements;
-          elNames = def[action]._elements;
-          delete def[action]._elements;
-          _.extend(def['default'], def[action]);
-
-          // remove all elements not needed for this action
-          elements = _.filter(elements, function (el) {
-            return elNames.indexOf(el['default'].name) !== -1;
-          });
-          // sort elements as per the action-specific order
-          elements = _.sortBy(elements, function (el) {
-            return elNames.indexOf(el['default'].name);
-          });
-
-          def['default']._elements = elements;
-        }
-
-        resolve(def['default']);
       });
     };
 

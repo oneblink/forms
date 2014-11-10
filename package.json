@@ -3,6 +3,7 @@
   "version": "3.1.4",
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
   "devDependencies": {
+    "blinkmobile-forms": "blinkmobile/forms#v1.0.0",
     "grunt": "~0.4",
     "grunt-jslint": "~1.1",
     "grunt-contrib-clean": "~0.5",
