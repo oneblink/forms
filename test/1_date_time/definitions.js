@@ -13,6 +13,27 @@ define(function () {
           },
           {
             'default': {
+              name: 'datenonative',
+              label: 'Date - Non Native',
+              type: 'date'
+            }
+          },
+          {
+            'default': {
+              name: 'timenonative',
+              label: 'Time - Non Native',
+              type: 'time'
+            }
+          },
+          {
+            'default': {
+              name: 'datetimenonative',
+              label: 'Date + Time - Non Native',
+              type: 'datetime'
+            }
+          },
+          {
+            'default': {
               name: 'date',
               label: 'Date',
               type: 'date',
