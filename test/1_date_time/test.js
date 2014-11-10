@@ -68,6 +68,22 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.show();
       });
 
+      test('use datetime field - avoid undefined', function () {
+        var form = Forms.current,
+          element = form.getElement('datetimenonative'),
+          $fieldset = element.attributes._view.$el,
+          date = $fieldset.find('input[name="datetimenonative_date"]'),
+          time = $fieldset.find('input[name="datetimenonative_time"]');
+
+        date.val("2014-02-01").change();
+        assert.equal(element.val(), "2014-02-01T00:00");
+
+        date.val("").change();
+        time.val("").change();
+        time.val("10:11").change();
+        assert.equal(element.val(), "0000-00-00T10:11");
+      });
+
       test('use native picker defaults to native picker', function (done) {
         nativedate.forEach(function (fld) {
           assert.equal($('input[name="' + fld + '_date"]').attr('type'), 'date');
