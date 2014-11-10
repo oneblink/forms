@@ -84,6 +84,22 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.equal(element.val(), "0000-00-00T10:11");
       });
 
+      test('use datetime field - organise elements properly on screen', function () {
+        var form = Forms.current,
+          element = form.getElement('datetimenonative'),
+          $fieldset = element.attributes._view.$el.children(),
+          elementsInOrder = [
+            'LABEL',
+            'DIV',
+            'LABEL',
+            'DIV'
+          ];
+
+        elementsInOrder.forEach(function (v, k) {
+          assert.equal($($fieldset[k]).prop('tagName'), v);
+        });
+      });
+
       test('use native picker defaults to native picker', function (done) {
         nativedate.forEach(function (fld) {
           assert.equal($('input[name="' + fld + '_date"]').attr('type'), 'date');
