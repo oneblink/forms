@@ -81,14 +81,24 @@ define([
      * update value to match _date and/or _time
      */
     prepareValue: function () {
-      var type = this.attributes.type;
+      var type = this.attributes.type,
+        date,
+        time;
       if (type === 'date') {
         this.set('value', this.attributes._date);
       } else if (type === 'time') {
         this.set('value', this.attributes._time);
       } else { // type === 'datetime'
+        date = this.attributes._date;
+        time = this.attributes._time;
         // TODO: somehow stop this from firing twice
-        this.set('value', this.attributes._date + 'T' + this.attributes._time);
+        if (!date) {
+          date = "0000-00-00";
+        }
+        if (!time) {
+          time = "00:00";
+        }
+        this.set('value', date + 'T' + time);
       }
     },
     /**

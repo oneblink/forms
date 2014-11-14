@@ -1,5 +1,44 @@
 # Changelog
 
+## v3.1.5 - 2014-11-14
+
+### Added
+
+- FORMS-108: Better UI for Date/Time fields
+
+- FORMS-104: flattenDefinition is provided by an external library
+
+- FORMS-63: pageInjected event has been added
+
+### Fixed
+
+- Backwards compatibility with previous versions
+
+- Better IE8 support
+
+## v3.1.4 - 2014-10-31
+
+### Added
+
+- FORMS-71: support for manual calculations
+
+    - this depends on a future version of the platform for compatible definitions
+
+### Fixed
+
+- FORMS-100: sub-form labels are not honoured
+
+- FORMS-99: fields with the hidden option are not hidden as expected
+
+- FORMS-98: sub-form minus buttons don't work
+
+- FORMS-96: number field validate non-numeric characters incorrectly
+
+- FORMS-89: heading types (e.g. `h1`, `h2`, etc) are not honoured
+
+- FORMS-75: sub-forms malfunction when navigating between form pages
+
+
 ## v3.1.3 - 2014-09-03
 
 ### Added

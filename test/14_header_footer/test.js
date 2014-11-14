@@ -4,7 +4,7 @@
 
 define(['BlinkForms', 'BIC'], function (Forms) {
 
-  suite('3: text/number/message', function () {
+  suite('14: Forms Header/Footer', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
 

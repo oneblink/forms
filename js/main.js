@@ -1,8 +1,9 @@
 define(function (require) {
   'use strict';
-  var Forms, BicyclePump;
+  var Forms, BicyclePump, FormsLib;
 
   BicyclePump = require('bicyclepump');
+  FormsLib = require('FormsLib');
   Forms = window.BMP.Forms;
 
   _.extend(Forms, Backbone.Events);
@@ -38,6 +39,8 @@ define(function (require) {
   Forms.models = new BicyclePump();
   Forms.views = new BicyclePump();
 
+  Forms.flattenDefinition = FormsLib.flattenDefinition;
+
   /**
    * @param {Object} def definition of form to initialise.
    */
@@ -59,7 +62,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.1.4';
+  Forms.version = '3.1.5';
 
   return Forms;
 });
