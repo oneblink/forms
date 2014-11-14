@@ -62,7 +62,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.1.4';
+  Forms.version = '3.1.5';
 
   return Forms;
 });
