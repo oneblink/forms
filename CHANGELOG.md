@@ -1,5 +1,21 @@
 # Changelog
 
+## v3.1.5 - 2014-11-14
+
+### Added
+
+- FORMS-108: Better UI for Date/Time fields
+
+- FORMS-104: flattenDefinition is provided by an external library
+
+- FORMS-63: pageInjected event has been added
+
+### Fixed
+
+- Backwards compatibility with previous versions
+
+- Better IE8 support
+
 ## v3.1.4 - 2014-10-31
 
 ### Added
