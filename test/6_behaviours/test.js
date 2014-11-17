@@ -100,12 +100,13 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.lengthOf(form.attributes.behaviours, 4);
       });
 
-      test('Text is visible', function () {
+      test('Text is visible and empty', function () {
         var form = BMP.Forms.current,
           element = form.getElement('text'),
           view = element.attributes._view;
 
         assert(!view.isHidden());
+        assert.equal(element.val(), '');
       });
 
       test('per-definition, Email is initially hidden', function () {
@@ -129,6 +130,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         form.data().then(function (data) {
           assert.notProperty(data, 'email');
           assert.notProperty(data, 'number');
+          done();
+        }, function () {
+          assert(false, 'form.data() rejected');
           done();
         });
       });
