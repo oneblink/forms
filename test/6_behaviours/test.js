@@ -436,4 +436,38 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
   }); // END: suite('1', ...)
 
+  suite('Behaviour.normalizeActions()', function () {
+    var actions;
+
+    suiteSetup(function () {
+      actions = [
+        'abc',
+        {
+          action: 'def',
+          autoReverse: true
+        }
+      ];
+      actions = Forms._models.Behaviour.normalizeActions(actions);
+    });
+
+    test('result Array contains 2 Objects, no Strings', function () {
+      assert.lengthOf(actions, 2);
+      assert.isTrue(actions.every(function (a) {
+        return a && typeof a === 'object';
+      }));
+    });
+
+    test('1st Action gets default autoReverse:false', function () {
+      var action = actions[0];
+      assert.equal(action.action, 'abc');
+      assert.isFalse(action.autoReverse);
+    });
+
+    test('2nd Action keeps explicit autoReverse:true', function () {
+      var action = actions[1];
+      assert.equal(action.action, 'def');
+      assert.isTrue(action.autoReverse);
+    });
+  });
+
 });

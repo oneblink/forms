@@ -11,6 +11,8 @@ define(function (require) {
     initialize: function () {
       var self = this;
       this.attributes.elements = new Elements();
+      this.attributes.actions = Behaviour.normalizeActions(this.attributes.actions);
+      this.attributes.actionsIfFalse = Behaviour.normalizeActions(this.attributes.actionsIfFalse);
       this.hookupTriggers();
       // TODO: find the best time to trigger this
       setTimeout(function () {
@@ -62,15 +64,11 @@ define(function (require) {
 
       if (Array.isArray(this.attributes.actions)) {
         this.attributes.actions.forEach(function (action) {
-          if (!action || (!_.isString(action) && !action.action)) {
+          if (!action || !action.action) {
             return;
           }
           if (result) {
-            if (_.isString(action)) {
-              self.runAction(action);
-            } else {
-              self.runAction(action.action);
-            }
+            self.runAction(action.action);
           } else if (action.autoReverse) {
             self.runAction(action.action, true);
           }
@@ -82,11 +80,7 @@ define(function (require) {
             return;
           }
           if (!result) {
-            if (_.isString(action)) {
-              self.runAction(action);
-            } else {
-              self.runAction(action.action);
-            }
+            self.runAction(action.action);
           } else if (action.autoReverse) {
             self.runAction(action.action, true);
           }
@@ -229,6 +223,31 @@ define(function (require) {
       }
       behaviour = new Behaviour(attrs);
       return behaviour;
+    },
+    /**
+     * @param {Array} actions array of Strings and Objects
+     * @returns {Object[]} array of Objects { action: "...", autoReverse: true|false }
+     */
+    normalizeActions: function (actions) {
+      if (!actions || !Array.isArray(actions)) {
+        return [];
+      }
+      return actions.map(function (action) {
+        if (action && typeof action === 'string') {
+          action = {
+            action: action,
+            autoReverse: false
+          };
+        }
+        if (action && typeof action === 'object') {
+          if (action.action && typeof action.action === 'string') {
+            if (typeof action.autoReverse === 'boolean') {
+              return action;
+            }
+          }
+        }
+        return {};
+      });
     }
   });
 
