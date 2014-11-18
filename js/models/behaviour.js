@@ -9,35 +9,56 @@ define(function (require) {
 
   Behaviour = Backbone.Model.extend({
     initialize: function () {
-      var self = this;
-      this.attributes.elements = new Elements();
+      var attrs = this.attributes;
+      attrs.elements = new Elements();
+      attrs.actions = Behaviour.normalizeActions(attrs.actions);
+      attrs.actionsIfFalse = Behaviour.normalizeActions(attrs.actionsIfFalse);
+
+      // correct older definition structures
+      if (!attrs.trigger && attrs.formElements) {
+        attrs.trigger = { formElements: attrs.formElements };
+      }
+
+      // normalize so that formElements is always an Array
+      if (!Array.isArray(attrs.trigger.formElements)) {
+        attrs.trigger.formElements = [attrs.trigger.formElements];
+      }
+
+      attrs.isLegacy = attrs.trigger.formElements.indexOf('*') !== -1;
+      // legacy calculations only expect to monitor value changes (performance)
+      attrs.event = attrs.isLegacy ? 'change:value change:html' : 'change';
+
       this.hookupTriggers();
       // TODO: find the best time to trigger this
       setTimeout(function () {
-        self.attributes.elements.trigger('change');
+        attrs.elements.trigger(attrs.event);
       }, 0);
     },
     hookupTriggers: function () {
       var attrs = this.attributes,
         form = attrs.form,
-        elements = attrs.elements;
+        elements = attrs.elements,
+        outputTargets;
 
-      elements.off('change', this.runCheck, this);
+      elements.off(attrs.event, this.runCheck, this);
 
-      if (!attrs.trigger && attrs.formElements) {
-        attrs.trigger = { formElements: attrs.formElements };
-      }
-      if (!Array.isArray(attrs.trigger.formElements)) {
-        attrs.trigger.formElements = [attrs.trigger.formElements];
-      }
+      outputTargets = this.getOutputTargets();
       if (attrs.trigger.formElements.indexOf('*') !== -1) {
-        elements.set(form.attributes.elements.models);
+        // migrated legacy calculation
+        elements.set(form.attributes.elements.models.filter(function (m) {
+          // prevent monitoring of output targets (possible loops)
+          return outputTargets.indexOf(m.attributes.name) === -1;
+        }));
+
       } else {
-        attrs.trigger.formElements.forEach(function (name) {
+        attrs.trigger.formElements.filter(function (name) {
+          // only proceed with elements that are not output targets
+          return outputTargets.indexOf(name) === -1;
+        }).forEach(function (name) {
           elements.add(form.getElement(name));
         });
       }
-      elements.on('change', this.runCheck, this);
+      elements.on(attrs.event, this.runCheck, this);
     },
     runCheck: function () {
       var check, exp;
@@ -62,15 +83,11 @@ define(function (require) {
 
       if (Array.isArray(this.attributes.actions)) {
         this.attributes.actions.forEach(function (action) {
-          if (!action || (!_.isString(action) && !action.action)) {
+          if (!action || !action.action) {
             return;
           }
           if (result) {
-            if (_.isString(action)) {
-              self.runAction(action);
-            } else {
-              self.runAction(action.action);
-            }
+            self.runAction(action.action);
           } else if (action.autoReverse) {
             self.runAction(action.action, true);
           }
@@ -82,11 +99,7 @@ define(function (require) {
             return;
           }
           if (!result) {
-            if (_.isString(action)) {
-              self.runAction(action);
-            } else {
-              self.runAction(action.action);
-            }
+            self.runAction(action.action);
           } else if (action.autoReverse) {
             self.runAction(action.action, true);
           }
@@ -169,6 +182,30 @@ define(function (require) {
         return null;
       }
     },
+    getActionsNames: function () {
+      return this.attributes.actions.map(function (a) {
+        return a.action;
+      }).concat(this.attributes.actionsIfFalse.map(function (a) {
+        return a.action;
+      }));
+    },
+    getOutputTargets: function () {
+      var allActions, names, myActions;
+      try {
+        allActions = this.attributes.form.attributes._actions;
+        names = this.getActionsNames();
+        myActions = allActions.filter(function (a) {
+          return names.indexOf(a.name) !== -1;
+        });
+        return myActions.filter(function (a) {
+          return !!a.outputTarget;
+        }).map(function (a) {
+          return a.outputTarget;
+        });
+      } catch (err) {
+        return [];
+      }
+    },
     getReversedAction: function (action) {
       var isReversible;
 
@@ -195,8 +232,9 @@ define(function (require) {
       return null;
     },
     destroy: function () {
-      this.attributes.elements.off('change', this.runCheck);
-      this.attributes.elements.reset();
+      var attrs = this.attributes;
+      attrs.elements.off(attrs.event, this.runCheck, this);
+      attrs.elements.reset();
     },
     bindExpressions: function () {
       var unbound = Expression.fn['formelement.value'];
@@ -229,6 +267,31 @@ define(function (require) {
       }
       behaviour = new Behaviour(attrs);
       return behaviour;
+    },
+    /**
+     * @param {Array} actions array of Strings and Objects
+     * @returns {Object[]} array of Objects { action: "...", autoReverse: true|false }
+     */
+    normalizeActions: function (actions) {
+      if (!actions || !Array.isArray(actions)) {
+        return [];
+      }
+      return actions.map(function (action) {
+        if (action && typeof action === 'string') {
+          action = {
+            action: action,
+            autoReverse: false
+          };
+        }
+        if (action && typeof action === 'object') {
+          if (action.action && typeof action.action === 'string') {
+            if (typeof action.autoReverse === 'boolean') {
+              return action;
+            }
+          }
+        }
+        return {};
+      });
     }
   });
 

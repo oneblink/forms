@@ -100,12 +100,13 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.lengthOf(form.attributes.behaviours, 4);
       });
 
-      test('Text is visible', function () {
+      test('Text is visible and empty', function () {
         var form = BMP.Forms.current,
           element = form.getElement('text'),
           view = element.attributes._view;
 
         assert(!view.isHidden());
+        assert.equal(element.val(), '');
       });
 
       test('per-definition, Email is initially hidden', function () {
@@ -129,6 +130,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         form.data().then(function (data) {
           assert.notProperty(data, 'email');
           assert.notProperty(data, 'number');
+          done();
+        }, function () {
+          assert(false, 'form.data() rejected');
           done();
         });
       });
@@ -435,5 +439,39 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     }); // END: suite('Behaviours: unset middle Element value', ...)
 
   }); // END: suite('1', ...)
+
+  suite('Behaviour.normalizeActions()', function () {
+    var actions;
+
+    suiteSetup(function () {
+      actions = [
+        'abc',
+        {
+          action: 'def',
+          autoReverse: true
+        }
+      ];
+      actions = Forms._models.Behaviour.normalizeActions(actions);
+    });
+
+    test('result Array contains 2 Objects, no Strings', function () {
+      assert.lengthOf(actions, 2);
+      assert.isTrue(actions.every(function (a) {
+        return a && typeof a === 'object';
+      }));
+    });
+
+    test('1st Action gets default autoReverse:false', function () {
+      var action = actions[0];
+      assert.equal(action.action, 'abc');
+      assert.isFalse(action.autoReverse);
+    });
+
+    test('2nd Action keeps explicit autoReverse:true', function () {
+      var action = actions[1];
+      assert.equal(action.action, 'def');
+      assert.isTrue(action.autoReverse);
+    });
+  });
 
 });
