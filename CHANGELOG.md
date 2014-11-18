@@ -1,5 +1,28 @@
 # Changelog
 
+## v3.1.6 - 2014-11-18
+
+### Changed
+
+- consider Behaviours that attempt to watch all Elements to be "legacy"
+
+    - these are typically migrated Forms v2 calculations
+
+- "legacy" Behaviours are now specifically triggered by changes to an Element's
+  `value` (or `html` for Message Elements)
+
+- changes any property of an Element will still trigger best-practice Behaviours
+  that watch specific Elements (instead of them all)
+
+- all Behaviours will avoid watching Elements that relate to the Behaviour's
+  Action(s), to prevent circular loops
+
+
+### Fixed
+
+- FORMS-110: certain Behaviours definitions will no longer infinitely loop
+
+
 ## v3.1.5 - 2014-11-14
 
 ### Added
@@ -15,6 +38,7 @@
 - Backwards compatibility with previous versions
 
 - Better IE8 support
+
 
 ## v3.1.4 - 2014-10-31
 
