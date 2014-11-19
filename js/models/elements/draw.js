@@ -7,13 +7,11 @@ define(['models/element'], function (Element) {
     },
     initializeView: function () {
       var Forms = BMP.Forms,
-        navigator = window.navigator,
         view;
 
       this.removeView();
 
-      if (navigator.bgtouchdraw && navigator.bgtouchdraw.getDrawing &&
-          window.BGTouchDraw) {
+      if (BMP.BlinkGap.hasTouchDraw()) {
         view = new Forms._views.BGDrawElement({model: this});
       } else {
         view = new Forms._views.DrawElement({model: this});

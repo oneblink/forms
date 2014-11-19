@@ -12,8 +12,7 @@ define(['models/element'], function (Element) {
 
       this.removeView();
 
-      if (window.PictureSourceType && window.navigator.camera &&
-          window.navigator.camera.getPicture && accept.indexOf('image') === 0) {
+      if (BMP.BlinkGap.hasCamera() && accept.indexOf('image') === 0) {
         view = new Forms._views.BGImageElement({model: this});
       } else {
         view = new Forms._views.FileElement({model: this});
