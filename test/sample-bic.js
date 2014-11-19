@@ -9,8 +9,9 @@ define([
   'BlinkForms',
   'definitions',
   'BMP.Blob',
+  'BMP.BlinkGap',
   'feature!es5'
-], function (Promise, $, _, Forms, defs, BMP) {
+], function (Promise, $, _, Forms, defs) {
   'use strict';
 
   var $submitPopup, $footer, $grid, $colB;
@@ -83,7 +84,5 @@ define([
   });
 
   BMP.FileInput.initialize();
-
-  window.BMP = BMP;
 
 });
