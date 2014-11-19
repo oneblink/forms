@@ -8,7 +8,12 @@ define([
 
   BGCameraElementView = FileElementView.extend({
     render: function () {
-      var $new, $existing, $div;
+      var $new, $existing, $div, PictureSourceType;
+
+      try {
+        PictureSourceType = window.PictureSourceType || navigator.camera.PictureSourceType;
+      } catch (ignore) {}
+      PictureSourceType = PictureSourceType || {};
 
       this.$el.empty();
       this.renderLabel();
@@ -18,11 +23,11 @@ define([
 
       $new = $div.find('button').first();
       $new.text('Camera');
-      $new.data('SourceType', window.PictureSourceType.CAMERA);
+      $new.data('SourceType', PictureSourceType.CAMERA);
 
       $existing = $div.find('button').last();
       $existing.text('Gallery');
-      $existing.data('SourceType', window.PictureSourceType.PHOTO_LIBRARY);
+      $existing.data('SourceType', PictureSourceType.PHOTO_LIBRARY);
 
       this.$el.append($div);
 
@@ -57,4 +62,3 @@ define([
 
   return BGCameraElementView;
 });
-

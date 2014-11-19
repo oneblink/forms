@@ -2,6 +2,8 @@
 /*global suiteSetup:true, suiteTeardown:true*/ // mocha
 /*global assert:true*/ // chai
 
+var BMP = window.BMP || {};
+
 define(['BlinkForms', 'BIC'], function (Forms) {
 
   suite('10: blinkgap', function () {
@@ -36,6 +38,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       window.BGTouchDraw = {
         DestinationType: {},
         EncodingType: {}
+      };
+
+      window.cordova = {
+        available: true
       };
 
       getPictureStub = window.sinon.stub(navigator.camera, 'getPicture',
