@@ -1,7 +1,7 @@
 define(function (require) {
   var Elements = require('collections/elements'),
-  Pages = require('collections/pages'),
-  Form;
+    Pages = require('collections/pages'),
+    Form;
 
   Form = Backbone.Model.extend({
     defaults: {
@@ -9,13 +9,13 @@ define(function (require) {
     },
     initialize: function () {
       var Forms = BMP.Forms,
-      self = this,
-      Page = Forms._models.Page,
-      Element = Forms._models.Element,
-      Behaviour = Forms._models.Behaviour,
-      pages,
-      elements,
-      behaviours;
+        self = this,
+        Page = Forms._models.Page,
+        Element = Forms._models.Element,
+        Behaviour = Forms._models.Behaviour,
+        pages,
+        elements,
+        behaviours;
 
       Forms.setAttributesFromClass(this, [
         '_actions',
@@ -88,8 +88,8 @@ define(function (require) {
     */
     getPage: function (index) {
       var Forms = BMP.Forms,
-      Page = Forms._models.Page,
-      pages = this.get('pages');
+        Page = Forms._models.Page,
+        pages = this.get('pages');
 
       // assume that by now it's okay to create vanilla Pages
       while (pages.length <= index) {
@@ -116,8 +116,8 @@ define(function (require) {
     */
     getRecord: function () {
       var me = this,
-      data = {},
-      promises = [];
+        data = {},
+        promises = [];
 
       return new Promise(function (resolve) {
         if (me.attributes.elements) {
@@ -176,7 +176,7 @@ define(function (require) {
     */
     setRecord: function (data) {
       var self = this,
-      promises = [];
+        promises = [];
 
       return new Promise(function (resolve, reject) {
         if (!_.isObject(data)) {
@@ -220,8 +220,9 @@ define(function (require) {
     */
     getErrors: function () {
       var me = this,
-      err,
-      errors = {};
+        err,
+        errors = {};
+
       me.attributes.elements.forEach(function (el) {
         err = el.validate();
         if (err) {
@@ -249,12 +250,12 @@ define(function (require) {
     },
     xmlToJson: function (xml) {
       var result = {},
-      nodes,
-      object = [],
-      subform,
-      childItems,
-      nodeName,
-      json = {};
+        nodes,
+        object = [],
+        subform,
+        childItems,
+        nodeName,
+        json = {};
 
       if (xml.hasChildNodes()) {
         nodes = xml.childNodes;
@@ -272,7 +273,7 @@ define(function (require) {
                 json[childItem.nodeName] = childItem.firstChild.nodeValue;
               }
             });// 2nd for loop
-            
+
             object.push(json);
           }
         });//1st for loop
