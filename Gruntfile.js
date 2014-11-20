@@ -101,7 +101,7 @@ module.exports = function (grunt) {
             // libraries to be built-in
             bicyclepump: '../bower_components/bicyclepump/bicyclepump',
             rivets: '../bower_components/rivets/dist/rivets',
-            FormsLib: '../node_modules/blinkmobile-forms/forms',
+            'formslib/main': '../node_modules/blinkmobile-forms/dist/formslib',
             // Require.JS plugins
             text: '../bower_components/requirejs-text/text'
           },

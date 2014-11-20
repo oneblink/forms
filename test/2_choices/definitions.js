@@ -30,9 +30,7 @@ define(function () {
               name: 'selecte',
               label: 'Select E',
               type: 'select',
-              mode: 'expanded',
-              layout: 'horizontal',
-              other: true,
+              class: 'mode: expanded; layout: horizontal; other;',
               options: {
                 a: 'alpha',
                 b: 'beta',

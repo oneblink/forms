@@ -15,11 +15,15 @@ define(function (require) {
 
   Page = Backbone.Model.extend({
     defaults: {
+      class: ''
     },
     initialize: function () {
       var attrs = this.attributes,
+        Forms = BMP.Forms,
         form = attrs.form,
         sections;
+
+      Forms.setAttributesFromClass(this, ['_sections']);
 
       // TODO: document that this now assumes all Sections are pre-declared
 
