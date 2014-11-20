@@ -4,6 +4,7 @@ define(function () {
   Element = Backbone.Model.extend({
     defaults: {
       page: 0,
+      class: '',
       defaultValue: '',
       value: '',
       pattern: '',
@@ -14,7 +15,10 @@ define(function () {
       var attrs = this.attributes,
         form = attrs.form,
         page = attrs.page,
+        Forms = BMP.Forms,
         section = $.trim(attrs.section || '');
+
+      Forms.setAttributesFromClass(this);
 
       this.initializeView();
 
@@ -243,4 +247,3 @@ define(function () {
 
   return Element;
 });
-

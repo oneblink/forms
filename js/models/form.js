@@ -1,18 +1,30 @@
 define(function (require) {
   var Elements = require('collections/elements'),
-    Pages = require('collections/pages'),
-    Form;
+  Pages = require('collections/pages'),
+  Form;
 
   Form = Backbone.Model.extend({
+    defaults: {
+      class: ''
+    },
     initialize: function () {
       var Forms = BMP.Forms,
-        self = this,
-        Page = Forms._models.Page,
-        Element = Forms._models.Element,
-        Behaviour = Forms._models.Behaviour,
-        pages,
-        elements,
-        behaviours;
+      self = this,
+      Page = Forms._models.Page,
+      Element = Forms._models.Element,
+      Behaviour = Forms._models.Behaviour,
+      pages,
+      elements,
+      behaviours;
+
+      Forms.setAttributesFromClass(this, [
+        '_actions',
+        '_checks',
+        '_behaviours',
+        '_elements',
+        '_pages',
+        '_sections'
+      ]);
 
       pages = this.attributes._pages;
       delete this.attributes._pages;
@@ -71,13 +83,13 @@ define(function (require) {
       return Backbone.Model.prototype.destroy.call(this, options);
     },
     /**
-     * get a Page, creating it if necessary
-     * @param {Number} index desired Page index.
-     */
+    * get a Page, creating it if necessary
+    * @param {Number} index desired Page index.
+    */
     getPage: function (index) {
       var Forms = BMP.Forms,
-        Page = Forms._models.Page,
-        pages = this.get('pages');
+      Page = Forms._models.Page,
+      pages = this.get('pages');
 
       // assume that by now it's okay to create vanilla Pages
       while (pages.length <= index) {
@@ -86,8 +98,8 @@ define(function (require) {
       return pages.at(index);
     },
     /**
-     * official Blink API
-     */
+    * official Blink API
+    */
     getElement: function (name) {
       var element = this.attributes.elements.get(name);
       if (!element && name === 'id') {
@@ -100,12 +112,12 @@ define(function (require) {
       return element;
     },
     /**
-     * official Blink API
-     */
+    * official Blink API
+    */
     getRecord: function () {
       var me = this,
-        data = {},
-        promises = [];
+      data = {},
+      promises = [];
 
       return new Promise(function (resolve) {
         if (me.attributes.elements) {
@@ -160,11 +172,11 @@ define(function (require) {
       });
     },
     /**
-     * official Blink API
-     */
+    * official Blink API
+    */
     setRecord: function (data) {
       var self = this,
-        promises = [];
+      promises = [];
 
       return new Promise(function (resolve, reject) {
         if (!_.isObject(data)) {
@@ -196,20 +208,20 @@ define(function (require) {
       });
     },
     /**
-     * official Blink API
-     */
+    * official Blink API
+    */
     data: function () {
       if (!arguments.length) {
         return this.getRecord();
       }
     },
     /**
-     * official Blink API
-     */
+    * official Blink API
+    */
     getErrors: function () {
       var me = this,
-        err,
-        errors = {};
+      err,
+      errors = {};
       me.attributes.elements.forEach(function (el) {
         err = el.validate();
         if (err) {
@@ -221,8 +233,8 @@ define(function (require) {
   }, {
     // static properties
     /**
-     * @param {Object} attrs attributes for this model.
-     */
+    * @param {Object} attrs attributes for this model.
+    */
     create: function (attrs, action) {
       var form;
 
@@ -237,12 +249,12 @@ define(function (require) {
     },
     xmlToJson: function (xml) {
       var result = {},
-        nodes,
-        object = [],
-        subform,
-        childItems,
-        nodeName,
-        json = {};
+      nodes,
+      object = [],
+      subform,
+      childItems,
+      nodeName,
+      json = {};
 
       if (xml.hasChildNodes()) {
         nodes = xml.childNodes;
@@ -260,7 +272,7 @@ define(function (require) {
                 json[childItem.nodeName] = childItem.firstChild.nodeValue;
               }
             });// 2nd for loop
-
+            
             object.push(json);
           }
         });//1st for loop
