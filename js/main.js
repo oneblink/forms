@@ -49,7 +49,7 @@ define(function (require) {
   * @param {String{}} blacklist property names that should not be set by class
   */
   Forms.setAttributesFromClass = function (model, blacklist) {
-    var klass, defaults, parsed, cast;
+    var klass, defaults, parsed;
     if (model && typeof model !== 'object') {
       throw new TypeError('expect 1st parameter to be Backbone.Model');
     }
@@ -68,7 +68,7 @@ define(function (require) {
 
     parsed = Forms.parseClass(klass);
     blacklist.forEach(function (prop) {
-      delete parsed['prop'];
+      delete parsed[prop];
     });
 
     defaults = model.constructor.prototype.defaults || {};

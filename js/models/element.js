@@ -8,6 +8,7 @@ define(function () {
       defaultValue: '',
       value: '',
       pattern: '',
+      hidden: false,
       persist: true
     },
     idAttribute: 'name',
