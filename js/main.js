@@ -3,7 +3,7 @@ define(function (require) {
   var Forms, BicyclePump, FormsLib;
 
   BicyclePump = require('bicyclepump');
-  FormsLib = require('FormsLib');
+  FormsLib = require('formslib/main');
   Forms = window.BMP.Forms;
 
   _.extend(Forms, Backbone.Events);
@@ -39,7 +39,9 @@ define(function (require) {
   Forms.models = new BicyclePump();
   Forms.views = new BicyclePump();
 
+  Forms.castPropertyValues = FormsLib.castPropertyValues;
   Forms.flattenDefinition = FormsLib.flattenDefinition;
+  Forms.parseClass = FormsLib.parseClass;
 
   /**
    * @param {Object} def definition of form to initialise.
