@@ -22,7 +22,8 @@ define(function () {
             Array.prototype.some &&
             Array.prototype.reduce &&
             Array.prototype.reduceRight &&
-            Array.isArray);
+            Array.isArray &&
+            Function.prototype.bind);
         },
         implementation: 'es5-shim'
       },
