@@ -4,6 +4,8 @@
 (function (window) {
   'use strict';
 
+  window.BMP = {};
+
   window.mocha.ui('tdd');
   window.assert = window.chai.assert;
 
