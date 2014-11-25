@@ -194,7 +194,8 @@ define(function (require) {
             if (typeof value === 'string') {
               result = '<' + key + '>' + value + '</' + key + '>';
               xml = $.parseXML(result);
-              value = Form.xmlToJson(xml.firstElementChild);
+              // PhantomJS doesn't seem to have firstElementChild
+              value = Form.xmlToJson(xml.firstElementChild || xml.documentElement);
               value = value[key];
             }
             promises.push(formElement.setRecords(value));

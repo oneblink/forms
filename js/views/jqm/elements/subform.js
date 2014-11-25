@@ -28,7 +28,7 @@ define(function (require) {
         'data-action': 'add'
       }).text(name);
 
-      $button.on('click', this.onAddClick);
+      $button.on('click', this.onAddClick.bind(this));
 
       this.$el.attr('data-form', name);
       this.$el.prepend($button);
@@ -36,10 +36,7 @@ define(function (require) {
       this.onFormsChange();
     },
     onAddClick: function () {
-      var Forms = BMP.Forms,
-        element = Forms.getElement(this);
-
-      element.add();
+      this.model.add();
     },
     onFormsChange: function () {
       var Forms,
