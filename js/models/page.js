@@ -15,7 +15,7 @@ define(function (require) {
 
   Page = Backbone.Model.extend({
     defaults: {
-      class: ''
+      'class': ''
     },
     initialize: function () {
       var attrs = this.attributes,

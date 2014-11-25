@@ -5,7 +5,7 @@ define(function (require) {
 
   Form = Backbone.Model.extend({
     defaults: {
-      class: ''
+      'class': ''
     },
     initialize: function () {
       var Forms = BMP.Forms,
@@ -259,13 +259,11 @@ define(function (require) {
 
       if (xml.hasChildNodes()) {
         nodes = xml.childNodes;
-        /*jslint unparam: true*/
-        _.each(nodes, function (item, key) {
+        _.each(nodes, function (item) {
           if (item.hasChildNodes()) {
             childItems = item.childNodes;
             nodeName = item.nodeName;
-            /*jslint unparam: true*/
-            _.each(childItems, function (childItem, key) {
+            _.each(childItems, function (childItem) {
               if (childItem.childElementCount > 0) {
                 subform = Form.xmlToJson(childItem);
                 json[childItem.nodeName] = subform[childItem.nodeName];

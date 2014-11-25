@@ -44,17 +44,17 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       this.model.on('change:value', this.onValueChange, this);
     },
     onValueChange: function () {
+      var $values;
+      var $mapValues;
       this.$el.find('select').selectmenu();
       this.$el.find('select').selectmenu('refresh');
-      var $values = this.$el.find('.ui-btn-text').text().split(','),
-        $mapValues = $.map($values, function (val) {
-          return val.trim();
-        });
+      $values = this.$el.find('.ui-btn-text').text().split(',');
+      $mapValues = $.map($values, function (val) {
+        return val.trim();
+      });
       ChoiceElementView.prototype.renderOtherText.call(this, $mapValues);
     }
   });
 
   return ChoiceCollapsedElementView;
 });
-
-

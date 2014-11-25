@@ -3,11 +3,9 @@ define(function () {
     tagName: 'section',
     initialize: function () {
       var attrs = this.model.attributes;
-      /*jslint sub:true*/ // IE8: reserved keywords can't be used as properties
       if (attrs['class']) {
         this.$el.addClass(attrs['class']);
       }
-      /*jslint sub:false*/
     },
     render: function () {
       var self = this;

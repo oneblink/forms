@@ -82,6 +82,7 @@ define(['views/jqm/elements/date'], function (DateView) {
         case 'date':
           settings.min = new Date(attr.dateAllowFromDate);
           break;
+        default:
         }
       }
 
@@ -96,6 +97,7 @@ define(['views/jqm/elements/date'], function (DateView) {
         case 'date':
           settings.max = new Date(attr.dateAllowToDate);
           break;
+        default:
         }
       }
       return settings;

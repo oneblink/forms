@@ -1,7 +1,7 @@
 define(['models/page', 'waitfor'], function (Page, waitFor) {
   return Backbone.Collection.extend({
     model: Page,
-    goto: function (index) {
+    'goto': function (index) {
       var self, currentform, currentPage;
       self = this;
       if (!_.isNumber(index)) {

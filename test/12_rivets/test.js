@@ -1,10 +1,5 @@
-/*jslint browser:true, indent:2, devel:true*/
-/*global console, suite, test, setup, teardown, suiteSetup, suiteTeardown*/ // mocha
+/*eslint-env mocha*/
 /*global assert*/ // chai
-/*global define, require*/ // AMD / Require.JS
-
-/*jslint nomen:true*/ // subject of test includes dangling underscores
-/*global BMP*/ // subject of test
 
 define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
   'use strict';

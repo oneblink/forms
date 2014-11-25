@@ -74,14 +74,14 @@ define(function () {
     return !Expression.fn.empty.call(this, a);
   };
 
-  /*jslint eqeq:true*/
+  /*eslint-disable eqeqeq*/
   Expression.fn['=='] = function (a, b) {
     return a == b;
   };
   Expression.fn['!='] = function (a, b) {
     return a != b;
   };
-  /*jslint eqeq:false*/
+  /*eslint-enable eqeqeq*/
 
   Expression.fn['<'] = function (a, b) {
     return a < b;
@@ -104,7 +104,7 @@ define(function () {
     if (typeof haystack === 'string') {
       return haystack.indexOf(needle) !== -1;
     }
-    /*jslint eqeq:true*/
+    /*eslint-disable eqeqeq*/
     if (_.isArray(haystack)) {
       found = false;
       haystack.forEach(function (item) {
@@ -114,7 +114,7 @@ define(function () {
       });
       return found;
     }
-    /*jslint eqeq:false*/
+    /*eslint-enable eqeqeq*/
     throw new Error('contains: unexpected operand type');
   };
   Expression.fn['!contains'] = function (haystack, needle) {

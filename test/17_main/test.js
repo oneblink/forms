@@ -1,5 +1,5 @@
-/*global suite:true, test:true*/ // mocha
-/*global assert:true*/ // chai
+/*eslint-env mocha*/
+/*global assert*/ // chai
 
 define(['BlinkForms', 'BIC'], function () {
 

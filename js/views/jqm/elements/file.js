@@ -11,7 +11,7 @@ define(['views/jqm/element'], function (ElementView) {
       unitIndex = 0,
       divisor = 1;
 
-    while (size > (divisor * 1024) && unitIndex < units.length) {
+    while (size > divisor * 1024 && unitIndex < units.length) {
       divisor *= 1024;
       unitIndex += 1;
     }
@@ -92,4 +92,3 @@ define(['views/jqm/element'], function (ElementView) {
 
   return FileElementView;
 });
-

@@ -85,12 +85,10 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       if (!_.isArray(value)) {
         value = [];
       }
-      /*jslint unparam:true*/
       $inputs.each(function (index, input) {
         var $input = $(input);
         $input.prop('checked', _.indexOf(value, $input.val()) !== -1);
       });
-      /*jslint unparam:false*/
 
       $inputs.checkboxradio('refresh');
       $values = this.$el.find('label[data-icon=checkbox-on]');
@@ -116,5 +114,3 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
   return ChoiceExpandedElementView;
 });
-
-

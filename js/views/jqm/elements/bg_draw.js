@@ -64,4 +64,3 @@ define([
 
   return BGDrawElementView;
 });
-

@@ -4,7 +4,7 @@ define(function () {
   Element = Backbone.Model.extend({
     defaults: {
       page: 0,
-      class: '',
+      'class': '',
       defaultValue: '',
       value: '',
       pattern: '',
@@ -54,7 +54,7 @@ define(function () {
         errors.value.push({code: 'REQUIRED'});
       }
       if (attrs.pattern && attrs.value &&
-          !(new RegExp(attrs.pattern).test(attrs.value))) {
+          !new RegExp(attrs.pattern).test(attrs.value)) {
         errors.value = errors.value || [];
         errors.value.push({code: 'PATTERN', PATTERN: attrs.pattern});
       }

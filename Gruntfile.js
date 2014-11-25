@@ -1,4 +1,5 @@
-/*jslint indent:2, node:true*/
+/*eslint-env node*/
+/*eslint-disable camelcase*/ // for uglify options
 /**
  * module.exports ... is required for things to work
  * @param {Object} grunt instance of Grunt.
@@ -11,7 +12,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-exec');
-  grunt.loadNpmTasks('grunt-jslint');
+  grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-mocha');
 
   grunt.initConfig({
@@ -22,49 +23,8 @@ module.exports = function (grunt) {
       }
     },
 
-    jslint: {
-      all: {
-        src: [
-          '**/*.js',
-          '**/*.json',
-          '!bower_components/**',
-          '!node_modules/**',
-          '!js/build/**',
-          '!js/locales/**/i18n.js',
-          '!BlinkForms*.js',
-          '!test/lib/**/*'
-        ],
-        directives: {
-          browser: true,
-          es5: true,
-          indent: 2,
-          nomen: true,
-          todo: true, // TODO: eventually drop this
-          sloppy: true, // we force strict-mode separately
-          predef: [
-            // pre-defined globals
-            'module',
-            'define',
-            'require',
-            'Promise',
-            // globals we assume have been loaded
-            '$',
-            '_',
-            'Backbone',
-            'rivets',
-            'BMP',
-            'Q',
-            'moment',
-            'picker.date',
-            'picker.time'
-          ]
-        },
-        options: {
-          errorsOnly: true,
-          failOnError: true
-        }
-      }
-
+    eslint: {
+      target: [ './' ]
     },
 
     exec: {
@@ -182,7 +142,7 @@ module.exports = function (grunt) {
         files: [
           'test/**/*'
         ],
-        tasks: ['jslint', 'mocha']
+        tasks: ['eslint', 'mocha']
       },
       options: {
         interrupt: true
@@ -201,7 +161,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('test', [
-    'jslint',
+    'eslint',
     'build',
     'mocha'
   ]);

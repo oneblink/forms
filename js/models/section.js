@@ -55,4 +55,3 @@ define(function (require) {
 
   return Section;
 });
-

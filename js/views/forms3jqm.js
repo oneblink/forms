@@ -1,4 +1,3 @@
-/*jslint indent:2*/
 define(function (require) {
   var Forms, rivets;
   rivets = require('rivets');

@@ -9,6 +9,3 @@ define(['models/elements/select'], function (SelectElement) {
 
   return MultiElement;
 });
-
-
-

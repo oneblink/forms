@@ -3,5 +3,3 @@ define(['models/element'], function (Element) {
     model: Element
   });
 });
-
-

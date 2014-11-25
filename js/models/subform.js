@@ -10,6 +10,3 @@ define(['models/form'], function (Form) {
 
   return SubForm;
 });
-
-
-

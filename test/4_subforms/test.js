@@ -1,6 +1,5 @@
-/*global suite:true, test:true, setup:true, teardown:true*/ // mocha
-/*global suiteSetup:true, suiteTeardown:true*/ // mocha
-/*global assert:true*/ // chai
+/*eslint-env mocha*/
+/*global assert*/ // chai
 
 define(['BlinkForms', 'BIC'], function (Forms) {
   suite('4: subForms', function () {

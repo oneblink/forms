@@ -1,6 +1,5 @@
 define(function (require) {
-  var Forms = BMP.Forms,
-    FormView = require('views/jqm/form');
+  var FormView = require('views/jqm/form');
 
   return FormView.extend({
     tagName: 'section',

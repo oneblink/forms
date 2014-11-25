@@ -1,6 +1,3 @@
-/*jslint indent:2*/
-/*global define, require*/ // AMD / Require.JS
-
 (function (window) {
   'use strict';
 

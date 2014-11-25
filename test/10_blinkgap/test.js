@@ -1,8 +1,5 @@
-/*global suite:true, test:true, setup:true, teardown:true*/ // mocha
-/*global suiteSetup:true, suiteTeardown:true*/ // mocha
+/*eslint-env mocha*/
 /*global assert:true*/ // chai
-
-var BMP = window.BMP || {};
 
 define(['BlinkForms', 'BIC'], function (Forms) {
 

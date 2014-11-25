@@ -25,6 +25,3 @@ define(['models/elements/text'], function (TextElement) {
 
   return EmailElement;
 });
-
-
-
