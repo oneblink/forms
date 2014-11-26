@@ -205,6 +205,22 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           assert.strictEqual(view.model, element);
         });
 
+        test('Address element has 1 "add" button', function () {
+          var element, view;
+          element = form.getElement('Address');
+          view = element.get('_view');
+          assert.lengthOf(view.$el.children('.ui-btn'), 1);
+        });
+
+        test('Exp element in all Address sub-records have 1 "add" button each', function () {
+          form.getElement('Address').get('forms').each(function (subForm) {
+            var element, view;
+            element = subForm.getElement('Exp');
+            view = element.get('_view');
+            assert.lengthOf(view.$el.children('.ui-btn'), 1);
+          });
+        });
+
       });
 
     }); // END: suite('Form', ...)
