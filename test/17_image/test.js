@@ -73,6 +73,48 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         done();
       });
 
+      test('img elements present', function () {
+        var elements = ['Photo', 'Photo1', 'Photo2'],
+          element,
+          view;
+        _.each(elements, function (key) {
+          element = BMP.Forms.current.getElement(key);
+          setTimeout(function () {
+            view = element.attributes._view.$el.children('figure');
+            assert.lengthOf(view.children('img'), 1);
+          }, 1000);
+        });
+      });
+
+      test('fixBlobFieldValue test', function () {
+        var values = ['/9j/4AAQSkZJRgABAgEASABIAAD/4RYPRXhpZgAATU0AKgAAAAgAB', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD'],
+          results = ['data:image/jpeg;base64,/9j/4AAQSkZJRgABAgEASABIAAD/4RYPRXhpZgAATU0AKgAAAAgAB', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD'],
+          result,
+          form = BMP.Forms._models.Form;
+        _.each(values, function (value) {
+          result = form.addMimetype(value, 'image/jpeg');
+          assert.isTrue(_.contains(results, result));
+        });
+      });
+
+      test('elements mimetype', function () {
+        var elements = {'Photo': 'image/jpeg', 'Photo1': 'image/png', 'Photo2': 'image/jpeg'},
+          element,
+          value,
+          parts,
+          mime;
+        _.each(elements, function (mimetype, key) {
+
+          setTimeout(function () {
+            element = BMP.Forms.current.getElement(key);
+            value = element.val();
+            parts = value.split(';');
+            parts = parts[0].split(':');
+            mime = parts[1];
+            assert.equal(mimetype, mime);
+          }, 1000);
+        });
+      });
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)

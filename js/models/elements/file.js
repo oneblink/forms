@@ -6,16 +6,15 @@ define(['models/element'], function (Element) {
       Element.prototype.initialize.call(this);
 
       this.on('change:value', function () {
-          var value, blob;
-          value = this.get('value');
+        var value, blob;
+        value = this.get('value');
 
-          if (value) {
-            //blob = BMP.Blob.fromDataURI('data:image/jpeg;base64,' + value);
-            blob = BMP.Blob.fromDataURI(value);
-            this.set('blob', blob);
-          } else {
-            this.unset('blob');
-          }
+        if (value) {
+          blob = BMP.Blob.fromDataURI(value);
+          this.set('blob', blob);
+        } else {
+          this.unset('blob');
+        }
       }, this);
     },
     initializeView: function () {

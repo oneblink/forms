@@ -24,9 +24,9 @@ define([
       $button.on('click', $.proxy(DrawElementView.onButtonClick, this));
 
       this.bindRivets();
-      this.model.on('change:blob', function() {
+      this.model.on('change:blob', function () {
         this.model.updateWarning();
-        if(_.isEmpty(this.model.attributes.warning)){
+        if (_.isEmpty(this.model.attributes.warning)) {
           this.renderWarning();
         } else {
           this.renderFigure();

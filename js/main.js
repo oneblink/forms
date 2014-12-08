@@ -62,7 +62,7 @@ define(function (require) {
   Forms.supports.blob = (function () {
     var blob;
     try {
-      blob = new Blob();
+      blob = new BMP.Blob();
       return typeof blob.size === 'number';
     } catch (ignore) {}
     return false;

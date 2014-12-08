@@ -59,7 +59,7 @@ define(function () {
     updateErrors: function () {
       this.set('errors', this.validate());
     },
-    warn: function (attrs) {
+    warn: function () {
       var warning = {};
       warning.value = warning.value || [];
       if (!BMP.Forms.supports.blob) {

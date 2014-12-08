@@ -160,7 +160,7 @@ define(function (require) {
         }
 
         _.each(data, function (value, key) {
-          var formElement = self.getElement(key), result, xml;
+          var formElement = self.getElement(key), result, xml, mime;
           if (!formElement) {
             return;
           }
@@ -174,6 +174,10 @@ define(function (require) {
             }
             promises.push(formElement.setRecords(value));
           } else {
+            if (_.contains(['file', 'draw'], formElement.attributes.type)) {
+              mime = data[key + '_mimetype'] || 'image/jpeg';
+              value = Form.addMimetype(value, mime);
+            }
             formElement.val(value);
           }
         });
@@ -221,6 +225,15 @@ define(function (require) {
       form = new Form(attrs);
 
       return form;
+    },
+    /*
+    * add mimetype to blob fields value
+    */
+    addMimetype: function (value, mime) {
+      if (value.indexOf('data:') === -1) {
+        return "data:" + mime + ";base64," + value;
+      }
+      return value;
     },
     xmlToJson: function (xml) {
       var result = {},

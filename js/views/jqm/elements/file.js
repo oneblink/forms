@@ -40,11 +40,11 @@ define(['views/jqm/element'], function (ElementView) {
 
       this.bindRivets();
       $input.on('change', function (event) {
-          self.onInputChange(event);
+        self.onInputChange(event);
       });
-      this.model.on('change:blob', function() {
+      this.model.on('change:blob', function () {
         this.model.updateWarning();
-        if(_.isEmpty(this.model.attributes.warning)){
+        if (_.isEmpty(this.model.attributes.warning)) {
           this.renderWarning();
         } else {
           this.renderFigure();
