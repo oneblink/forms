@@ -43,6 +43,7 @@ define(function () {
         }
       }
       this.on('change', this.updateErrors, this);
+      // this.on('change:blob', this.updateWarning, this);
     },
     validate: function (attrs) {
       var errors = {};
@@ -62,6 +63,17 @@ define(function () {
     },
     updateErrors: function () {
       this.set('errors', this.validate());
+    },
+    warn: function () {
+      var warning = {};
+      warning.value = warning.value || [];
+      if (!BMP.Forms.supports.blob) {
+        warning.value.push({code: 'NO_BLOB_PREVIEW'});
+      }
+      return _.isEmpty(warning) ? undefined : warning;
+    },
+    updateWarning: function () {
+      this.set('warning', this.warn());
     },
     removeView: function () {
       var attrs = this.attributes;
@@ -155,6 +167,7 @@ define(function () {
       if (value === undefined) {
         return this.get('value');
       }
+
       this.set('value', value);
       return value;
     }

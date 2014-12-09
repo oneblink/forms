@@ -97,6 +97,16 @@ define(function (require) {
   };
 
   Forms.version = '3.1.6';
+  Forms.supports = {};
+
+  Forms.supports.blob = (function () {
+    var blob;
+    try {
+      blob = new BMP.Blob();
+      return typeof blob.size === 'number';
+    } catch (ignore) {}
+    return false;
+  }());
 
   return Forms;
 });
