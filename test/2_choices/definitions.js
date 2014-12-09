@@ -68,6 +68,35 @@ define(function () {
           },
           {
             'default': {
+              name: 'multif',
+              label: 'Multi F',
+              type: 'multi',
+              other: true,
+              'class': 'mode: collapsed; native-menu: true;',
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
+          },
+          {
+            'default': {
+              name: 'selectf',
+              label: 'Select F',
+              type: 'select',
+              mode: 'collapsed',
+              other: true,
+              'class': 'mode: collapsed; native-menu: true;',
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
+          },
+          {
+            'default': {
               name: 'boolean',
               label: 'Boolean',
               type: 'boolean',

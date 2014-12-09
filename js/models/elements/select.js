@@ -5,6 +5,7 @@ define(['models/element'], function (Element) {
   defaults.mode = 'collapsed';
   defaults.layout = 'vertical';
   defaults.other = false;
+  defaults.nativeMenu = false;
 
   return Element.extend({
     defaults: defaults,
