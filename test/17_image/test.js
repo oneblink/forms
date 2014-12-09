@@ -1,10 +1,9 @@
-/*global suite:true, test:true, setup:true, teardown:true*/ // mocha
-/*global suiteSetup:true, suiteTeardown:true*/ // mocha
-/*global assert:true*/ // chai
+/*eslint-env mocha*/
+/*global assert*/ // chai
 
 define(['BlinkForms', 'BIC'], function (Forms) {
 
-  suite('15: subForms render', function () {
+  suite('17: Blob fields', function () {
     var $doc = $(document),
       $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
