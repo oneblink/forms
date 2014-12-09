@@ -51,7 +51,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         var form = Forms.current,
           element = form.getElement('selectc'),
           $fieldset = element.attributes._view.$el,
-          $span = $fieldset.find('.ui-btn-text');
+          $span = $fieldset.find('.ui-btn-text'),
+          $select = $fieldset.find('select');
 
         element.val('');
         assert.equal(element.val(), '', 'model.value is ""');
@@ -64,6 +65,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.equal(element.val(), 'b', 'model.value = "b"');
         assert.equal($span.text(), 'beta', 'jQM shows "beta"');
 
+
+        assert.notEqual($select.data("role"), "none", "data-role is none");
         // TODO: test UI causes side-effect in model
       });
 
@@ -71,7 +74,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         var form = Forms.current,
           element = form.getElement('multic'),
           $fieldset = element.attributes._view.$el,
-          $span = $fieldset.find('.ui-btn-text');
+          $span = $fieldset.find('.ui-btn-text'),
+          $select = $fieldset.find('select');
 
         element.val([]);
         assert.deepEqual(element.val(), [], 'model.value is []');
@@ -83,6 +87,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         element.val(['a', 'b']);
         assert.deepEqual(element.val(), ['a', 'b'], 'model.value = ["a", "b"]');
         assert.equal($span.text(), 'alpha, beta', 'jQM shows "alpha, beta"');
+
+        assert.notEqual($select.data("role"), "none", "data-role is none");
 
         // TODO: test UI causes side-effect in model
       });
@@ -124,6 +130,44 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $fieldset.find('.ui-btn-text:contains(beta)').trigger('click');
         $fieldset.find('.ui-btn-text:contains(gamma)').trigger('click');
         assert.deepEqual(element.val(), ['a', 'g'], 'model.value = ["a", "g"]');
+      });
+
+      test('Select-F native collapsed', function () {
+        var form = Forms.current,
+          element = form.getElement('selectf'),
+          $fieldset = element.attributes._view.$el,
+          $select = $fieldset.find('select');
+
+        element.val('');
+        assert.equal(element.val(), '', 'model.value is ""');
+
+        element.val('a');
+        assert.equal(element.val(), 'a', 'model.value = "a"');
+
+        element.val('b');
+        assert.equal(element.val(), 'b', 'model.value = "b"');
+
+        assert.equal($select.data("role"), "none", "data-role is not none");
+
+      });
+
+      test('Multi-F native collapsed', function () {
+        var form = Forms.current,
+          element = form.getElement('multif'),
+          $fieldset = element.attributes._view.$el,
+          $select = $fieldset.find('select');
+
+        element.val([]);
+        assert.deepEqual(element.val(), [], 'model.value is []');
+
+        element.val(['a']);
+        assert.deepEqual(element.val(), ['a'], 'model.value = ["a"]');
+
+        element.val(['a', 'b']);
+        assert.deepEqual(element.val(), ['a', 'b'], 'model.value = ["a", "b"]');
+
+        assert.equal($select.data("role"), "none", "data-role is not none");
+
       });
 
       test('boolean 0/1', function (done) {
