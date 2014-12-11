@@ -45,7 +45,7 @@ define([
           destinationType: window.BGTouchDraw.DestinationType.DATA_URL,
           encodingType: window.BGTouchDraw.EncodingType.JPEG
         },
-        options = {};
+        options = this.model.toCameraOptions() || {};
 
       options.canvasButtonOriginX = offset.left + Math.floor(width / 2);
       options.canvasButtonOriginY = offset.top - $window.scrollTop();
