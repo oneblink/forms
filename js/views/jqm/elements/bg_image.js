@@ -46,7 +46,7 @@ define([
     onButtonClick: function (event) {
       var model = this.model,
         $button = $(event.target),
-        options = {};
+        options = this.model.toCameraOptions() || {};
 
       options.sourceType = $button.data('SourceType');
       window.navigator.camera.getPicture(function (data) {
