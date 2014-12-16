@@ -45,6 +45,7 @@ define(function (require) {
     DrawElement: require('views/jqm/elements/draw'),
     BGDrawElement: require('views/jqm/elements/bg_draw'),
     BGImageElement: require('views/jqm/elements/bg_image'),
-    ButtonElement: require('views/jqm/elements/button')
+    ButtonElement: require('views/jqm/elements/button'),
+    WebRTCImageElement: require('views/jqm/elements/webrtc_image')
   };
 });
