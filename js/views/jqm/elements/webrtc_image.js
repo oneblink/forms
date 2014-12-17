@@ -31,6 +31,7 @@ define([
       onButtonClick: function () {
         var that = this;
         var $popup = $('<div data-role="popup"></div>');
+        var $tracks = $('<select></select>');
         var $video = $('<video autoplay width="100%"/>');
         var $image = $('<img style="display: none;"/>');
         var $error = $('<div></div>');
@@ -41,8 +42,8 @@ define([
         var $use = $('<a class="ui-disabled" data-role="button" data-inline="true">Use</a>');
         var $canvas = $('<canvas></canvas>');
         var start;
-        var stop;
         var stream;
+        var stop;
         var capture;
         var recapture;
         var rotate;
@@ -55,7 +56,6 @@ define([
         $popup.append($video, $image, $buttons);
 
         this.$el.append($popup);
-        this.$el.trigger('create');
 
         capture = function () {
           var video = $video[0];
@@ -122,9 +122,19 @@ define([
           }
         };
 
-        start = function () {
+        start = function (track) {
+          var options = {video: true, audio: false};
+
+          if (track) {
+            options.video = {
+              optional: [
+                {sourceId: track}
+              ]
+            };
+          }
+
           navigator.getMedia(
-            {video: true, audio: false},
+            options,
             function (localMediaStream) {
               stream = localMediaStream;
               $video.attr('src', window.URL.createObjectURL(stream));
@@ -132,8 +142,6 @@ define([
 
               $image.hide();
               $video.show();
-
-              $popup.popup('open');
             },
             function () {
               $error.append('Please allow access to the camera');
@@ -143,8 +151,15 @@ define([
           );
         };
 
+        stop = function () {
+          if (stream.stop) {
+            stream.stop();
+          }
+        };
+
         $popup.popup({
           afteropen: function() {
+            start();
             $rotate.on('click', rotate);
             $recapture.on('click', recapture);
             $use.on('click', use);
@@ -153,13 +168,41 @@ define([
             $rotate.off();
             $recapture.off();
             $use.off();
-            if (stream.stop) {
-              stream.stop();
-            }
+            stop();
           }
         });
 
-        start();
+        if (typeof MediaStreamTrack !== 'undefined' && typeof MediaStreamTrack.getSources !== 'undefined') {
+          MediaStreamTrack.getSources(function (sources) {
+            var counter = 0;
+            var cameraCounter = 0;
+            var source;
+            var label;
+
+            for (counter = 0; counter < sources.length; counter++) {
+              source = sources[counter];
+              if (source.kind === 'video') {
+                cameraCounter++;
+                label = source.label || 'camera ' + cameraCounter;
+                $tracks.append('<option value="' + source.id + '">' + label + '</option>');
+              }
+            }
+
+            if (cameraCounter > 1) {
+              $popup.prepend($tracks);
+              $tracks.on('change', function () {
+                stop();
+                start($tracks.val());
+              });
+            }
+
+            $popup.trigger('create');
+            $popup.popup('open');
+          });
+        } else {
+          $popup.trigger('create');
+          $popup.popup('open');
+        }
       }
     });
 
