@@ -183,7 +183,7 @@ define([
               source = sources[counter];
               if (source.kind === 'video') {
                 cameraCounter++;
-                label = source.label || 'camera ' + cameraCounter;
+                label = source.label || 'Camera ' + cameraCounter;
                 $tracks.append('<option value="' + source.id + '">' + label + '</option>');
               }
             }
