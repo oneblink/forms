@@ -155,6 +155,8 @@ define([
           if (stream.stop) {
             stream.stop();
           }
+          $popup.remove();
+          $popup = $tracks = $video = $image = $error = $buttons = $rotate = $cancel = $recapture = $use = $canvas = null;
         };
 
         $popup.popup({
