@@ -30,7 +30,7 @@ define([
     }, {
       onButtonClick: function () {
         var that = this;
-        var $popup = $('<div data-role="popup"></div>');
+        var $popup = $('<div data-role="popup"><h1>Tap to snap</h1></div>');
         var $tracks = $('<select></select>');
         var $video = $('<video autoplay width="100%"/>');
         var $image = $('<img style="display: none;"/>');
