@@ -14,6 +14,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   grunt.initConfig({
 
@@ -116,6 +117,17 @@ module.exports = function (grunt) {
       }
     },
 
+    connect: {
+      server: {
+        options: {
+          hostname: '*',
+          port: 8000,
+          base: '.',
+          keepalive: true
+        }
+      }
+    },
+
     watch: {
       i18n: {
         files: [
@@ -135,8 +147,12 @@ module.exports = function (grunt) {
         tasks: [
           'clean',
           'requirejs',
-          'uglify'
-        ]
+          'uglify',
+          'connect'
+        ],
+        options: {
+          atBegin: true
+        }
       },
       tests: {
         files: [
