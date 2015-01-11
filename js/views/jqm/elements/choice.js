@@ -3,7 +3,7 @@ define(['views/jqm/element'], function (ElementView) {
 
   var ChoiceElementView = ElementView.extend({
 
-    renderOtherText: function ($values) {
+    renderOtherText: function (render) {
       var name = this.model.attributes.name,
         $input = $('<input type="text" />'),
         $label = '<label rv-text="m:label" class="ui-input-text"></label>',
@@ -18,12 +18,13 @@ define(['views/jqm/element'], function (ElementView) {
         name: name + '_other',
         'class': 'ui-input-text ui-body-c'
       });
-      if ($.inArray('other', $values) >= 0 && !isOtherRendered) {
+      if (render && !isOtherRendered) {
         $element.append($label);
         $div.append($input);
         $element.append($div);
         this.$el.append($element);
-      } else if ($.inArray('other', $values) < 0 && isOtherRendered) {
+        return $input;
+      } else if (!render && isOtherRendered) {
         this.$el.children('div[data-role=fieldcontain]').remove();
       }
     }

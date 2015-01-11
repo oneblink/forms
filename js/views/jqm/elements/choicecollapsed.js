@@ -50,6 +50,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
     },
     onValueChange: function () {
       var $mapValues;
+      var renderOther;
       var attr = this.model.attributes;
       if (!attr.nativeMenu) {
         this.$el.find('select').selectmenu();
@@ -57,9 +58,19 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       }
 
       if (attr.type === 'select') {
-        $mapValues = [this.model.attributes.value];
+        if ($.inArray(this.model.attributes.value, _.keys(this.model.attributes.options)) < 0) {
+          renderOther = true;
+        } else {
+          renderOther = false;
+        }
       } else { // type === 'multi'
-        $mapValues = this.model.attributes.value;
+        if (_.difference(this.model.attributes.value, _.keys(this.model.attributes.options)).length > 0) {
+          renderOther = true;
+        } else {
+          renderOther = false;
+        }
+      }
+      ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
       }
 
       ChoiceElementView.prototype.renderOtherText.call(this, $mapValues);
