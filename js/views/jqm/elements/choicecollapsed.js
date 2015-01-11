@@ -3,6 +3,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
   var ChoiceCollapsedElementView = ChoiceElementView.extend({
     render: function () {
+      var that = this;
       var $input, $otherOption,
         attr = this.model.attributes,
         type = this.model.attributes.type,
@@ -12,9 +13,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       this.renderLabel();
 
       $input = $('<select></select>');
-      $input.attr({
-        'rv-value': 'm:value'
-      });
 
       if (type === 'select') {
         $input.attr({
@@ -46,12 +44,16 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       this.$el.append($input);
 
       this.bindRivets();
+      $input.on('change', function () {
+        that.model.set('value', $input[0].value);
+      });
       this.model.on('change:value', this.onValueChange, this);
     },
     onValueChange: function () {
-      var $mapValues;
+      var that = this;
       var renderOther;
       var attr = this.model.attributes;
+      var otherbox;
       if (!attr.nativeMenu) {
         this.$el.find('select').selectmenu();
         this.$el.find('select').selectmenu('refresh');
@@ -70,10 +72,12 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           renderOther = false;
         }
       }
-      ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
+      otherbox = ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
+      if (otherbox) {
+        otherbox.on('change', function () {
+          that.model.set('value', otherbox[0].value);
+        });
       }
-
-      ChoiceElementView.prototype.renderOtherText.call(this, $mapValues);
     }
   });
 
