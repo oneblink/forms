@@ -45,37 +45,46 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
       this.bindRivets();
       $input.on('change', function () {
-        that.model.set('value', $input[0].value);
+        that.model.set('value', $input.val());
       });
       this.model.on('change:value', this.onValueChange, this);
     },
     onValueChange: function () {
-      var that = this;
-      var renderOther;
+      var renderOther = false;
       var attr = this.model.attributes;
       var otherbox;
+      var select = this.$el.find('select');
+
       if (!attr.nativeMenu) {
-        this.$el.find('select').selectmenu();
-        this.$el.find('select').selectmenu('refresh');
+        select.selectmenu();
+        select.selectmenu('refresh');
       }
 
       if (attr.type === 'select') {
-        if ($.inArray(this.model.attributes.value, _.keys(this.model.attributes.options)) < 0) {
+        if ($.inArray(attr.value, _.keys(attr.options)) < 0) {
           renderOther = true;
+          select.val('other');
         } else {
-          renderOther = false;
+          select.val(attr.value);
         }
       } else { // type === 'multi'
-        if (_.difference(this.model.attributes.value, _.keys(this.model.attributes.options)).length > 0) {
+        if (_.difference(attr.value, _.keys(attr.options)).length > 0) {
           renderOther = true;
-        } else {
-          renderOther = false;
         }
+        select.val(attr.value);
       }
+      select.selectmenu('refresh');
       otherbox = ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
       if (otherbox) {
         otherbox.on('change', function () {
-          that.model.set('value', otherbox[0].value);
+          if (attr.type === 'select') {
+            attr.value = otherbox.val();
+          } else {
+            if (attr.value.indexOf('other')) {
+              attr.value.splice(attr.value.indexOf('other'), 1);
+            }
+            attr.value.push(otherbox.val());
+          }
         });
       }
     }
