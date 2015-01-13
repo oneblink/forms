@@ -55,11 +55,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       var otherbox;
       var select = this.$el.find('select');
 
-      if (!attr.nativeMenu) {
-        select.selectmenu();
-        select.selectmenu('refresh');
-      }
-
       if (attr.type === 'select') {
         if ($.inArray(attr.value, _.keys(attr.options)) < 0) {
           renderOther = true;
@@ -73,7 +68,12 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         }
         select.val(attr.value);
       }
-      select.selectmenu('refresh');
+
+      if (!attr.nativeMenu) {
+        select.selectmenu();
+        select.selectmenu('refresh');
+      }
+
       otherbox = ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
       if (otherbox) {
         otherbox.on('change', function () {
