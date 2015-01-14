@@ -52,7 +52,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
     onValueChange: function () {
       var renderOther = false;
       var attr = this.model.attributes;
-      var otherbox;
       var select = this.$el.find('select');
 
       if (attr.type === 'select') {
@@ -74,19 +73,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         select.selectmenu('refresh');
       }
 
-      otherbox = ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
-      if (otherbox) {
-        otherbox.on('change', function () {
-          if (attr.type === 'select') {
-            attr.value = otherbox.val();
-          } else {
-            if (attr.value.indexOf('other')) {
-              attr.value.splice(attr.value.indexOf('other'), 1);
-            }
-            attr.value.push(otherbox.val());
-          }
-        });
-      }
+      ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
     }
   });
 
