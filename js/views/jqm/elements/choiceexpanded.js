@@ -47,16 +47,15 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         });
         $label.prepend($input);
         $fieldset.append($label);
-
-        $input.on('click', function () {
-          self.model.set('value', value);
-        });
       });
 
       this.$el.append($fieldset);
       if (type === 'select') {
         this.bindRivets();
         this.model.on('change:value', this.onSelectValueChange, this);
+        $fieldset.find('input').on('click', function () {
+          self.model.set('value', self.$el.find('input:checked').val());
+        });
       } else { // type === 'multi'
         // bind custom handler for checkboxes -> array
         // Note: jQM uses triggerHandler, so this has to be a direct event
@@ -77,10 +76,15 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       val = _.map($inputs, function (input) {
         return $(input).val();
       });
+
+      if (val.indexOf('other') !== -1 && view.$el.find('input[type = text]').val()) {
+        val.splice(val.indexOf('other'), 1);
+        val.push(view.$el.find('input[type = text]').val());
+      }
       model.set('value', val);
     },
     onMultiValueChange: function () {
-      var view = this, $values, values,
+      var view = this,
         model = this.model,
         $inputs = view.$el.find('input[type=radio],input[type=checkbox]'),
         value = model.attributes.value,
@@ -95,13 +99,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         $input.prop('checked', _.indexOf(value, $input.val()) !== -1);
       });
 
-      $values = this.$el.find('label[data-icon=checkbox-on]');
-
-      values = $.map($values, function (val) {
-        return $(val).text().trim();
-      });
-
-      if (_.contains(values, 'other') || _.difference(value, _.keys(model.attributes.options)).length > 0) {
+      if (_.contains(value, 'other') || _.difference(value, _.keys(model.attributes.options)).length > 0) {
         renderOther = true;
         view.$el.find('input[value = other]').prop('checked', true);
       }
