@@ -62,10 +62,11 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           select.val(attr.value);
         }
       } else { // type === 'multi'
+        select.val(attr.value);
         if (_.difference(attr.value, _.keys(attr.options)).length > 0) {
           renderOther = true;
+          select.val(_.union(attr.value, ['other']));
         }
-        select.val(attr.value);
       }
 
       if (!attr.nativeMenu) {
@@ -74,6 +75,17 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       }
 
       ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
+
+      // Also need to fill the text box back in, in addition to selecting radio
+      if (attr.type === 'select') {
+        if ($.inArray(attr.value, _.keys(attr.options)) < 0 && attr.value !== 'other') {
+          this.$el.find('input[type = text]').val(attr.value);
+        }
+      } else {
+        if (_.difference(attr.value, _.keys(attr.options)).length > 0 && !_.contains(attr.value, 'other')) {
+          this.$el.find('input[type = text]').val(_.difference(attr.value, _.keys(attr.options)));
+        }
+      }
     }
   });
 

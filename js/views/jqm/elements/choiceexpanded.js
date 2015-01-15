@@ -83,7 +83,8 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       var view = this, $values, values,
         model = this.model,
         $inputs = view.$el.find('input[type=radio],input[type=checkbox]'),
-        value = model.attributes.value;
+        value = model.attributes.value,
+        renderOther = false;
 
       if (!_.isArray(value)) {
         value = [];
@@ -94,15 +95,23 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         $input.prop('checked', _.indexOf(value, $input.val()) !== -1);
       });
 
-      $inputs.checkboxradio('refresh');
-
       $values = this.$el.find('label[data-icon=checkbox-on]');
 
       values = $.map($values, function (val) {
         return $(val).text().trim();
       });
 
-      ChoiceElementView.prototype.renderOtherText.call(this, _.contains(values, 'other'));
+      if (_.contains(values, 'other') || _.difference(value, _.keys(model.attributes.options)).length > 0) {
+        renderOther = true;
+        view.$el.find('input[value = other]').prop('checked', true);
+      }
+
+      $inputs.checkboxradio('refresh');
+      ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
+
+      if (_.difference(value, _.keys(model.attributes.options)).length > 0) {
+        view.$el.find('input[type = text]').val(_.difference(value, _.keys(model.attributes.options)));
+      }
     },
     onSelectValueChange: function () {
       var view = this, $values, values,
@@ -112,10 +121,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         this.$el.find('[value = ' + this.model.get('value') + ']').prop('checked', true);
       } else {
         this.$el.find('[value = other]').prop('checked', true);
-        if (this.model.get('value') !== 'other') {
-          // Also need to fill the text box back in, in addition to selecting radio
-          this.$el.find('input[type = text]').val(this.model.get('value'));
-        }
       }
       $inputs.checkboxradio('refresh');
 
@@ -125,6 +130,11 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       });
 
       ChoiceElementView.prototype.renderOtherText.call(this, _.contains(values, 'other'));
+
+      if (!_.contains(_.keys(this.model.get('options')), this.model.get('value')) && this.model.get('value') !== 'other') {
+        // Also need to fill the text box back in, in addition to selecting radio
+        this.$el.find('input[type = text]').val(this.model.get('value'));
+      }
     }
   });
 
