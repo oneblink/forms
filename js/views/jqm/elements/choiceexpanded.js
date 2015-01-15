@@ -43,11 +43,14 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
         $input.attr({
           name: iName,
-          'rv-checked': 'm:value',
           value: value
         });
         $label.prepend($input);
         $fieldset.append($label);
+
+        $input.on('click', function () {
+          self.model.set('value', value);
+        });
       });
 
       this.$el.append($fieldset);
@@ -85,30 +88,43 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       if (!_.isArray(value)) {
         value = [];
       }
+
       $inputs.each(function (index, input) {
         var $input = $(input);
         $input.prop('checked', _.indexOf(value, $input.val()) !== -1);
       });
 
       $inputs.checkboxradio('refresh');
+
       $values = this.$el.find('label[data-icon=checkbox-on]');
 
       values = $.map($values, function (val) {
         return $(val).text().trim();
       });
-      ChoiceElementView.prototype.renderOtherText.call(this, values);
+
+      ChoiceElementView.prototype.renderOtherText.call(this, _.contains(values, 'other'));
     },
     onSelectValueChange: function () {
       var view = this, $values, values,
         $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
 
+      if (_.contains(_.keys(this.model.get('options')), this.model.get('value'))) {
+        this.$el.find('[value = ' + this.model.get('value') + ']').prop('checked', true);
+      } else {
+        this.$el.find('[value = other]').prop('checked', true);
+        if (this.model.get('value') !== 'other') {
+          // Also need to fill the text box back in, in addition to selecting radio
+          this.$el.find('input[type = text]').val(this.model.get('value'));
+        }
+      }
       $inputs.checkboxradio('refresh');
-      $values = this.$el.find('label[data-icon=radio-on]');
 
+      $values = this.$el.find('label[data-icon=radio-on]');
       values = $.map($values, function (val) {
         return $(val).text().trim();
       });
-      ChoiceElementView.prototype.renderOtherText.call(this, values);
+
+      ChoiceElementView.prototype.renderOtherText.call(this, _.contains(values, 'other'));
     }
   });
 
