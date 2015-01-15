@@ -45,7 +45,17 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
       this.bindRivets();
       $input.on('change', function () {
-        that.model.set('value', $input.val());
+        var arrayValues;
+        if (_.isArray($input.val()) && _.contains($input.val(), 'other')) {
+          arrayValues = $input.val();
+          if (arrayValues.indexOf('other') !== -1 && that.$el.find('input[type = text]').val()) {
+            arrayValues.splice(arrayValues.indexOf('other'), 1);
+            arrayValues.push(that.$el.find('input[type = text]').val());
+          }
+          that.model.set('value', arrayValues);
+        } else {
+          that.model.set('value', $input.val());
+        }
       });
       this.model.on('change:value', this.onValueChange, this);
     },
