@@ -118,7 +118,11 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       if (_.contains(_.keys(this.model.get('options')), this.model.get('value'))) {
         this.$el.find('[value = ' + this.model.get('value') + ']').prop('checked', true);
       } else {
-        this.$el.find('[value = other]').prop('checked', true);
+        if (this.model.get('value') === '') {
+          this.$el.find('input:checked').prop('checked', false);
+        } else {
+          this.$el.find('[value = other]').prop('checked', true);
+        }
       }
       $inputs.checkboxradio('refresh');
 

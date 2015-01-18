@@ -54,7 +54,11 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           }
           that.model.set('value', arrayValues);
         } else {
-          that.model.set('value', $input.val());
+          if ($input.val() === 'select one...') {
+            that.model.set('value', '');
+          } else {
+            that.model.set('value', $input.val());
+          }
         }
       });
       this.model.on('change:value', this.onValueChange, this);
@@ -66,8 +70,12 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
       if (attr.type === 'select') {
         if ($.inArray(attr.value, _.keys(attr.options)) < 0) {
-          renderOther = true;
-          select.val('other');
+          if (attr.value === '') {
+            select.find('option:not([value])').prop('selected', true);
+          } else {
+            renderOther = true;
+            select.val('other');
+          }
         } else {
           select.val(attr.value);
         }
