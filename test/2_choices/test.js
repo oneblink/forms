@@ -47,89 +47,247 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.show();
       });
 
-      test('select-1 collapsed', function () {
+      test('select-1 collapsed API -> UI bindings', function () {
         var form = Forms.current,
           element = form.getElement('selectc'),
           $fieldset = element.attributes._view.$el,
           $span = $fieldset.find('.ui-btn-text'),
-          $select = $fieldset.find('select');
+          $select = $fieldset.find('select'),
+          $other;
 
         element.val('');
-        assert.equal(element.val(), '', 'model.value is ""');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($select.val(), 'select one...', 'form element value is "select one"..."');
+        assert.equal($other.length, 0, 'other box absent');
 
         element.val('a');
-        assert.equal(element.val(), 'a', 'model.value = "a"');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($select.val(), 'a', 'form element value = "a"');
         assert.equal($span.text(), 'alpha', 'jQM shows "alpha"');
+        assert.equal($other.length, 0, 'other box absent');
 
         element.val('b');
-        assert.equal(element.val(), 'b', 'model.value = "b"');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($select.val(), 'b', 'form element value = "b"');
         assert.equal($span.text(), 'beta', 'jQM shows "beta"');
+        assert.equal($other.length, 0, 'other box absent');
 
+        element.val('other');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($select.val(), 'other', 'form element value = "other"');
+        assert.equal($other.length, 1, 'other box exists');
+        assert.equal($other.val(), '', 'other box is empty');
 
-        assert.notEqual($select.data("role"), "none", "data-role is none");
-        // TODO: test UI causes side-effect in model
+        // Include this test here to make the other box dissapear
+        // Then test what happens when an 'other' value is directly inserted
+        // This pattern repeated in all test suites below for coverage
+        element.val('');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($select.val(), 'select one...', 'form element value is "select one"..."');
+        assert.equal($other.length, 0, 'other box absent');
+
+        element.val('cat');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($select.val(), 'other', 'form element value = "other"');
+        assert.equal($other.length, 1, 'other box exists');
+        assert.equal($other.val(), 'cat', 'other box is has value "cat"');
       });
 
-      test('select-multi collapsed', function () {
+      test('select-1 collapsed UI -> API bindings');
+
+      test('select-1 expanded API -> UI bindings', function () {
         var form = Forms.current,
-          element = form.getElement('multic'),
-          $fieldset = element.attributes._view.$el,
-          $span = $fieldset.find('.ui-btn-text'),
-          $select = $fieldset.find('select');
-
-        element.val([]);
-        assert.deepEqual(element.val(), [], 'model.value is []');
-
-        element.val(['a']);
-        assert.deepEqual(element.val(), ['a'], 'model.value = ["a"]');
-        assert.equal($span.text(), 'alpha', 'jQM shows "alpha"');
-
-        element.val(['a', 'b']);
-        assert.deepEqual(element.val(), ['a', 'b'], 'model.value = ["a", "b"]');
-        assert.equal($span.text(), 'alpha, beta', 'jQM shows "alpha, beta"');
-
-        assert.notEqual($select.data("role"), "none", "data-role is none");
-
-        // TODO: test UI causes side-effect in model
-      });
-
-      test('select-1 expanded', function () {
-        var form = Forms.current,
-          element = form.getElement('selecte'),
-          $fieldset = element.attributes._view.$el;
+        element = form.getElement('selecte'),
+        $fieldset = element.attributes._view.$el,
+        $selected,
+        $other;
 
         element.val('');
-        assert.equal(element.val(), '', 'model.value is ""');
-        assert.equal($fieldset.find('ui-btn-active').length, 0, 'jQM is blank');
+        $selected = $fieldset.find('input[type = radio]:checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected.length, 0, 'no form element selected');
+        assert.equal($other.length, 0, 'other box absent');
 
         element.val('a');
-        assert.equal(element.val(), 'a', 'model.value = "a"');
+        $selected = $fieldset.find('input[type = radio]:checked').val();
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected, 'a', 'form element value = "a"');
+        assert.equal($other.length, 0, 'other box absent');
 
         element.val('b');
-        assert.equal(element.val(), 'b', 'model.value = "b"');
+        $selected = $fieldset.find('input[type = radio]:checked').val();
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected, 'b', 'form element value = "b"');
+        assert.equal($other.length, 0, 'other box absent');
+
+        element.val('other');
+        $selected = $fieldset.find('input[type = radio]:checked').val();
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected, 'other', 'form element value = "other"');
+        assert.equal($other.length, 1, 'other box exists');
+        assert.equal($other.val(), '', 'other box is empty');
+
+        element.val('');
+        $selected = $fieldset.find('input[type = radio]:checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected.length, 0, 'no form element selected');
+        assert.equal($other.length, 0, 'other box absent');
+
+        element.val('cat');
+        $selected = $fieldset.find('input[type = radio]:checked').val();
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected, 'other', 'form element value = "other"');
+        assert.equal($other.length, 1, 'other box exists');
+        assert.equal($other.val(), 'cat', 'other box is "cat"');
+      });
+
+      test('select-1 expanded UI -> API bindings', function () {
+        // UI -> API bindings
+        var form = Forms.current,
+        element = form.getElement('selecte'),
+        $fieldset = element.attributes._view.$el;
 
         $fieldset.find('label:contains(gamma)').trigger('click');
         assert.equal(element.val(), 'g', 'model.value = "g"');
       });
 
-      test('select-multi expanded', function () {
+      test('select-multi collapsed API -> UI bindings', function () {
         var form = Forms.current,
-          element = form.getElement('multie'),
-          $fieldset = element.attributes._view.$el;
+          element = form.getElement('multic'),
+          $fieldset = element.attributes._view.$el,
+          $span = $fieldset.find('.ui-btn-text'),
+          $select = $fieldset.find('select'),
+          $selected,
+          $other,
+          val;
 
-        element.val('');
-        assert.equal(element.val(), '', 'model.value is ""');
-        assert.equal($fieldset.find('ui-btn-active').length, 0, 'jQM is blank');
+        element.val([]);
+        $selected = $select.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($span.text(), 'select one or more...', 'jQM shows "select one or more..."');
+        assert.equal($selected.length, 0, 'no elements selected');
+        assert.equal($other.length, 0, 'other box absent');
 
         element.val(['a']);
-        assert.deepEqual(element.val(), ['a'], 'model.value = ["a"]');
+        $selected = $select.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($span.text(), 'alpha', 'jQM shows "alpha"');
+        assert.equal($selected.length, 1, '1 element selected');
+        val = _.map($selected, function (input) {
+          return $(input).val();
+        });
+        assert.deepEqual(val, ['a'], 'element has a selected');
+        assert.equal($other.length, 0, 'other box absent');
 
         element.val(['a', 'b']);
-        assert.deepEqual(element.val(), ['a', 'b'], 'model.value = ["a", "b"]');
+        $selected = $select.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($span.text(), 'alpha, beta', 'jQM shows "alpha, beta"');
+        assert.equal($selected.length, 2, '2 elements selected');
+        val = _.map($selected, function (input) {
+          return $(input).val();
+        });
+        assert.deepEqual(val, ['a', 'b'], 'element has a & b selected');
+        assert.equal($other.length, 0, 'other box absent');
+
+        element.val(['a', 'b', 'other']);
+        $selected = $select.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($span.text(), 'alpha, beta, other', 'jQM shows "alpha, beta, other"');
+        assert.equal($selected.length, 3, '3 elements selected');
+        val = _.map($selected, function (input) {
+          return $(input).val();
+        });
+        assert.deepEqual(val, ['a', 'b', 'other'], 'element has a, b & other selected');
+        assert.equal($other.length, 1, 'other box present');
+        assert.equal($other.val(), '', 'other box empty');
+
+        element.val([]);
+        $selected = $select.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($span.text(), 'select one or more...', 'jQM shows "select one or more..."');
+        assert.equal($selected.length, 0, 'no elements selected');
+        assert.equal($other.length, 0, 'other box absent');
+
+        element.val(['a', 'b', 'cat']);
+        $selected = $select.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($span.text(), 'alpha, beta, other', 'jQM shows "alpha, beta, other"');
+        assert.equal($selected.length, 3, '3 elements selected');
+        val = _.map($selected, function (input) {
+          return $(input).val();
+        });
+        assert.deepEqual(val, ['a', 'b', 'other'], 'element has a, b & other selected');
+        assert.equal($other.length, 1, 'other box present');
+        assert.equal($other.val(), 'cat', 'other box contains "cat"');
+
+        assert.notEqual($select.data("role"), "none", "data-role is none");
+      });
+
+      test('select-multi expanded API -> UI bindings', function () {
+        var form = Forms.current,
+          element = form.getElement('multie'),
+          $fieldset = element.attributes._view.$el,
+          $selected,
+          $other,
+          val;
+
+        element.val('');
+        $selected = $fieldset.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected.length, 0, 'no items selected');
+        assert.equal($other.length, 0, 'other box absent');
+
+        element.val(['a']);
+        $selected = $fieldset.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected.length, 1, '1 item selected');
+        val = _.map($selected, function (input) {
+          return $(input).val();
+        });
+        assert.deepEqual(val, ['a'], 'element has a selected');
+        assert.equal($other.length, 0, 'other box absent');
+
+        element.val(['a', 'b']);
+        $selected = $fieldset.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected.length, 2, '2 items selected');
+        val = _.map($selected, function (input) {
+          return $(input).val();
+        });
+        assert.deepEqual(val, ['a', 'b'], 'element has a & b selected');
+        assert.equal($other.length, 0, 'other box absent');
+
+        element.val(['a', 'b', 'other']);
+        $selected = $fieldset.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected.length, 3, '3 items selected');
+        val = _.map($selected, function (input) {
+          return $(input).val();
+        });
+        assert.deepEqual(val, ['a', 'b', 'other'], 'element has a, b & other selected');
+        assert.equal($other.length, 1, 'other box present');
+        assert.equal($other.val(), '', 'other box empty');
+
+        element.val('');
+        $selected = $fieldset.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected.length, 0, 'no items selected');
+        assert.equal($other.length, 0, 'other box absent');
+
+        element.val(['a', 'b', 'cat']);
+        $selected = $fieldset.find(':checked');
+        $other = $fieldset.find('input[type = text]');
+        assert.equal($selected.length, 3, '3 items selected');
+        val = _.map($selected, function (input) {
+          return $(input).val();
+        });
+        assert.deepEqual(val, ['a', 'b', 'other'], 'element has a, b, other selected');
+        assert.equal($other.length, 1, 'other box present');
+        assert.equal($other.val(), 'cat', 'other box contains "cat"');
 
         $fieldset.find('.ui-btn-text:contains(beta)').trigger('click');
         $fieldset.find('.ui-btn-text:contains(gamma)').trigger('click');
-        assert.deepEqual(element.val(), ['a', 'g'], 'model.value = ["a", "g"]');
       });
 
       test('Select-F native collapsed', function () {
@@ -227,3 +385,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
   }); // END: suite('1', ...)
 
 });
+
+
+/*
+TODO
+SelectC ...chose one bugs out
+*/
