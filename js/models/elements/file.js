@@ -26,6 +26,8 @@ define(['models/element'], function (Element) {
 
       if (BMP.BlinkGap.hasCamera() && accept.indexOf('image') === 0) {
         view = new Forms._views.BGImageElement({model: this});
+      } else if (this.getUserMediaPresent() && this.get('capture') === true) {
+        view = new Forms._views.WebRTCImageElement({model: this});
       } else {
         view = new Forms._views.FileElement({model: this});
       }
@@ -55,6 +57,10 @@ define(['models/element'], function (Element) {
         _.extend(options, cameraOpts);
       }
       return options;
+    },
+    getUserMediaPresent: function () {
+      return window.URL && window.URL.createObjectURL && (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+
     }
   });
 

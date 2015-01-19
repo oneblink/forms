@@ -17,7 +17,8 @@ define(function () {
               name: "Photo",
               type: "file",
               label: "Photo",
-              accept: "image/*"
+              accept: "image/*",
+              capture: true
             }
           },
           {
@@ -25,7 +26,8 @@ define(function () {
               name: "Photo1",
               type: "file",
               label: "Photo1",
-              accept: "image/*"
+              accept: "image/*",
+              capture: false
             }
           },
           {
@@ -33,7 +35,8 @@ define(function () {
               name: "Photo2",
               type: "file",
               label: "Photo2",
-              accept: "image/*"
+              accept: "image/*",
+              capture: true
             }
           },
           {
