@@ -18,9 +18,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       }
     };
 
-    BMP.BIC= {};
+    BMP.BIC = {};
     BMP.BIC.attributes = {
-      imageCaptureQuality:40,
+      imageCaptureQuality: 40,
       imageCaptureScale: 60,
       cameraOptions: '{"quality":50}'
     };
