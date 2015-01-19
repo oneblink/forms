@@ -4,9 +4,11 @@ define(function () {
   Element = Backbone.Model.extend({
     defaults: {
       page: 0,
+      'class': '',
       defaultValue: '',
       value: '',
       pattern: '',
+      hidden: false,
       persist: true
     },
     idAttribute: 'name',
@@ -14,7 +16,10 @@ define(function () {
       var attrs = this.attributes,
         form = attrs.form,
         page = attrs.page,
+        Forms = BMP.Forms,
         section = $.trim(attrs.section || '');
+
+      Forms.setAttributesFromClass(this);
 
       this.initializeView();
 
@@ -38,6 +43,7 @@ define(function () {
         }
       }
       this.on('change', this.updateErrors, this);
+      // this.on('change:blob', this.updateWarning, this);
     },
     validate: function (attrs) {
       var errors = {};
@@ -49,7 +55,7 @@ define(function () {
         errors.value.push({code: 'REQUIRED'});
       }
       if (attrs.pattern && attrs.value &&
-          !(new RegExp(attrs.pattern).test(attrs.value))) {
+          !new RegExp(attrs.pattern).test(attrs.value)) {
         errors.value = errors.value || [];
         errors.value.push({code: 'PATTERN', PATTERN: attrs.pattern});
       }
@@ -57,6 +63,17 @@ define(function () {
     },
     updateErrors: function () {
       this.set('errors', this.validate());
+    },
+    warn: function () {
+      var warning = {};
+      warning.value = warning.value || [];
+      if (!BMP.Forms.supports.blob) {
+        warning.value.push({code: 'NO_BLOB_PREVIEW'});
+      }
+      return _.isEmpty(warning) ? undefined : warning;
+    },
+    updateWarning: function () {
+      this.set('warning', this.warn());
     },
     removeView: function () {
       var attrs = this.attributes;
@@ -150,6 +167,7 @@ define(function () {
       if (value === undefined) {
         return this.get('value');
       }
+
       this.set('value', value);
       return value;
     }
@@ -243,4 +261,3 @@ define(function () {
 
   return Element;
 });
-

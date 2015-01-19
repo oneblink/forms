@@ -1,0 +1,14 @@
+# 3rd-party / vendor
+bower_components
+node_modules
+
+# JetBrains IntelliJ IDEA files
+/.idea
+
+/nbproject
+
+# build output
+js/build
+js/locales
+/BlinkForms*.js*
+test/lib

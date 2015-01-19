@@ -11,7 +11,7 @@ define(['views/jqm/element'], function (ElementView) {
       unitIndex = 0,
       divisor = 1;
 
-    while (size > (divisor * 1024) && unitIndex < units.length) {
+    while (size > divisor * 1024 && unitIndex < units.length) {
       divisor *= 1024;
       unitIndex += 1;
     }
@@ -42,7 +42,15 @@ define(['views/jqm/element'], function (ElementView) {
       $input.on('change', function (event) {
         self.onInputChange(event);
       });
-      this.model.on('change:blob', this.renderFigure, this);
+      this.model.on('change:blob', function () {
+        this.model.updateWarning();
+        if (_.isEmpty(this.model.attributes.warning)) {
+          this.renderWarning();
+        } else {
+          this.renderFigure();
+        }
+
+      }, this);
     },
     renderFigure: function () {
       var $figure, $figcaption, blob, caption, $img;
@@ -92,4 +100,3 @@ define(['views/jqm/element'], function (ElementView) {
 
   return FileElementView;
 });
-

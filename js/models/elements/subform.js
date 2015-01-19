@@ -42,29 +42,40 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
       });
     },
     /**
-     * @param {Number|Node|jQuery} index or DOM element for the record.
+    * @param {Model} model the SubForm Model to find an index
+    * @return {Number} -1 if not found, otherwise the collection's index
+    */
+    indexOf: function (model) {
+      var forms = this.attributes.forms;
+      return forms.models.indexOf(model);
+    },
+    /**
+     * @param {Number|Model} index or model for the record.
      */
     remove: function (index) {
       var form,
-        Forms = BMP.Forms;
+        forms = this.attributes.forms;
 
       // TODO: skip placeholder "delete" records when counting
       if (typeof index === 'number') {
-        form = this.attributes.forms.at(index);
-      } else {
-        form = index instanceof $ ? index : $(index);
-        form = Forms.getForm(form);
+        form = forms.at(index);
+      } else if (index instanceof Backbone.Model) {
+        form = index;
       }
-      if (form.attributes._view) {
-        form.attributes._view.remove();
+      if (this.indexOf(form) === -1) {
+        return; // invalid SubForm model, not part of this SubFrom Element
       }
       if (form.get('_action') === 'edit') {
+        if (form.attributes._view) {
+          form.attributes._view.remove();
+        }
         form.attributes = {
           _action: 'remove',
           id: form.attributes.id
         };
       } else {
         form.destroy();
+        forms.remove(form);
       }
     },
     size: function () {

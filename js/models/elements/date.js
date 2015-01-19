@@ -58,6 +58,7 @@ define([
             this.trigger('change:_time');
           }
           break;
+        default:
         }
       }
     },

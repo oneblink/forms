@@ -30,9 +30,7 @@ define(function () {
               name: 'selecte',
               label: 'Select E',
               type: 'select',
-              mode: 'expanded',
-              layout: 'horizontal',
-              other: true,
+              'class': 'mode: expanded; layout: horizontal; other;',
               options: {
                 a: 'alpha',
                 b: 'beta',
@@ -61,6 +59,35 @@ define(function () {
               type: 'multi',
               mode: 'expanded',
               other: true,
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
+          },
+          {
+            'default': {
+              name: 'multif',
+              label: 'Multi F',
+              type: 'multi',
+              other: true,
+              'class': 'mode: collapsed; native-menu: true;',
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
+          },
+          {
+            'default': {
+              name: 'selectf',
+              label: 'Select F',
+              type: 'select',
+              mode: 'collapsed',
+              other: true,
+              'class': 'mode: collapsed; native-menu: true;',
               options: {
                 a: 'alpha',
                 b: 'beta',

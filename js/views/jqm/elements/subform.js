@@ -28,7 +28,7 @@ define(function (require) {
         'data-action': 'add'
       }).text(name);
 
-      $button.on('click', this.onAddClick);
+      $button.on('click', this.onAddClick.bind(this));
 
       this.$el.attr('data-form', name);
       this.$el.prepend($button);
@@ -36,17 +36,14 @@ define(function (require) {
       this.onFormsChange();
     },
     onAddClick: function () {
-      var Forms = BMP.Forms,
-        element = Forms.getElement(this);
-
-      element.add();
+      this.model.add();
     },
     onFormsChange: function () {
       var Forms,
         me,
         view;
       Forms = BMP.Forms;
-      me = this.$el;
+      me = this;
 
       this.model.attributes.forms.forEach(function (form) {
         var body$, previous$, action;
@@ -60,17 +57,19 @@ define(function (require) {
         action = form.attributes._action;
 
         if (action !== 'remove') {
-          form.$form = view.$el; // backwards-compatibility, convenience
-          view.render();
+          if (!view || !view.$el || !view.$el.children().length) {
+            // prevent calling render() over and over as "add" buttons go crazy
+            form.$form = view.$el; // backwards-compatibility, convenience
+            view.render();
+          }
           body$ = view.$el.closest('body');
 
           if (!body$.length || body$[0] !== document.body) {
             // make sure all SubFormViews related to the SubForm models are appended to the DOM
-            previous$ = me.children('section[data-form]').last();
+            previous$ = me.$el.children('section[data-form]').last();
             if (!previous$.length) {
-              me.prepend(view.$el);
+              me.$el.prepend(view.$el);
             } else {
-              // view.$el.insertAfter(previous$);
               previous$.after(view.$el);
             }
           }
@@ -80,4 +79,3 @@ define(function (require) {
     }
   });
 });
-

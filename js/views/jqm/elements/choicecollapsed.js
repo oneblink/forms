@@ -3,7 +3,9 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
   var ChoiceCollapsedElementView = ChoiceElementView.extend({
     render: function () {
+      var that = this;
       var $input, $otherOption,
+        attr = this.model.attributes,
         type = this.model.attributes.type,
         name = this.model.attributes.name;
 
@@ -11,9 +13,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       this.renderLabel();
 
       $input = $('<select></select>');
-      $input.attr({
-        'rv-value': 'm:value'
-      });
 
       if (type === 'select') {
         $input.attr({
@@ -30,6 +29,10 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         $input.append('<option>select one or more...</option>');
       }
 
+      if (attr.nativeMenu) {
+        $input.attr({"data-role": "none"});
+      }
+
       _.forEach(this.model.attributes.options, function (label, value) {
         var $option = $('<option value="' + value + '">' + label + '</option>');
         $input.append($option);
@@ -41,20 +44,68 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       this.$el.append($input);
 
       this.bindRivets();
+      $input.on('change', function () {
+        var arrayValues;
+        if (_.isArray($input.val()) && _.contains($input.val(), 'other')) {
+          arrayValues = $input.val();
+          if (arrayValues.indexOf('other') !== -1 && that.$el.find('input[type = text]').val()) {
+            arrayValues.splice(arrayValues.indexOf('other'), 1);
+            arrayValues.push(that.$el.find('input[type = text]').val());
+          }
+          that.model.set('value', arrayValues);
+        } else {
+          if ($input.val() === 'select one...') {
+            that.model.set('value', '');
+          } else {
+            that.model.set('value', $input.val());
+          }
+        }
+      });
       this.model.on('change:value', this.onValueChange, this);
     },
     onValueChange: function () {
-      this.$el.find('select').selectmenu();
-      this.$el.find('select').selectmenu('refresh');
-      var $values = this.$el.find('.ui-btn-text').text().split(','),
-        $mapValues = $.map($values, function (val) {
-          return val.trim();
-        });
-      ChoiceElementView.prototype.renderOtherText.call(this, $mapValues);
+      var renderOther = false;
+      var attr = this.model.attributes;
+      var select = this.$el.find('select');
+
+      if (attr.type === 'select') {
+        if ($.inArray(attr.value, _.keys(attr.options)) < 0) {
+          if (attr.value === '') {
+            select.find('option:not([value])').prop('selected', true);
+          } else {
+            renderOther = true;
+            select.val('other');
+          }
+        } else {
+          select.val(attr.value);
+        }
+      } else { // type === 'multi'
+        select.val(attr.value);
+        if (_.difference(attr.value, _.keys(attr.options)).length > 0) {
+          renderOther = true;
+          select.val(_.union(attr.value, ['other']));
+        }
+      }
+
+      if (!attr.nativeMenu) {
+        select.selectmenu();
+        select.selectmenu('refresh');
+      }
+
+      ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
+
+      // Also need to fill the text box back in, in addition to selecting radio
+      if (attr.type === 'select') {
+        if ($.inArray(attr.value, _.keys(attr.options)) < 0 && attr.value !== 'other') {
+          this.$el.find('input[type = text]').val(attr.value);
+        }
+      } else {
+        if (_.difference(attr.value, _.keys(attr.options)).length > 0 && !_.contains(attr.value, 'other')) {
+          this.$el.find('input[type = text]').val(_.difference(attr.value, _.keys(attr.options)));
+        }
+      }
     }
   });
 
   return ChoiceCollapsedElementView;
 });
-
-

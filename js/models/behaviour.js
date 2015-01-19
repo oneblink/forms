@@ -150,9 +150,9 @@ define(function (require) {
         });
       }
       try {
-        /*jslint evil:true*/
+        /*eslint-disable no-eval*/
         eval('js = ' + string);
-        /*jslint evil:false*/
+        /*eslint-enable no-eval*/
         if (_.isFunction(js)) {
           result = js.call(form);
         } else {

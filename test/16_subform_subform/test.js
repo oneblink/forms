@@ -1,8 +1,97 @@
-/*global suite:true, test:true, setup:true, teardown:true*/ // mocha
-/*global suiteSetup:true, suiteTeardown:true*/ // mocha
-/*global assert:true*/ // chai
+/*eslint-env mocha*/
+/*global assert*/ // chai
 
 define(['BlinkForms', 'BIC'], function (Forms) {
+  var record$, record, $xml;
+
+  suite('getformrecord.xml', function () {
+    var status, jqxhr;
+
+    suiteSetup(function (done) {
+      $.get("getformrecord.xml").then(
+        function (res, stat, xhr) {
+          status = stat;
+          jqxhr = xhr;
+          done();
+        }
+      );
+    });
+
+    test('status is "success"', function () {
+      assert.equal(status, 'success');
+    });
+
+    test('responseText exists and is non-empty', function () {
+      assert.property(jqxhr, 'responseText');
+      assert.isString(jqxhr.responseText);
+      assert(!!jqxhr.responseText);
+    });
+
+    suite('parsing as XML', function () {
+
+      suiteSetup(function () {
+        $xml = $($.parseXML(jqxhr.responseText));
+      });
+
+      test('$.parseXML completes successfully', function () {
+        assert.lengthOf($xml, 1);
+      });
+
+      test('XML has a "Test" element', function () {
+        assert.lengthOf($xml.find('Test'), 1);
+      });
+
+    });
+
+    suite('XML record', function () {
+
+      suiteSetup(function () {
+        record$ = $xml.find('Test').first();
+      });
+
+      test('defines "id" field', function () {
+        assert.lengthOf(record$.children('id'), 1);
+      });
+
+      test('defines "Name" field', function () {
+        assert.lengthOf(record$.children('Name'), 1);
+      });
+
+      test('defines "Address" field', function () {
+        assert.lengthOf(record$.children('Address'), 1);
+      });
+
+      test('defines "Address" field with 3 sub-records', function () {
+        assert.lengthOf(record$.children('Address').children('Address'), 3);
+      });
+
+    });
+
+    suite('XML to Object', function () {
+
+      suiteSetup(function () {
+        record = {};
+        record$.children().each(function (index, el) {
+          var value;
+          if (el.normalize) {
+            el.normalize();
+          }
+          value = (new XMLSerializer()).serializeToString(el);
+          value = value.substring(
+            ('<' + el.nodeName + '>').length,
+            value.length - ('</' + el.nodeName + '>').length
+          ); // unwrap the outer XML tag from the new XML string
+          record[el.nodeName] = value;
+        });
+      });
+
+      test('object has correct keys', function () {
+        assert.sameMembers(Object.keys(record), ['id', 'Name', 'Address']);
+      });
+
+    });
+
+  });
 
   suite('16: subForms render', function () {
     var $doc = $(document),
@@ -54,46 +143,84 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       });
 
-      // test('promise is resolved', function (done) {
-      //   var record = {
-      //     id: '37',
-      //     name: 'Harry Potter',
-      //     address: [
-      //       {
-      //         id: 1,
-      //         detail: 'what a whiner'
-      //       },{
-      //         id: 2,
-      //         detail: 'great day'
-      //       }
-      //     ]
-      //   };
-      //
-      //   Forms.current.setRecord(record).then(function () {
-      //     assert(true, 'success handler for promise called');
-      //     done();
-      //   });
-      // });
+      suite('after .setRecord()', function () {
 
-      test('Edit form with subforms', function (done) {
-        var form = Forms.current;
-        $.get("getformrecord.xml").then(
-          function (data) {
-            var record = {}, node, nodes;
-            nodes = data.evaluate('//' + form.attributes.name, data);
-            node = nodes.iterateNext();
-            _.each(node.children, function (key) {
-              record[key.nodeName] = key.innerHTML;
-            });
+        var form;
 
-            form.setRecord(record).then(function () {
-              form.data().then(function (formdata) {
-                assert.deepEqual(formdata, record, 'form data');
-              });
-            });
-          }
-        );
-        done();
+        suiteSetup(function (done) {
+          form = BMP.Forms.current;
+          form.setRecord(record).then(function () {
+            done();
+          }, function (err) {
+            throw err;
+          });
+        });
+
+        test('input record is the same as output', function (done) {
+          form.data().then(function (formdata) {
+            assert.deepEqual(formdata, record, 'form data');
+            done();
+          });
+        });
+
+        test('Address has 3 sub-records', function () {
+          var element;
+          element = form.getElement('Address');
+          assert.equal(element.size(), 3);
+        });
+
+        test('Address[0].parentElement', function () {
+          var element, subForm;
+          element = form.getElement('Address');
+          assert.instanceOf(element, Backbone.Model);
+          subForm = element.getForm(0);
+          assert.instanceOf(subForm, Backbone.Model);
+          assert.strictEqual(subForm.parentElement, element);
+        });
+
+        test('Address[0] _view.model', function () {
+          var element, view;
+          element = form.getElement('Address');
+          assert.instanceOf(element, Backbone.Model);
+          view = element.get('_view');
+          assert.instanceOf(view, Backbone.View);
+          assert.strictEqual(view.model, element);
+        });
+
+        test('Address[0] Exp[0].parentElement', function () {
+          var element, subForm;
+          element = form.getElement('Address').getForm(0).getElement('Exp');
+          assert.instanceOf(element, Backbone.Model);
+          subForm = element.getForm(0);
+          assert.instanceOf(subForm, Backbone.Model);
+          assert.strictEqual(subForm.parentElement, element);
+        });
+
+        test('Address[0] Exp[0] _view.model', function () {
+          var element, view;
+          element = form.getElement('Address').getForm(0).getElement('Exp');
+          assert.instanceOf(element, Backbone.Model);
+          view = element.get('_view');
+          assert.instanceOf(view, Backbone.View);
+          assert.strictEqual(view.model, element);
+        });
+
+        test('Address element has 1 "add" button', function () {
+          var element, view;
+          element = form.getElement('Address');
+          view = element.get('_view');
+          assert.lengthOf(view.$el.children('.ui-btn'), 1);
+        });
+
+        test('Exp element in all Address sub-records have 1 "add" button each', function () {
+          form.getElement('Address').get('forms').each(function (subForm) {
+            var element, view;
+            element = subForm.getElement('Exp');
+            view = element.get('_view');
+            assert.lengthOf(view.$el.children('.ui-btn'), 1);
+          });
+        });
+
       });
 
     }); // END: suite('Form', ...)

@@ -1,8 +1,7 @@
-/*jslint indent:2*/
-/*global define, require*/ // AMD / Require.JS
-
 (function (window) {
   'use strict';
+
+  window.BMP = {};
 
   window.mocha.ui('tdd');
   window.assert = window.chai.assert;
@@ -16,6 +15,7 @@
       BlinkForms: '../../js/build/views/forms3jqm',
       BIC: '../sample-bic',
       'BMP.Blob': '../lib/bmp-blobs',
+      'BMP.BlinkGap': '../../node_modules/bic-jqm/scripts/vendor/BMP.BlinkGap',
       signaturepad: 'http://cdnp.blinkm.co/signaturepad/2.3.0/jq.sig.min',
       picker: '../../bower_components/pickadate/lib/picker',
       'picker.date': '../../bower_components/pickadate/lib/picker.date',
@@ -29,7 +29,11 @@
     shim: {
       'BMP.Blob': {
         depends: ['jquery', 'underscore'],
-        exports: 'BMP'
+        exports: 'BMP.Blob'
+      },
+      'BMP.BlinkGap': {
+        depends: ['BMP.Blob'], // because BMP.BlinkGap assumes window.BMP
+        exports: 'BMP.BlinkGap'
       },
       signaturepad: {
         deps: ['jquery'],

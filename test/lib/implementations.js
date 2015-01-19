@@ -1,8 +1,3 @@
-/*jslint indent:2*/
-/*global define, require*/ // AMD / Require.JS
-
-/*global Promise*/ // ECMAScript 6
-
 // https://github.com/blinkmobile/bic-v3/blob/develop/scripts/frag/05-implementations.js
 
 define(function () {
@@ -22,7 +17,8 @@ define(function () {
             Array.prototype.some &&
             Array.prototype.reduce &&
             Array.prototype.reduceRight &&
-            Array.isArray);
+            Array.isArray &&
+            Function.prototype.bind);
         },
         implementation: 'es5-shim'
       },

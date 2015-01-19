@@ -9,6 +9,3 @@ define(['models/element'], function (Element) {
 
   return ButtonElement;
 });
-
-
-

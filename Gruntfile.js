@@ -1,4 +1,5 @@
-/*jslint indent:2, node:true*/
+/*eslint-env node*/
+/*eslint-disable camelcase*/ // for uglify options
 /**
  * module.exports ... is required for things to work
  * @param {Object} grunt instance of Grunt.
@@ -11,8 +12,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-exec');
-  grunt.loadNpmTasks('grunt-jslint');
+  grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   grunt.initConfig({
 
@@ -22,49 +24,8 @@ module.exports = function (grunt) {
       }
     },
 
-    jslint: {
-      all: {
-        src: [
-          '**/*.js',
-          '**/*.json',
-          '!bower_components/**',
-          '!node_modules/**',
-          '!js/build/**',
-          '!js/locales/**/i18n.js',
-          '!BlinkForms*.js',
-          '!test/lib/**/*'
-        ],
-        directives: {
-          browser: true,
-          es5: true,
-          indent: 2,
-          nomen: true,
-          todo: true, // TODO: eventually drop this
-          sloppy: true, // we force strict-mode separately
-          predef: [
-            // pre-defined globals
-            'module',
-            'define',
-            'require',
-            'Promise',
-            // globals we assume have been loaded
-            '$',
-            '_',
-            'Backbone',
-            'rivets',
-            'BMP',
-            'Q',
-            'moment',
-            'picker.date',
-            'picker.time'
-          ]
-        },
-        options: {
-          errorsOnly: true,
-          failOnError: true
-        }
-      }
-
+    eslint: {
+      target: [ './' ]
     },
 
     exec: {
@@ -101,7 +62,7 @@ module.exports = function (grunt) {
             // libraries to be built-in
             bicyclepump: '../bower_components/bicyclepump/bicyclepump',
             rivets: '../bower_components/rivets/dist/rivets',
-            FormsLib: '../node_modules/blinkmobile-forms/forms',
+            'formslib/main': '../node_modules/blinkmobile-forms/dist/formslib',
             // Require.JS plugins
             text: '../bower_components/requirejs-text/text'
           },
@@ -156,6 +117,17 @@ module.exports = function (grunt) {
       }
     },
 
+    connect: {
+      server: {
+        options: {
+          hostname: '*',
+          port: 8000,
+          base: '.',
+          keepalive: true
+        }
+      }
+    },
+
     watch: {
       i18n: {
         files: [
@@ -175,14 +147,18 @@ module.exports = function (grunt) {
         tasks: [
           'clean',
           'requirejs',
-          'uglify'
-        ]
+          'uglify',
+          'connect'
+        ],
+        options: {
+          atBegin: true
+        }
       },
       tests: {
         files: [
           'test/**/*'
         ],
-        tasks: ['jslint', 'mocha']
+        tasks: ['eslint', 'mocha']
       },
       options: {
         interrupt: true
@@ -201,7 +177,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('test', [
-    'jslint',
+    'eslint',
     'build',
     'mocha'
   ]);

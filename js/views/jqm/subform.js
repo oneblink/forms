@@ -1,6 +1,5 @@
 define(function (require) {
-  var Forms = BMP.Forms,
-    FormView = require('views/jqm/form');
+  var FormView = require('views/jqm/form');
 
   return FormView.extend({
     tagName: 'section',
@@ -28,15 +27,14 @@ define(function (require) {
         'data-action': 'remove'
       }).text(name);
 
-      $button.on('click', this.onRemoveClick);
+      $button.on('click', this.onRemoveClick.bind(this));
 
       FormView.prototype.render.call(this);
 
       this.$el.prepend($button);
     },
     onRemoveClick: function () {
-      var $form = Forms.getForm(this).$form;
-      Forms.getElement($form).remove($form);
+      this.model.parentElement.remove(this.model);
     }
   });
 });

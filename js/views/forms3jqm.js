@@ -1,8 +1,5 @@
-/*jslint indent:2*/
 define(function (require) {
-  var Forms, rivets;
-  rivets = require('rivets');
-  Forms = require('main');
+  var rivets = require('rivets');
 
   $.mobile.page.prototype.options.keepNative = '[type^=time], [type^=date]';
 
@@ -19,50 +16,6 @@ define(function (require) {
     publish: function (obj, keypath, value) {
       obj.set(keypath, value);
     }
-  };
-
-  /**
-   * @param {Node|jQuery} element where to start looking.
-   */
-  Forms.getForm = function (element) {
-    var cfo = Forms.current,
-      $element = element instanceof $ ? element : $(element),
-      $next = $element.closest('[data-form]'),
-      form;
-
-    while ($next.length > 0) {
-      if ($.hasData($next[0])) {
-        form = $next.data('model');
-        if (form instanceof Forms._models.Form) {
-          return form;
-        }
-      }
-      $next = $element.parent().closest('[data-form]');
-    }
-    if (cfo && cfo.$form && cfo.$form.parent().length > 0) {
-      return Forms.current;
-    }
-    return null;
-  };
-
-  /**
-   * @param {Node|jQuery} element where to start looking.
-   */
-  Forms.getElement = function (element) {
-    var $element = element instanceof $ ? element : $(element),
-      $next = $element.closest('[data-name]'),
-      el;
-
-    while ($next.length > 0) {
-      if ($.hasData($next[0])) {
-        el = $next.data('model');
-        if (el instanceof Forms._models.Element) {
-          return el;
-        }
-      }
-      $next = $element.parent().closest('[data-name]');
-    }
-    return null;
   };
 
   return {
@@ -92,6 +45,7 @@ define(function (require) {
     DrawElement: require('views/jqm/elements/draw'),
     BGDrawElement: require('views/jqm/elements/bg_draw'),
     BGImageElement: require('views/jqm/elements/bg_image'),
-    ButtonElement: require('views/jqm/elements/button')
+    ButtonElement: require('views/jqm/elements/button'),
+    WebRTCImageElement: require('views/jqm/elements/webrtc_image')
   };
 });

@@ -30,5 +30,3 @@ define(['views/jqm/element'], function (ElementView) {
 
   return BooleanElementView;
 });
-
-

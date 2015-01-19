@@ -34,5 +34,3 @@ define(['models/element'], function (Element) {
 
   return MessageElement;
 });
-
-

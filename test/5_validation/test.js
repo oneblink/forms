@@ -1,6 +1,5 @@
-/*global suite:true, test:true, setup:true, teardown:true*/ // mocha
-/*global suiteSetup:true, suiteTeardown:true*/ // mocha
-/*global assert:true*/ // chai
+/*eslint-env mocha*/
+/*global assert*/ // chai
 
 define([
   'underscore',
@@ -86,8 +85,8 @@ define([
         var form = Forms.current,
           element = form.getElement('number1'),
           cases = {
-            "MIN" : "-1",
-            "MAX" : "101",
+            "MIN": "-1",
+            "MAX": "101",
             "MINDECIMALS": "100.1",
             "MAXDECIMALS": "100.1111"
           };
@@ -102,8 +101,8 @@ define([
         var form = Forms.current,
           element = form.getElement('email'),
           cases = {
-            "REQUIRED" : "",
-            "EMAIL" : "test@test"
+            "REQUIRED": "",
+            "EMAIL": "test@test"
           };
 
         assert.isUndefined(element.validate(), 'no validation errors');
@@ -115,7 +114,7 @@ define([
         var form = Forms.current,
           element = form.getElement('url'),
           cases = {
-            "REQUIRED" : ""
+            "REQUIRED": ""
           };
 
         assert.isUndefined(element.validate(), 'no validation errors');
@@ -127,7 +126,7 @@ define([
         var form = Forms.current,
           element = form.getElement('telephone'),
           cases = {
-            "REQUIRED" : ""
+            "REQUIRED": ""
           };
 
         assert.isUndefined(element.validate(), 'no validation errors');

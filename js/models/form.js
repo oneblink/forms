@@ -4,6 +4,9 @@ define(function (require) {
     Form;
 
   Form = Backbone.Model.extend({
+    defaults: {
+      'class': ''
+    },
     initialize: function () {
       var Forms = BMP.Forms,
         self = this,
@@ -13,6 +16,15 @@ define(function (require) {
         pages,
         elements,
         behaviours;
+
+      Forms.setAttributesFromClass(this, [
+        '_actions',
+        '_checks',
+        '_behaviours',
+        '_elements',
+        '_pages',
+        '_sections'
+      ]);
 
       pages = this.attributes._pages;
       delete this.attributes._pages;
@@ -71,9 +83,9 @@ define(function (require) {
       return Backbone.Model.prototype.destroy.call(this, options);
     },
     /**
-     * get a Page, creating it if necessary
-     * @param {Number} index desired Page index.
-     */
+    * get a Page, creating it if necessary
+    * @param {Number} index desired Page index.
+    */
     getPage: function (index) {
       var Forms = BMP.Forms,
         Page = Forms._models.Page,
@@ -86,8 +98,8 @@ define(function (require) {
       return pages.at(index);
     },
     /**
-     * official Blink API
-     */
+    * official Blink API
+    */
     getElement: function (name) {
       var element = this.attributes.elements.get(name);
       if (!element && name === 'id') {
@@ -100,8 +112,8 @@ define(function (require) {
       return element;
     },
     /**
-     * official Blink API
-     */
+    * official Blink API
+    */
     getRecord: function () {
       var me = this,
         data = {},
@@ -160,8 +172,8 @@ define(function (require) {
       });
     },
     /**
-     * official Blink API
-     */
+    * official Blink API
+    */
     setRecord: function (data) {
       var self = this,
         promises = [];
@@ -173,7 +185,7 @@ define(function (require) {
         }
 
         _.each(data, function (value, key) {
-          var formElement = self.getElement(key), result, xml;
+          var formElement = self.getElement(key), result, xml, mime;
           if (!formElement) {
             return;
           }
@@ -182,11 +194,16 @@ define(function (require) {
             if (typeof value === 'string') {
               result = '<' + key + '>' + value + '</' + key + '>';
               xml = $.parseXML(result);
-              value = Form.xmlToJson(xml.firstElementChild);
+              // PhantomJS doesn't seem to have firstElementChild
+              value = Form.xmlToJson(xml.firstElementChild || xml.documentElement);
               value = value[key];
             }
             promises.push(formElement.setRecords(value));
           } else {
+            if (_.contains(['file', 'draw'], formElement.attributes.type)) {
+              mime = data[key + '_mimetype'] || 'image/jpeg';
+              value = Form.addMimetype(value, mime);
+            }
             formElement.val(value);
           }
         });
@@ -196,20 +213,21 @@ define(function (require) {
       });
     },
     /**
-     * official Blink API
-     */
+    * official Blink API
+    */
     data: function () {
       if (!arguments.length) {
         return this.getRecord();
       }
     },
     /**
-     * official Blink API
-     */
+    * official Blink API
+    */
     getErrors: function () {
       var me = this,
         err,
         errors = {};
+
       me.attributes.elements.forEach(function (el) {
         err = el.validate();
         if (err) {
@@ -221,8 +239,8 @@ define(function (require) {
   }, {
     // static properties
     /**
-     * @param {Object} attrs attributes for this model.
-     */
+    * @param {Object} attrs attributes for this model.
+    */
     create: function (attrs, action) {
       var form;
 
@@ -235,6 +253,15 @@ define(function (require) {
 
       return form;
     },
+    /*
+    * add mimetype to blob fields value
+    */
+    addMimetype: function (value, mime) {
+      if (value.indexOf('data:') === -1) {
+        return "data:" + mime + ";base64," + value;
+      }
+      return value;
+    },
     xmlToJson: function (xml) {
       var result = {},
         nodes,
@@ -246,13 +273,11 @@ define(function (require) {
 
       if (xml.hasChildNodes()) {
         nodes = xml.childNodes;
-        /*jslint unparam: true*/
-        _.each(nodes, function (item, key) {
+        _.each(nodes, function (item) {
           if (item.hasChildNodes()) {
             childItems = item.childNodes;
             nodeName = item.nodeName;
-            /*jslint unparam: true*/
-            _.each(childItems, function (childItem, key) {
+            _.each(childItems, function (childItem) {
               if (childItem.childElementCount > 0) {
                 subform = Form.xmlToJson(childItem);
                 json[childItem.nodeName] = subform[childItem.nodeName];
