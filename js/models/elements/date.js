@@ -65,11 +65,15 @@ define([
     initializeView: function () {
       var Forms = BMP.Forms,
         view,
+        View,
         attr = this.attributes;
 
       this.removeView();
-
-      if (parseInt(attr.nativeDatetimePicker, 10) === 1
+      if (attr.readonly) {
+        this.removeView();
+        View = Forms._views.ReadOnlyElement;
+        view = new View({model: this});
+      } else if (parseInt(attr.nativeDatetimePicker, 10) === 1
           || parseInt(attr.nativeDatePicker, 10) === 1
           || parseInt(attr.nativeTimePicker, 10) === 1) {
         view = new Forms._views.DateElement({model: this});

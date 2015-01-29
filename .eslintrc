@@ -15,6 +15,7 @@
     "Q": false,
     "moment": false,
     /* Web Platform APIs */
+    "MediaStreamTrack": false,
     "Promise": false
   },
   "rules": {

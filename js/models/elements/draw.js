@@ -20,8 +20,9 @@ define(['models/element'], function (Element) {
         view;
 
       this.removeView();
-
-      if (BMP.BlinkGap.hasTouchDraw()) {
+      if (this.attributes.readonly) {
+        view = new Forms._views.BlobReadOnlyElement({model: this});
+      } else if (BMP.BlinkGap.hasTouchDraw()) {
         view = new Forms._views.BGDrawElement({model: this});
       } else {
         view = new Forms._views.DrawElement({model: this});

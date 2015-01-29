@@ -116,16 +116,6 @@ define(function () {
       case 'boolean':
         View = Forms._views.BooleanElement;
         break;
-      case 'select':
-        mode = attrs.mode || 'collapsed';
-        mode = mode[0].toUpperCase() + mode.substring(1);
-        View = Forms._views['Choice' + mode + 'Element'];
-        break;
-      case 'multi':
-        mode = attrs.mode || 'collapsed';
-        mode = mode[0].toUpperCase() + mode.substring(1);
-        View = Forms._views['Choice' + mode + 'Element'];
-        break;
       case 'hidden':
         View = Forms._views.HiddenElement;
         break;
@@ -134,21 +124,6 @@ define(function () {
         break;
       case 'telephone':
         View = Forms._views.TelephoneElement;
-        break;
-      case 'password':
-        View = Forms._views.PasswordElement;
-        break;
-      case 'email':
-        View = Forms._views.EmailElement;
-        break;
-      case 'url':
-        View = Forms._views.URLElement;
-        break;
-      case 'text':
-        View = Forms._views.TextElement;
-        break;
-      case 'textarea':
-        View = Forms._views.TextAreaElement;
         break;
       case 'button':
         View = Forms._views.ButtonElement;
