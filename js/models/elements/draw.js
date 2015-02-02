@@ -28,6 +28,31 @@ define(['models/element'], function (Element) {
         view = new Forms._views.DrawElement({model: this});
       }
       this.set('_view', view);
+    },
+    toCameraOptions: function () {
+      var options = {},
+      cameraOpts,
+      // attrs = {'imageCaptureQuality':40, 'imageCaptureScale': 60, 'cameraOptions': '{"quality":45}'};
+      attrs = BMP.BIC.attributes || {};
+
+      if (_.isNumber(attrs.imageCaptureQuality)) {
+        options.quality = attrs.imageCaptureQuality;
+      }
+      if (_.isNumber(attrs.imageCaptureScale)) {
+        options.imageScale = attrs.imageCaptureScale;
+      }
+      if (_.isString(attrs.cameraOptions)) {
+        try {
+          cameraOpts = JSON.parse(attrs.cameraOptions);
+          if (!_.isObject(cameraOpts) || _.isArray(cameraOpts)) {
+            cameraOpts = {};
+          }
+        } finally {
+          cameraOpts = cameraOpts || {};
+        }
+        _.extend(options, cameraOpts);
+      }
+      return options;
     }
   });
 
