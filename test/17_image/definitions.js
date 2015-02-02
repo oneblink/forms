@@ -27,7 +27,7 @@ define(function () {
               type: "file",
               label: "Photo1",
               accept: "image/*",
-              capture: false
+              capture: true
             }
           },
           {

@@ -204,6 +204,12 @@ define(function (require) {
               mime = data[key + '_mimetype'] || 'image/jpeg';
               value = Form.addMimetype(value, mime);
             }
+            if (formElement.attributes.type === 'multi') {
+              value = value.split('\n');
+              value = value.map(function (v) {
+                return v.trim();
+              });
+            }
             formElement.val(value);
           }
         });

@@ -11,7 +11,11 @@ define(['models/element'], function (Element) {
 
       this.removeView();
 
-      view = new Forms._views.LocationElement({model: this});
+      if (this.attributes.readonly) {
+        view = new Forms._views.LocationReadOnlyElement({model: this});
+      } else {
+        view = new Forms._views.LocationElement({model: this});
+      }
       this.set('_view', view);
     },
     getGeoLocation: function (options) {

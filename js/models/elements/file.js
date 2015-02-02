@@ -23,8 +23,9 @@ define(['models/element'], function (Element) {
         accept = this.attributes.accept;
 
       this.removeView();
-
-      if (BMP.BlinkGap.hasCamera() && accept.indexOf('image') === 0) {
+      if (this.attributes.readonly) {
+        view = new Forms._views.BlobReadOnlyElement({model: this});
+      } else if (BMP.BlinkGap.hasCamera() && accept.indexOf('image') === 0) {
         view = new Forms._views.BGImageElement({model: this});
       } else if (this.getUserMediaPresent() && this.get('capture') === true) {
         view = new Forms._views.WebRTCImageElement({model: this});
