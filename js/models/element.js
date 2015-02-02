@@ -98,8 +98,7 @@ define(function () {
       var Forms = BMP.Forms,
         attrs = this.attributes,
         View,
-        view,
-        mode;
+        view;
 
       this.removeView();
 
