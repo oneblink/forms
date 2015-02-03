@@ -14,7 +14,7 @@ define(['models/elements/text'], function (TextElement) {
         this.removeView();
         View = Forms._views.ReadOnlyElement;
       } else {
-        return TextElement.prototype.initializeView.call(this);
+        View = Forms._views.PasswordElement;
       }
 
       view = new View({model: this});

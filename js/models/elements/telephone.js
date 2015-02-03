@@ -14,7 +14,7 @@ define(['models/element'], function (Element) {
         this.removeView();
         View = Forms._views.ReadOnlyElement;
       } else {
-        return Element.prototype.initializeView.call(this);
+        View = Forms._views.TelephoneElement;
       }
 
       view = new View({model: this});
