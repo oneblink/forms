@@ -47,6 +47,23 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.show();
       });
 
+      test('location button is enabled', function (done) {
+        var form = Forms.current,
+          element = form.getElement('location'),
+          view = element.get('_view'),
+          button = view.$el.find('button');
+
+        element.once('change:value change:errors', function () {
+          setTimeout(function () {
+            assert.isFalse(button.hasClass('ui-disabled'));
+            done();
+          }, 100);
+        });
+
+        button.trigger('click');
+
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)
