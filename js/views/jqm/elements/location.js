@@ -3,12 +3,13 @@ define(['views/jqm/element'], function (ElementView) {
   var LocationElementView = ElementView.extend({
     render: function () {
       var $button, $div;
+      var i18n = window.i18n['BMP/Forms/elements'];
 
       this.$el.empty();
       this.renderLabel();
 
       $button = $('<button />');
-      $button.text('Detect Location');
+      $button.text(i18n.LOCATION_BUTTON);
 
       $div = $('<div class="ui-input-text"></div>');
       $div.append($button);
@@ -59,7 +60,21 @@ define(['views/jqm/element'], function (ElementView) {
   }, {
     // static properties and methods
     onButtonClick: function (event) {
-      this.model.getGeoLocation();
+      var i18n = window.i18n['BMP/Forms/elements'],
+        view = this,
+        model = this.model;
+
+      view.$el.find('button').addClass('ui-disabled');
+      view.$el.find('.ui-btn-text').text(i18n.LOCATING_SHORT);
+
+      model.getGeoLocation().then(function () { // onSuccess
+        view.$el.find('button').removeClass('ui-disabled');
+        view.$el.find('.ui-btn-text').text(i18n.LOCATION_BUTTON);
+      }, function () { // onError (err)
+        view.$el.find('button').removeClass('ui-disabled');
+        view.$el.find('.ui-btn-text').text(i18n.LOCATION_BUTTON);
+      });
+
       event.preventDefault();
       return false;
     }

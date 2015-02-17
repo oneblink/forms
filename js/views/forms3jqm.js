@@ -45,6 +45,12 @@ define(function (require) {
     DrawElement: require('views/jqm/elements/draw'),
     BGDrawElement: require('views/jqm/elements/bg_draw'),
     BGImageElement: require('views/jqm/elements/bg_image'),
-    ButtonElement: require('views/jqm/elements/button')
+    ButtonElement: require('views/jqm/elements/button'),
+    ReadOnlyElement: require('views/jqm/elements/readonly'),
+    BlobReadOnlyElement: require('views/jqm/elements/blob_readonly'),
+    LocationReadOnlyElement: require('views/jqm/elements/location_readonly'),
+    SelectReadOnlyElement: require('views/jqm/elements/select_readonly'),
+    MultiReadOnlyElement: require('views/jqm/elements/multi_readonly'),
+    WebRTCImageElement: require('views/jqm/elements/webrtc_image')
   };
 });
