@@ -61,6 +61,7 @@ module.exports = function (grunt) {
             'picker.time': 'empty:',
             // libraries to be built-in
             bicyclepump: '../bower_components/bicyclepump/bicyclepump',
+            geolocation: '../node_modules/geolocation/geolocation',
             rivets: '../bower_components/rivets/dist/rivets',
             'formslib/main': '../node_modules/blinkmobile-forms/dist/formslib',
             // Require.JS plugins

@@ -1,0 +1,6 @@
+{
+  "PERMISSION_DENIED": "user has not granted permission",
+  "PERMISSION_DENIED_TIMEOUT": "user did not grant permission in time",
+  "POSITION_UNAVAILABLE": "unable to determine position",
+  "UNKNOWN_ERROR": "unknown error"
+}

@@ -2,6 +2,9 @@
   "name": "forms",
   "version": "3.1.7",
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
+  "dependencies": {
+    "geolocation": "git://github.com/blinkmobile/geolocation#v1.0.0"
+  },
   "devDependencies": {
     "bic-jqm": "blinkmobile/bic-v3#master",
     "blinkmobile-forms": "blinkmobile/forms#v1.2.1",

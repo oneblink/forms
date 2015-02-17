@@ -7,6 +7,22 @@ define([
   'BIC'
 ], function (_, Forms) {
 
+  suite('i18n', function () {
+    /*eslint-disable new-cap*/
+
+    test('i18n[BMP/geolocation]', function () {
+      assert.isFunction(window.i18n['BMP/geolocation'].PERMISSION_DENIED);
+      assert.isString(window.i18n['BMP/geolocation'].PERMISSION_DENIED());
+    });
+
+    test('i18n[BMP/Forms/validation]', function () {
+      assert.isFunction(window.i18n['BMP/Forms/validation'].REQUIRED);
+      assert.isString(window.i18n['BMP/Forms/validation'].REQUIRED());
+    });
+
+    /*eslint-enable new-cap*/
+  });
+
   suite('5: validation', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]'),
