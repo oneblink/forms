@@ -131,8 +131,8 @@ define(function (require) {
             }
             if (type === 'subForm') {
               promises.push(new Promise(function (subResolve) {
-                el.getRecord().then(function (val) {
-                  data[el.attributes.name] = val;
+                el.getRecord().then(function (v) {
+                  data[el.attributes.name] = v;
                   subResolve();
                 });
               }));

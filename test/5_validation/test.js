@@ -17,8 +17,8 @@ define([
           element.val(v);
           assert.isObject(element.validate(), 'now has a validation error');
           assert.isArray(element.validate().value, 'something wrong with value');
-          error = _.find(element.validate().value, function (error) {
-            return _.isObject(error) && error.code === i;
+          error = _.find(element.validate().value, function (e) {
+            return _.isObject(e) && e.code === i;
           });
 
           assert.isObject(error, 'contained ' + i + ' error');

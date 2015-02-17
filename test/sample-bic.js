@@ -40,8 +40,8 @@ define([
 
   Forms.getDefinition = function (name, action) {
     return new Promise(function (resolve, reject) {
-      var def = _.find(defs, function (def) {
-        return def && def['default'] && def['default'].name === name;
+      var def = _.find(defs, function (d) {
+        return d && d.default && d.default.name === name;
       });
       if (!def) {
         reject(def);
