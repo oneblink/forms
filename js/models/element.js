@@ -19,6 +19,9 @@ define(function () {
         Forms = BMP.Forms,
         section = $.trim(attrs.section || '');
 
+      // migrate builder rowClass to class
+      attrs.class = attrs.class || attrs.rowClass || '';
+
       Forms.setAttributesFromClass(this);
 
       this.initializeView();
