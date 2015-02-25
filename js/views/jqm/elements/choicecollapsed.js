@@ -37,7 +37,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         var $option = $('<option value="' + value + '">' + label + '</option>');
         $input.append($option);
       });
-      if (this.model.attributes.other) {
+      if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
         $otherOption = $('<option value="other">other</option>');
         $input.append($otherOption);
       }

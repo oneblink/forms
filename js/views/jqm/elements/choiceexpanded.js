@@ -33,7 +33,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       $legend = $('<legend></legend>').text(attrs.label);
       $fieldset.prepend($legend);
 
-      if (this.model.attributes.other) {
+      if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
         options.other = 'other';
       }
 
