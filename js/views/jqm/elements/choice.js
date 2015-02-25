@@ -28,7 +28,7 @@ define(['views/jqm/element'], function (ElementView) {
           var attr = model.attributes;
           if (_.isArray(attr.value)){
             // Multi select
-            if (attr.value.indexOf('other')) {
+            if (attr.value.indexOf('other') !== -1) {
               attr.value.splice(attr.value.indexOf('other'), 1);
             }
             attr.value.push($input.val());
