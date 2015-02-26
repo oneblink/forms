@@ -1,6 +1,7 @@
 define([
-  'models/element'
-], function (Element) {
+  'models/element',
+  'moment'
+], function (Element, moment) {
   'use strict';
 
   var DateElement = Element.extend({

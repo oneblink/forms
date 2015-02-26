@@ -8,9 +8,6 @@
       'jquery',
       'underscore',
       'backbone',
-      'moment',
-      'picker.date',
-      'picker.time',
       'jquerymobile',
       'feature!es5',
       'signaturepad'
@@ -18,9 +15,9 @@
 
   } else {
     // no Require.JS, no AMD modules
-    definition(Promise, $, _, Backbone, moment);
+    definition(Promise, $, _, Backbone);
   }
-}(function(Promise, $, _, Backbone, moment) {
+}(function(Promise, $, _, Backbone) {
   "use strict";
   // establish globals
   var BMP = window['BMP'] = window['BMP'] || {};

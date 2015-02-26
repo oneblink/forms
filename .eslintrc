@@ -13,7 +13,6 @@
     "Backbone": false,
     "rivets": false,
     "Q": false,
-    "moment": false,
     /* Web Platform APIs */
     "MediaStreamTrack": false,
     "Promise": false

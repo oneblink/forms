@@ -1,4 +1,4 @@
-define(['views/jqm/elements/date'], function (DateView) {
+define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (DateView) {
   'use strict';
 
   var DatePickadateElement = DateView.extend({
