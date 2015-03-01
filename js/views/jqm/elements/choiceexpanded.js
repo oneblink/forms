@@ -33,7 +33,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       $legend = $('<legend></legend>').text(attrs.label);
       $fieldset.prepend($legend);
 
-      if (this.model.attributes.other) {
+      if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
         options.other = 'other';
       }
 
@@ -54,7 +54,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         this.bindRivets();
         this.model.on('change:value', this.onSelectValueChange, this);
         $fieldset.find('input').on('click', function () {
-          self.model.set('value', self.$el.find('input:checked').val());
+          self.model.set('value', self.prepModelValue());
         });
       } else { // type === 'multi'
         // bind custom handler for checkboxes -> array
@@ -69,19 +69,8 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
     },
     onMultiInputClick: function (event) {
       var view = event.data.view,
-        model = event.data.model,
-        $inputs = view.$el.find('input:checked'),
-        val;
-
-      val = _.map($inputs, function (input) {
-        return $(input).val();
-      });
-
-      if (val.indexOf('other') !== -1 && view.$el.find('input[type = text]').val()) {
-        val.splice(val.indexOf('other'), 1);
-        val.push(view.$el.find('input[type = text]').val());
-      }
-      model.set('value', val);
+        model = event.data.model;
+      model.set('value', view.prepModelValue());
     },
     onMultiValueChange: function () {
       var view = this,
@@ -137,6 +126,27 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         // Also need to fill the text box back in, in addition to selecting radio
         this.$el.find('input[type = text]').val(this.model.get('value'));
       }
+    },
+    fetchValue: function () {
+      var attr = this.model.attributes,
+        values;
+
+      switch (attr.type) {
+        case "select":
+          values = this.$el.find('input:checked').val();
+          break;
+        default:
+          var $inputs = this.$el.find('input:checked');
+          values = _.map($inputs, function (input) {
+            return $(input).val();
+          });
+          if(values.length <= 0) {
+            values = "";
+          }
+          break;
+      }
+
+      return values;
     }
   });
 

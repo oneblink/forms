@@ -328,6 +328,61 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       });
 
+      test('Select-H native collapsed', function () {
+        var form = Forms.current,
+          element = form.getElement('selecth'),
+          $fieldset = element.attributes._view.$el,
+          $select = $fieldset.find('select'),
+          $other;
+
+        element.val('');
+        assert.equal(element.val(), '', 'model.value is ""');
+
+        element.val('other');
+        assert.equal(element.val(), 'other', 'model.value = "other"');
+
+        element.val('other');
+        $other = $fieldset.find('input[type = text]');
+        $other.val("test");
+        $other.change();
+        assert.equal(element.val(), 'test', 'model.value = "test"');
+
+        assert.equal($select.data("role"), "none", "data-role is not none");
+
+      });
+
+      test('Multi-G native collapsed', function () {
+        var form = Forms.current,
+          element = form.getElement('multig'),
+          $fieldset = element.attributes._view.$el,
+          $select = $fieldset.find('select'),
+          $other;
+
+        element.val([]);
+        assert.deepEqual(element.val(), [], 'model.value is []');
+
+        element.val(['other']);
+        assert.sameMembers(element.val(), ['other'], 'model.value = ["other"]');
+
+        element.val(['other']);
+        $other = $fieldset.find('input[type = text]');
+        $other.val("test123");
+        $other.change();
+        assert.sameMembers(element.val(), ['test123'], 'model.value = ["test123"]');
+
+        element.val(['a', 'other']);
+        assert.sameMembers(element.val(), ['a', 'other'], 'model.value = ["a", "other"]');
+
+        element.val(['b', 'other']);
+        $other = $fieldset.find('input[type = text]');
+        $other.val("test");
+        $other.change();
+        assert.sameMembers(element.val(), ['a', 'test'], 'model.value = ["a", "test"]');
+
+        assert.equal($select.data("role"), "none", "data-role is not none");
+
+      });
+
       test('boolean 0/1', function (done) {
         var form = Forms.current,
           element = form.getElement('boolean'),
