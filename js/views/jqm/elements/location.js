@@ -121,20 +121,16 @@ define(['views/jqm/element',
         model.getGeoLocation().then(function () { // onSuccess
           value = model.get('value');
           LocationElementView.initializeMap(value, $div);
-          //enable location button
-          view.$el.find('button').removeClass('ui-disabled');
-          view.$el.find('.ui-btn-text').text(i18n.LOCATION_BUTTON);
         }, function () { // onError (err)
-          view.$el.find('button').removeClass('ui-disabled');
-          view.$el.find('.ui-btn-text').text(i18n.LOCATION_BUTTON);
         });
       } else {
         $div.find('[data-action=clear]').removeClass('ui-disabled');
         LocationElementView.initializeMap(value, $div);
-        view.$el.find('button').removeClass('ui-disabled');
-        view.$el.find('.ui-btn-text').text(i18n.LOCATION_BUTTON);
       }
 
+      //enable location button
+      view.$el.find('button').removeClass('ui-disabled');
+      view.$el.find('.ui-btn-text').text(i18n.LOCATION_BUTTON);
       //finally creating and poping up map
       $form.trigger('create');
       $div.popup(options);
