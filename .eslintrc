@@ -14,6 +14,7 @@
     "rivets": false,
     "Q": false,
     "moment": false,
+    "google": false,
     /* Web Platform APIs */
     "MediaStreamTrack": false,
     "Promise": false

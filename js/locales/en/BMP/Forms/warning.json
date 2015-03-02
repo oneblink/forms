@@ -1,4 +1,5 @@
 {
   "NO_BLOB_PREVIEW": "preview of existing data is not yet supported on this device",
-  "MISSING_BLOB_MIME": "type of data is unknown, so a preview cannot be displayed"
+  "MISSING_BLOB_MIME": "type of data is unknown, so a preview cannot be displayed",
+  "ERROR_GOOGLE_MAP": "unable to load google maps due to some error"
 }
