@@ -10,8 +10,7 @@ define(['views/jqm/element'], function (ElementView) {
         $label = '<label rv-text="m:label" class="ui-input-text"></label>',
         $element = $('<div data-role="fieldcontain"></div>'),
         $div = $('<div class="ui-input-text"></div>'),
-        isOtherRendered = !!this.$el.find('div[data-role=fieldcontain]').length,
-        model = this.model;
+        isOtherRendered = !!this.$el.find('div[data-role=fieldcontain]').length;
 
       $element.addClass('ui-field-contain ui-body ui-br');
       $div.addClass('ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c');
@@ -26,8 +25,7 @@ define(['views/jqm/element'], function (ElementView) {
         $element.append($div);
         this.$el.append($element);
         $input.on('change', function () {
-          var attr = model.attributes;
-          attr.value = self.prepModelValue();
+          self.model.set('value', self.prepModelValue());
         });
       } else if (!render && isOtherRendered) {
         this.$el.children('div[data-role=fieldcontain]').remove();
