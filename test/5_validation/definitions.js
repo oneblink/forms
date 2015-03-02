@@ -161,6 +161,36 @@ define(function () {
           },
           {
             'default': {
+              name: 'select',
+              label: 'Select required',
+              type: 'select',
+              rowClass: 'mode: collapsed;',
+              canSpecifyOther: "1",
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              },
+              required: "1"
+            }
+          },
+          {
+            'default': {
+              name: 'multi',
+              label: 'Multi required',
+              type: 'multi',
+              mode: 'collapsed',
+              other: true,
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              },
+              required: "1"
+            }
+          },
+          {
+            'default': {
               name: 'comments',
               label: 'Comments',
               type: 'subForm',

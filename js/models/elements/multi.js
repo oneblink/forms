@@ -24,6 +24,31 @@ define(['models/elements/select'], function (SelectElement) {
       view = new View({model: this});
       this.set('_view', view);
       return view;
+    },
+    validate: function (attrs) {
+      var errors = {},
+        other = false;
+      if (attrs === undefined) {
+        attrs = this.attributes;
+      }
+
+      if (attrs.other || attrs.canSpecifyOther) {
+        other = true;
+      }
+
+      // if `other` is true
+      // and required is true
+      // and attr.lenghth === 1 && _.contains(attr.value, 'other')
+      // and other is not in options
+      // then fail
+      if (attrs.required && (_.isEmpty(attrs.value) || (other && (attrs.value.length === 1 && attrs.value[0] === "other") && !_.contains(attrs.options, 'other')))) {
+        errors.value = errors.value || [];
+        errors.value.push({code: 'REQUIRED'});
+      }
+
+      if (!_.isEmpty(errors)) {
+        return errors;
+      }
     }
   });
 

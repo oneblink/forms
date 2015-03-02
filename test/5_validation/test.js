@@ -252,6 +252,45 @@ define([
         assert.isObject(element.validate(), 'max decimal places error');
       });
 
+      test('Select, required', function () {
+        var form = Forms.current,
+          element = form.getElement('select'),
+          cases;
+
+        element.val('a');
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        cases = {
+          "REQUIRED": ""
+        };
+        runTests(cases, element);
+
+        cases = {
+          "REQUIRED": "other"
+        };
+        runTests(cases, element);
+      });
+
+      test('Multi select, required', function () {
+        var form = Forms.current,
+          element = form.getElement('multi'),
+          cases;
+
+        element.val(['a']);
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        cases = {
+          "REQUIRED": []
+        };
+        runTests(cases, element);
+
+        cases = {
+          "REQUIRED": ["other"]
+        };
+        runTests(cases, element);
+
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)
