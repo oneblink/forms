@@ -113,24 +113,31 @@ define(['views/jqm/element',
       $form.on('submit', $.proxy(LocationElementView.onDone, this));
 
       //disable button till location located
-      view.$el.find('button').addClass('ui-disabled');
+      view.$el.find('button').button( "disable" );
       view.$el.find('.ui-btn-text').text(i18n.LOCATING_SHORT);
 
       value = model.get('value');
       if (!value) {
         model.getGeoLocation().then(function () { // onSuccess
-          value = model.get('value');
+          value = model.get('currentlocation');
           LocationElementView.initializeMap(value, $div);
+          $div.find('input').val(JSON.stringify(value));
+          $div.find('[data-action=clear]').button( "disable" );
+          //enable location button
+          view.$el.find('button').button( "enable" );
+          view.$el.find('.ui-btn-text').text(i18n.LOCATION_BUTTON);
         }, function () { // onError (err)
+          //enable location button
+          view.$el.find('button').button( "enable" );
+          view.$el.find('.ui-btn-text').text(i18n.LOCATION_BUTTON);
         });
       } else {
-        $div.find('[data-action=clear]').removeClass('ui-disabled');
         LocationElementView.initializeMap(value, $div);
+        //enable location button
+        view.$el.find('button').button( "enable" );
+        view.$el.find('.ui-btn-text').text(i18n.LOCATION_BUTTON);
       }
 
-      //enable location button
-      view.$el.find('button').removeClass('ui-disabled');
-      view.$el.find('.ui-btn-text').text(i18n.LOCATION_BUTTON);
       //finally creating and poping up map
       $form.trigger('create');
       $div.popup(options);
