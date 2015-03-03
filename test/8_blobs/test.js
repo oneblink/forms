@@ -78,11 +78,11 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         setTimeout(function () {
           $body = $(document.body);
-          assert.lengthOf($body.find('[data-action=cancel]'),1);
-          assert.lengthOf($body.find('[data-action=clear]'),1);
-          assert.lengthOf($body.find('button[type="submit"]'),1);
-          assert.lengthOf($body.find('#map-canvas'),1);
-          assert.lengthOf($body.find('#bmp-forms-location'),1);
+          assert.lengthOf($body.find('[data-action=cancel]'), 1);
+          assert.lengthOf($body.find('[data-action=clear]'), 1);
+          assert.lengthOf($body.find('button[type="submit"]'), 1);
+          assert.lengthOf($body.find('#map-canvas'), 1);
+          assert.lengthOf($body.find('#bmp-forms-location'), 1);
           $body.find('[data-action=cancel]').trigger('click');
           done();
         }, 100);
