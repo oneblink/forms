@@ -37,7 +37,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         var $option = $('<option value="' + value + '">' + label + '</option>');
         $input.append($option);
       });
-      if (this.model.attributes.other) {
+      if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
         $otherOption = $('<option value="other">other</option>');
         $input.append($otherOption);
       }
@@ -45,21 +45,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
       this.bindRivets();
       $input.on('change', function () {
-        var arrayValues;
-        if (_.isArray($input.val()) && _.contains($input.val(), 'other')) {
-          arrayValues = $input.val();
-          if (arrayValues.indexOf('other') !== -1 && that.$el.find('input[type = text]').val()) {
-            arrayValues.splice(arrayValues.indexOf('other'), 1);
-            arrayValues.push(that.$el.find('input[type = text]').val());
-          }
-          that.model.set('value', arrayValues);
-        } else {
-          if ($input.val() === 'select one...') {
-            that.model.set('value', '');
-          } else {
-            that.model.set('value', $input.val());
-          }
-        }
+        that.model.set('value', that.prepModelValue());
       });
       this.model.on('change:value', this.onValueChange, this);
     },
@@ -104,6 +90,15 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           this.$el.find('input[type = text]').val(_.difference(attr.value, _.keys(attr.options)));
         }
       }
+    },
+    fetchValue: function () {
+      var attr = this.model.attributes,
+        value = this.$el.find('select').val();
+
+      if ((attr.type === "select" && value === "select one...") || _.contains(value, "select one or more...")) {
+        value = "";
+      }
+      return value;
     }
   });
 

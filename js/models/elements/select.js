@@ -31,6 +31,31 @@ define(['models/element'], function (Element) {
       view = new View({model: this});
       this.set('_view', view);
       return view;
+    },
+    validate: function (attrs) {
+      var errors = {},
+        other = false;
+      if (attrs === undefined) {
+        attrs = this.attributes;
+      }
+
+      if (attrs.other || attrs.canSpecifyOther) {
+        other = true;
+      }
+
+      // if `other` is true
+      // and required is true
+      // and attr.value === 'other'
+      // and other is not in options
+      // then fail
+      if (attrs.required && (!attrs.value || (other && attrs.value === 'other' && !_.contains(attrs.options, 'other')))) {
+        errors.value = errors.value || [];
+        errors.value.push({code: 'REQUIRED'});
+      }
+
+      if (!_.isEmpty(errors)) {
+        return errors;
+      }
     }
   });
 });

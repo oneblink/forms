@@ -97,6 +97,35 @@ define(function () {
           },
           {
             'default': {
+              name: 'multig',
+              label: 'Multi G',
+              type: 'multi',
+              canSpecifyOther: "1",
+              'class': 'mode: collapsed; native-menu: true;',
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
+          },
+          {
+            'default': {
+              name: 'selecth',
+              label: 'Select H',
+              type: 'select',
+              mode: 'collapsed',
+              canSpecifyOther: "1",
+              'class': 'mode: collapsed; native-menu: true;',
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
+          },
+          {
+            'default': {
               name: 'boolean',
               label: 'Boolean',
               type: 'boolean',
