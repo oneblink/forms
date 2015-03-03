@@ -32,7 +32,7 @@ define(['models/element', 'geo'], function (Element, geo) {
           if (!position.coords) {
             return Promise.reject(new TypeError('position result lacks coordinates'));
           }
-          self.set('value', position.coords);
+          self.set('currentlocation', position.coords);
         }, function (error) { // onError
           errors.value.push(geo.getErrorMessage(error));
           self.set('errors', errors);
