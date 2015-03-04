@@ -48,7 +48,7 @@ define(['models/element'], function (Element) {
       // and attr.value === 'other'
       // and other is not in options
       // then fail
-      if (attrs.required && (!attrs.value || (other && attrs.value === 'other' && !_.contains(attrs.options, 'other')))) {
+      if (attrs.required && (!attrs.value || other && attrs.value === 'other' && !_.contains(attrs.options, 'other'))) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
       }

@@ -128,15 +128,16 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       }
     },
     fetchValue: function () {
-      var attr = this.model.attributes,
-        values;
+      var attr = this.model.attributes;
+      var values;
+      var $inputs;
 
       switch (attr.type) {
         case "select":
           values = this.$el.find('input:checked').val();
           break;
         default:
-          var $inputs = this.$el.find('input:checked');
+          $inputs = this.$el.find('input:checked');
           values = _.map($inputs, function (input) {
             return $(input).val();
           });

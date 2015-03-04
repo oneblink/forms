@@ -95,7 +95,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       var attr = this.model.attributes,
         value = this.$el.find('select').val();
 
-      if ((attr.type === "select" && value === "select one...") || _.contains(value, "select one or more...")) {
+      if (attr.type === "select" && value === "select one..." || _.contains(value, "select one or more...")) {
         value = "";
       }
       return value;

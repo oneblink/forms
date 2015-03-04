@@ -35,7 +35,7 @@ define(['views/jqm/element'], function (ElementView) {
       var $input = this.$el.find('input[type = text]'),
         values;
 
-      values =  this.fetchValue();
+      values = this.fetchValue();
       if ($input.length > 0) {
         if (_.isArray(values) && _.contains(values, 'other')) {
           // Multi select

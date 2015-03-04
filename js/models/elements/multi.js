@@ -41,7 +41,7 @@ define(['models/elements/select'], function (SelectElement) {
       // and attr.lenghth === 1 && _.contains(attr.value, 'other')
       // and other is not in options
       // then fail
-      if (attrs.required && (_.isEmpty(attrs.value) || (other && (attrs.value.length === 1 && attrs.value[0] === "other") && !_.contains(attrs.options, 'other')))) {
+      if (attrs.required && (_.isEmpty(attrs.value) || other && (attrs.value.length === 1 && attrs.value[0] === "other") && !_.contains(attrs.options, 'other'))) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
       }
