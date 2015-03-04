@@ -1,4 +1,4 @@
-define(['models/element'], function (Element) {
+define(['models/element', 'geo'], function (Element, geo) {
   'use strict';
 
   var LocationElement = Element.extend({
@@ -11,66 +11,35 @@ define(['models/element'], function (Element) {
 
       this.removeView();
 
-      view = new Forms._views.LocationElement({model: this});
+      if (this.attributes.readonly) {
+        view = new Forms._views.LocationReadOnlyElement({model: this});
+      } else {
+        view = new Forms._views.LocationElement({model: this});
+      }
       this.set('_view', view);
     },
-    getGeoLocation: function (options) {
-      var self = this,
-        geolocation = window.navigator && window.navigator.geolocation,
-        defaultOptions = {
-          enableHighAccuracy: true,
-          maximumAge: 5 * 60 * 1000, // 5 minutes
-          timeout: 5 * 1000 // 5 seconds
-        },
-        errors = { value: [] };
 
-      if (!geolocation || !geolocation.getCurrentPosition) {
+    getGeoLocation: function (options) {
+      var self = this;
+      var errors = { value: [] };
+      if (!geo.isSupported) {
         errors.value.push('unsupported in this browser');
         self.set('errors', errors);
-        return;
+        return Promise.reject(new Error(errors.value[0]));
       }
-      options = $.isPlainObject(options) ? options : {};
-      options = $.extend({}, defaultOptions, options);
-      geolocation.getCurrentPosition(
-        function (position) { // successCallback
-          var coords;
-          if (position.coords) {
-            coords = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-              altitude: position.coords.altitude,
-              accuracy: position.coords.accuracy,
-              altitudeAccuracy: position.coords.altitudeAccuracy,
-              heading: position.coords.heading,
-              speed: position.coords.speed
-            };
-            self.set('value', coords);
-          } else {
-            errors.value.push('unable to determine position');
-            self.set('errors', errors);
+      return geo.getCurrentPosition(options)
+        .then(function (position) { // onSuccess
+          if (!position.coords) {
+            return Promise.reject(new TypeError('position result lacks coordinates'));
           }
-        },
-        function (error) { // errorCallback
-          var string;
-          switch (error.code) {
-          case error.PERMISSION_DENIED:
-            string = 'user has not granted permission';
-            break;
-          case error.PERMISSION_DENIED_TIMEOUT:
-            string = 'user did not grant permission in time';
-            break;
-          case error.POSITION_UNAVAILABLE:
-            string = 'unable to determine position';
-            break;
-          default:
-            string = 'unknown error';
-          }
-          errors.value.push(string);
+          self.set('currentlocation', position.coords);
+        }, function (error) { // onError
+          errors.value.push(geo.getErrorMessage(error));
           self.set('errors', errors);
-        },
-        options
-      );
+          return Promise.reject(error);
+        });
     }
+
   });
 
   return LocationElement;

@@ -65,8 +65,8 @@ define([
         options = {
           dismissible: true,
           history: false,
-          afterclose: function (event, ui) {
-            if (event && ui) {
+          afterclose: function (e, ui) {
+            if (e && ui) {
               $div.remove();
               signaturePad = null;
             }

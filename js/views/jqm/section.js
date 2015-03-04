@@ -3,8 +3,8 @@ define(function () {
     tagName: 'section',
     initialize: function () {
       var attrs = this.model.attributes;
-      if (attrs['class']) {
-        this.$el.addClass(attrs['class']);
+      if (attrs.class) {
+        this.$el.addClass(attrs.class);
       }
     },
     render: function () {

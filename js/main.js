@@ -96,7 +96,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.1.7';
+  Forms.version = '3.1.8';
   Forms.supports = {};
 
   Forms.supports.blob = (function () {
@@ -107,6 +107,27 @@ define(function (require) {
     } catch (ignore) {}
     return false;
   }());
+
+  Forms.loaded = {};
+  Forms.loaded.googleMap = false;
+
+  Forms.loadScript = function (src, type) {
+    var script = document.createElement('script');
+    script.type = type;
+    script.src = src;
+    document.body.appendChild(script);
+  };
+
+  Forms.initializeFlag = function () {
+    Forms.loaded.googleMap = true;
+  };
+
+  Forms.loadMapScript = function () {
+    var src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=BMP.Forms.initializeFlag';
+    if (!Forms.loaded.googleMap) {
+      Forms.loadScript(src, 'text/javascript');
+    }
+  };
 
   return Forms;
 });

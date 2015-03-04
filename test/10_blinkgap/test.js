@@ -18,6 +18,12 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       }
     };
 
+    BMP.BIC = {};
+    BMP.BIC.attributes = {
+      imageCaptureQuality: 40,
+      imageCaptureScale: 60,
+      cameraOptions: '{"quality":50}'
+    };
     /**
      * execute once before everything else in this suite
      */
@@ -117,6 +123,16 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         $button.trigger('click');
         assert(getPictureStub.called);
+      });
+
+      test('toCameraOptions called', function () {
+        var form = Forms.current,
+        element = form.getElement('image'),
+        result = {
+          quality: 50,
+          imageScale: 60
+        };
+        assert.deepEqual(element.toCameraOptions(), result);
       });
 
     }); // END: suite('', ...)

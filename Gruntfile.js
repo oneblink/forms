@@ -56,11 +56,13 @@ module.exports = function (grunt) {
             jquery: 'empty:',
             jquerymobile: 'empty:',
             underscore: 'empty:',
-            moment: 'empty:',
-            'picker.date': 'empty:',
-            'picker.time': 'empty:',
             // libraries to be built-in
+            moment: '../bower_components/momentjs/min/moment.min',
+            picker: '../bower_components/pickadate/lib/picker',
+            'picker.date': '../bower_components/pickadate/lib/picker.date',
+            'picker.time': '../bower_components/pickadate/lib/picker.time',
             bicyclepump: '../bower_components/bicyclepump/bicyclepump',
+            geolocation: '../node_modules/geolocation/geolocation',
             rivets: '../bower_components/rivets/dist/rivets',
             'formslib/main': '../node_modules/blinkmobile-forms/dist/formslib',
             // Require.JS plugins
@@ -72,13 +74,14 @@ module.exports = function (grunt) {
             },
             {
               name: 'views/forms3jqm',
-              include: ['main']
+              include: ['main', 'moment', 'picker.date', 'picker.time']
             }
           ],
           wrap: {
             startFile: [
               'parts/00-start.frag',
-              'bower_components/almond/almond.js'
+              'bower_components/almond/almond.js',
+              'parts/01-jquery.frag'
             ],
             endFile: [
               'parts/99-end.frag',

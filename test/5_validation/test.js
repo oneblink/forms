@@ -7,6 +7,22 @@ define([
   'BIC'
 ], function (_, Forms) {
 
+  suite('i18n', function () {
+    /*eslint-disable new-cap*/
+
+    test('i18n[BMP/geolocation]', function () {
+      assert.isFunction(window.i18n['BMP/geolocation'].PERMISSION_DENIED);
+      assert.isString(window.i18n['BMP/geolocation'].PERMISSION_DENIED());
+    });
+
+    test('i18n[BMP/Forms/validation]', function () {
+      assert.isFunction(window.i18n['BMP/Forms/validation'].REQUIRED);
+      assert.isString(window.i18n['BMP/Forms/validation'].REQUIRED());
+    });
+
+    /*eslint-enable new-cap*/
+  });
+
   suite('5: validation', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]'),
@@ -17,8 +33,8 @@ define([
           element.val(v);
           assert.isObject(element.validate(), 'now has a validation error');
           assert.isArray(element.validate().value, 'something wrong with value');
-          error = _.find(element.validate().value, function (error) {
-            return _.isObject(error) && error.code === i;
+          error = _.find(element.validate().value, function (e) {
+            return _.isObject(e) && e.code === i;
           });
 
           assert.isObject(error, 'contained ' + i + ' error');
@@ -234,6 +250,45 @@ define([
 
         element.val(45.32365);
         assert.isObject(element.validate(), 'max decimal places error');
+      });
+
+      test('Select, required', function () {
+        var form = Forms.current,
+          element = form.getElement('select'),
+          cases;
+
+        element.val('a');
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        cases = {
+          "REQUIRED": ""
+        };
+        runTests(cases, element);
+
+        cases = {
+          "REQUIRED": "other"
+        };
+        runTests(cases, element);
+      });
+
+      test('Multi select, required', function () {
+        var form = Forms.current,
+          element = form.getElement('multi'),
+          cases;
+
+        element.val(['a']);
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        cases = {
+          "REQUIRED": []
+        };
+        runTests(cases, element);
+
+        cases = {
+          "REQUIRED": ["other"]
+        };
+        runTests(cases, element);
+
       });
 
     }); // END: suite('Form', ...)

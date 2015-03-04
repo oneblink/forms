@@ -47,6 +47,47 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.show();
       });
 
+      test('location button is enabled', function (done) {
+        var form = Forms.current,
+          element = form.getElement('location'),
+          view = element.get('_view'),
+          button = view.$el.find('button');
+
+        element.once('change:value change:errors', function () {
+          setTimeout(function () {
+            assert.isFalse(button.hasClass('ui-disabled'));
+          }, 1000);
+        });
+
+        button.trigger('click');
+
+        setTimeout(function () {
+          $(document.body).find('[data-action=cancel]').trigger('click');
+          done();
+        }, 100);
+      });
+
+      test('location button popup elements', function (done) {
+        var form = Forms.current,
+          element = form.getElement('location'),
+          view = element.get('_view'),
+          button = view.$el.find('button'),
+          $body;
+
+        button.trigger('click');
+
+        setTimeout(function () {
+          $body = $(document.body);
+          assert.lengthOf($body.find('[data-action=cancel]'), 1);
+          assert.lengthOf($body.find('[data-action=clear]'), 1);
+          assert.lengthOf($body.find('button[type="submit"]'), 1);
+          assert.lengthOf($body.find('#map-canvas'), 1);
+          assert.lengthOf($body.find('#bmp-forms-location'), 1);
+          $body.find('[data-action=cancel]').trigger('click');
+          done();
+        }, 100);
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)

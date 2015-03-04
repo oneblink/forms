@@ -131,8 +131,8 @@ define(function (require) {
             }
             if (type === 'subForm') {
               promises.push(new Promise(function (subResolve) {
-                el.getRecord().then(function (val) {
-                  data[el.attributes.name] = val;
+                el.getRecord().then(function (v) {
+                  data[el.attributes.name] = v;
                   subResolve();
                 });
               }));
@@ -203,6 +203,12 @@ define(function (require) {
             if (_.contains(['file', 'draw'], formElement.attributes.type)) {
               mime = data[key + '_mimetype'] || 'image/jpeg';
               value = Form.addMimetype(value, mime);
+            }
+            if (formElement.attributes.type === 'multi') {
+              value = value.split('\n');
+              value = value.map(function (v) {
+                return v.trim();
+              });
             }
             formElement.val(value);
           }

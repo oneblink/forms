@@ -5,6 +5,22 @@ define(['models/element'], function (Element) {
     initialize: function () {
       Element.prototype.initialize.call(this);
     },
+    initializeView: function () {
+      var Forms = BMP.Forms,
+      View,
+      view;
+
+      if (this.attributes.readonly) {
+        this.removeView();
+        View = Forms._views.ReadOnlyElement;
+      } else {
+        View = Forms._views.TextElement;
+      }
+
+      view = new View({model: this});
+      this.set('_view', view);
+      return view;
+    },
     validate: function (attrs) {
       var errors = Element.prototype.validate.call(this) || {};
       if (attrs === undefined) {

@@ -5,6 +5,22 @@ define(['models/elements/text'], function (TextElement) {
     initialize: function () {
       TextElement.prototype.initialize.call(this);
     },
+    initializeView: function () {
+      var Forms = BMP.Forms,
+      View,
+      view;
+
+      if (this.attributes.readonly) {
+        this.removeView();
+        View = Forms._views.ReadOnlyElement;
+      } else {
+        View = Forms._views.EmailElement;
+      }
+
+      view = new View({model: this});
+      this.set('_view', view);
+      return view;
+    },
     validate: function (attrs) {
       var errors = TextElement.prototype.validate.call(this) || {},
         //http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
