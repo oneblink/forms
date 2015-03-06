@@ -88,6 +88,21 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         }, 100);
       });
 
+      test('form&isPopulating is true during form#setRecord()', function (done) {
+        var form = Forms.current;
+        assert.isFalse(form.get('isPopulating'));
+        form.setRecord({}).then(function () {
+          assert.isFalse(form.get('isPopulating'));
+          done();
+        }, function (err) {
+          assert.isFalse(form.get('isPopulating'));
+          assert.ok(false, 'Promise should not be rejected');
+          assert.notOk(err, 'Promise should not have an error');
+          done();
+        });
+        assert.isTrue(form.get('isPopulating'));
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)

@@ -5,7 +5,8 @@ define(function (require) {
 
   Form = Backbone.Model.extend({
     defaults: {
-      'class': ''
+      'class': '',
+      isPopulating: false
     },
     initialize: function () {
       var Forms = BMP.Forms,
@@ -184,6 +185,8 @@ define(function (require) {
           return;
         }
 
+        self.set('isPopulating', true);
+
         _.each(data, function (value, key) {
           var formElement = self.getElement(key), result, xml, mime;
           if (!formElement) {
@@ -214,7 +217,11 @@ define(function (require) {
           }
         });
         Promise.all(promises).then(function () {
+          self.set('isPopulating', false);
           resolve(data);
+        }, function (err) {
+          self.set('isPopulating', false);
+          reject(err);
         });
       });
     },
