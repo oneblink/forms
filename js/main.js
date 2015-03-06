@@ -39,6 +39,7 @@ define(function (require) {
   Forms.models = new BicyclePump();
   Forms.views = new BicyclePump();
 
+  Forms.blobUploader = FormsLib.blobUploader;
   Forms.castPropertyValues = FormsLib.castPropertyValues;
   Forms.flattenDefinition = FormsLib.flattenDefinition;
   Forms.parseClass = FormsLib.parseClass;
