@@ -3,7 +3,7 @@ define(function (require) {
   var Forms, BicyclePump, FormsLib;
 
   BicyclePump = require('bicyclepump');
-  FormsLib = require('formslib/main');
+  FormsLib = require('formslib');
   Forms = window.BMP.Forms;
 
   _.extend(Forms, Backbone.Events);
