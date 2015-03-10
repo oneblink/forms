@@ -7,6 +7,7 @@
   },
   "devDependencies": {
     "bic-jqm": "blinkmobile/bic-v3#master",
+    "blinkgap-utils": "git://github.com/blinkmobile/blinkgap-utils",
     "blinkmobile-forms": "blinkmobile/forms#v1.2.1",
     "grunt": "~0.4",
     "grunt-contrib-clean": "~0.6",
