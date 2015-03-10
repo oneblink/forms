@@ -72,6 +72,12 @@ define(['views/jqm/element'], function (ElementView) {
       if (_.isString(blob.type) && blob.type.indexOf('image/') === 0) {
         $img = $('<img />');
         $img.attr('src', blob.toDataURI());
+        if (blob.width && blob.height) {
+          $img.attr({
+            height: blob.height,
+            width: blob.width
+          });
+        }
         $img.css({
           'max-height': '6em',
           'max-width': '100%'
