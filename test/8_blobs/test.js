@@ -43,6 +43,8 @@ define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
         Forms.getDefinition('form1', 'add').then(function (def) {
           Forms.initialize(def);
           form = Forms.current;
+          form.set('answerSpace', 'blah');
+          form.set('uuid', Forms.uuid.v4());
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'form1');
           assert.equal(form.get('label'), 'Form 1');
@@ -157,6 +159,21 @@ define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
           assert.isObject(blob1);
         });
 
+        test('bfe[file].set("value", "...") with image/jpeg sets xhr', function (done) {
+          var form = Forms.current;
+          var element = form.getElement('file');
+          var xhr;
+          element.once('change:xhr', function () {
+            xhr = element.get('xhr');
+          });
+          Forms.blobUploader.once('drain', function () {
+            assert.isObject(xhr, '"xhr" event means XHR is available');
+            assert.ok(!element.get('xhr'), '"drain" event means no more XHR');
+            done();
+          });
+          element.set('value', 'data:image/jpeg;base64,abc123');
+        });
+
         test('bfe[file].set("value", "...") with text/plain does not trigger blobUploader', function (done) {
           var form = Forms.current;
           var element = form.getElement('file');
@@ -210,8 +227,9 @@ define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
           element.set('value', 'data:image/jpeg;base64,abc123');
         });
 
-        teardown(function () {
+        teardown(function (done) {
           Forms.blobUploader.removeAllListeners('drain');
+          setTimeout(done, 200);
         });
 
       });

@@ -5,8 +5,10 @@ define(function (require) {
 
   Form = Backbone.Model.extend({
     defaults: {
+      answerSpace: '',
       'class': '',
-      isPopulating: false
+      isPopulating: false,
+      uuid: ''
     },
     initialize: function () {
       var Forms = BMP.Forms,

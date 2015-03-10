@@ -36,6 +36,8 @@ define(function (require) {
     ButtonElement: require('models/elements/button')
   };
 
+  Forms.uuid = require('uuid');
+
   Forms.models = new BicyclePump();
   Forms.views = new BicyclePump();
 

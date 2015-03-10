@@ -27,6 +27,29 @@ The `current` property is a reference to the currently active Form object. It is
 
 As documented elsewhere, the root DOM element for this new Form is referred to by form.**$form** (the `$form` property on that instance of the Form Model).
 
+### other initialization requirements
+
+#### tuple UUID and answerSpace name
+
+After `BMP.Forms.initialize(...)` is complete, you must set the answerSpace name
+attribute on the form model.
+
+```javascript
+BMP.Forms.current.set('answerSpace', 'blah');
+```
+
+We also require a UUID that you should preserve across drafts and submission
+attempts. Different records should have different UUIDs. Two people who are
+updating the same record should also have different UUIDs.
+
+```javascript
+BMP.Forms.current.set('uuid', '0DFF8629-C107-455C-A22D-6742978B1EB5');
+```
+
+We use the answerSpace and UUID values to scope uploaded blobs. If these values
+change after a user attaches an image to a record but before the back-end
+persists the record, then data loss will occur.
+
 
 ## BIC integration
 

@@ -5,11 +5,11 @@ define(['models/element'], function (Element) {
     defaults: _.extend({}, Element.prototype.defaults, {
       height: 0,
       width: 0,
-      uuid: ''
+      uuid: '',
+      xhr: null
     }),
-    initialize: function () {
-      var me = this;
 
+    initialize: function () {
       Element.prototype.initialize.call(this);
 
       this.on('change:value', function () {
@@ -30,12 +30,13 @@ define(['models/element'], function (Element) {
       }, this);
 
       this.on('change:blob', function () {
-        var form = me.get('form');
+        var form = this.get('form');
         if (!form.get('isPopulating')) {
-          me.uploadBlob();
+          this.uploadBlob();
         }
-      });
+      }, this);
     },
+
     initializeView: function () {
       var Forms = BMP.Forms,
         view,
@@ -53,6 +54,7 @@ define(['models/element'], function (Element) {
       }
       this.set('_view', view);
     },
+
     toCameraOptions: function () {
       var options = {},
       cameraOpts,
@@ -87,6 +89,17 @@ define(['models/element'], function (Element) {
       var me = this;
       var Forms = BMP.Forms;
       var blob = this.get('blob');
+      var uuid = Forms.uuid.v4();
+
+      var xhrHandler = function (xhr, currentBlob) {
+        // we need to double-check that this xhr is for this blob
+        if (currentBlob.blob === uuid) {
+          // hooray, a match, we can stop listening now
+          Forms.blobUploader.removeListener('xhr', xhrHandler);
+          // store the XHR for use by the View
+          me.set('xhr', xhr);
+        }
+      };
 
       if (typeof navigator === 'undefined' || !navigator.onLine) {
         return; // offline, do nothing
@@ -100,9 +113,12 @@ define(['models/element'], function (Element) {
         return; // only upload binary blobs for now, leave text blobs alone
       }
 
+      Forms.blobUploader.on('xhr', xhrHandler);
+
       Forms.blobUploader.saveBlob({
-        answerSpace: '...',
-        tuple: '...',
+        answerSpace: Forms.current.get('answerSpace'),
+        tuple: Forms.current.get('uuid'),
+        blob: uuid,
         file: blob.base64,
         mime: blob.type
       }, function (err, res) {
@@ -111,6 +127,8 @@ define(['models/element'], function (Element) {
           width: me.get('width'),
           uuid: me.get('uuid')
         };
+
+        me.set('xhr', null);
 
         if (err) {
           /*eslint-disable no-console*/ // error needs to be able to be debugged

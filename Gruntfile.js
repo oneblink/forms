@@ -65,6 +65,7 @@ module.exports = function (grunt) {
             geolocation: '../node_modules/geolocation/geolocation',
             rivets: '../bower_components/rivets/dist/rivets',
             formslib: '../node_modules/blinkmobile-forms/dist/formslib',
+            uuid: '../node_modules/node-uuid/uuid',
             // Require.JS plugins
             text: '../bower_components/requirejs-text/text'
           },
