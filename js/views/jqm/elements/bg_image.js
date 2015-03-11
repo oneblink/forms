@@ -1,22 +1,18 @@
 define([
-  'views/jqm/element',
   'views/jqm/elements/file',
   'text!views/jqm/templates/bg_image.html'
-], function (ElementView, FileElementView, html) {
+], function (FileElementView, html) {
   'use strict';
   var BGCameraElementView;
 
   BGCameraElementView = FileElementView.extend({
-    render: function () {
+    renderControls: function () {
       var $new, $existing, $div, PictureSourceType;
 
       try {
         PictureSourceType = window.PictureSourceType || navigator.camera.PictureSourceType;
       } catch (ignore) {}
       PictureSourceType = PictureSourceType || {};
-
-      this.$el.empty();
-      this.renderLabel();
 
       $div = $('<div class="ui-input-text"></div>');
       $div.append(html);
@@ -33,14 +29,12 @@ define([
 
       $new.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
       $existing.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
-
-      this.bindRivets();
-      this.model.on('change:blob', this.renderFigure, this);
     },
+
     remove: function () {
       this.$el.find('button').off('click');
       this.model.off('change:blob', this.renderFigure, this);
-      return ElementView.prototype.remove.call(this);
+      return FileElementView.prototype.remove.call(this);
     }
   }, {
     onButtonClick: function (event) {

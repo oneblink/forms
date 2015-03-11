@@ -23,25 +23,12 @@ define(['views/jqm/element'], function (ElementView) {
 
   FileElementView = ElementView.extend({
     render: function () {
-      var self = this,
-        $input,
-        name = this.model.get('name');
-
       this.$el.empty();
       this.renderLabel();
 
-      $input = $('<input type="file" />');
-      $input.attr({
-        name: name,
-        'rv-accept': 'm:accept'
-      });
-      $input.prop('capture', !!this.model.get('capture'));
-      this.$el.append($input);
+      this.renderControls();
 
       this.bindRivets();
-      $input.on('change', function (event) {
-        self.onInputChange(event);
-      });
       this.model.on('change:blob', function () {
         this.model.updateWarning();
         if (_.isEmpty(this.model.attributes.warning)) {
@@ -52,6 +39,23 @@ define(['views/jqm/element'], function (ElementView) {
 
       }, this);
     },
+
+    renderControls: function () {
+      var $input = $('<input type="file" />');
+      var name = this.model.get('name');
+
+      $input.attr({
+        name: name,
+        'rv-accept': 'm:accept'
+      });
+      $input.prop('capture', !!this.model.get('capture'));
+      this.$el.append($input);
+
+      $input.on('change', function (event) {
+        this.onInputChange(event);
+      }.bind(this));
+    },
+
     renderFigure: function () {
       var $figure, $figcaption, blob, caption, $img;
       blob = this.model.attributes.blob;
