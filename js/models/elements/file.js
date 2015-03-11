@@ -5,6 +5,7 @@ define(['models/element'], function (Element) {
     defaults: _.extend({}, Element.prototype.defaults, {
       height: 0,
       width: 0,
+      progress: null,
       uuid: '',
       xhr: null
     }),
@@ -35,6 +36,8 @@ define(['models/element'], function (Element) {
           this.uploadBlob();
         }
       }, this);
+
+      this.on('change:xhr', this.onChangeXHR, this);
     },
 
     initializeView: function () {
@@ -129,11 +132,12 @@ define(['models/element'], function (Element) {
         };
 
         me.set('xhr', null);
+        me.set('progress', null);
 
         if (err) {
           /*eslint-disable no-console*/ // error needs to be able to be debugged
           if (typeof console !== 'undefined') {
-            console.error('Forms.blobUploader unable to saveBlob()');
+            console.error('uploadBlob() had error during blobUploader.saveBlob()');
             console.error(err);
           }
           /*eslint-enable no-console*/
@@ -160,7 +164,7 @@ define(['models/element'], function (Element) {
           me.set(backupValues);
           /*eslint-disable no-console*/ // error needs to be able to be debugged
           if (typeof console !== 'undefined') {
-            console.error('Forms.blobUploader unable use server response');
+            console.error('uploadBlob() unable use server response');
             console.error(tryErr);
             callback(tryErr);
           }
@@ -168,6 +172,25 @@ define(['models/element'], function (Element) {
         }
 
       });
+    },
+
+    onChangeXHR: function () {
+      var me = this;
+      var xhr = this.get('xhr');
+      if (xhr && xhr.upload && xhr.upload.addEventListener) {
+        this.set('progress', {
+          lengthComputable: false,
+          loaded: 0,
+          total: 0
+        });
+        xhr.upload.addEventListener('progress', function (event) {
+          me.set('progress', {
+            lengthComputable: event.lengthComputable,
+            loaded: event.loaded,
+            total: event.total * 1.1 // add 10% to account for response download
+          });
+        }, false);
+      }
     }
   });
 

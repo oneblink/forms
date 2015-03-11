@@ -38,6 +38,8 @@ define(['views/jqm/element'], function (ElementView) {
         }
 
       }, this);
+
+      this.model.on('change:progress', this.renderProgress, this);
     },
 
     renderControls: function () {
@@ -90,11 +92,39 @@ define(['views/jqm/element'], function (ElementView) {
       }
       this.$el.append($figure);
     },
+
+    renderProgress: function () {
+      var progress = this.model.get('progress');
+      var figure$ = this.$el.children('figure').first();
+      var progress$ = figure$.children('progress');
+      var attrs;
+
+      if (!progress) {
+        if (progress$.length) {
+          progress$.remove();
+        }
+        return;
+      }
+
+      attrs = { value: progress.loaded };
+      if (!progress$.length) {
+        progress$ = $('<progress></progress>').appendTo(figure$);
+      }
+      if (!progress.lengthComputable) {
+        progress$.removeAttr('max');
+      } else {
+        attrs.max = progress.total;
+      }
+      progress$.attr(attrs);
+    },
+
     remove: function () {
       this.$el.children('input').off('change');
       this.model.off('change:blob', this.renderFigure, this);
+      this.model.off('change:progress', this.renderProgress, this);
       return ElementView.prototype.remove.call(this);
     },
+
     onInputChange: function (event) {
       var self = this,
         $input = event && $(event.target),
@@ -106,6 +136,7 @@ define(['views/jqm/element'], function (ElementView) {
         });
       }
     }
+
   });
 
   return FileElementView;

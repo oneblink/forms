@@ -4,8 +4,10 @@
 define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
 
   var mockXhrUpload = new Backbone.Model();
-  mockXhrUpload.addEventListener = mockXhrUpload.on;
-  mockXhrUpload.lengthComputer = true;
+  mockXhrUpload.addEventListener = function (type, handler) {
+    this.on(type, handler);
+  };
+  mockXhrUpload.lengthComputable = true;
   mockXhrUpload.loaded = 0;
   mockXhrUpload.total = 200;
   mockXhrUpload.go = function () {
@@ -229,7 +231,8 @@ define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
 
         teardown(function (done) {
           Forms.blobUploader.removeAllListeners('drain');
-          setTimeout(done, 200);
+          mockXhrUpload.off('progress');
+          setTimeout(done, 300);
         });
 
       });
