@@ -27,8 +27,33 @@
 - FORMS-105: properly migrate row class from Forms v2 definitions
 
 
-## v3.1.7 - 2015-01-15
+## v3.1.7 - 2015-01-19
 
+### Added
+
+- FORMS-105: [CSS `class` attribute is parsed](https://github.com/blinkmobile/forms/blob/master/docs/parseClass.md), exposing access to Forms v3 settings that are not currently exposed in the official Builder
+
+    - note: as recently as Platform v2.24.0, the Builder exports the `rowClass` attribute (not `class`), so this is and all other work depending upon it cannot be demonstrated
+
+- FORMS-112: [`getUserMedia`](http://www.html5rocks.com/en/tutorials/getusermedia/intro/)-capable environments get suitably enhanced image capture fields
+
+### Changed
+
+- FORMS-106: choice fields default to `nativeMenu: false`, but this can be overridden using the `class` attribute per FORMS-105 (above)
+    - this new default offers the best consistency between single and multiple choice fields
+    - multiple choice fields are not natively implemented in all environments, so we picked the safer default
+
+### Fixed
+
+- FORMS-80: detect Cordova and BlinkGap the same way BIC v2 did, triggers native-enhanced image capture fields, etc as expected in Android
+
+- FORMS-113: image size hints as configured in elsewhere in the app are passed through when making Cordova API calls, so native-enhanced capture fields behave as expected
+
+- FORMS-114: in environments supporting W3C File [`Blob`](http://caniuse.com/#feat=blobbuilder)s, image previews are correctly displayed when resuming a pending / draft record
+
+- FORMS-117: choice fields with "other" values enabled now function as expected
+
+    - note: as recently as Platform v2.24.0, the Builder exports the `canSpecifyOther` attribute, which is not currently checked by the client-side code, so this feature cannot currently be demonstrated
 
 
 ## v3.1.6 - 2014-11-18
