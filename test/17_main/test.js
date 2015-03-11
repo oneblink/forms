@@ -21,6 +21,18 @@ define(['BlinkForms', 'BIC'], function () {
       assert.isString(window.BMP.Forms.version);
     });
 
+    test('BMP.Forms.blobUploader is an object', function () {
+      assert.isObject(window.BMP.Forms.blobUploader);
+    });
+
+    test('BMP.Forms.uuid exists', function () {
+      assert.ok(window.BMP.Forms.uuid);
+    });
+
+    test('BMP.Forms.uuid.v4 is a function', function () {
+      assert.isFunction(window.BMP.Forms.uuid.v4);
+    });
+
   });
 
 });

@@ -1,17 +1,13 @@
 define([
-  'views/jqm/element',
   'views/jqm/elements/file',
   'text!views/jqm/templates/signaturePad.html'
-], function (ElementView, FileElementView, html) {
+], function (FileElementView, html) {
   'use strict';
   var signaturePad, DrawElementView;
 
   DrawElementView = FileElementView.extend({
-    render: function () {
+    renderControls: function () {
       var $button, $div;
-
-      this.$el.empty();
-      this.renderLabel();
 
       $button = $('<button />');
       $button.text('Signature');
@@ -22,22 +18,12 @@ define([
       this.$el.append($div);
 
       $button.on('click', $.proxy(DrawElementView.onButtonClick, this));
-
-      this.bindRivets();
-      this.model.on('change:blob', function () {
-        this.model.updateWarning();
-        if (_.isEmpty(this.model.attributes.warning)) {
-          this.renderWarning();
-        } else {
-          this.renderFigure();
-        }
-
-      }, this);
     },
+
     remove: function () {
       this.$el.children('button').off('click');
       this.model.off('change:blob', this.renderFigure, this);
-      return ElementView.prototype.remove.call(this);
+      return FileElementView.prototype.remove.call(this);
     }
   }, {
     // static properties and methods

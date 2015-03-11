@@ -3,7 +3,7 @@ define(function (require) {
   var Forms, BicyclePump, FormsLib;
 
   BicyclePump = require('bicyclepump');
-  FormsLib = require('formslib/main');
+  FormsLib = require('formslib');
   Forms = window.BMP.Forms;
 
   _.extend(Forms, Backbone.Events);
@@ -36,9 +36,12 @@ define(function (require) {
     ButtonElement: require('models/elements/button')
   };
 
+  Forms.uuid = require('uuid');
+
   Forms.models = new BicyclePump();
   Forms.views = new BicyclePump();
 
+  Forms.blobUploader = FormsLib.blobUploader;
   Forms.castPropertyValues = FormsLib.castPropertyValues;
   Forms.flattenDefinition = FormsLib.flattenDefinition;
   Forms.parseClass = FormsLib.parseClass;
