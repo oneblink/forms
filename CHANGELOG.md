@@ -1,5 +1,36 @@
 # Changelog
 
+## v3.1.8 - 2015-03-04
+
+### Added
+
+- FORMS-72: geolocation pop-up with dynamic map
+
+- FORMS-54: read-only views for fields that are set to read-only
+
+### Changed
+
+- FORMS-92: label of geolocation button indicates progress / activity
+
+- FORMS-121: always request freshest geolocation data from device
+
+    - HelpDesk: 3536-ERYZ-0783
+
+### Fixed
+
+- FORMS-120: update to pickadate v3.5.5 to fix date picker issues on iPads
+
+- FORMS-117: choice fields that allow the user to add "other" values
+
+- FORMS-127: required validation for choice fields allowing "other" values
+
+- FORMS-105: properly migrate row class from Forms v2 definitions
+
+
+## v3.1.7 - 2015-01-15
+
+
+
 ## v3.1.6 - 2014-11-18
 
 ### Changed
