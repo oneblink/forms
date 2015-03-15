@@ -66,6 +66,10 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         // bind custom handler for checkboxes <- array
         this.model.on('change:value', this.onMultiValueChange, this);
       }
+
+      BMP.Forms.once('formInjected', function () {
+        self.model.on('change:value', self.onChangeRefresh, self);
+      });
     },
     onMultiInputClick: function (event) {
       var view = event.data.view,
@@ -93,7 +97,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         view.$el.find('input[value = other]').prop('checked', true);
       }
 
-      $inputs.checkboxradio('refresh');
       ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
 
       if (_.difference(value, _.keys(model.attributes.options)).length > 0) {
@@ -113,7 +116,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           this.$el.find('[value = other]').prop('checked', true);
         }
       }
-      $inputs.checkboxradio('refresh');
 
       $values = this.$el.find('label[data-icon=radio-on]');
       values = $.map($values, function (val) {
@@ -126,6 +128,12 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         // Also need to fill the text box back in, in addition to selecting radio
         this.$el.find('input[type = text]').val(this.model.get('value'));
       }
+    },
+    onChangeRefresh: function () {
+      var view = this,
+        $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
+
+      $inputs.checkboxradio('refresh');
     },
     fetchValue: function () {
       var attr = this.model.attributes;

@@ -32,6 +32,7 @@ define(['views/jqm/element',
       this.model.on('change:value', this.renderFigure, this);
 
       BMP.Forms.once('formInjected', function () {
+        self.model.on('change:value', self.setClearButton, self);
         self.setClearButton();
       });
     },
@@ -53,7 +54,6 @@ define(['views/jqm/element',
         staticMap,
         self = this;
 
-      self.setClearButton();
       if (typeof self.model.attributes.value === 'string') {
         loc = JSON.parse(self.model.attributes.value);
       } else {

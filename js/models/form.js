@@ -155,7 +155,10 @@ define(function (require) {
             if (type === 'location') {
               val = attrs.value;
               if (val) {
-                data[el.attributes.name] = JSON.stringify(val);
+                if (typeof val !== 'string') {
+                  val = JSON.stringify(val);
+                }
+                data[el.attributes.name] = val;
               }
               return;
             }
@@ -216,7 +219,9 @@ define(function (require) {
               formElement.set('width', data[key + '_width'] || 0);
             }
             if (formElement.attributes.type === 'multi') {
-              value = value.split('\n');
+              if( typeof value === 'string') {
+                value = value.split('\n');
+              }
               value = value.map(function (v) {
                 return v.trim();
               });
