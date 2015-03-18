@@ -104,8 +104,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       }
     },
     onSelectValueChange: function () {
-      var view = this, $values, values,
-        $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
+      var $values, values;
 
       if (_.contains(_.keys(this.model.get('options')), this.model.get('value'))) {
         this.$el.find('[value = ' + this.model.get('value') + ']').prop('checked', true);
