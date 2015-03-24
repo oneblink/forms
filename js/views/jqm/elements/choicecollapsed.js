@@ -48,19 +48,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         that.model.set('value', that.prepModelValue());
       });
       this.model.on('change:value', this.onValueChange, this);
-
-      BMP.Forms.once('formInjected', function () {
-        that.model.on('change:value', that.onChangeRefresh, that);
-      });
-    },
-    onChangeRefresh: function () {
-      var select = this.$el.find('select');
-      var attr = this.model.attributes;
-
-      if (!attr.nativeMenu) {
-        select.selectmenu();
-        select.selectmenu('refresh');
-      }
     },
     onValueChange: function () {
       var renderOther = false;
@@ -84,6 +71,11 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           renderOther = true;
           select.val(_.union(attr.value, ['other']));
         }
+      }
+
+      if (!attr.nativeMenu) {
+        select.selectmenu();
+        select.selectmenu('refresh');
       }
 
       ChoiceElementView.prototype.renderOtherText.call(this, renderOther);

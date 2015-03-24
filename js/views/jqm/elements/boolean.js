@@ -4,7 +4,6 @@ define(['views/jqm/element'], function (ElementView) {
   var BooleanElementView = ElementView.extend({
     render: function () {
       var $input;
-      var self = this;
       var model = this.model;
 
       this.$el.empty();
@@ -23,14 +22,10 @@ define(['views/jqm/element'], function (ElementView) {
 
       this.$el.append($input);
       this.bindRivets();
-
-      BMP.Forms.once('formInjected', function () {
-        model.on('change:value', self.onValueChange, self);
-        self.onValueChange();
-      });
+      model.on('change:value', this.onValueChange, this);
     },
     onValueChange: function () {
-      this.$el.children('select').slider('refresh');
+      this.$el.children('select').slider().slider('refresh');
     }
   });
 
