@@ -12,6 +12,8 @@
     "node-uuid": "1.4.3"
   },
   "devDependencies": {
+    "assert": "Jxck/assert#ac895ade8d",
+    "assertive-chai": "1.0.0",
     "bic-jqm": "blinkmobile/bic-v3#master",
     "bluebird": "^2.9.14",
     "grunt": "~0.4",
