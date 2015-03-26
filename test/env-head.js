@@ -21,7 +21,7 @@
       'picker.date': '../../bower_components/pickadate/lib/picker.date',
       'picker.time': '../../bower_components/pickadate/lib/picker.time',
       'moment': '../../bower_components/momentjs/min/moment.min',
-      bluebird: '../../bower_components/bluebird/js/browser/bluebird',
+      bluebird: '../../node_modules/bluebird/js/browser/bluebird.min',
       feature: '../../bower_components/amd-feature/feature',
       'es5-shim': '../../bower_components/es5-shim/es5-shim.min',
       implementations: '../lib/implementations'
