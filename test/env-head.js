@@ -23,7 +23,7 @@
       'moment': '../../bower_components/momentjs/min/moment.min',
       bluebird: '../../node_modules/bluebird/js/browser/bluebird.min',
       feature: '../../bower_components/amd-feature/feature',
-      'es5-shim': '../../bower_components/es5-shim/es5-shim.min',
+      'es5-shim': '../../node_modules/es5-shim/es5-shim.min',
       implementations: '../lib/implementations'
     },
     shim: {
