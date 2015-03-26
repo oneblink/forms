@@ -435,6 +435,18 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       });
 
+      test('FORMS-139 # select with values containing space', function () {
+        // UI -> API bindings
+        var form = Forms.current,
+          element = form.getElement('select_space'),
+          $fieldset = element.attributes._view.$el;
+
+        $fieldset.find('label:contains(Second)').trigger('click');
+        assert.equal(element.val(), 'Second', 'model.value = "Second"');
+        $fieldset.find('label:contains("First value")').trigger('click');
+        assert.equal(element.val(), 'First value', 'model.value = "First value"');
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)
