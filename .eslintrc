@@ -24,7 +24,7 @@
     "strict": 0, /* this is taken care of during the build process */
     /* Possible Errors */
     "no-extra-parens": 2,
-    "no-reserved-keys": 2,
+    "dot-notation": [2, { "allowKeywords": false }],
     "valid-jsdoc": 0, /* TODO: 2 */
     /* Best Practices */
     "block-scoped-var": 2,

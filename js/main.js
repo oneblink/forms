@@ -64,7 +64,7 @@ define(function (require) {
     if (!model instanceof Backbone.Model || !model.attributes) {
       return; // nothing to do
     }
-    klass = model.attributes.class;
+    klass = model.attributes['class'];
     if (typeof klass !== 'string' || klass.indexOf(';') === -1) {
       return; // nothing to do
     }

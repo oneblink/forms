@@ -41,7 +41,7 @@ define([
   Forms.getDefinition = function (name, action) {
     return new Promise(function (resolve, reject) {
       var def = _.find(defs, function (d) {
-        return d && d.default && d.default.name === name;
+        return d && d['default'] && d['default'].name === name;
       });
       if (!def) {
         reject(def);
@@ -75,7 +75,7 @@ define([
     var index = Forms.current.get('pages').current.index();
 
     if (index > 0) {
-      Forms.current.get('pages').goto(index - 1);
+      Forms.current.get('pages')['goto'](index - 1);
     }
   });
 
@@ -83,7 +83,7 @@ define([
     var index = Forms.current.get('pages').current.index();
 
     if (index < Forms.current.get('pages').length - 1) {
-      Forms.current.get('pages').goto(index + 1);
+      Forms.current.get('pages')['goto'](index + 1);
     }
   });
 
