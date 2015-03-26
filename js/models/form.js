@@ -251,13 +251,12 @@ define(function (require) {
     */
     getErrors: function () {
       var me = this,
-        err,
         errors = {};
 
       me.attributes.elements.forEach(function (el) {
-        err = el.validate();
-        if (err) {
-          errors[el.attributes.name] = err.value;
+        el.updateErrors();
+        if (!_.isEmpty(el.attributes.errors)) {
+          errors[el.attributes.name] = el.attributes.errors.value;
         }
       });
       return _.isEmpty(errors) ? undefined : errors;
