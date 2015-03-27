@@ -172,8 +172,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         var subFormElement = Forms.current.getElement('comments'),
           subForms = subFormElement.attributes.forms,
           testData = [
-            { comment: 'abc' },
-            { comment: 'def' }
+            { comment: 'abc', '_action': 'add' },
+            { comment: 'def', '_action': 'add' }
           ];
 
         assert.equal(subForms.length, 2, '2 subForms');
@@ -210,7 +210,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         var subFormElement = Forms.current.getElement('comments'),
           subForms = subFormElement.attributes.forms,
           testData = [
-            { comment: 'def' }
+            { comment: 'def', '_action': 'add' }
           ];
 
         assert.equal(subForms.length, 1, '1 subForm');

@@ -55,9 +55,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $add,
           subForms,
           testData = [
-            { Rank: '1', _action: "add"},
-            { Rank: '2', _action: "add" },
-            { Rank: '3', _action: "add" }
+            { Rank: 1, _action: 'add' },
+            { Rank: 2, _action: 'add' },
+            { Rank: 3, _action: 'add' }
           ];
 
         //move to page 1 (page having subform)
@@ -98,9 +98,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           pages = form.attributes.pages,
           subFormElement,
           testData = [
-            { Rank: '1', _action: "add"},
-            { Rank: '2', _action: "add" },
-            { Rank: '3', _action: "add" }
+            { Rank: 1, _action: 'add' },
+            { Rank: 2, _action: 'add' },
+            { Rank: 3, _action: 'add' }
           ];
 
         subFormElement = Forms.current.getElement('subform01');
