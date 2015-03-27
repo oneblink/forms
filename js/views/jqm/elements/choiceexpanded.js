@@ -33,10 +33,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       $legend = $('<legend></legend>').text(attrs.label);
       $fieldset.prepend($legend);
 
-      if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
-        options.other = 'other';
-      }
-
       _.forEach(options, function (label, value) {
         var $label = $('<label>' + label + '</label>'),
           $input = $('<input type="' + iType + '" />');
@@ -48,6 +44,10 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         $label.prepend($input);
         $fieldset.append($label);
       });
+
+      if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
+        $fieldset.append('<label><input name="' + iName + '" type="' + iType + '" value="other" />other</label>');
+      }
 
       this.$el.append($fieldset);
       if (type === 'select') {
@@ -138,7 +138,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         case "select":
           values = this.$el.find('input:checked').val();
           break;
-        default:
+        default: // multi
           $inputs = this.$el.find('input:checked');
           values = _.map($inputs, function (input) {
             return $(input).val();
