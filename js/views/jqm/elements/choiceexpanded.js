@@ -12,7 +12,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
     render: function () {
       var $fieldset,
-        $legend,
         attrs = this.model.attributes,
         type = attrs.type;
 
@@ -26,12 +25,11 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           'data-type': 'horizontal'
         });
       }
-      $legend = $('<legend></legend>').text(attrs.label);
-      $fieldset.prepend($legend);
+      $fieldset.prepend($('<legend></legend>').text(attrs.label));
 
       this.$el.append($fieldset);
 
-      this.renderOptions();
+      this._renderOptions();
 
       if (type === 'select') {
         this.bindRivets();
@@ -42,7 +40,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       }
     },
 
-    renderOptions: function () {
+    '_renderOptions': function () {
       var self = this;
       var $fieldset = this.$el.children('fieldset');
       var attrs = this.model.attributes;
@@ -51,8 +49,10 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       var name = attrs.name;
       var iType = type === 'select' ? 'radio' : 'checkbox';
       var iName = type === 'select' ? name + '_' + self.cid : name + '[]';
+      var $controls = $fieldset.children('.ui-controlgroup-controls');
 
-      $fieldset.remove('label');
+      $fieldset.children('label').remove();
+      $controls = $fieldset;
 
       _.forEach(options, function (label, value) {
         var $label = $('<label>' + label + '</label>'),
@@ -63,26 +63,32 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           value: value
         });
         $label.prepend($input);
-        $fieldset.append($label);
+        $controls.append($label);
       });
 
       if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
-        $fieldset.append('<label><input name="' + iName + '" type="' + iType + '" value="other" />other</label>');
+        $controls.append('<label><input name="' + iName + '" type="' + iType + '" value="other" />other</label>');
       }
 
       if (type === 'select') {
-        $fieldset.find('input').on('click', function () {
+        $controls.find('input').on('click', function () {
           self.model.set('value', self.prepModelValue());
         });
       } else { // type === 'multi'
         // bind custom handler for checkboxes -> array
         // Note: jQM uses triggerHandler, so this has to be a direct event
-        $fieldset.find('input').on('click', {
+        $controls.find('input').on('click', {
           view: this,
           model: this.model
         }, this.onMultiInputClick);
       }
 
+    },
+
+    renderOptions: function () {
+      this.render();
+      this.$el.find('label > input').checkboxradio();
+      this.$el.children('fieldset').controlgroup().addClass('ui-field-contain');
     },
 
     onMultiInputClick: function (event) {

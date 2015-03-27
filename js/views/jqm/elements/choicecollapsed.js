@@ -44,8 +44,9 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
     renderOptions: function () {
       var $otherOption;
-      var type = this.model.attributes.type;
-      var $input = this.$el.children('select');
+      var attrs = this.model.attributes;
+      var type = attrs.type;
+      var $input = this.$el.find('select');
 
       $input.empty();
 
@@ -54,13 +55,17 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       } else { // type === 'multi'
         $input.append('<option>select one or more...</option>');
       }
-      _.forEach(this.model.attributes.options, function (label, value) {
+      _.forEach(attrs.options, function (label, value) {
         var $option = $('<option value="' + value + '">' + label + '</option>');
         $input.append($option);
       });
-      if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
+      if (attrs.other || attrs.canSpecifyOther) {
         $otherOption = $('<option value="other">other</option>');
         $input.append($otherOption);
+      }
+
+      if (!attrs.nativeMenu && this.$el.children('.ui-select').length) {
+        $input.selectmenu('refresh');
       }
     },
 

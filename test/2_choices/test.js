@@ -4,6 +4,7 @@
 define(['BlinkForms', 'BIC'], function (Forms) {
 
   var originalOptions = { a: 'alpha', b: 'beta', g: 'gamma' };
+  var newOptions = { d: 'delta', e: 'epsilon', z: 'zeta' };
   var choiceElements = [ 'selectc', 'selecte', 'multic', 'multie', 'multif',
       'selectf', 'multig', 'selecth' ];
   var multiWithOther = [ 'multic', 'multie', 'multif', 'multig' ];
@@ -275,6 +276,161 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           var element = form.getElement(name);
           var currentOptions = element.get('options');
           assert.deepEqual(currentOptions, originalOptions, name + ' ' + JSON.stringify(currentOptions));
+        });
+      });
+
+      test('elements set to d|e|z options', function () {
+        var form = Forms.current;
+        choiceElements.forEach(function (name) {
+          var element = form.getElement(name);
+          // var currentOptions = element.get('options');
+          element.set('options', newOptions);
+        });
+      });
+
+      test('select+other bindings between model and "other" input', function () {
+        var form = Forms.current;
+        selectWithOther.forEach(function (name) {
+          var value;
+          var element = form.getElement(name);
+          var $view = element.get('_view').$el;
+          var $other;
+          var $checked;
+
+          element.val('');
+          $other = $view.find('input[type=text]');
+          assert.notOk(element.val(), name + ': model value is falsey');
+          // assert.lengthOf($selected, 0, name + ': nothing checked');
+          assert.lengthOf($other, 0, name + ': other box absent');
+
+          value = 'd';
+          element.val(value);
+          $other = $view.find('input[type=text]');
+          $checked = $view.find(':checked');
+          assert.equal(element.val(), value, name + ': model value correct');
+          assert.lengthOf($checked, 1, name + ': 1 checked');
+          assert.lengthOf($other, 0, name + ': other box absent');
+          assert.equal($checked.val(), value, name + ': model value correct');
+
+          value = '123';
+          element.val(value);
+          $other = $view.find('input[type=text]');
+          $checked = $view.find(':checked');
+          assert.deepEqual(element.val(), value, name + ': model value correct');
+          assert.lengthOf($checked, 1, name + ': 1 checked');
+          assert.lengthOf($other, 1, name + ': other box present');
+          assert.equal($other.val(), '123', name + ': other box shows "123"');
+          assert.equal($checked.val(), 'other', name + ': model value correct');
+
+          element.val('');
+          $other = $view.find('input[type=text]');
+          assert.notOk(element.val(), name + ': model value is falsey');
+          // assert.lengthOf($selected, 0, name + ': nothing checked');
+          assert.lengthOf($other, 0, name + ': other box absent');
+
+          if (element.get('nativeMenu')) {
+            assert.equal($view.find('select').data("role"), "none", name + ': data-role is not none');
+          } else {
+            assert.notEqual($view.find('select').data("role"), "none", name + ': data-role is not none');
+          }
+        });
+      });
+
+      test('multi+other bindings between model and "other" input', function () {
+        var form = Forms.current;
+        multiWithOther.forEach(function (name) {
+          var value;
+          var element = form.getElement(name);
+          var $view = element.get('_view').$el;
+          var $other;
+          var $checked;
+
+          element.val('');
+          $other = $view.find('input[type=text]');
+          $checked = $view.find(':checked');
+          assert.notOk(element.val(), name + ': model value is falsey');
+          assert.lengthOf($checked, 0, name + ': nothing checked');
+          assert.lengthOf($other, 0, name + ': other box absent');
+
+          value = ['d'];
+          element.val(value);
+          $other = $view.find('input[type=text]');
+          $checked = $view.find(':checked');
+          assert.deepEqual(element.val(), value, name + ': model value correct');
+          assert.lengthOf($checked, 1, name + ': 1 checked');
+          assert.lengthOf($other, 0, name + ': other box absent');
+          assert.deepEqual($checked.map(function () {
+            return $(this).val();
+          }).get(), value, name + ': model value correct');
+
+          value = ['d', 'e'];
+          element.val(value);
+          $other = $view.find('input[type=text]');
+          $checked = $view.find(':checked');
+          assert.deepEqual(element.val(), value, name + ': model value correct');
+          assert.lengthOf($checked, 2, name + ': 2 checked');
+          assert.lengthOf($other, 0, name + ': other box absent');
+          assert.deepEqual($checked.map(function () {
+            return $(this).val();
+          }).get(), value, name + ': model value correct');
+
+          value = [''];
+          element.val(value);
+          $other = $view.find('input[type=text]');
+          $checked = $view.find(':checked');
+          assert.deepEqual(element.val(), value, name + ': model value correct');
+          assert.lengthOf($checked, 1, name + ': 1 checked');
+          assert.lengthOf($other, 1, name + ': other box present');
+          assert.equal($other.val(), '', name + ': other box empty');
+
+          value = ['d', ''];
+          element.val(value);
+          $other = $view.find('input[type=text]');
+          $checked = $view.find(':checked');
+          assert.deepEqual(element.val(), value, name + ': model value correct');
+          assert.lengthOf($checked, 2, name + ': 2 checked');
+          assert.lengthOf($other, 1, name + ': other box present');
+          assert.equal($other.val(), '', name + ': other box empty');
+          assert.deepEqual($checked.map(function () {
+            return $(this).val();
+          }).get(), ['d', 'other'], name + ': model value correct');
+
+          value = ['123'];
+          element.val(value);
+          $other = $view.find('input[type=text]');
+          $checked = $view.find(':checked');
+          assert.deepEqual(element.val(), value, name + ': model value correct');
+          assert.lengthOf($checked, 1, name + ': 1 checked');
+          assert.lengthOf($other, 1, name + ': other box present');
+          assert.equal($other.val(), '123', name + ': other box shows "123"');
+          assert.deepEqual($checked.map(function () {
+            return $(this).val();
+          }).get(), ['other'], name + ': model value correct');
+
+          value = ['d', '123'];
+          element.val(value);
+          $other = $view.find('input[type=text]');
+          $checked = $view.find(':checked');
+          assert.deepEqual(element.val(), value, name + ': model value correct');
+          assert.lengthOf($checked, 2, name + ': 2 checked');
+          assert.lengthOf($other, 1, name + ': other box present');
+          assert.equal($other.val(), '123', name + ': other box shows "123"');
+          assert.deepEqual($checked.map(function () {
+            return $(this).val();
+          }).get(), ['d', 'other'], name + ': model value correct');
+
+          element.val('');
+          $other = $view.find('input[type=text]');
+          $checked = $view.find(':checked');
+          assert.notOk(element.val(), name + ': model value is falsey');
+          assert.lengthOf($checked, 0, name + ': nothing checked');
+          assert.lengthOf($other, 0, name + ': other box absent');
+
+          if (element.get('nativeMenu')) {
+            assert.equal($view.find('select').data("role"), "none", name + ': data-role is not none');
+          } else {
+            assert.notEqual($view.find('select').data("role"), "none", name + ': data-role is not none');
+          }
         });
       });
 

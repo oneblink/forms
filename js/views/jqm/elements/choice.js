@@ -3,6 +3,11 @@ define(['views/jqm/element'], function (ElementView) {
 
   var ChoiceElementView = ElementView.extend({
 
+    initialize: function () {
+      ElementView.prototype.initialize.call(this);
+      this.model.on('change:options', this.renderOptions, this);
+    },
+
     renderOtherText: function (render) {
       var self = this,
         name = this.model.attributes.name,
