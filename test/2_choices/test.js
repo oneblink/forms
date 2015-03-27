@@ -3,6 +3,10 @@
 
 define(['BlinkForms', 'BIC'], function (Forms) {
 
+  var originalOptions = { a: 'alpha', b: 'beta', g: 'gamma' };
+  var choiceElements = [ 'selectc', 'selecte', 'multic', 'multie', 'multif',
+      'selectf', 'multig', 'selecth' ];
+
   suite('2: options', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
@@ -377,7 +381,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $other = $fieldset.find('input[type = text]');
         $other.val("test");
         $other.change();
-        assert.sameMembers(element.val(), ['a', 'test'], 'model.value = ["a", "test"]');
+        assert.sameMembers(element.val(), ['b', 'test'], 'model.value = ["b", "test"]');
 
         assert.equal($select.data("role"), "none", "data-role is not none");
 
@@ -433,6 +437,15 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           }, 500);
         }, 500);
 
+      });
+
+      test('elements have original a|b|g options', function () {
+        var form = Forms.current;
+        choiceElements.forEach(function (name) {
+          var element = form.getElement(name);
+          var currentOptions = element.get('options');
+          assert.deepEqual(currentOptions, originalOptions, name + ' ' + JSON.stringify(currentOptions));
+        });
       });
 
     }); // END: suite('Form', ...)
