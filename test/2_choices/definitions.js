@@ -145,6 +145,21 @@ define(function () {
                 y: 'yes'
               }
             }
+          },
+          {
+            'default': {
+              name: 'select_space',
+              label: 'Select space in value',
+              type: 'select',
+              mode: 'expanded',
+              other: true,
+              options: {
+                "First value": "First value",
+                "Second": "Second",
+                "Third": "Third",
+                "Fouth value": "Fouth value"
+              }
+            }
           }
         ]
       }

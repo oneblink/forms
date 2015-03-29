@@ -291,6 +291,100 @@ define([
 
       });
 
+      function subformValidationTest (errors, element, counter) {
+        var validation,
+          errorCounter = 0;
+
+        validation = element.validate();
+        _.each(validation.value, function (v) {
+          assert.notEqual(errors.indexOf(v.code), -1, '(' + counter + ') contained ' + v.code + ' error');
+          if (errors.indexOf(v.code) !== -1) {
+            errorCounter++;
+          }
+        });
+        assert.equal(errorCounter, validation.value.length, "(" + counter + ") number of total error doesn't match validation array");
+        assert.equal(errorCounter, errors.length, "(" + counter + ") number of total error doesn't match");
+      }
+
+      test('subform require, min=1 subform test', function (done) {
+        var subFormElement = Forms.current.getElement('comments'),
+          subForms = subFormElement.attributes.forms,
+          subForm = subForms.at(0),
+          $subformView = subForm.attributes._view.$el,
+          $remove = $subformView.children('.ui-btn').children('button'),
+          errors = ['REQUIRED'];
+
+        assert.equal(subForms.length, 1, 'no subForms yet');
+
+        $remove.trigger('click');
+
+        setTimeout(function () {
+          subformValidationTest(errors, subFormElement, 1);
+          done();
+        }, 0);
+      });
+
+      test('maxinum number of subforms test', function (done) {
+        var subFormElement = Forms.current.getElement('comments'),
+          $view = subFormElement.attributes._view.$el,
+          $add = $view.children('.ui-btn').children('button'),
+          subForms = subFormElement.attributes.forms,
+          errors;
+
+        assert.equal(subForms.length, 0, 'no subForms yet');
+        $add.trigger('click');
+        $add.trigger('click');
+        $add.trigger('click');
+        $add.trigger('click');
+        setTimeout(function () {
+          assert.isObject(subFormElement.validate(), "subform validation fails");
+
+          errors = ['MAXSUBFORM', 'SUBFORM'];
+          subformValidationTest(errors, subFormElement, 1);
+
+          subForms.at(0).getElement('comment').val('def');
+          subForms.at(1).getElement('comment').val('def');
+          subformValidationTest(errors, subFormElement, 2);
+
+          subForms.at(2).getElement('comment').val('def');
+          subForms.at(3).getElement('comment').val('def');
+          errors = ['MAXSUBFORM'];
+          subformValidationTest(errors, subFormElement, 3);
+
+          done();
+        }, 0);
+      });
+
+      test('subform require, min=2 subform test', function (done) {
+        var subFormElement = Forms.current.getElement('names'),
+          $view = subFormElement.attributes._view.$el,
+          $add = $view.children('.ui-btn').children('button'),
+          subForms = subFormElement.attributes.forms,
+          errors;
+
+        assert.equal(subForms.length, 0, 'no subForms yet');
+
+        setTimeout(function () {
+          assert.isObject(subFormElement.validate(), "subform validation fails");
+
+          errors = ['REQUIRED', 'MINSUBFORM'];
+          subformValidationTest(errors, subFormElement, 1);
+
+          $add.trigger('click');
+          setTimeout(function () {
+            errors = ['MINSUBFORM', 'SUBFORM'];
+            subformValidationTest(errors, subFormElement, 2);
+
+            $add.trigger('click');
+            setTimeout(function () {
+              errors = ['SUBFORM'];
+              subformValidationTest(errors, subFormElement, 2);
+
+              done();
+            }, 0);
+          }, 0);
+        }, 0);
+      });
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)

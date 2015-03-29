@@ -63,6 +63,7 @@ define([
   $submitPopup.popup();
 
   $(document.body).on('click', 'button[data-action=submit]', function () {
+    Forms.current.getErrors();
     Forms.current.data().then(function (data) {
       var json = JSON.stringify(data, undefined, 2);
       $submitPopup.empty();
