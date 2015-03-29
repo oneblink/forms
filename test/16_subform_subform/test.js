@@ -171,8 +171,6 @@ define(['BlinkForms', 'backbone', 'BIC'], function (Forms, Backbone) {
           assert.equal(element.size(), 3);
         });
 
-        test('');
-
         test('Address[0].parentElement', function () {
           var element = form.getElement('Address');
           var subForm = element.getForm(0);
