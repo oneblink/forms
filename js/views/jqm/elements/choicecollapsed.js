@@ -4,7 +4,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
   var ChoiceCollapsedElementView = ChoiceElementView.extend({
     render: function () {
       var that = this;
-      var $input, $otherOption,
+      var $input,
         attr = this.model.attributes,
         type = this.model.attributes.type,
         name = this.model.attributes.name;
@@ -18,7 +18,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         $input.attr({
           name: name
         });
-        $input.append('<option>select one...</option>');
       } else { // type === 'multi'
         $input.attr({
           name: name + '[]',
@@ -26,22 +25,15 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           // TODO: detect if native menu actually works and enable it
           'data-native-menu': false
         });
-        $input.append('<option>select one or more...</option>');
       }
 
       if (attr.nativeMenu) {
         $input.attr({"data-role": "none"});
       }
 
-      _.forEach(this.model.attributes.options, function (label, value) {
-        var $option = $('<option value="' + value + '">' + label + '</option>');
-        $input.append($option);
-      });
-      if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
-        $otherOption = $('<option value="other">other</option>');
-        $input.append($otherOption);
-      }
       this.$el.append($input);
+
+      this.renderOptions();
 
       this.bindRivets();
       $input.on('change', function () {
@@ -49,6 +41,34 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       });
       this.model.on('change:value', this.onValueChange, this);
     },
+
+    renderOptions: function () {
+      var $otherOption;
+      var attrs = this.model.attributes;
+      var type = attrs.type;
+      var $input = this.$el.find('select');
+
+      $input.empty();
+
+      if (type === 'select') {
+        $input.append('<option>select one...</option>');
+      } else { // type === 'multi'
+        $input.append('<option>select one or more...</option>');
+      }
+      _.forEach(attrs.options, function (label, value) {
+        var $option = $('<option value="' + value + '">' + label + '</option>');
+        $input.append($option);
+      });
+      if (attrs.other || attrs.canSpecifyOther) {
+        $otherOption = $('<option value="other">other</option>');
+        $input.append($otherOption);
+      }
+
+      if (!attrs.nativeMenu && this.$el.children('.ui-select').length) {
+        $input.selectmenu('refresh');
+      }
+    },
+
     onValueChange: function () {
       var renderOther = false;
       var attr = this.model.attributes;
@@ -91,6 +111,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         }
       }
     },
+
     fetchValue: function () {
       var attr = this.model.attributes,
         value = this.$el.find('select').val();
