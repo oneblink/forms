@@ -22,8 +22,8 @@ define(function () {
         this.$el.append($header);
       }
 
-      if (pages && typeof pages.goto === 'function') {
-        pages.goto(0);
+      if (pages && typeof pages['goto'] === 'function') {
+        pages['goto'](0);
       }
 
       if (this.model.attributes.footer) {

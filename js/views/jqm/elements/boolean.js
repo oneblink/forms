@@ -4,6 +4,7 @@ define(['views/jqm/element'], function (ElementView) {
   var BooleanElementView = ElementView.extend({
     render: function () {
       var $input;
+      var model = this.model;
 
       this.$el.empty();
       this.renderLabel();
@@ -21,10 +22,10 @@ define(['views/jqm/element'], function (ElementView) {
 
       this.$el.append($input);
       this.bindRivets();
-      this.model.on('change:value', this.onValueChange, this);
+      model.on('change:value', this.onValueChange, this);
     },
     onValueChange: function () {
-      this.$el.children('select').slider('refresh');
+      this.$el.children('select').slider().slider('refresh');
     }
   });
 

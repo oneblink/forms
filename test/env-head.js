@@ -15,15 +15,15 @@
       BlinkForms: '../../js/build/views/forms3jqm',
       BIC: '../sample-bic',
       'BMP.Blob': '../lib/bmp-blobs',
-      'BMP.BlinkGap': '../../node_modules/bic-jqm/scripts/vendor/BMP.BlinkGap',
+      'BMP.BlinkGap': '../../node_modules/blinkgap-utils/BMP.BlinkGap',
       signaturepad: 'http://cdnp.blinkm.co/signaturepad/2.3.0/jq.sig.min',
       picker: '../../bower_components/pickadate/lib/picker',
       'picker.date': '../../bower_components/pickadate/lib/picker.date',
       'picker.time': '../../bower_components/pickadate/lib/picker.time',
       'moment': '../../bower_components/momentjs/min/moment.min',
-      bluebird: '../../bower_components/bluebird/js/browser/bluebird',
+      bluebird: '../../node_modules/bluebird/js/browser/bluebird.min',
       feature: '../../bower_components/amd-feature/feature',
-      'es5-shim': '../../bower_components/es5-shim/es5-shim.min',
+      'es5-shim': '../../node_modules/es5-shim/es5-shim.min',
       implementations: '../lib/implementations'
     },
     shim: {

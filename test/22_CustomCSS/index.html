@@ -25,6 +25,15 @@
     <footer data-role="footer"></footer>
 </div>
 <div id="mocha"></div>
+
+<style type="text/css">
+  div[data-type="file"] {
+    display: none;
+  }
+  div[data-name="location"] {
+    display: none;
+  }
+</style>
 <script>
     require(['test'], function () {
         mocha.run();

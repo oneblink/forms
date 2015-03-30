@@ -3,6 +3,11 @@ define(['views/jqm/element'], function (ElementView) {
 
   var ChoiceElementView = ElementView.extend({
 
+    initialize: function () {
+      ElementView.prototype.initialize.call(this);
+      this.model.on('change:options', this.renderOptions, this);
+    },
+
     renderOtherText: function (render) {
       var self = this,
         name = this.model.attributes.name,
@@ -32,11 +37,11 @@ define(['views/jqm/element'], function (ElementView) {
       }
     },
     prepModelValue: function() {
-      var $input = this.$el.find('input[type = text]'),
-        values;
+      var $input = this.$el.find('input[type = text]');
+      var values = this.fetchValue();
+      var allowsOther = this.model.attributes.other || this.model.attributes.canSpecifyOther;
 
-      values = this.fetchValue();
-      if ($input.length > 0) {
+      if ($input.length > 0 && allowsOther) {
         if (_.isArray(values) && _.contains(values, 'other')) {
           // Multi select
           if (values.indexOf('other') !== -1) {

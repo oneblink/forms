@@ -194,7 +194,20 @@ define(function () {
               name: 'comments',
               label: 'Comments',
               type: 'subForm',
-              subForm: 'form2'
+              subForm: 'form2',
+              required: "1",
+              maxSubforms: 3,
+              minSubforms: 1
+            }
+          },
+          {
+            'default': {
+              name: 'names',
+              label: 'names',
+              type: 'subForm',
+              subForm: 'form2',
+              required: "1",
+              minSubforms: 2
             }
           }
         ],

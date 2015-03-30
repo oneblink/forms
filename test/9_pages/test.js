@@ -95,7 +95,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           done();
         });
 
-        pages.goto(1);
+        pages['goto'](1);
       });
 
       test('page 1 elements are visible', function () {
@@ -135,7 +135,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           done();
         });
 
-        pages.goto(2);
+        pages['goto'](2);
       });
 
       test('page 2 elements are visible', function () {

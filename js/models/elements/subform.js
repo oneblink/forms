@@ -11,6 +11,8 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
     initialize: function () {
       Element.prototype.initialize.call(this);
       this.attributes.forms = new SubForms();
+      this.attributes.forms.on('add remove', this.updateFieldErrors, this);
+      this.off('change', this.updateErrors, this);
     },
     add: function () {
       // TODO: there is too much DOM stuff here to be in the model
@@ -24,7 +26,6 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
       return new Promise(function (resolve, reject) {
         Forms.getDefinition(name, action).then(function (def) {
           var form;
-
           try {
             form = SubForm.create(def, action);
             form.parentElement = self;
@@ -144,21 +145,66 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         return this.getRecord();
       }
     },
-    validate: function (attrs) {
-      var forms = this.attributes.forms,
-        err,
+    updateFieldErrors: function () {
+      this.set('errors', this.validateField());
+    },
+    validateField: function (attrs) {
+      var forms,
         errors = {};
+
       if (attrs === undefined) {
         attrs = this.attributes;
       }
 
-      forms.models.forEach(function (frm, index) {
+      forms = attrs.forms;
+
+      //check if there is any subform added
+      if (forms && (attrs.required && forms.length === 0 || attrs.minSubforms && attrs.minSubforms === 1 && forms.length === 0)) {
+        errors.value = errors.value || [];
+        errors.value.push({code: 'REQUIRED'});
+      }
+      // check for max subforms
+      if (forms && attrs.maxSubforms && forms.length > attrs.maxSubforms) {
+        errors.value = errors.value || [];
+        errors.value.push({code: 'MAXSUBFORM', MAX: attrs.maxSubforms});
+      }
+      // check for min subforms
+      if (forms && attrs.minSubforms && attrs.minSubforms > 1 && forms.length < attrs.minSubforms) {
+        errors.value = errors.value || [];
+        errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
+      }
+
+      if (!_.isEmpty(errors)) {
+        return errors;
+      }
+    },
+
+    validate: function (attrs) {
+      var forms,
+        err,
+        subformErrorCounter = 0,
+        errors;
+
+      if (attrs === undefined) {
+        attrs = this.attributes;
+      }
+
+      errors = this.validateField(attrs) || {};
+
+      forms = attrs.forms;
+
+      forms.models.forEach(function (frm) {
         err = frm.getErrors();
         if (err) {
-          errors.value = errors.value || {};
-          errors.value[index] = err;
+          subformErrorCounter++;
         }
       });
+
+      //check if subform fields has any errors
+      if (subformErrorCounter > 0) {
+        errors.value = errors.value || [];
+        errors.value.push({code: 'SUBFORM'});
+      }
 
       if (!_.isEmpty(errors)) {
         return errors;

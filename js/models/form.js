@@ -5,7 +5,10 @@ define(function (require) {
 
   Form = Backbone.Model.extend({
     defaults: {
-      'class': ''
+      answerSpace: '',
+      'class': '',
+      isPopulating: false,
+      uuid: ''
     },
     initialize: function () {
       var Forms = BMP.Forms,
@@ -144,12 +147,18 @@ define(function (require) {
                 data[el.attributes.name] = blob.base64 || blob.text;
                 data[el.attributes.name + '_mimetype'] = blob.type;
               }
+              data[el.attributes.name + '_uuid'] = attrs.uuid;
+              data[el.attributes.name + '_height'] = attrs.height;
+              data[el.attributes.name + '_width'] = attrs.width;
               return;
             }
             if (type === 'location') {
               val = attrs.value;
               if (val) {
-                data[el.attributes.name] = JSON.stringify(val);
+                if (typeof val !== 'string') {
+                  val = JSON.stringify(val);
+                }
+                data[el.attributes.name] = val;
               }
               return;
             }
@@ -184,6 +193,8 @@ define(function (require) {
           return;
         }
 
+        self.set('isPopulating', true);
+
         _.each(data, function (value, key) {
           var formElement = self.getElement(key), result, xml, mime;
           if (!formElement) {
@@ -203,9 +214,14 @@ define(function (require) {
             if (_.contains(['file', 'draw'], formElement.attributes.type)) {
               mime = data[key + '_mimetype'] || 'image/jpeg';
               value = Form.addMimetype(value, mime);
+              formElement.set('uuid', data[key + '_uuid'] || '');
+              formElement.set('height', data[key + '_height'] || 0);
+              formElement.set('width', data[key + '_width'] || 0);
             }
             if (formElement.attributes.type === 'multi') {
-              value = value.split('\n');
+              if( typeof value === 'string') {
+                value = value.split('\n');
+              }
               value = value.map(function (v) {
                 return v.trim();
               });
@@ -214,7 +230,11 @@ define(function (require) {
           }
         });
         Promise.all(promises).then(function () {
+          self.set('isPopulating', false);
           resolve(data);
+        }, function (err) {
+          self.set('isPopulating', false);
+          reject(err);
         });
       });
     },
@@ -231,13 +251,12 @@ define(function (require) {
     */
     getErrors: function () {
       var me = this,
-        err,
         errors = {};
 
       me.attributes.elements.forEach(function (el) {
-        err = el.validate();
-        if (err) {
-          errors[el.attributes.name] = err.value;
+        el.updateErrors();
+        if (!_.isEmpty(el.attributes.errors)) {
+          errors[el.attributes.name] = el.attributes.errors.value;
         }
       });
       return _.isEmpty(errors) ? undefined : errors;

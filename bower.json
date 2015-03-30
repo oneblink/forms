@@ -1,12 +1,11 @@
 {
   "name": "forms",
-  "version": "3.1.8",
+  "version": "3.2.0",
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
   "dependencies": {
-    "pickadate": "~3.5.5",
-    "momentjs": "~2.5.1",
-    "rivets": "~0.6.8",
-    "bluebird": "~1.2.4"
+    "pickadate": "3.5.5",
+    "momentjs": "2.5.1",
+    "rivets": "0.6.8"
   },
   "devDependencies": {
     "almond": "~0.2",
@@ -14,8 +13,6 @@
     "requirejs": "~2.1",
     "requirejs-text": "~2.0",
     "amd-feature": "~1.1.0",
-    "assertive-chai": "~1.0.0",
-    "html5shiv": "~3.7.2",
-    "es5-shim": "~3.4.0"
+    "html5shiv": "~3.7.2"
   }
 }

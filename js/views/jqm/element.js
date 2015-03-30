@@ -8,6 +8,7 @@ define(['rivets'], function (rivets) {
     initialize: function () {
       var element = this.model;
       this.$el.attr('data-name', element.attributes.name);
+      this.$el.attr('data-type', element.attributes.type);
       this.$el.data('model', element);
       this.bindRivets();
       this.onChangeHidden();
@@ -101,9 +102,17 @@ define(['rivets'], function (rivets) {
     onChangeHidden: function () {
       var hidden = this.model.attributes.hidden;
       if (hidden) {
-        this.$el.hide();
+        this.hide();
       } else {
-        this.$el.show();
+        this.show();
+      }
+    },
+    hide: function () {
+      this.$el.css('display', 'none');
+    },
+    show: function () {
+      if (this.$el.css('display') === 'none') {
+        this.$el.css('display', '');
       }
     },
     isHidden: function () {

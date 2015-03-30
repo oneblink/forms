@@ -3,7 +3,7 @@ define(function (require) {
   var Forms, BicyclePump, FormsLib;
 
   BicyclePump = require('bicyclepump');
-  FormsLib = require('formslib/main');
+  FormsLib = require('formslib');
   Forms = window.BMP.Forms;
 
   _.extend(Forms, Backbone.Events);
@@ -36,9 +36,12 @@ define(function (require) {
     ButtonElement: require('models/elements/button')
   };
 
+  Forms.uuid = require('uuid');
+
   Forms.models = new BicyclePump();
   Forms.views = new BicyclePump();
 
+  Forms.blobUploader = FormsLib.blobUploader;
   Forms.castPropertyValues = FormsLib.castPropertyValues;
   Forms.flattenDefinition = FormsLib.flattenDefinition;
   Forms.parseClass = FormsLib.parseClass;
@@ -61,7 +64,7 @@ define(function (require) {
     if (!model instanceof Backbone.Model || !model.attributes) {
       return; // nothing to do
     }
-    klass = model.attributes.class;
+    klass = model.attributes['class'];
     if (typeof klass !== 'string' || klass.indexOf(';') === -1) {
       return; // nothing to do
     }
@@ -96,7 +99,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.1.8';
+  Forms.version = '3.2.0';
   Forms.supports = {};
 
   Forms.supports.blob = (function () {

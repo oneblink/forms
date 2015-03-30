@@ -9,16 +9,11 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       }
       return ChoiceElementView.prototype.remove.call(this);
     },
+
     render: function () {
-      var self = this,
-        $fieldset,
-        $legend,
+      var $fieldset,
         attrs = this.model.attributes,
-        type = attrs.type,
-        name = attrs.name,
-        options = attrs.options,
-        iType = type === 'select' ? 'radio' : 'checkbox',
-        iName = type === 'select' ? name + '_' + self.cid : name + '[]';
+        type = attrs.type;
 
       this.$el.empty();
 
@@ -30,12 +25,34 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           'data-type': 'horizontal'
         });
       }
-      $legend = $('<legend></legend>').text(attrs.label);
-      $fieldset.prepend($legend);
+      $fieldset.prepend($('<legend></legend>').text(attrs.label));
 
-      if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
-        options.other = 'other';
+      this.$el.append($fieldset);
+
+      this._renderOptions();
+
+      if (type === 'select') {
+        this.bindRivets();
+        this.model.on('change:value', this.onSelectValueChange, this);
+      } else { // type === 'multi'
+        // bind custom handler for checkboxes <- array
+        this.model.on('change:value', this.onMultiValueChange, this);
       }
+    },
+
+    '_renderOptions': function () {
+      var self = this;
+      var $fieldset = this.$el.children('fieldset');
+      var attrs = this.model.attributes;
+      var type = attrs.type;
+      var options = attrs.options;
+      var name = attrs.name;
+      var iType = type === 'select' ? 'radio' : 'checkbox';
+      var iName = type === 'select' ? name + '_' + self.cid : name + '[]';
+      var $controls = $fieldset.children('.ui-controlgroup-controls');
+
+      $fieldset.children('label').remove();
+      $controls = $fieldset;
 
       _.forEach(options, function (label, value) {
         var $label = $('<label>' + label + '</label>'),
@@ -46,32 +63,40 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           value: value
         });
         $label.prepend($input);
-        $fieldset.append($label);
+        $controls.append($label);
       });
 
-      this.$el.append($fieldset);
+      if (this.model.attributes.other || this.model.attributes.canSpecifyOther) {
+        $controls.append('<label><input name="' + iName + '" type="' + iType + '" value="other" />other</label>');
+      }
+
       if (type === 'select') {
-        this.bindRivets();
-        this.model.on('change:value', this.onSelectValueChange, this);
-        $fieldset.find('input').on('click', function () {
+        $controls.find('input').on('click', function () {
           self.model.set('value', self.prepModelValue());
         });
       } else { // type === 'multi'
         // bind custom handler for checkboxes -> array
         // Note: jQM uses triggerHandler, so this has to be a direct event
-        $fieldset.find('input').on('click', {
+        $controls.find('input').on('click', {
           view: this,
           model: this.model
         }, this.onMultiInputClick);
-        // bind custom handler for checkboxes <- array
-        this.model.on('change:value', this.onMultiValueChange, this);
       }
+
     },
+
+    renderOptions: function () {
+      this.render();
+      this.$el.find('label > input').checkboxradio();
+      this.$el.children('fieldset').controlgroup().addClass('ui-field-contain');
+    },
+
     onMultiInputClick: function (event) {
       var view = event.data.view,
         model = event.data.model;
       model.set('value', view.prepModelValue());
     },
+
     onMultiValueChange: function () {
       var view = this,
         model = this.model,
@@ -93,19 +118,21 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         view.$el.find('input[value = other]').prop('checked', true);
       }
 
-      $inputs.checkboxradio('refresh');
+      $inputs.checkboxradio().checkboxradio('refresh');
+
       ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
 
       if (_.difference(value, _.keys(model.attributes.options)).length > 0) {
         view.$el.find('input[type = text]').val(_.difference(value, _.keys(model.attributes.options)));
       }
     },
+
     onSelectValueChange: function () {
-      var view = this, $values, values,
-        $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
+      var $values, values, view = this;
+      var $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
 
       if (_.contains(_.keys(this.model.get('options')), this.model.get('value'))) {
-        this.$el.find('[value = ' + this.model.get('value') + ']').prop('checked', true);
+        this.$el.find('[value = "' + this.model.get('value') + '"]').prop('checked', true);
       } else {
         if (this.model.get('value') === '') {
           this.$el.find('input:checked').prop('checked', false);
@@ -113,7 +140,8 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           this.$el.find('[value = other]').prop('checked', true);
         }
       }
-      $inputs.checkboxradio('refresh');
+
+      $inputs.checkboxradio().checkboxradio('refresh');
 
       $values = this.$el.find('label[data-icon=radio-on]');
       values = $.map($values, function (val) {
@@ -127,6 +155,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         this.$el.find('input[type = text]').val(this.model.get('value'));
       }
     },
+
     fetchValue: function () {
       var attr = this.model.attributes;
       var values;
@@ -136,7 +165,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         case "select":
           values = this.$el.find('input:checked').val();
           break;
-        default:
+        default: // multi
           $inputs = this.$el.find('input:checked');
           values = _.map($inputs, function (input) {
             return $(input).val();

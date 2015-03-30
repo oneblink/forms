@@ -1,23 +1,32 @@
 {
   "name": "forms",
-  "version": "3.1.8",
+  "version": "3.2.0",
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
+  "scripts": {
+    "test": "grunt test"
+  },
   "dependencies": {
-    "geolocation": "git://github.com/blinkmobile/geolocation#v1.0.0"
+    "blinkgap-utils": "git://github.com/blinkmobile/blinkgap-utils#500774457d",
+    "blinkmobile-forms": "blinkmobile/forms#v1.3.1",
+    "geolocation": "git://github.com/blinkmobile/geolocation#v1.0.0",
+    "node-uuid": "1.4.3"
   },
   "devDependencies": {
+    "assert": "Jxck/assert#ac895ade8d",
+    "assertive-chai": "^2.0.1",
     "bic-jqm": "blinkmobile/bic-v3#master",
-    "blinkmobile-forms": "blinkmobile/forms#v1.2.1",
+    "bluebird": "^2.9.14",
+    "es5-shim": "^4.1.0",
     "grunt": "~0.4",
     "grunt-contrib-clean": "~0.6",
     "grunt-contrib-connect": "^0.9.0",
     "grunt-contrib-requirejs": "~0.4",
-    "grunt-contrib-uglify": "~0.7",
+    "grunt-contrib-uglify": "~0.8",
     "grunt-contrib-watch": "~0.6",
-    "grunt-eslint": "^6.0",
+    "grunt-eslint": "^9.0",
     "grunt-exec": "~0.4",
     "grunt-mocha": "~0.4",
     "messageformat": "~0.2.1",
-    "mocha": "~2.1"
+    "mocha": "~2.2"
   }
 }

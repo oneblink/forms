@@ -1,5 +1,94 @@
 # Changelog
 
+## v3.2.0 - 2015-03-30
+
+### Added
+
+- FORMS-125: views reflect live changes to "options" attribute for choice fields
+
+    - e.g. `BMP.Forms.current.getElement('choice').set('options', { /*...*/ });`
+
+- FORMS-134: ensure custom CSS can select fields for flexible styling
+
+    - e.g. `[data-type="select"], [data-name="choice"] { /*...*/ }`
+
+- FORMS-137: required fields have a visible asterisk
+
+### Changed
+
+- FORMS-123: upload new blobs (images, signatures, attachments, etc) in the
+  background
+
+    - see: https://github.com/blinkmobile/forms/blob/master/docs/blob-uploader.md
+
+### Fixed
+
+- FORMS-128: pending / draft records populate as expected when the form includes
+  choice (select / multi) fields
+
+- FORMS-135: sub form min/max validation behaves as expected
+
+- FORMS-136: sub form required validation behaves as expected
+
+- FORMS-139: choice option values may include whitespace without breaking
+
+
+## v3.1.8 - 2015-03-04
+
+### Added
+
+- FORMS-72: geolocation pop-up with dynamic map
+
+- FORMS-54: read-only views for fields that are set to read-only
+
+### Changed
+
+- FORMS-92: label of geolocation button indicates progress / activity
+
+- FORMS-121: always request freshest geolocation data from device
+
+    - HelpDesk: 3536-ERYZ-0783
+
+### Fixed
+
+- FORMS-120: update to pickadate v3.5.5 to fix date picker issues on iPads
+
+- FORMS-117: choice fields that allow the user to add "other" values
+
+- FORMS-127: required validation for choice fields allowing "other" values
+
+- FORMS-105: properly migrate row class from Forms v2 definitions
+
+
+## v3.1.7 - 2015-01-19
+
+### Added
+
+- FORMS-105: [CSS `class` attribute is parsed](https://github.com/blinkmobile/forms/blob/master/docs/parseClass.md), exposing access to Forms v3 settings that are not currently exposed in the official Builder
+
+    - note: as recently as Platform v2.24.0, the Builder exports the `rowClass` attribute (not `class`), so this is and all other work depending upon it cannot be demonstrated
+
+- FORMS-112: [`getUserMedia`](http://www.html5rocks.com/en/tutorials/getusermedia/intro/)-capable environments get suitably enhanced image capture fields
+
+### Changed
+
+- FORMS-106: choice fields default to `nativeMenu: false`, but this can be overridden using the `class` attribute per FORMS-105 (above)
+    - this new default offers the best consistency between single and multiple choice fields
+    - multiple choice fields are not natively implemented in all environments, so we picked the safer default
+
+### Fixed
+
+- FORMS-80: detect Cordova and BlinkGap the same way BIC v2 did, triggers native-enhanced image capture fields, etc as expected in Android
+
+- FORMS-113: image size hints as configured in elsewhere in the app are passed through when making Cordova API calls, so native-enhanced capture fields behave as expected
+
+- FORMS-114: in environments supporting W3C File [`Blob`](http://caniuse.com/#feat=blobbuilder)s, image previews are correctly displayed when resuming a pending / draft record
+
+- FORMS-117: choice fields with "other" values enabled now function as expected
+
+    - note: as recently as Platform v2.24.0, the Builder exports the `canSpecifyOther` attribute, which is not currently checked by the client-side code, so this feature cannot currently be demonstrated
+
+
 ## v3.1.6 - 2014-11-18
 
 ### Changed
