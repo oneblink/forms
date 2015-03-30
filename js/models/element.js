@@ -40,11 +40,21 @@ define(function () {
       this.set('value', attrs.defaultValue);
       if (!attrs.label && attrs.type !== 'message') {
         if (attrs.prefix) {
-          this.set('label', attrs.name + ' ' + attrs.prefix);
+          attrs.label = attrs.name + ' ' + attrs.prefix;
         } else {
-          this.set('label', attrs.name);
+          attrs.label = attrs.name;
         }
       }
+
+      //FORMS-137 # Fields that are set to required are not marked as such in anyway (no *)
+      if (attrs.required && attrs.label && attrs.type !== "subForm") {
+        attrs.label += " *";
+      }
+
+      if (attrs.label) {
+        this.set('label', attrs.label);
+      }
+
       this.on('change', this.updateErrors, this);
       // this.on('change:blob', this.updateWarning, this);
     },

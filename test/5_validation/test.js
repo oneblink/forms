@@ -39,7 +39,7 @@ define([
 
           assert.isObject(error, 'contained ' + i + ' error');
         });
-      };
+      }, elements;
 
     suiteSetup(function () {
       $content.empty();
@@ -386,6 +386,44 @@ define([
         }, 0);
       });
     }); // END: suite('Form', ...)
+
+    elements = ['textBox1', 'number1', 'password1', 'text', 'url', 'email', 'password', 'streetAddress', 'city', 'telephone', 'number', 'currency', /*'heading', 'message',*/ 'select', 'multi'/*, 'comments', 'names'*/];
+
+    elements.forEach(function (name) {
+
+      suite('"' + name + '" element label', function () {
+        var element, view;
+
+        suiteSetup(function () {
+          var form = BMP.Forms.current;
+
+          element = form.getElement(name);
+          view = element.attributes._view;
+        });
+
+        test('label is correct', function () {
+          var label$ = view.$el.find('label').first(),
+            attr = element.attributes;
+
+          if (attr.required) {
+            assert.notEqual(attr.label.indexOf('*'), -1, name + ' is required');
+          } else {
+            assert.equal(attr.label.indexOf('*'), -1, name + ' is not required');
+          }
+          assert(label$.length, 'label exists');
+          assert.equal(label$.text(), element.get('label'));
+        });
+
+        test('label is bound', function () {
+          var label$ = view.$el.find('label').first();
+
+          element.set('label', 'ABC');
+          assert.equal(label$.text(), 'ABC');
+        });
+
+      });
+
+    });
 
   }); // END: suite('1', ...)
 
