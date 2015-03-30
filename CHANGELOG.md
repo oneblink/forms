@@ -1,5 +1,38 @@
 # Changelog
 
+## v3.2.0 - 2015-03-30
+
+### Added
+
+- FORMS-125: views reflect live changes to "options" attribute for choice fields
+
+    - e.g. `BMP.Forms.current.getElement('choice').set('options', { /*...*/ });`
+
+- FORMS-134: ensure custom CSS can select fields for flexible styling
+
+    - e.g. `[data-type="select"], [data-name="choice"] { /*...*/ }`
+
+- FORMS-137: required fields have a visible asterisk
+
+### Changed
+
+- FORMS-123: upload new blobs (images, signatures, attachments, etc) in the
+  background
+
+    - see: https://github.com/blinkmobile/forms/blob/master/docs/blob-uploader.md
+
+### Fixed
+
+- FORMS-128: pending / draft records populate as expected when the form includes
+  choice (select / multi) fields
+
+- FORMS-135: sub form min/max validation behaves as expected
+
+- FORMS-136: sub form required validation behaves as expected
+
+- FORMS-139: choice option values may include whitespace without breaking
+
+
 ## v3.1.8 - 2015-03-04
 
 ### Added
