@@ -43,12 +43,8 @@ define([
         options = this.model.toCameraOptions() || {};
 
       options.sourceType = $button.data('SourceType');
-      window.navigator.camera.getPicture(function (data) {
-        var blob = window.BMP.Blob.fromDataURI(data);
-        if (blob) {
-          model.set('blob', blob);
-        }
-      }, $.noop, options);
+      window.navigator.camera.getPicture(model.setBlobFromString.bind(model),
+        $.noop, options);
       event.preventDefault();
       return false;
     }

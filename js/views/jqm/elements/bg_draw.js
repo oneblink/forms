@@ -45,12 +45,8 @@ define([
       options.canvasButtonOriginY = offset.top - $window.scrollTop();
 
       options = $.extend({}, defaults, options);
-      window.navigator.bgtouchdraw.getDrawing(function (data) {
-        var blob = window.BMP.Blob.fromDataURI(data);
-        if (blob) {
-          model.set('blob', blob);
-        }
-      }, $.noop, options);
+      window.navigator.bgtouchdraw.getDrawing(model.setBlobFromString.bind(model),
+        $.noop, options);
       event.preventDefault();
       return false;
     }

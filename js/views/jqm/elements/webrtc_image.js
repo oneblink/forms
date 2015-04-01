@@ -94,10 +94,7 @@ define([
       };
 
       use = function () {
-        var blob = window.BMP.Blob.fromDataURI($canvas[0].toDataURL());
-        if (blob) {
-          that.model.set('blob', blob);
-        }
+        that.model.setBlobFromString($canvas[0].toDataURL());
         $popup.popup('close');
       };
 
