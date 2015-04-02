@@ -8,7 +8,10 @@ define(['BlinkForms', 'backbone', 'BIC'], function (Forms, Backbone) {
     var status, jqxhr;
 
     suiteSetup(function (done) {
-      $.get("getformrecord.xml").then(
+      $.ajax({
+        type: "GET",
+        url: "getformrecord.xml",
+        dataType: "xml"}).then(
         function (res, stat, xhr) {
           status = stat;
           jqxhr = xhr;
