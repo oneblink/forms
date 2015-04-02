@@ -184,7 +184,7 @@ define(['views/jqm/element',
       //creating map
       myLatlng = new google.maps.LatLng(value.latitude, value.longitude);
       mapOptions = {
-          zoom: 8,
+          zoom: 17,
           center: myLatlng,
           mapTypeId: google.maps.MapTypeId.ROADMAP
       };
