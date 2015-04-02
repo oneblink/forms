@@ -155,6 +155,8 @@ define(function (require) {
             if (type === 'location') {
               val = attrs.value;
               if (val) {
+                //NOTE: This is kinda unnecessary as we are assigning object all the time
+                //but leaving it here as safety net
                 if (typeof val !== 'string') {
                   val = JSON.stringify(val);
                 }
@@ -188,6 +190,8 @@ define(function (require) {
         promises = [];
 
       return new Promise(function (resolve, reject) {
+        var loopCounter = 0,
+          MAX_LOOP = 5;
         if (!_.isObject(data)) {
           reject();
           return;
@@ -225,6 +229,19 @@ define(function (require) {
               value = value.map(function (v) {
                 return v.trim();
               });
+            }
+            if (formElement.attributes.type === 'location') {
+              while (typeof value === 'string' && loopCounter < MAX_LOOP) {
+                try {
+                  value = JSON.parse(value);
+                } catch(e) {
+                  value = undefined;
+                }
+                loopCounter++;
+              }
+              if (loopCounter >= MAX_LOOP && typeof value !== 'object') {
+                value = undefined;
+              }
             }
             formElement.val(value);
           }

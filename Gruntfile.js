@@ -116,7 +116,8 @@ module.exports = function (grunt) {
       all: {
         src: ['test/*/index.html'],
         options: {
-          run: false
+          run: false,
+          timeout: 10000
         }
       }
     },
