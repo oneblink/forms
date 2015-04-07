@@ -108,6 +108,33 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     }); // END: suite('Form', ...)
 
+    suite('number', function () {
+
+      var fields = [
+        'number',
+        'number2'
+      ];
+
+      fields.forEach(function (name) {
+
+        test(name + ' field', function (done) {
+          var form = BMP.Forms.current,
+            element = form.getElement(name),
+            view = element.get('_view').$el,
+            attr = element.attributes;
+
+          if (attr.useSlider && attr.min && attr.max) {
+            assert.equal('range', view.find('input').attr('type'), name + " is not range field");
+          } else {
+            assert.equal('number', view.find('input').attr('type'), name + " is not number field");
+          }
+          done();
+        });
+
+      });
+
+    });
+
     suite('headings', function () {
 
       test('1st heading is an h1', function () {

@@ -92,6 +92,18 @@ define(function () {
           },
           {
             'default': {
+              name: 'number2',
+              label: 'Number with slider',
+              type: 'number',
+              useSlider: "1",
+              min: 0,
+              max: 100,
+              defaultValue: 1,
+              placeholderText: '20'
+            }
+          },
+          {
+            'default': {
               name: 'currency',
               label: 'Currency',
               type: 'number',
