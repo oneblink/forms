@@ -91,6 +91,7 @@ define(function () {
               headingText: "Heading using old definition",
               headingPosition: "left",
               headingFontFace: "arial",
+              headingSmallText: "<span>Small text to support heading</span>",
               page: 0
             }
           },

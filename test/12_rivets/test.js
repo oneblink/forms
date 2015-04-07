@@ -188,7 +188,8 @@ define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
         assert.equal($('[data-name="_message_1"]').html(), "Message using <em><strong>old definition<strong> structure</strong></strong></em>");
       });
       test('Heading field with old-definition structure', function () {
-        assert.equal($('[data-name="_heading_1"]').html(), "Heading using old definition");
+        assert.equal($('[data-name="_heading_1"]').find('h1').html(), "Heading using old definition");
+        assert.equal($('[data-name="_heading_1"]').find('p').html(), "<span>Small text to support heading</span>");
       });
     });
 

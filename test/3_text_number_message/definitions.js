@@ -139,6 +139,15 @@ define(function () {
           },
           {
             'default': {
+              name: 'heading4',
+              type: 'heading',
+              headingType: 2,
+              text: 'h3 with Small Text',
+              headingSmallText: "<span>Small Text</span>"
+            }
+          },
+          {
+            'default': {
               name: 'message',
               type: 'message',
               html: 'This is <strong>static</strong> text.'
