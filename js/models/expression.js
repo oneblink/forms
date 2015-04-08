@@ -19,7 +19,17 @@ define(function () {
   };
 
   Expression.prototype.evaluate = function () {
-    var args;
+    var args,
+      binaryOp = [
+        '==',
+        '!=',
+        '>',
+        '<',
+        '>=',
+        '<=',
+        'contains',
+        '!contains'
+      ];
     if (!this.operator) {
       throw new Error('missing operator');
     }
@@ -36,6 +46,13 @@ define(function () {
       }
       throw new Error('unexpected operand type');
     });
+
+    //FORMS-141 # binary operator will need two arguments,
+    // if one provided, set other to empty string
+    if (args.length === 1 && binaryOp.indexOf(this.operator) > -1) {
+      args.push("");
+    }
+
     return Expression.fn[this.operator].apply(this, args);
   };
 

@@ -94,9 +94,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         element.val('');
       });
 
-      test('per-definition, 4 Behaviours are defined', function () {
+      test('per-definition, 6 Behaviours are defined', function () {
         var form = BMP.Forms.current;
-        assert.lengthOf(form.attributes.behaviours, 4);
+        assert.lengthOf(form.attributes.behaviours, 6);
       });
 
       test('Text is visible and empty', function () {
@@ -436,6 +436,88 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       }); // END: after unset Text
 
     }); // END: suite('Behaviours: unset middle Element value', ...)
+
+    suite('Behaviours: Conditional Logic (FORMS-141)', function () {
+
+      suite('text1 = ""', function () {
+
+        test('text2 should be hidden', function (done) {
+          var form = BMP.Forms.current,
+            element = form.getElement('text2'),
+            view = element.attributes._view;
+
+          assert(view.isHidden());
+          done();
+        });
+
+        test('text3 should not be hidden', function (done) {
+          var form = BMP.Forms.current,
+            element = form.getElement('text3'),
+            view = element.attributes._view;
+
+          assert(!view.isHidden());
+          done();
+        });
+
+      }); // END: text1 = ""
+
+      suite('text1 = "aaa"', function () {
+
+        suiteSetup(function () {
+          var form = BMP.Forms.current;
+
+          form.getElement('text1').val('aaa');
+        });
+
+        test('text2 should not be hidden', function (done) {
+          var form = BMP.Forms.current,
+            element = form.getElement('text2'),
+            view = element.attributes._view;
+
+          assert(!view.isHidden());
+          done();
+        });
+
+        test('text3 should be hidden', function (done) {
+          var form = BMP.Forms.current,
+            element = form.getElement('text3'),
+            view = element.attributes._view;
+
+          assert(view.isHidden());
+          done();
+        });
+
+      }); // END: text1 = "aaa"
+
+      suite('text1 = "abc"', function () {
+
+        suiteSetup(function () {
+          var form = BMP.Forms.current;
+
+          form.getElement('text1').val('abc');
+        });
+
+        test('text2 should not be hidden', function (done) {
+          var form = BMP.Forms.current,
+            element = form.getElement('text2'),
+            view = element.attributes._view;
+
+          assert(!view.isHidden());
+          done();
+        });
+
+        test('text3 should not be hidden', function (done) {
+          var form = BMP.Forms.current,
+            element = form.getElement('text3'),
+            view = element.attributes._view;
+
+          assert(!view.isHidden());
+          done();
+        });
+
+      }); // END: text1 = "abc"
+
+    }); // END: suite('Behaviours: Conditional Logic (FORMS-141)', ...)
 
   }); // END: suite('1', ...)
 
