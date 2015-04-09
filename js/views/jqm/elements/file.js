@@ -27,6 +27,7 @@ define(['views/jqm/element'], function (ElementView) {
       this.renderLabel();
 
       this.renderControls();
+      this.renderFigure();
 
       this.bindRivets();
       this.model.on('change:blob', function () {

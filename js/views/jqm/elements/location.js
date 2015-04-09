@@ -24,6 +24,7 @@ define(['views/jqm/element',
       $div.append($button);
 
       this.$el.append($div);
+      this.renderFigure();
 
       $locateButton.find('button').on('click', $.proxy(LocationElementView.onButtonClick, this));
       $clearButton.find('button').on('click', $.proxy(LocationElementView.onClear, this));
@@ -52,12 +53,17 @@ define(['views/jqm/element',
         $img,
         caption,
         staticMap,
-        self = this;
+        self = this,
+        attr = self.model.attributes;
 
-      if (typeof self.model.attributes.value === 'string') {
-        loc = JSON.parse(self.model.attributes.value);
+      if (typeof attr.value === 'string') {
+        try {
+          loc = JSON.parse(attr.value);
+        } catch (e) {
+          loc = null;
+        }
       } else {
-        loc = self.model.attributes.value;
+        loc = attr.value;
       }
 
       self.$el.children('figure').remove();
@@ -94,7 +100,11 @@ define(['views/jqm/element',
       var value = $('#bmp-forms-location').find('input').val();
 
       if (value) {
-        value = JSON.parse(value);
+        try {
+          value = JSON.parse(value);
+        } catch(e) {
+          value = undefined;
+        }
         this.model.set('value', value);
       }
       $('#bmp-forms-location').popup('close');
