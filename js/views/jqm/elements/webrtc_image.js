@@ -19,7 +19,7 @@ define([
     },
 
     remove: function () {
-      return FileElementView.prototype.FileElementView.call(this);
+      return FileElementView.prototype.remove.call(this);
     }
   }, {
     onButtonClick: function () {
