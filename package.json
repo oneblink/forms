@@ -11,6 +11,7 @@
     "geolocation": "git://github.com/blinkmobile/geolocation#v1.0.0",
     "moment": "2.10.2",
     "node-uuid": "1.4.3",
+    "pickadate": "amsul/pickadate.js#3.5.5",
     "rivets": "0.6.8"
   },
   "devDependencies": {

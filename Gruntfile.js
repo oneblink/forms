@@ -58,9 +58,9 @@ module.exports = function (grunt) {
             underscore: 'empty:',
             // libraries to be built-in
             moment: '../node_modules/moment/min/moment.min',
-            picker: '../bower_components/pickadate/lib/picker',
-            'picker.date': '../bower_components/pickadate/lib/picker.date',
-            'picker.time': '../bower_components/pickadate/lib/picker.time',
+            picker: '../node_modules/pickadate/lib/picker',
+            'picker.date': '../node_modules/pickadate/lib/picker.date',
+            'picker.time': '../node_modules/pickadate/lib/picker.time',
             bicyclepump: '../bower_components/bicyclepump/bicyclepump',
             geolocation: '../node_modules/geolocation/geolocation',
             rivets: '../node_modules/rivets/dist/rivets',
