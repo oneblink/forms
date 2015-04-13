@@ -6,6 +6,7 @@
     "test": "grunt test"
   },
   "dependencies": {
+    "almond": "0.3.1",
     "blinkgap-utils": "git://github.com/blinkmobile/blinkgap-utils#500774457d",
     "blinkmobile-forms": "blinkmobile/forms#v1.3.1",
     "geolocation": "git://github.com/blinkmobile/geolocation#v1.0.0",

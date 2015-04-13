@@ -81,7 +81,7 @@ module.exports = function (grunt) {
           wrap: {
             startFile: [
               'parts/00-start.frag',
-              'bower_components/almond/almond.js',
+              'node_modules/almond/almond.js',
               'parts/01-jquery.frag'
             ],
             endFile: [

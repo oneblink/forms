@@ -6,7 +6,9 @@
 
 - FORMS-149: changed location field map default zoom from 8 to 17 (zoomed in)
 
-- updated to [Moment.js](http://momentjs.com/) to v2.10.2
+- updated [Moment.js](http://momentjs.com/) to v2.10.2
+
+- updated [almond](https://github.com/jrburke/almond) to v0.3.1
 
 ### Fixed
 
