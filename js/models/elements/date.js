@@ -22,9 +22,9 @@ define([
           if (attr.defaultValue === 'now') {
             dateValue = moment();
           } else if (attr.defaultValue === 'now_plus') {
-            dateValue = moment().add('d', parseInt(attr.defaultDateNowPlus, 10));
+            dateValue = moment().add(parseInt(attr.defaultDateNowPlus, 10), 'd');
           } else if (attr.defaultValue === 'date') {
-            dateValue = moment(attr.defaultDateDate);
+            dateValue = moment(Date.parse(attr.defaultDateDate));
           }
           if (dateValue !== null) {
             this.set('value', dateValue.format(dateFormat));
@@ -35,7 +35,7 @@ define([
           if (attr.defaultValue === 'now') {
             timeValue = moment();
           } else if (attr.defaultValue === 'now_plus') {
-            timeValue = moment().add('m', parseInt(attr.nowPlusAmount, 10));
+            timeValue = moment().add(parseInt(attr.nowPlusAmount, 10), 'm');
           }
           if (timeValue !== null) {
             this.set('value', timeValue.format(timeFormat));
