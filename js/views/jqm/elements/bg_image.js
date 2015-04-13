@@ -11,8 +11,9 @@ define([
 
       try {
         PictureSourceType = window.PictureSourceType || navigator.camera.PictureSourceType;
-      } catch (ignore) {}
-      PictureSourceType = PictureSourceType || {};
+      } catch (ignore) {
+        PictureSourceType = PictureSourceType || {};
+      }
 
       $div = $('<div class="ui-input-text"></div>');
       $div.append(html);

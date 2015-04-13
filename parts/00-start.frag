@@ -18,7 +18,6 @@
     definition(Promise, $, _, Backbone);
   }
 }(function(Promise, $, _, Backbone) {
-  "use strict";
   // establish globals
   var BMP = window['BMP'] = window['BMP'] || {};
   BMP.Forms = BMP.Forms || {};
