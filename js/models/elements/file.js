@@ -14,12 +14,11 @@ define(['models/element'], function (Element) {
       Element.prototype.initialize.call(this);
 
       this.on('change:value', function () {
-        var value, blob;
+        var value;
         value = this.get('value');
 
         if (value) {
-          blob = BMP.Blob.fromDataURI(value);
-          this.set('blob', blob);
+          this.setBlobFromString(value);
         } else {
           this.unset('blob');
           this.set({
@@ -191,7 +190,20 @@ define(['models/element'], function (Element) {
           });
         }, false);
       }
+    },
+
+    setBlobFromString: function (data) {
+      var blob;
+      if (!data) { return; }
+      if (data.substring(0, 5) !== 'data:') {
+        data = 'data:image/jpeg;base64,' + data;
+      }
+      blob = window.BMP.Blob.fromDataURI(data);
+      if (blob) {
+        this.set('blob', blob);
+      }
     }
+
   });
 
   return FileElement;

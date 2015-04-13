@@ -108,6 +108,33 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     }); // END: suite('Form', ...)
 
+    suite('number', function () {
+
+      var fields = [
+        'number',
+        'number2'
+      ];
+
+      fields.forEach(function (name) {
+
+        test(name + ' field', function (done) {
+          var form = BMP.Forms.current,
+            element = form.getElement(name),
+            view = element.get('_view').$el,
+            attr = element.attributes;
+
+          if (attr.useSlider && attr.min && attr.max) {
+            assert.equal('range', view.find('input').attr('type'), name + " is not range field");
+          } else {
+            assert.equal('number', view.find('input').attr('type'), name + " is not number field");
+          }
+          done();
+        });
+
+      });
+
+    });
+
     suite('headings', function () {
 
       test('1st heading is an h1', function () {
@@ -116,7 +143,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         element = form.getElement('heading');
         view = element.get('_view');
         assert.lengthOf(view.$el, 1);
-        assert.equal(view.$el[0].nodeName, 'H1');
+        assert.equal(view.$el[0].nodeName, 'HEADER');
+        assert.equal(view.$el.children().length, 1);
+        assert.equal(view.$el.find('H1').length, 1);
+        assert.equal(view.$el.find('p').length, 0);
       });
 
       test('2nd heading is an h2', function () {
@@ -124,8 +154,12 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         form = BMP.Forms.current;
         element = form.getElement('heading2');
         view = element.get('_view');
+
         assert.lengthOf(view.$el, 1);
-        assert.equal(view.$el[0].nodeName, 'H2');
+        assert.equal(view.$el[0].nodeName, 'HEADER');
+        assert.equal(view.$el.children().length, 1);
+        assert.equal(view.$el.find('H2').length, 1);
+        assert.equal(view.$el.find('p').length, 0);
       });
 
       test('3rd heading is an h3', function () {
@@ -133,10 +167,26 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         form = BMP.Forms.current;
         element = form.getElement('heading3');
         view = element.get('_view');
+
         assert.lengthOf(view.$el, 1);
-        assert.equal(view.$el[0].nodeName, 'H3');
+        assert.equal(view.$el[0].nodeName, 'HEADER');
+        assert.equal(view.$el.children().length, 1);
+        assert.equal(view.$el.find('H3').length, 1);
+        assert.equal(view.$el.find('p').length, 0);
       });
 
+      test('4th heading is an h3 with small text', function () {
+        var form, element, view;
+        form = BMP.Forms.current;
+        element = form.getElement('heading4');
+        view = element.get('_view');
+
+        assert.lengthOf(view.$el, 1);
+        assert.equal(view.$el[0].nodeName, 'HEADER');
+        assert.equal(view.$el.children().length, 2);
+        assert.equal(view.$el.find('H3').length, 1);
+        assert.equal(view.$el.find('p').length, 1);
+      });
     });
 
   }); // END: suite('1', ...)

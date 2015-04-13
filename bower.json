@@ -1,15 +1,8 @@
 {
   "name": "forms",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
-  "dependencies": {
-    "pickadate": "3.5.5",
-    "momentjs": "2.5.1",
-    "rivets": "0.6.8"
-  },
   "devDependencies": {
-    "almond": "~0.2",
-    "bicyclepump": "~1.0.0",
     "requirejs": "~2.1",
     "requirejs-text": "~2.0",
     "amd-feature": "~1.1.0",

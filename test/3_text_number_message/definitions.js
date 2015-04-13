@@ -92,6 +92,18 @@ define(function () {
           },
           {
             'default': {
+              name: 'number2',
+              label: 'Number with slider',
+              type: 'number',
+              useSlider: "1",
+              min: 0,
+              max: 100,
+              defaultValue: 1,
+              placeholderText: '20'
+            }
+          },
+          {
+            'default': {
               name: 'currency',
               label: 'Currency',
               type: 'number',
@@ -123,6 +135,15 @@ define(function () {
               type: 'heading',
               headingType: 2,
               text: 'h3'
+            }
+          },
+          {
+            'default': {
+              name: 'heading4',
+              type: 'heading',
+              headingType: 2,
+              text: 'h3 with Small Text',
+              headingSmallText: "<span>Small Text</span>"
             }
           },
           {

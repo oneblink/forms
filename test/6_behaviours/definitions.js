@@ -56,6 +56,27 @@ define(function () {
               html: '',
               persist: true
             }
+          },
+          {
+            'default': {
+              name: 'text1',
+              label: 'Text 1',
+              type: 'text'
+            }
+          },
+          {
+            'default': {
+              name: 'text2',
+              label: 'Text 2',
+              type: 'text'
+            }
+          },
+          {
+            'default': {
+              name: 'text3',
+              label: 'Text 3',
+              type: 'text'
+            }
           }
         ],
         _behaviours: [
@@ -109,6 +130,36 @@ define(function () {
                 'set_calc2fn'
               ]
             }
+          },
+          {
+            "default": {
+              "name": "showText2_text1IsNot",
+              "trigger": {
+                "formElements": "*"
+              },
+              "check": "text1IsNot",
+              "actions": [
+                {
+                  "action": "showText2",
+                  "autoReverse": true
+                }
+              ]
+            }
+          },
+          {
+            "default": {
+              "name": "showText3_text1IsNotAaa",
+              "trigger": {
+                "formElements": "*"
+              },
+              "check": "text1IsNotAaa",
+              "actions": [
+                {
+                  "action": "showText3",
+                  "autoReverse": true
+                }
+              ]
+            }
           }
         ],
         _checks: [
@@ -144,6 +195,39 @@ define(function () {
                       operands: ['email']
                     }]
                   }
+                ]
+              }
+            }
+          },
+          {
+            "default": {
+              "name": "text1IsNot",
+              "exp": {
+                "operator": "!=",
+                "operands": [
+                  {
+                    "operator": "formElement.value",
+                    "operands": [
+                      "text1"
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "default": {
+              "name": "text1IsNotAaa",
+              "exp": {
+                "operator": "!=",
+                "operands": [
+                  {
+                    "operator": "formElement.value",
+                    "operands": [
+                      "text1"
+                    ]
+                  },
+                  "aaa"
                 ]
               }
             }
@@ -186,6 +270,34 @@ define(function () {
                   persist: true
                 }
               }]
+            }
+          },
+          {
+            "default": {
+              "name": "showText2",
+              "manipulations": [
+                {
+                  "target": "text2",
+                  "properties": {
+                    "hidden": false,
+                    "persist": true
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "default": {
+              "name": "showText3",
+              "manipulations": [
+                {
+                  "target": "text3",
+                  "properties": {
+                    "hidden": false,
+                    "persist": true
+                  }
+                }
+              ]
             }
           }
         ]

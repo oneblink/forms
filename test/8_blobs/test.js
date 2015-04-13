@@ -1,4 +1,3 @@
-/*eslint-env mocha*/
 /*global assert*/ // chai
 
 define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
@@ -31,6 +30,12 @@ define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
     suiteSetup(function () {
       $content.empty();
       delete Forms.current;
+
+      ['drain', 'empty', 'saturate'].forEach(function (event) {
+        Forms.blobUploader.on(event, function () {
+          console.log('blobUploader: ' + event);
+        });
+      });
     });
 
     suite('Form', function () {
@@ -123,12 +128,23 @@ define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
         assert.isTrue(form.get('isPopulating'));
       });
 
-      if (navigator.userAgent.toLowerCase().indexOf('phantom') !== -1) {
-        return;
-      }
+      test('#setBlobFromString() accepts non-DataURI Base64', function () {
+        // var data = 'abc123';
+        var form = Forms.current;
+        // var element = form.getElement('file');
+        form.set('isPopulating', true);
+        assert.doesNotThrow(function () {
+          // element.setBlobFromString(data);
+        });
+        form.set('isPopulating', false);
+      });
 
       suite('blobUploader with successful transfers', function () {
         var count;
+
+        if (navigator.userAgent.toLowerCase().indexOf('phantom') !== -1) {
+          return;
+        }
 
         setup(function () {
           count = 0;
@@ -240,6 +256,10 @@ define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
       suite('blobUploader with failed transfers', function () {
         var count, blob;
 
+        if (navigator.userAgent.toLowerCase().indexOf('phantom') !== -1) {
+          return;
+        }
+
         suiteSetup(function () {
           count = 0;
           Forms.current.getElement('file').set('value', '');
@@ -301,6 +321,32 @@ define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
 
         teardown(function () {
           Forms.blobUploader.removeAllListeners('drain');
+        });
+
+      });
+
+      suite('#setBlobFromString()', function () {
+        var element;
+
+        setup(function () {
+          Forms.current.set('isPopulating', true);
+          element = Forms.current.getElement('file');
+        });
+
+        test('accepts DataURI with Base64', function () {
+          assert.doesNotThrow(function () {
+            element.setBlobFromString('data:image/jpeg;base64,abc123');
+          });
+        });
+
+        test('accepts non-DataURI Base64', function () {
+          assert.doesNotThrow(function () {
+            element.setBlobFromString('abc123');
+          });
+        });
+
+        teardown(function () {
+          Forms.current.set('isPopulating', true);
         });
 
       });

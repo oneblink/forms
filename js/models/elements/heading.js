@@ -13,7 +13,8 @@ define(['models/element'], function (Element) {
       schemaMap = {
         'headingText': 'text',
         'headingPosition': 'position',
-        'headingFontFace': 'fontFace'
+        'headingFontFace': 'fontFace',
+        'headingSmallText': 'smallText'
       };
 
       Object.keys(schemaMap).forEach(function (key) {

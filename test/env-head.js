@@ -6,6 +6,10 @@
   window.mocha.ui('tdd');
   window.assert = window.chai.assert;
 
+  document.write('<link rel="stylesheet" href="../../node_modules/pickadate/lib/themes/default.css" />');
+  document.write('<link rel="stylesheet" href="../../node_modules/pickadate/lib/themes/default.date.css" />');
+  document.write('<link rel="stylesheet" href="../../node_modules/pickadate/lib/themes/default.time.css" />');
+
   require.config({
     paths: {
       backbone: 'http://cdnp.blinkm.co/backbonejs/1.0.0/backbone-min',

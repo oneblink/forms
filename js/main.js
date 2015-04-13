@@ -99,7 +99,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.2.0';
+  Forms.version = '3.2.1';
   Forms.supports = {};
 
   Forms.supports.blob = (function () {
@@ -107,17 +107,24 @@ define(function (require) {
     try {
       blob = new BMP.Blob();
       return typeof blob.size === 'number';
-    } catch (ignore) {}
+    } catch (ignore) {
+      return false;
+    }
     return false;
   }());
 
   Forms.loaded = {};
+  Forms.loading = {};
   Forms.loaded.googleMap = false;
+  Forms.loading.googleMap = false;
 
-  Forms.loadScript = function (src, type) {
+  Forms.loadScript = function (src, done) {
     var script = document.createElement('script');
-    script.type = type;
     script.src = src;
+    if (done && typeof done === "function") {
+      script.onload = done;
+      script.onerror = done;
+    }
     document.body.appendChild(script);
   };
 
@@ -127,8 +134,11 @@ define(function (require) {
 
   Forms.loadMapScript = function () {
     var src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=BMP.Forms.initializeFlag';
-    if (!Forms.loaded.googleMap) {
-      Forms.loadScript(src, 'text/javascript');
+    if (!Forms.loaded.googleMap && Forms.loading.googleMap === false) {
+      Forms.loadScript(src, function () {
+        Forms.loading.googleMap = false;
+      });
+      Forms.loading.googleMap = true;
     }
   };
 

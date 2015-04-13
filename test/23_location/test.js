@@ -3,7 +3,7 @@
 
 define(['BlinkForms', 'BIC'], function (Forms) {
 
-  suite('17: Blob fields', function () {
+  suite('23: Location field', function () {
     var $doc = $(document),
       $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
@@ -17,6 +17,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     });
 
     suite('Form', function () {
+
+      if (navigator.userAgent.toLowerCase().indexOf('phantom') !== -1) {
+        return;
+      }
 
       test('BlinkForms global is an Object', function () {
         assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
@@ -54,6 +58,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       test('Render form with data', function (done) {
         var form = Forms.current;
+
         $.ajax({
           type: "GET",
           url: "getformrecord.xml",
@@ -67,7 +72,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
             });
             form.setRecord(record).then(function () {
               form.data().then(function (formdata) {
-                var keys = _.keys(record);
+                var keys = ['id', 'location1', 'location2', '_action'];
                 _.each(keys, function(k) {
                   assert.ok(formdata[k], k + " does not exist");
                 });
@@ -81,48 +86,78 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         );
       });
 
-      test('img elements present', function () {
-        var elements = ['Photo', 'Photo1', 'Photo2'],
+      test('location elements present', function (done) {
+        var elements = {'location1': 1, 'location2': 1, 'location3': 0, 'location4': 0},
           element,
           view;
-        _.each(elements, function (key) {
+
+        _.each(elements, function (val, key) {
           element = BMP.Forms.current.getElement(key);
+          view = element.attributes._view.$el.children('figure');
+          assert.lengthOf(view.children('img'), val);
+        });
+        done();
+      });
+
+      test('location data is correct', function (done) {
+        var form = Forms.current,
+          elements = {
+            id: "1",
+            _action: "add",
+            location1: '{"latitude":-33.867487,"longitude":151.20699,"altitude":null,"accuracy":25000,"altitudeAccuracy":null,"heading":null,"speed":null}',
+            location2: '{"latitude":-33.867487,"longitude":151.20699,"altitude":null,"accuracy":25000,"altitudeAccuracy":null,"heading":null,"speed":null}'
+          };
+
+        form.data().then(function (formdata) {
           setTimeout(function () {
-            view = element.attributes._view.$el.children('figure');
-            assert.lengthOf(view.children('img'), 1);
-          }, 1000);
+            assert.deepEqual(formdata, elements, "form data");
+            done();
+          }, 0);
+        }, function () {
+          assert(false, "failed to set record");
+          done();
         });
       });
 
-      test('fixBlobFieldValue test', function () {
-        var values = ['/9j/4AAQSkZJRgABAgEASABIAAD/4RYPRXhpZgAATU0AKgAAAAgAB', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD'],
-          results = ['data:image/jpeg;base64,/9j/4AAQSkZJRgABAgEASABIAAD/4RYPRXhpZgAATU0AKgAAAAgAB', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD'],
-          result,
-          form = BMP.Forms._models.Form;
-        _.each(values, function (value) {
-          result = form.addMimetype(value, 'image/jpeg');
-          assert.isTrue(_.contains(results, result));
-        });
+      test('LOCATE button works as expected', function (done) {
+        var element = Forms.current.getElement('location4'),
+          $view = element.attributes._view.$el,
+          $add = $view.find('.ui-btn').children('button'),
+          $dialog,
+          keys = ['accuracy', 'altitude', 'altitudeAccuracy', 'heading', 'latitude', 'longitude', 'speed'],
+          value;
+
+        this.timeout(10000);
+
+        $add.trigger('click');
+
+        setTimeout(function () {
+          $dialog = $('#bmp-forms-location').find('button');
+          $dialog.first().trigger('click');
+          value = element.get('value');
+          _.each(keys, function(k) {
+            assert(_.has(value, k), k + " does not exist");
+          });
+          done();
+        }, 7000);
       });
 
-      test('elements mimetype', function () {
-        var elements = {'Photo': 'image/jpeg', 'Photo1': 'image/png', 'Photo2': 'image/jpeg'},
-          element,
-          value,
-          parts,
-          mime;
-        _.each(elements, function (mimetype, key) {
+      test('CLEAR button works as expected', function (done) {
+        var element = Forms.current.getElement('location4'),
+          $view = element.attributes._view.$el,
+          $clear = $view.find('.ui-btn').children('button').last(),
+          value;
 
-          setTimeout(function () {
-            element = BMP.Forms.current.getElement(key);
-            value = element.val();
-            parts = value.split(';');
-            parts = parts[0].split(':');
-            mime = parts[1];
-            assert.equal(mimetype, mime);
-          }, 1000);
-        });
+        $clear.trigger('click');
+
+        setTimeout(function () {
+            value = element.get('value');
+            assert.notOk(value, "value still exists");
+            done();
+        }, 0);
       });
+
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)

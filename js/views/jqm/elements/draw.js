@@ -28,14 +28,10 @@ define([
   }, {
     // static properties and methods
     onSignatureSubmit: function (event) {
-      var data = signaturePad.getSignatureImage('image/jpeg'),
-        blob;
+      var data = signaturePad.getSignatureImage('image/jpeg');
 
-      if (data.indexOf('data:') !== 0) {
-        data = 'data:image/jpeg;base64,' + data;
-      }
-      blob = BMP.Blob.fromDataURI(data);
-      this.model.set('blob', blob);
+      this.model.setBlobFromString(data);
+
       $('#bmp-forms-dialog-signature').popup('close');
       event.preventDefault();
       return false;

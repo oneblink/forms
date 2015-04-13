@@ -57,13 +57,13 @@ module.exports = function (grunt) {
             jquerymobile: 'empty:',
             underscore: 'empty:',
             // libraries to be built-in
-            moment: '../bower_components/momentjs/min/moment.min',
-            picker: '../bower_components/pickadate/lib/picker',
-            'picker.date': '../bower_components/pickadate/lib/picker.date',
-            'picker.time': '../bower_components/pickadate/lib/picker.time',
-            bicyclepump: '../bower_components/bicyclepump/bicyclepump',
+            moment: '../node_modules/moment/min/moment.min',
+            picker: '../node_modules/pickadate/lib/picker',
+            'picker.date': '../node_modules/pickadate/lib/picker.date',
+            'picker.time': '../node_modules/pickadate/lib/picker.time',
+            bicyclepump: '../node_modules/bicyclepump.js/bicyclepump',
             geolocation: '../node_modules/geolocation/geolocation',
-            rivets: '../bower_components/rivets/dist/rivets',
+            rivets: '../node_modules/rivets/dist/rivets',
             formslib: '../node_modules/blinkmobile-forms/dist/formslib',
             uuid: '../node_modules/node-uuid/uuid',
             // Require.JS plugins
@@ -81,7 +81,7 @@ module.exports = function (grunt) {
           wrap: {
             startFile: [
               'parts/00-start.frag',
-              'bower_components/almond/almond.js',
+              'node_modules/almond/almond.js',
               'parts/01-jquery.frag'
             ],
             endFile: [
@@ -116,7 +116,8 @@ module.exports = function (grunt) {
       all: {
         src: ['test/*/index.html'],
         options: {
-          run: false
+          run: false,
+          timeout: 10000
         }
       }
     },

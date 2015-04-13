@@ -12,7 +12,7 @@ define(['views/jqm/element'], function (ElementView) {
       this.$el.empty();
       this.renderLabel();
 
-      if (_.isNumber(min) && _.isNumber(max)) {
+      if (_.isNumber(min) && _.isNumber(max) && attrs.useSlider) {
         $input = $('<input type="range" />');
         $input.attr({
           'data-highlight': true
