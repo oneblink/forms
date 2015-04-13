@@ -1,5 +1,38 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- FORMS-149: changed location field map default zoom from 8 to 17 (zoomed in)
+
+### Fixed
+
+- FORMS-146: properly populate records when involving location fields
+
+    - initialisation of Google Maps APIs sometimes prevented this
+
+- FORMS-150 and FORMS-151: Cordova integration no longer throws errors during
+  image capture
+
+    - we improperly assumed APIs resulted in Data URIs, not plain Base64
+
+- FORMS-142: display non-heading text that comes with some headings
+
+- FORMS-145: re-render image previews when changing pages
+
+- FORMS-134: ensure custom CSS can select fields for flexible styling
+
+    - e.g. `[data-element-type="select"], [data-name="choice"] { /*...*/ }`
+
+    - this no longer clashes with jQueryMobile data attributes
+
+- FORMS-140: to display a slider widget, set minimum and maximum as well as
+  enable the slider widget in the forms definition
+
+- FORMS-141: conditional logic properly accounts for empty inputs
+
+
 ## v3.2.0 - 2015-03-30
 
 ### Added
