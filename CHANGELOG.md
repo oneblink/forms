@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+
+## v3.2.1 - 2015-04-13
+
 ### Changed
 
 - FORMS-149: changed location field map default zoom from 8 to 17 (zoomed in)

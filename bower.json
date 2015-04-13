@@ -1,6 +1,6 @@
 {
   "name": "forms",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
   "devDependencies": {
     "requirejs": "~2.1",
