@@ -107,7 +107,9 @@ define(function (require) {
     try {
       blob = new BMP.Blob();
       return typeof blob.size === 'number';
-    } catch (ignore) {}
+    } catch (ignore) {
+      return false;
+    }
     return false;
   }());
 
