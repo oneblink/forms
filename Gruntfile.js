@@ -61,7 +61,7 @@ module.exports = function (grunt) {
             picker: '../node_modules/pickadate/lib/picker',
             'picker.date': '../node_modules/pickadate/lib/picker.date',
             'picker.time': '../node_modules/pickadate/lib/picker.time',
-            bicyclepump: '../bower_components/bicyclepump/bicyclepump',
+            bicyclepump: '../node_modules/bicyclepump.js/bicyclepump',
             geolocation: '../node_modules/geolocation/geolocation',
             rivets: '../node_modules/rivets/dist/rivets',
             formslib: '../node_modules/blinkmobile-forms/dist/formslib',
