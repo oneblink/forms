@@ -9,7 +9,9 @@
     "blinkgap-utils": "git://github.com/blinkmobile/blinkgap-utils#500774457d",
     "blinkmobile-forms": "blinkmobile/forms#v1.3.1",
     "geolocation": "git://github.com/blinkmobile/geolocation#v1.0.0",
-    "node-uuid": "1.4.3"
+    "moment": "2.5.1",
+    "node-uuid": "1.4.3",
+    "rivets": "0.6.8"
   },
   "devDependencies": {
     "assert": "Jxck/assert#ac895ade8d",

@@ -57,13 +57,13 @@ module.exports = function (grunt) {
             jquerymobile: 'empty:',
             underscore: 'empty:',
             // libraries to be built-in
-            moment: '../bower_components/momentjs/min/moment.min',
+            moment: '../node_modules/moment/min/moment.min',
             picker: '../bower_components/pickadate/lib/picker',
             'picker.date': '../bower_components/pickadate/lib/picker.date',
             'picker.time': '../bower_components/pickadate/lib/picker.time',
             bicyclepump: '../bower_components/bicyclepump/bicyclepump',
             geolocation: '../node_modules/geolocation/geolocation',
-            rivets: '../bower_components/rivets/dist/rivets',
+            rivets: '../node_modules/rivets/dist/rivets',
             formslib: '../node_modules/blinkmobile-forms/dist/formslib',
             uuid: '../node_modules/node-uuid/uuid',
             // Require.JS plugins
