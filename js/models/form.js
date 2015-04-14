@@ -270,6 +270,11 @@ define(function (require) {
       var me = this,
         errors = {};
 
+      //no validation needs to be performed if action is remove
+      if (me.attributes._action === "remove") {
+        return undefined;
+      }
+
       me.attributes.elements.forEach(function (el) {
         el.updateErrors();
         if (!_.isEmpty(el.attributes.errors)) {

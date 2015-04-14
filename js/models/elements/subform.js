@@ -9,19 +9,31 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
 
   return Element.extend({
     initialize: function () {
+      var attrs;
+
       Element.prototype.initialize.call(this);
       this.attributes.forms = new SubForms();
+
+      attrs = this.attributes;
+      //currently server sets preload to either "admin_defined" or "no"
+      if (!_.isNumber(attrs.preload)) {
+        if (attrs.preload !== "no" && _.isNumber(attrs.preloadNum) && attrs.preloadNum > 0) {
+          attrs.preload = attrs.preloadNum;
+        }
+      }
+
       this.attributes.forms.on('add remove', this.updateFieldErrors, this);
       this.off('change', this.updateErrors, this);
     },
-    add: function () {
+    add: function (action) {
       // TODO: there is too much DOM stuff here to be in the model
       var self = this,
         attrs = self.attributes,
         name = attrs.subForm,
         forms = attrs.forms,
-        action = attrs.form.attributes._action,
         Forms = BMP.Forms;
+
+      action = action || "add";
 
       return new Promise(function (resolve, reject) {
         Forms.getDefinition(name, action).then(function (def) {
@@ -72,7 +84,7 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         }
         form.attributes = {
           _action: 'remove',
-          id: form.attributes.id
+          id: form.getElement('id').get('value')
         };
       } else {
         form.destroy();
@@ -108,18 +120,28 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
       var me = this,
         forms = this.attributes.forms,
         addPromises = [],
-        promises;
+        promises,
+        counter = 0,
+        action;
 
       return new Promise(function (resolve, reject) {
         if (!_.isArray(data)) {
           resolve();
           return;
         }
-        while (forms.length > data.length) {
+
+        //remove all preloaded forms
+        while (forms.length > 0) {
           me.remove(forms.length - 1);
         }
+
         while (forms.length + addPromises.length < data.length) {
-          addPromises.push(me.add());
+          action = "add";
+          if (data[counter].id) {
+            action = "edit";
+          }
+          addPromises.push(me.add(action));
+          counter++;
         }
         // wait for extra (blank) records to be added
         Promise.all(addPromises).then(function () {

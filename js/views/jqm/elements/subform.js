@@ -11,15 +11,17 @@ define(function (require) {
       return ElementView.prototype.remove.call(this);
     },
     render: function () {
-      var name = this.model.attributes.plusButtonLabel,
-        $button;
+      var attrs = this.model.attributes,
+        name = attrs.plusButtonLabel,
+        $button,
+        counter;
 
-      if (_.isEmpty(name) && this.model.attributes.label) {
-        name = this.model.attributes.label;
+      if (_.isEmpty(name) && attrs.label) {
+        name = attrs.label;
       }
 
       if (_.isEmpty(name)) {
-        name = this.model.attributes.name;
+        name = attrs.name;
       }
 
       $button = $('<button></button>').attr({
@@ -33,6 +35,13 @@ define(function (require) {
       this.$el.attr('data-form', name);
       this.$el.prepend($button);
       this.model.attributes.forms.on('add remove', this.onFormsChange, this);
+
+      if (attrs.preload) {
+        for (counter = 0; counter < attrs.preload; counter++) {
+          this.model.add();
+        }
+      }
+
       this.onFormsChange();
     },
     onAddClick: function () {

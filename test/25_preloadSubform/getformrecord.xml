@@ -1,0 +1,20 @@
+<xml>
+    <Test>
+        <id>37</id>
+        <Name>Greg</Name>
+        <Address>
+            <Address>
+                <id>39</id>
+                <Detail>fertertert</Detail>
+            </Address>
+            <Address>
+                <id>40</id>
+                <Detail>ertertertert</Detail>
+            </Address>
+            <Address>
+                <id>41</id>
+                <Detail>ertertert</Detail>
+            </Address>
+        </Address>
+    </Test>
+</xml>
