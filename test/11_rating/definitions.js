@@ -16,9 +16,9 @@ define(function () {
               name: 'star_rating',
               label: 'Star Rating',
               type: 'number',
-              min: 0,
-              max: 5,
-              step: 1,
+              min: "0",
+              max: "5",
+              step: "1",
               defaultValue: 0,
               mode: "graphical",
               picker: {
@@ -36,10 +36,10 @@ define(function () {
               name: 'star_rating2',
               label: 'Star Rating2',
               type: 'number',
-              min: 0,
-              max: 10,
-              step: 1,
-              defaultValue: 0,
+              min: "0",
+              max: "10",
+              step: "1",
+              defaultValue: "0",
               mode: "graphical",
               picker: {
                 active: {
@@ -56,10 +56,10 @@ define(function () {
               name: 'star_rating3',
               label: 'Star Rating3',
               type: 'number',
-              min: 0,
-              max: 5,
-              step: 1,
-              defaultValue: 0,
+              min: "0",
+              max: "5",
+              step: "1",
+              defaultValue: "0",
               mode: "graphical",
               picker: {
                 active: {

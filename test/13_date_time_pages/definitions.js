@@ -127,9 +127,9 @@ define(function () {
               label: 'Number',
               "type": 'number',
               min: 15,
-              max: 400,
+              max: "400",
               step: 5,
-              defaultValue: 35,
+              defaultValue: "35",
               page: 2
             }
           },
