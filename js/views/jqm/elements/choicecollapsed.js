@@ -40,6 +40,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         that.model.set('value', that.prepModelValue());
       });
       this.model.on('change:value', this.onValueChange, this);
+      this.onValueChange();
     },
 
     renderOptions: function () {

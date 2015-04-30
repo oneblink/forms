@@ -225,7 +225,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $fieldset = element.attributes._view.$el;
 
         element.val('');
-        assert.equal(element.val(), '', 'model.value is ""');
+        assert.equal(element.val(), 0, 'model.value is 0');
         assert.equal($fieldset.find('ui-btn-active').length, 0, 'jQM is blank');
 
         element.val(0);
@@ -251,7 +251,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $fieldset = element.attributes._view.$el;
 
         element.val('');
-        assert.equal(element.val(), '', 'model.value is ""');
+        assert.equal(element.val(), 'n', 'model.value is "n"');
         assert.equal($fieldset.find('ui-btn-active').length, 0, 'jQM is blank');
 
         element.val('n');
@@ -447,6 +447,56 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
     }); // END: suite('Form', ...)
+
+    suite('change page', function () {
+
+      suiteSetup(function (done) {
+        choiceElements.forEach(function (name) {
+          var el = Forms.current.getElement(name);
+          if (el.get('type') === 'multi') {
+            el.val(['d']);
+          } else {
+            el.val('d');
+          }
+        });
+        Forms.current.getElement('boolean').val(1);
+        Forms.current.getElement('question').val('y');
+        setTimeout(function () {
+          Forms.current.get('pages')['goto'](1);
+          setTimeout(function () {
+            Forms.current.get('pages')['goto'](0);
+            done();
+          }, 497);
+        }, 497);
+      });
+
+      test('DOM reflects model value correctly', function () {
+        choiceElements.forEach(function (name) {
+          var el = Forms.current.getElement(name);
+          var el$ = el.get('_view').$el;
+          var input$;
+          if (el.get('mode') === 'collapsed') { // select
+            input$ = el$.find('select');
+          } else { // input[type=radio]
+            input$ = el$.find('input:checked');
+          }
+          assert.equal(input$.val(), 'd', name + '\'s DOM is up to date');
+        });
+      });
+
+      test('DOM reflects model value correctly: boolean', function () {
+        var el = Forms.current.getElement('boolean');
+        var select$ = el.get('_view').$el.find('select');
+        assert.equal(select$.val(), 1);
+      });
+
+      test('DOM reflects model value correctly: question', function () {
+        var el = Forms.current.getElement('question');
+        var select$ = el.get('_view').$el.find('select');
+        assert.equal(select$.val(), 'y');
+      });
+
+    });
 
   }); // END: suite('1', ...)
 
