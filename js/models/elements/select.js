@@ -10,7 +10,15 @@ define(['models/element'], function (Element) {
   return Element.extend({
     defaults: defaults,
     initialize: function () {
+      var attrs;
       Element.prototype.initialize.call(this);
+
+      attrs = this.attributes;
+
+      if (attrs.canSpecifyOther) {
+        attrs.other = attrs.canSpecifyOther;
+        delete attrs.canSpecifyOther;
+      }
     },
     initializeView: function () {
       var Forms = BMP.Forms,
@@ -33,14 +41,9 @@ define(['models/element'], function (Element) {
       return view;
     },
     validate: function (attrs) {
-      var errors = {},
-        other = false;
+      var errors = {};
       if (attrs === undefined) {
         attrs = this.attributes;
-      }
-
-      if (attrs.other || attrs.canSpecifyOther) {
-        other = true;
       }
 
       // if `other` is true
@@ -48,7 +51,7 @@ define(['models/element'], function (Element) {
       // and attr.value === 'other'
       // and other is not in options
       // then fail
-      if (attrs.required && (!attrs.value || other && attrs.value === 'other' && !_.contains(attrs.options, 'other'))) {
+      if (attrs.required && (!attrs.value || attrs.other && attrs.value === 'other' && !_.contains(attrs.options, 'other'))) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
       }

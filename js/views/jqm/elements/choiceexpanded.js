@@ -88,9 +88,17 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
     },
 
     renderOptions: function () {
+      var attrs = this.model.attributes,
+        type = attrs.type;
       this.render();
       this.$el.find('label > input').checkboxradio();
       this.$el.children('fieldset').controlgroup().addClass('ui-field-contain');
+      if (type === 'select') {
+        this.onSelectValueChange();
+      } else { // type === 'multi'
+        // bind custom handler for checkboxes <- array
+        this.onMultiValueChange();
+      }
     },
 
     onMultiInputClick: function (event) {
