@@ -23,6 +23,7 @@ define(['views/jqm/element'], function (ElementView) {
       this.$el.append($input);
       this.bindRivets();
       model.on('change:value', this.onValueChange, this);
+      this.onValueChange();
     },
     onValueChange: function () {
       this.$el.children('select').slider().slider('refresh');

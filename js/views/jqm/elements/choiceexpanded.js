@@ -34,9 +34,11 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       if (type === 'select') {
         this.bindRivets();
         this.model.on('change:value', this.onSelectValueChange, this);
+        this.onSelectValueChange();
       } else { // type === 'multi'
         // bind custom handler for checkboxes <- array
         this.model.on('change:value', this.onMultiValueChange, this);
+        this.onMultiValueChange();
       }
     },
 

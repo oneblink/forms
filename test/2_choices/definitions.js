@@ -160,6 +160,16 @@ define(function () {
                 "Fouth value": "Fouth value"
               }
             }
+          },
+          {
+            'default': {
+              name: 'email',
+              label: 'Email',
+              type: 'email',
+              defaultValue: 'ron@blinkmobile.com.au',
+              placeholderText: 'user@host',
+              page: 1
+            }
           }
         ]
       }
