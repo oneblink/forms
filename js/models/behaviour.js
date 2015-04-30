@@ -1,7 +1,7 @@
 define(function (require) {
   var Elements = require('collections/elements'),
     Behaviour,
-    Expression = require('models/expression');
+    Expression = BMP.Expression;
 
   Expression.fn['formelement.value'] = function (name) {
     return this.getElement(name).val();

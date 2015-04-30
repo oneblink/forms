@@ -71,15 +71,13 @@ module.exports = function (grunt) {
           },
           modules: [
             {
-              name: 'main'
-            },
-            {
               name: 'views/forms3jqm',
               include: ['main', 'moment', 'picker.date', 'picker.time']
             }
           ],
           wrap: {
             startFile: [
+              'js/models/expression.js',
               'parts/00-start.frag',
               'node_modules/almond/almond.js',
               'parts/01-jquery.frag'
