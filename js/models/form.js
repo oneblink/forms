@@ -64,6 +64,10 @@ define(function (require) {
         behaviours = [];
       }
       this.attributes.behaviours = behaviours;
+      setTimeout(function() {
+        self.trigger('formLoad', self);
+      }, 0);
+
     },
     destroy: function (options) {
       var attrs = this.attributes;
@@ -248,6 +252,9 @@ define(function (require) {
         });
         Promise.all(promises).then(function () {
           self.set('isPopulating', false);
+          setTimeout(function() {
+            self.trigger("formPopulated", self);
+          }, 0);
           resolve(data);
         }, function (err) {
           self.set('isPopulating', false);

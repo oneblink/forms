@@ -1,0 +1,20 @@
+<xml>
+    <form1>
+        <id>37</id>
+        <country>Australia</country>
+        <state>NSW</state>
+        <city>11</city>
+        <form2>
+            <form2>
+                <id>39</id>
+                <country1>Australia</country1>
+            </form2>
+        </form2>
+        <form3>
+            <form3>
+                <id>12</id>
+                <field1>a</field1>
+            </form3>
+        </form3>
+    </form1>
+</xml>

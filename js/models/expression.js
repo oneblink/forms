@@ -1,25 +1,38 @@
-define(function () {
+define('expression', ['feature!promises'], function (Promise) {
   var Expression;
 
   /**
    * @param {Object} definition object { operator: String, operands: Array }
    * @constructor
    */
-  Expression = function (definition) {
+  Expression = function (definition, ctx, names) {
     var self = this,
       def = JSON.parse(JSON.stringify(definition));
 
+    self.fn = {};
+    //copy static functions to class function
+    Object.keys(Expression.fn).forEach(function (prop) {
+      self.fn[prop] = Expression.fn[prop];
+    });
+    //if context and names provided, bind ctx with fn[names]
+    if (ctx && names) {
+      this.bindContext(ctx, names);
+    }
+
     this.operator = def.operator.toLowerCase();
     this.operands = def.operands || [];
+
     this.operands.forEach(function (op, index) {
       if (_.isObject(op) && _.isString(op.operator)) {
-        self.operands[index] = new Expression(op);
+        //pass down ctx, names for binding
+        self.operands[index] = new Expression(op, ctx, names);
       }
     });
   };
 
   Expression.prototype.evaluate = function () {
-    var args,
+    var self = this,
+      args,
       binaryOp = [
         '==',
         '!=',
@@ -53,7 +66,22 @@ define(function () {
       args.push("");
     }
 
-    return Expression.fn[this.operator].apply(this, args);
+    //return promise
+    return new Promise(function (resolve, reject) {
+      Promise.all(args).then(function (res) {
+        resolve(self.fn[self.operator].apply(self, res));
+      }, function (err) {
+        reject(err);
+      });
+    });
+  };
+
+  Expression.prototype.bindContext = function (ctx, names) {
+    var self = this;
+    //if names not provided, then it will bind ctx with everything
+    (names || Object.keys(self.fn)).forEach(function (prop) {
+      self.fn[prop] = self.fn[prop].bind(ctx);
+    });
   };
 
   Expression.fn = {};

@@ -1,0 +1,203 @@
+<xml>
+
+    <countries>
+        <country>Australia</country>
+        <country>India</country>
+    </countries>
+
+    <states country="Australia">
+        <state>NSW</state>
+        <state>VIC</state>
+        <state>QLD</state>
+        <state>SA</state>
+        <state>TAS</state>
+        <state>WA</state>
+        <state>NT</state>
+        <state>ACT</state>
+    </states>
+
+    <states country="India">
+        <state>Gujarat</state>
+        <state>Maharashtra</state>
+        <state>Rajasthan</state>
+    </states>
+
+    <cities state="Gujarat">
+        <city value="100">Rajkot</city>
+        <city value="101">Surat</city>
+        <city value="102">Baroda</city>
+        <city value="103">Ahmedabad</city>
+    </cities>
+
+    <cities state="Maharashtra">
+        <city value="104">Mumbai</city>
+        <city value="105">Pune</city>
+        <city value="106">Goa</city>
+    </cities>
+
+    <cities state="Rajasthan">
+        <city value="107">Udaypur</city>
+        <city value="108">Jaipur</city>
+    </cities>
+
+
+
+    <cities state="NSW">
+        <city value="10">Gosford</city>
+        <city value="11">Sydney</city>
+        <city value="12">Woy Woy</city>
+        <city value="13">Wagga Wagga</city>
+    </cities>
+
+    <cities state="VIC">
+        <city value="20">Melbourne</city>
+        <city value="21">St Kilda</city>
+        <city value="22">Bells Beach</city>
+    </cities>
+
+    <cities state="QLD">
+        <city value="30">Brisbane</city>
+        <city value="31">Kirra Beach</city>
+        <city value="32">Bundaberg</city>
+        <city value="33">Noosa</city>
+    </cities>
+
+
+    <cities state="SA">
+        <city value="41">Boganville</city>
+        <city value="42">Stoney Creek</city>
+    </cities>
+
+
+    <cities state="TAS">
+        <city value="51">Hobart</city>
+        <city value="52">Port Aurthor</city>
+    </cities>
+
+
+    <cities state="WA">
+        <city value="61">Perth</city>
+        <city value="62">Wave Rock</city>
+    </cities>
+
+
+    <cities state="NT">
+        <city value="71">Darwin</city>
+        <city value="72">Ayers Rock</city>
+    </cities>
+
+    <cities state="ACT">
+        <city value="81">Canberra</city>
+        <city value="82">Fishwick</city>
+    </cities>
+
+
+
+    <people city="10">
+        <person value="1">Ben TB Gosford</person>
+        <person value="2">Ron W Gosford</person>
+    </people>
+
+
+    <people city="11">
+        <person value="3">Ben TB Syd</person>
+        <person value="4">Ron W Syd</person>
+    </people>
+
+    <people city="12">
+        <person value="5">Ben TB WOY</person>
+        <person value="6">Ron W WOY</person>
+    </people>
+
+    <people city="13">
+        <person value="7">Ben TB WAGA</person>
+        <person value="8">Ron W WAGA</person>
+    </people>
+
+    <people city="20">
+        <person value="9">Ben TB MEL</person>
+        <person value="10">Ron W MEL</person>
+    </people>
+
+    <people city="21">
+        <person value="11">Ben TB</person>
+        <person value="12">Ron W</person>
+    </people>
+
+    <people city="22">
+        <person value="13">Ben TB</person>
+        <person value="14">Ron W</person>
+    </people>
+
+    <people city="30">
+        <person value="15">Ben TB</person>
+        <person value="16">Ron W</person>
+    </people>
+
+    <people city="31">
+        <person value="17">Ben TB</person>
+        <person value="18">Ron W</person>
+    </people>
+
+    <people city="32">
+        <person value="19">Ben TB</person>
+        <person value="20">Ron W</person>
+    </people>
+
+    <people city="33">
+        <person value="21">Ben TB</person>
+        <person value="22">Ron W</person>
+    </people>
+
+    <people city="41">
+        <person value="23">Ben TB</person>
+        <person value="24">Ron W</person>
+    </people>
+
+    <people city="42">
+        <person value="25">Ben TB</person>
+        <person value="26">Ron W</person>
+    </people>
+
+    <people city="51">
+        <person value="27">Ben TB</person>
+        <person value="28">Ron W</person>
+    </people>
+
+    <people city="52">
+        <person value="29">Ben TB</person>
+        <person value="30">Ron W</person>
+    </people>
+
+    <people city="61">
+        <person value="31">Ben TB</person>
+        <person value="32">Ron W</person>
+    </people>
+
+    <people city="62">
+        <person value="33">Ben TB</person>
+        <person value="34">Ron W</person>
+    </people>
+
+    <people city="71">
+        <person value="35">Ben TB</person>
+        <person value="36">Ron W</person>
+    </people>
+
+    <people city="72">
+        <person value="37">Ben TB</person>
+        <person value="38">Ron W</person>
+    </people>
+
+    <people city="81">
+        <person value="39">Ben TB</person>
+        <person value="40">Ron W</person>
+    </people>
+
+    <people city="82">
+        <person value="41">Ben TB</person>
+        <person value="42">Ron W</person>
+    </people>
+
+
+</xml>

@@ -56,6 +56,36 @@ define([
     });
   };
 
+  BMP.Expression.fn.interaction = function (interaction, queryString) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: "GET",
+        url: interaction + ".xml?" + queryString,
+        dataType: "xml"}).then(
+        function (data) {
+          resolve(data);
+        }, function () {
+          reject(arguments);
+        }
+      );
+    });
+  };
+
+  BMP.Expression.fn.suitcase = function (suitcase, type) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: "GET",
+        url: suitcase + ".xml?" + type,
+        dataType: "xml"}).then(
+        function (data) {
+          resolve(data);
+        }, function () {
+          reject(arguments);
+        }
+      );
+    });
+  };
+
   setTimeout(function () {
     Forms.blobUploader.setEndpoint('fake/save/form/blob');
   }, 197);
