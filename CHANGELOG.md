@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+### Added
+
+- FORMS-163: Behaviours now support migrated "cascading selects" features from
+  the Forms v2 Builder
+
+    - requires a platform update to improve the Forms v2 Builder
+
+- FORMS-155: sub-form elements now support the "preload" feature
+
+### Fixed
+
+- FORMS-155: choice elements properly display their values after page turn
+
+- FORMS-140: numeric slider elements from the Forms v2 Builder are properly
+  migrated and supported
+
 
 ## v3.2.1 - 2015-04-13
 
