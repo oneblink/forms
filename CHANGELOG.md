@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+
+## v3.3.0 - 2015-05-06
+
 ### Added
 
 - FORMS-163: Behaviours now support migrated "cascading selects" features from

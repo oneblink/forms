@@ -86,10 +86,6 @@ define([
     });
   };
 
-  setTimeout(function () {
-    Forms.blobUploader.setEndpoint('fake/save/form/blob');
-  }, 197);
-
   $submitPopup.popup();
 
   $(document.body).on('click', 'button[data-action=submit]', function () {
