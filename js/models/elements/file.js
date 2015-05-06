@@ -29,13 +29,6 @@ define(['models/element'], function (Element) {
         }
       }, this);
 
-      this.on('change:blob', function () {
-        var form = this.get('form');
-        if (!form.get('isPopulating')) {
-          this.uploadBlob();
-        }
-      }, this);
-
       this.on('change:xhr', this.onChangeXHR, this);
     },
 
@@ -85,111 +78,6 @@ define(['models/element'], function (Element) {
 
     getUserMediaPresent: function () {
       return window.URL && window.URL.createObjectURL && (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-    },
-
-    uploadBlob: function (callback) {
-      var me = this;
-      var Forms = BMP.Forms;
-      var blob = this.get('blob');
-      var uuid = Forms.uuid.v4();
-
-      var xhrHandler = function (xhr, currentBlob) {
-        // we need to double-check that this xhr is for this blob
-        if (currentBlob.blob === uuid) {
-          // hooray, a match, we can stop listening now
-          Forms.blobUploader.removeListener('xhr', xhrHandler);
-          // store the XHR for use by the View
-          me.set('xhr', xhr);
-        }
-      };
-
-      if (typeof navigator === 'undefined' || !navigator.onLine) {
-        return; // offline, do nothing
-      }
-
-      if (!blob || this.get('uuid')) {
-        return; // no work to be done, do nothing
-      }
-
-      if (!blob.base64) {
-        return; // only upload binary blobs for now, leave text blobs alone
-      }
-
-      Forms.blobUploader.on('xhr', xhrHandler);
-
-      Forms.blobUploader.saveBlob({
-        answerSpace: Forms.current.get('answerSpace'),
-        tuple: Forms.current.get('uuid'),
-        blob: uuid,
-        file: blob.base64,
-        mime: blob.type
-      }, function (err, res) {
-        var backupValues = {
-          height: me.get('height'),
-          width: me.get('width'),
-          uuid: me.get('uuid')
-        };
-
-        me.set('xhr', null);
-        me.set('progress', null);
-
-        if (err) {
-          /*eslint-disable no-console*/ // error needs to be able to be debugged
-          if (typeof console !== 'undefined') {
-            console.error('uploadBlob() had error during blobUploader.saveBlob()');
-            console.error(err);
-          }
-          /*eslint-enable no-console*/
-          if (_.isFunction(callback)) {
-            callback(err);
-          }
-          return;
-        }
-
-        try {
-          me.set('uuid', res.blob);
-          me.set('value', 'data:' + res.mime + ';base64,' + res.file);
-          if (res.width && res.height) {
-            me.set({
-              height: res.height,
-              width: res.width
-            });
-          }
-
-          if (_.isFunction(callback)) {
-            callback(null, res);
-          }
-        } catch (tryErr) {
-          me.set(backupValues);
-          /*eslint-disable no-console*/ // error needs to be able to be debugged
-          if (typeof console !== 'undefined') {
-            console.error('uploadBlob() unable use server response');
-            console.error(tryErr);
-            callback(tryErr);
-          }
-          /*eslint-enable no-console*/
-        }
-
-      });
-    },
-
-    onChangeXHR: function () {
-      var me = this;
-      var xhr = this.get('xhr');
-      if (xhr && xhr.upload && xhr.upload.addEventListener) {
-        this.set('progress', {
-          lengthComputable: false,
-          loaded: 0,
-          total: 0
-        });
-        xhr.upload.addEventListener('progress', function (event) {
-          me.set('progress', {
-            lengthComputable: event.lengthComputable,
-            loaded: event.loaded,
-            total: event.total * 1.1 // add 10% to account for response download
-          });
-        }, false);
-      }
     },
 
     setBlobFromString: function (data) {

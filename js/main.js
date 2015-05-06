@@ -41,7 +41,6 @@ define(function (require) {
   Forms.models = new BicyclePump();
   Forms.views = new BicyclePump();
 
-  Forms.blobUploader = FormsLib.blobUploader;
   Forms.castPropertyValues = FormsLib.castPropertyValues;
   Forms.flattenDefinition = FormsLib.flattenDefinition;
   Forms.parseClass = FormsLib.parseClass;
@@ -99,7 +98,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.2.1';
+  Forms.version = '3.3.0';
   Forms.supports = {};
 
   Forms.supports.blob = (function () {

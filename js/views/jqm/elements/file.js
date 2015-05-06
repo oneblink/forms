@@ -39,8 +39,6 @@ define(['views/jqm/element'], function (ElementView) {
         }
 
       }, this);
-
-      this.model.on('change:progress', this.renderProgress, this);
     },
 
     renderControls: function () {
@@ -92,31 +90,6 @@ define(['views/jqm/element'], function (ElementView) {
         $figure.append($img);
       }
       this.$el.append($figure);
-    },
-
-    renderProgress: function () {
-      var progress = this.model.get('progress');
-      var figure$ = this.$el.children('figure').first();
-      var progress$ = figure$.children('progress');
-      var attrs;
-
-      if (!progress) {
-        if (progress$.length) {
-          progress$.remove();
-        }
-        return;
-      }
-
-      attrs = { value: progress.loaded };
-      if (!progress$.length) {
-        progress$ = $('<progress></progress>').appendTo(figure$);
-      }
-      if (!progress.lengthComputable) {
-        progress$.removeAttr('max');
-      } else {
-        attrs.max = progress.total;
-      }
-      progress$.attr(attrs);
     },
 
     remove: function () {
