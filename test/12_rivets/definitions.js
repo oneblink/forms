@@ -68,10 +68,10 @@ define(function () {
               name: 'number',
               label: 'Number',
               type: 'number',
-              min: 15,
-              max: 400,
-              step: 5,
-              defaultValue: 35
+              min: "15",
+              max: "400",
+              step: "5",
+              defaultValue: "35"
             }
           },
           {

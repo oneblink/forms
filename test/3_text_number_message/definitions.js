@@ -96,9 +96,8 @@ define(function () {
               label: 'Number with slider',
               type: 'number',
               useSlider: "1",
-              min: 0,
-              max: 100,
-              defaultValue: 1,
+              max: "100",
+              defaultValue: "1",
               placeholderText: '20'
             }
           },

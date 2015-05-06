@@ -242,7 +242,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.equal(subForms.size(), 1);
 
         subForm.set('_action', 'edit');
-        subForm.set('id', 1);
+        subForm.getElement('id').set('value', 1);
 
         $remove.trigger('click');
         setTimeout(function () {

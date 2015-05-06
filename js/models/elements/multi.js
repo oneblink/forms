@@ -3,7 +3,15 @@ define(['models/elements/select'], function (SelectElement) {
 
   var MultiElement = SelectElement.extend({
     initialize: function () {
+      var attrs;
       SelectElement.prototype.initialize.call(this);
+
+      attrs = this.attributes;
+
+      if (attrs.canSpecifyOther) {
+        attrs.other = attrs.canSpecifyOther;
+        delete attrs.canSpecifyOther;
+      }
     },
     initializeView: function () {
       var Forms = BMP.Forms,
@@ -26,14 +34,9 @@ define(['models/elements/select'], function (SelectElement) {
       return view;
     },
     validate: function (attrs) {
-      var errors = {},
-        other = false;
+      var errors = {};
       if (attrs === undefined) {
         attrs = this.attributes;
-      }
-
-      if (attrs.other || attrs.canSpecifyOther) {
-        other = true;
       }
 
       // if `other` is true
@@ -41,7 +44,7 @@ define(['models/elements/select'], function (SelectElement) {
       // and attr.lenghth === 1 && _.contains(attr.value, 'other')
       // and other is not in options
       // then fail
-      if (attrs.required && (_.isEmpty(attrs.value) || other && (attrs.value.length === 1 && attrs.value[0] === "other") && !_.contains(attrs.options, 'other'))) {
+      if (attrs.required && (_.isEmpty(attrs.value) || attrs.other && (attrs.value.length === 1 && attrs.value[0] === "other") && !_.contains(attrs.options, 'other'))) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
       }

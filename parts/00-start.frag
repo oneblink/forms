@@ -8,6 +8,7 @@
       'jquery',
       'underscore',
       'backbone',
+      'expression',
       'jquerymobile',
       'feature!es5',
       'signaturepad'
@@ -15,9 +16,10 @@
 
   } else {
     // no Require.JS, no AMD modules
-    definition(Promise, $, _, Backbone);
+    definition(Promise, $, _, Backbone, Expression);
   }
-}(function(Promise, $, _, Backbone) {
+}(function(Promise, $, _, Backbone, Expression) {
   // establish globals
   var BMP = window['BMP'] = window['BMP'] || {};
   BMP.Forms = BMP.Forms || {};
+  BMP.Expression = Expression;

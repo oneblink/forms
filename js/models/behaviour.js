@@ -1,10 +1,70 @@
 define(function (require) {
   var Elements = require('collections/elements'),
     Behaviour,
-    Expression = require('models/expression');
+    Expression = BMP.Expression;
 
   Expression.fn['formelement.value'] = function (name) {
     return this.getElement(name).val();
+  };
+
+  Expression.fn.optionsbyxpath = function(xmlNodes) {
+    var newOptions = {};
+    if(_.isEmpty(xmlNodes)){
+      return newOptions;
+    }
+    $.each(xmlNodes, function(index, element) {
+      var $xml = $(element),
+        value = $xml.attr('value'),
+        text = $xml.text();
+      if (value) {
+        newOptions[value] = text;
+      } else {
+        newOptions[text] = text;
+      }
+    });
+    return newOptions;
+  };
+
+  Expression.fn.xpath = function (xpath, xml) {
+    return new Promise(function (resolve, reject) {
+      var node,
+        nodes,
+        result;
+      try {
+        if (typeof xml === "string") {
+          xml = $.parseXML(xml);
+        }
+        result = [];
+        nodes = xml.evaluate(xpath, xml);
+        node = nodes.iterateNext();
+        if (!_.isEmpty(node)) {
+          _.each(node.children, function (key) {
+            result.push(key);
+          });
+        }
+      } catch (err) {
+        reject(err);
+      }
+      resolve(result);
+    });
+  };
+
+  Expression.fn.injectelemval = function (string) {
+    var field,
+      value,
+      self = this,
+      placeholders = string.match(/\[[\w\/\[\]]+\]/g);
+    if (_.isArray(placeholders)) {
+      placeholders.forEach(function (placeholder) {
+        placeholder = placeholder.substring(1, placeholder.length - 1);
+        field = self.getElement(placeholder);
+        if (field) {
+          value = field.val();
+          string = string.replace('[' + placeholder + ']', value);
+        }
+      });
+    }
+    return string;
   };
 
   Behaviour = Backbone.Model.extend({
@@ -24,21 +84,37 @@ define(function (require) {
         attrs.trigger.formElements = [attrs.trigger.formElements];
       }
 
+      //if formEvents doesn't exist, then set it to empty array
+      if (!attrs.trigger.formEvents) {
+        attrs.trigger.formEvents = [];
+      }
+
       attrs.isLegacy = attrs.trigger.formElements.indexOf('*') !== -1;
+
+      //if formElements have (*) then also set formEvents->load
+      if (attrs.isLegacy === true && attrs.trigger.formEvents.indexOf('load') === -1) {
+        attrs.trigger.formEvents.push('load');
+      }
+
       // legacy calculations only expect to monitor value changes (performance)
       attrs.event = attrs.isLegacy ? 'change:value change:html' : 'change';
 
       this.hookupTriggers();
-      // TODO: find the best time to trigger this
-      setTimeout(function () {
-        attrs.elements.trigger(attrs.event);
-      }, 0);
     },
     hookupTriggers: function () {
-      var attrs = this.attributes,
+      var self = this,
+        attrs = this.attributes,
         form = attrs.form,
         elements = attrs.elements,
-        outputTargets;
+        outputTargets,
+        eventFrequencyDict = {
+          'formLoad': 'once',
+          'formPopulated': 'on'
+        },
+        eventDict = {
+          'load': 'formLoad',
+          'populated': 'formPopulated'
+        };
 
       elements.off(attrs.event, this.runCheck, this);
 
@@ -58,10 +134,25 @@ define(function (require) {
           elements.add(form.getElement(name));
         });
       }
+
+      if (typeof attrs.trigger.formEvents === "object") {
+        //go through each events
+        attrs.trigger.formEvents.forEach(function(i) {
+          //if event exists in event dictionary, use it
+          if (eventDict[i]) {
+            form[eventFrequencyDict[eventDict[i]]](eventDict[i], self.runCheck, self);
+          } else {
+            //otherwise assign that listener on event
+            form.on(i, self.runCheck, self);
+          }
+        });
+      }
       elements.on(attrs.event, this.runCheck, this);
     },
     runCheck: function () {
-      var check, exp;
+      var check, exp,
+        self = this;
+      //if check is not set returns true
       if (!this.attributes.check) {
         this.runActions(true);
         return;
@@ -69,10 +160,15 @@ define(function (require) {
       if (this.attributes.check) {
         check = this.getCheck(this.attributes.check);
         if (check && check.exp) {
-          this.bindExpressions();
-          exp = new Expression(check.exp);
-          this.runActions(exp.evaluate());
-          this.unbindExpressions();
+          //also send context and expressions that needs to be bound to context
+          exp = new Expression(check.exp, self.attributes.form, Behaviour.BOUND_EXPRESSIONS);
+
+          //evaluate now returns promise
+          exp.evaluate().then(function (args) {
+            self.runActions(args);
+          }, function (args) {
+            window.console.error("Behaviour-Check: ", args);
+          });
           return;
         }
       }
@@ -109,7 +205,9 @@ define(function (require) {
     runAction: function (name, isReversed) {
       var action = this.getAction(name),
         form = this.attributes.form,
-        result;
+        result,
+        self = this,
+        element;
 
       if (isReversed) {
         action = this.getReversedAction(action);
@@ -124,8 +222,17 @@ define(function (require) {
       // run manipulations
       if (Array.isArray(action.manipulations)) {
         action.manipulations.forEach(function (m) {
-          // TODO: use computed manipulations
-          form.getElement(m.target).set(_.clone(m.properties));
+          element = form.getElement(m.target);
+          //don't execute this if element doesn't exist
+          if (element) {
+            //simply copy static properties
+            element.set(_.clone(m.properties));
+            //Done: use computed manipulations (expressions)
+            //propValuesByExp: means set properties by evaluating expression
+            if (m.propValuesByExp) {
+              self.runExpression(form, name, element, m.propValuesByExp);
+            }
+          }
         });
       }
       // output result
@@ -133,9 +240,31 @@ define(function (require) {
         form.getElement(action.outputTarget).val(result);
       }
     },
+    runExpression: function(form, action, targetElement, propValuesByExp) {
+      var exp,
+        promises = [],
+        keys = [];
+      //build maps of <properties> and <expression_promise>
+      _.forEach(propValuesByExp, function (v, i) {
+        //also send context and expressions that needs to be bound to context
+        exp = new Expression(v, form, Behaviour.BOUND_EXPRESSIONS);
+        promises.push(exp.evaluate());
+        keys.push(i);
+      });
+
+      Promise.all(promises).then(function (args) {
+        //on all success, assign properties to targetElement
+        _.forEach(keys, function(key, i) {
+          targetElement.set(key, args[i]);
+        });
+      }, function (args) {
+        window.console.error("Behaviour-Action: " + action, args);
+      });
+    },
     runJavaScript: function (form, string) {
       var js, result, placeholders, value;
       js = null;
+      //todo: use expression parseElemVal instead of following operation
       placeholders = string.match(/\[[\w\/\[\]]+\]/g);
       if (_.isArray(placeholders)) {
         placeholders.forEach(function (placeholder) {
@@ -235,21 +364,12 @@ define(function (require) {
       var attrs = this.attributes;
       attrs.elements.off(attrs.event, this.runCheck, this);
       attrs.elements.reset();
-    },
-    bindExpressions: function () {
-      var unbound = Expression.fn['formelement.value'];
-      Expression.fn['formelement.value'] = _.bind(
-        Expression.fn['formelement.value'],
-        this.attributes.form
-      );
-      Expression.fn['formelement.value']._unbound = unbound;
-    },
-    unbindExpressions: function () {
-      var unbound = Expression.fn['formelement.value']._unbound;
-      delete Expression.fn['formelement.value']._unbound;
-      Expression.fn['formelement.value'] = unbound;
     }
   }, {
+    BOUND_EXPRESSIONS: [
+      'formelement.value',
+      'injectelemval'
+    ],
     // static properties
     /**
      * @param {Object} attrs attributes for this model.
@@ -284,10 +404,12 @@ define(function (require) {
           };
         }
         if (action && typeof action === 'object') {
+          //if autoReverse is undefined then mark it as false
+          if (typeof action.autoReverse !== 'boolean') {
+            action.autoReverse = false;
+          }
           if (action.action && typeof action.action === 'string') {
-            if (typeof action.autoReverse === 'boolean') {
-              return action;
-            }
+            return action;
           }
         }
         return {};

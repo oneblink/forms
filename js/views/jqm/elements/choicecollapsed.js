@@ -40,6 +40,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         that.model.set('value', that.prepModelValue());
       });
       this.model.on('change:value', this.onValueChange, this);
+      this.onValueChange();
     },
 
     renderOptions: function () {
@@ -67,6 +68,8 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       if (!attrs.nativeMenu && this.$el.children('.ui-select').length) {
         $input.selectmenu('refresh');
       }
+
+      this.onValueChange();
     },
 
     onValueChange: function () {
@@ -78,7 +81,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         if ($.inArray(attr.value, _.keys(attr.options)) < 0) {
           if (attr.value === '') {
             select.find('option:not([value])').prop('selected', true);
-          } else {
+          } else if(attr.other) {
             renderOther = true;
             select.val('other');
           }
@@ -87,7 +90,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         }
       } else { // type === 'multi'
         select.val(attr.value);
-        if (_.difference(attr.value, _.keys(attr.options)).length > 0) {
+        if (attr.other && _.difference(attr.value, _.keys(attr.options)).length > 0) {
           renderOther = true;
           select.val(_.union(attr.value, ['other']));
         }

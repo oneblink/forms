@@ -4,16 +4,37 @@ define(['models/element'], function (Element) {
   var NumberElement = Element.extend({
     initialize: function () {
       var self = this,
+        attrs = self.attributes,
         schemaMap = {
           'maxDecimalPlaces': 'maxDecimals',
           'minDecimalPlaces': 'minDecimals'
-        };
+        }, numerics = [
+          'min',
+          'max',
+          'defaultValue',
+          'step',
+          'maxDecimals',
+          'minDecimals'
+        ], intVal;
 
       Object.keys(schemaMap).forEach(function (key) {
-        if (schemaMap[key] && self.attributes[key]) {
-          self.attributes[schemaMap[key]] = self.attributes[key];
+        if (schemaMap[key] && attrs[key]) {
+          attrs[schemaMap[key]] = attrs[key];
         }
       });
+
+      numerics.forEach(function(i) {
+        if (attrs[i] && !_.isNumber(attrs[i])) {
+          intVal = Number(attrs[i]);
+          if (isNaN(intVal) === false) {
+            attrs[i] = intVal;
+          }
+        }
+      });
+
+      if (attrs.max && !attrs.min) {
+        attrs.min = 0;
+      }
 
       Element.prototype.initialize.call(this);
     },
