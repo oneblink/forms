@@ -44,10 +44,10 @@ define('expression', ['feature!promises'], function (Promise) {
         '!contains'
       ];
     if (!this.operator) {
-      throw new Error('missing operator');
+      return Promise.reject(new Error('missing operator'));
     }
     if (!Expression.fn[this.operator]) {
-      throw new Error('unknown operator: ' + this.operator);
+      return Promise.reject(new Error('unknown operator: ' + this.operator));
     }
     args = this.operands.map(function (op) {
       if (_.isString(op) || _.isNumber(op) || _.isBoolean(op) || _.isNull(op)) {
@@ -57,7 +57,7 @@ define('expression', ['feature!promises'], function (Promise) {
       if (op.evaluate) {
         return op.evaluate();
       }
-      throw new Error('unexpected operand type');
+      return Promise.reject(new Error('unexpected operand type'));
     });
 
     //FORMS-141 # binary operator will need two arguments,
@@ -143,24 +143,27 @@ define('expression', ['feature!promises'], function (Promise) {
 
   Expression.fn.contains = function (haystack, needle) {
     var found;
-    if (!haystack || _.isEmpty(haystack)) {
-      return false;
-    }
-    if (typeof haystack === 'string') {
-      return haystack.indexOf(needle) !== -1;
-    }
-    /*eslint-disable eqeqeq*/
-    if (_.isArray(haystack)) {
-      found = false;
-      haystack.forEach(function (item) {
-        if (item == needle) {
-          found = true;
-        }
-      });
-      return found;
-    }
-    /*eslint-enable eqeqeq*/
-    throw new Error('contains: unexpected operand type');
+    return new Promise(function (resolve, reject) {
+      if (!haystack || _.isEmpty(haystack)) {
+        resolve(false);
+      }
+      if (typeof haystack === 'string') {
+        resolve(haystack.indexOf(needle) !== -1);
+      }
+      /*eslint-disable eqeqeq*/
+      if (_.isArray(haystack)) {
+        found = false;
+        haystack.forEach(function (item) {
+          if (item == needle) {
+            found = true;
+          }
+        });
+        resolve(found);
+      }
+      /*eslint-enable eqeqeq*/
+      reject(new Error('contains: unexpected operand type'));
+    });
+
   };
   Expression.fn['!contains'] = function (haystack, needle) {
     return !Expression.fn.contains.call(this, haystack, needle);
