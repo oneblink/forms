@@ -87,7 +87,7 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
           id: form.getElement('id').get('value')
         };
       } else {
-        form.destroy();
+        form.close();
         forms.remove(form);
       }
     },

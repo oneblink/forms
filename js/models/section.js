@@ -9,6 +9,8 @@ define(function (require) {
 
       attrs.elements = new Elements();
       this.initializeView();
+
+      this.on('remove', this.close, this);
     },
     initializeView: function () {
       var Forms = BMP.Forms,
@@ -17,7 +19,7 @@ define(function (require) {
       view = new Forms._views.Section({model: this});
       this.set('_view', view);
     },
-    destroy: function (options) {
+    close: function () {
       var attrs = this.attributes;
       if (attrs._view) {
         attrs._view.remove();
@@ -25,9 +27,10 @@ define(function (require) {
       }
       delete attrs.form;
       attrs.elements.forEach(function (element) {
-        element.destroy(options);
+        element.close();
       });
-      return Backbone.Model.prototype.destroy.call(this, options);
+
+      this.off('remove', this.close, this);
     },
     add: function (element) {
       this.attributes.elements.add(element);

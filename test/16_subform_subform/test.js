@@ -227,6 +227,37 @@ define(['BlinkForms', 'backbone', 'BIC'], function (Forms, Backbone) {
 
       });
 
+      suite('removing a subform record with an "id" attribute', function () {
+        var oldSync;
+
+        suiteSetup(function (done) {
+          oldSync = Backbone.sync;
+
+          Backbone.sync = function () {
+            throw new Error('Backbone.sync called unexpectedly');
+          };
+
+          // this is necessary for a Backbone.Model#destroy() to trigger
+          // Backbone.sync()
+          BMP.Forms.current.getElement('Address').setRecords([{}]).then(function () {
+            BMP.Forms.current.getElement('Address').get('forms').at(0).id = '123';
+            done();
+          });
+        });
+
+        test('removing subform record does not trigger exception', function () {
+          assert.doesNotThrow(function () {
+            // if Backbone.sync() is called, there will be an exception
+            BMP.Forms.current.getElement('Address').remove(0);
+          });
+        });
+
+        suiteTeardown(function () {
+          Backbone.sync = oldSync;
+        });
+
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)

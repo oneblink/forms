@@ -64,12 +64,15 @@ define(function (require) {
         behaviours = [];
       }
       this.attributes.behaviours = behaviours;
+
+      this.on('remove', this.close, this);
+
       setTimeout(function() {
         self.trigger('formLoad', self);
       }, 0);
 
     },
-    destroy: function (options) {
+    close: function () {
       var attrs = this.attributes;
       if (attrs._view) {
         attrs._view.remove();
@@ -78,16 +81,17 @@ define(function (require) {
       delete this.$form;
       if (attrs.pages) {
         attrs.pages.forEach(function (page) {
-          page.destroy(options);
+          page.close();
         });
         attrs.pages.reset();
       }
       if (attrs.behaviours) {
         attrs.behaviours.forEach(function (behaviour) {
-          behaviour.destroy(options);
+          behaviour.close();
         });
       }
-      return Backbone.Model.prototype.destroy.call(this, options);
+
+      this.off('remove', this.close, this);
     },
     /**
     * get a Page, creating it if necessary
