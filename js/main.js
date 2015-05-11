@@ -1,8 +1,7 @@
 define(function (require) {
   'use strict';
-  var Forms, BicyclePump, FormsLib;
+  var Forms, FormsLib;
 
-  BicyclePump = require('bicyclepump');
   FormsLib = require('formslib');
   Forms = window.BMP.Forms;
 
@@ -37,9 +36,6 @@ define(function (require) {
   };
 
   Forms.uuid = require('uuid');
-
-  Forms.models = new BicyclePump();
-  Forms.views = new BicyclePump();
 
   Forms.castPropertyValues = FormsLib.castPropertyValues;
   Forms.flattenDefinition = FormsLib.flattenDefinition;

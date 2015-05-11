@@ -57,6 +57,8 @@ define(function (require) {
         }
       });
       attrs.sections = sections;
+
+      this.on('remove', this.close, this);
     },
     initializeView: function () {
       var Forms = BMP.Forms,
@@ -65,7 +67,7 @@ define(function (require) {
       view = new Forms._views.Page({model: this});
       this.set('_view', view);
     },
-    destroy: function (options) {
+    close: function () {
       var attrs = this.attributes;
       if (attrs._view) {
         attrs._view.remove();
@@ -77,11 +79,12 @@ define(function (require) {
         // some combinations of lo-dash and backbone have broken .length
         // so we need to double-check that .forEach actually yielded something
         if (element) {
-          element.destroy(options);
+          element.close();
         }
       });
       attrs.elements.reset();
-      return Backbone.Model.prototype.destroy.call(this, options);
+
+      this.off('remove', this.close, this);
     },
     add: function (element) {
       if (element instanceof Section) {

@@ -26,7 +26,7 @@ define(function () {
               subForm: 'Address',
               plusButtonLabel: "Add",
               minusButtonLabel: "Remove",
-              preloadNum: 2,
+              preloadNum: "2",
               preload: "admin_defined"
             }
           }
@@ -59,7 +59,7 @@ define(function () {
               subForm: 'PhoneForm',
               plusButtonLabel: "Add Phone",
               minusButtonLabel: "Remove Phone",
-              preload: 1
+              preload: "1"
             }
           }
         ]

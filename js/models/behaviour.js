@@ -100,6 +100,8 @@ define(function (require) {
       attrs.event = attrs.isLegacy ? 'change:value change:html' : 'change';
 
       this.hookupTriggers();
+
+      this.on('remove', this.close, this);
     },
     hookupTriggers: function () {
       var self = this,
@@ -360,10 +362,12 @@ define(function (require) {
       }
       return null;
     },
-    destroy: function () {
+    close: function () {
       var attrs = this.attributes;
       attrs.elements.off(attrs.event, this.runCheck, this);
       attrs.elements.reset();
+
+      this.off('remove', this.close, this);
     }
   }, {
     BOUND_EXPRESSIONS: [

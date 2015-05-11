@@ -16,10 +16,12 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
 
       attrs = this.attributes;
       //currently server sets preload to either "admin_defined" or "no"
-      if (!_.isNumber(attrs.preload)) {
-        if (attrs.preload !== "no" && _.isNumber(attrs.preloadNum) && attrs.preloadNum > 0) {
-          attrs.preload = attrs.preloadNum;
+      if (isNaN(Number(attrs.preload))) {
+        if (attrs.preload !== "no" && attrs.preloadNum) {
+          attrs.preload = Number(attrs.preloadNum);
         }
+      } else if (!isNaN(Number(attrs.preload))) {
+        attrs.preload = Number(attrs.preload);
       }
 
       this.attributes.forms.on('add remove', this.updateFieldErrors, this);
@@ -87,7 +89,7 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
           id: form.getElement('id').get('value')
         };
       } else {
-        form.destroy();
+        form.close();
         forms.remove(form);
       }
     },

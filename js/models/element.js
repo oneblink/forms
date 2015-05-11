@@ -57,6 +57,8 @@ define(function () {
 
       this.on('change', this.updateErrors, this);
       // this.on('change:blob', this.updateWarning, this);
+
+      this.on('remove', this.close, this);
     },
     validate: function (attrs) {
       var errors = {};
@@ -95,14 +97,12 @@ define(function () {
         delete attrs._view;
       }
     },
-    destroy: function (options) {
+    close: function () {
       var attrs = this.attributes;
       delete attrs.form;
       delete attrs.page;
       delete attrs.section;
-      this.id = null; // to prevent "sync"
       this.off(null, null, this);
-      return Backbone.Model.prototype.destroy.call(this, options);
     },
     /**
      * this will close any existing view first, then establish a new view
