@@ -3,6 +3,19 @@
 ## Unreleased
 
 
+## v3.3.1 - 2015-05-11
+
+### Fixed
+
+- FORMS-168: no longer call `Backbone.Model#destroy()` as it has side-effects
+
+    - this blocked new sub-form records after removing one
+
+    - we put all Backbone.Model destructor statements in `#close()` now
+
+- FORMS-133: sub-forms elements "preload" now works with real-world definitions
+
+
 ## v3.3.0 - 2015-05-06
 
 ### Added
@@ -12,7 +25,7 @@
 
     - requires a platform update to improve the Forms v2 Builder
 
-- FORMS-155: sub-form elements now support the "preload" feature
+- FORMS-133: sub-form elements now support the "preload" feature
 
 ### Fixed
 
