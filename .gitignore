@@ -12,6 +12,6 @@ node_modules
 /nbproject
 
 # build output
-js/build
+build
 /BlinkForms*.js*
 i18n.js

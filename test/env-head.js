@@ -16,7 +16,7 @@
       jquery: 'http://cdnp.blinkm.co/jquery/1.11.1/jquery-1.11.1',
       jquerymobile: 'http://cdnp.blinkm.co/jquery.mobile/1.3.2/jquery.mobile-1.3.2.min',
       underscore: 'http://cdnp.blinkm.co/lodash/2.4.1/lodash.underscore.min',
-      BlinkForms: '../../js/build/views/forms3jqm',
+      BlinkForms: '../../build/views/forms3jqm',
       BIC: '../sample-bic',
       'BMP.Blob': '../lib/bmp-blobs',
       'BMP.BlinkGap': '../../node_modules/blinkgap-utils/BMP.BlinkGap',
