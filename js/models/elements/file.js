@@ -97,7 +97,7 @@ define(['models/element'], function (Element) {
 
 /**
   @method toCameraOptions
-  @description Builds an object that conforms to the Cordova camera API options. values are taken from the BMP.BIC.attributes object.
+  @description Builds an object that conforms to the Cordova camera API options. values are taken from the answer space config settings.
 
   @returns {object} An object that conforms to the [Cordova options spec]{@link http://plugins.cordova.io/#/package/org.apache.cordova.camera}
 */
@@ -111,10 +111,10 @@ define(['models/element'], function (Element) {
         options.destinationType = cameraDestinationType;
       }
 
-      if (_.isNumber(attrs.imageCaptureQuality)) {
+      if (_.isNumber(+attrs.imageCaptureQuality)) {
         options.quality = attrs.imageCaptureQuality;
       }
-      if (_.isNumber(attrs.imageCaptureScale)) {
+      if (_.isNumber(+attrs.imageCaptureScale)) {
         options.imageScale = attrs.imageCaptureScale;
       }
       if (_.isString(attrs.cameraOptions)) {
