@@ -160,6 +160,585 @@ define(function () {
               "minuteStep": "1",
               "defaultValue": "now"
             }
+          },
+          {
+            "default": {
+              "name": "dateTimeRonlyNone",
+              "type": "datetime",
+              "label": "Date Time Ronly None",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "shown",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "minuteStep": "1",
+              "defaultValue": null,
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimeRonlyNow",
+              "type": "datetime",
+              "label": "Date Time Ronly Now",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "shown",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now",
+              "minuteStep": "1",
+              "defaultValue": "now",
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimeRonlyNowP",
+              "type": "datetime",
+              "label": "Date Time Ronly NowP +5min",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "shown",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now_plus",
+              "nowPlusAmount": "5",
+              "minuteStep": "1",
+              "defaultValue": "now_plus",
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimeRonlyNowPM",
+              "type": "datetime",
+              "label": "Date Time Ronly NowP -5min",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "shown",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now_plus",
+              "nowPlusAmount": "-5",
+              "minuteStep": "1",
+              "defaultValue": "now_plus",
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimeHiddenNone",
+              "type": "datetime",
+              "label": "Date Time Hidden None",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "hidden",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "minuteStep": "1",
+              "defaultValue": null,
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimeHiddenNow",
+              "type": "datetime",
+              "label": "Date Time Hidden Now",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "hidden",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now",
+              "minuteStep": "1",
+              "defaultValue": "now",
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimeHiddenNowP",
+              "type": "datetime",
+              "label": "Date Time Hidden NowP +5min",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "hidden",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now_plus",
+              "nowPlusAmount": "5",
+              "minuteStep": "1",
+              "defaultValue": "now_plus",
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimeHddenNowPM",
+              "type": "datetime",
+              "label": "Date Time Hidden NowP -5min",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "hidden",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now_plus",
+              "nowPlusAmount": "-5",
+              "minuteStep": "1",
+              "defaultValue": "now_plus",
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimePickerNone",
+              "type": "datetime",
+              "label": "Date Time Picker None",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "picker",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "minuteStep": "1",
+              "defaultValue": null,
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimePickerNow",
+              "type": "datetime",
+              "label": "Date Time Picker Now",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "picker",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now",
+              "minuteStep": "1",
+              "defaultValue": "now",
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimePickerNowP",
+              "type": "datetime",
+              "label": "Date Time Picker NowP +5min",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "picker",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now_plus",
+              "nowPlusAmount": "5",
+              "minuteStep": "1",
+              "defaultValue": "now_plus",
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimePckerNowPM",
+              "type": "datetime",
+              "label": "Date Time Picker NowP -5min",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "picker",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now_plus",
+              "nowPlusAmount": "-5",
+              "minuteStep": "1",
+              "defaultValue": "now_plus",
+              "page": 0
+            },
+            "list": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "search": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain"
+            },
+            "add": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "edit": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "view": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            },
+            "delete": {
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "dateFormat": "dd_mm_yyyy",
+              "timeFormat": "hh_mm"
+            }
           }
         ]
       }

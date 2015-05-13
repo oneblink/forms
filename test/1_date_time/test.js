@@ -100,11 +100,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('use native picker defaults to native picker', function (done) {
+        var form = Forms.current,
+          element,
+          $fieldset;
+        this.timeout(3000);
         nativedate.forEach(function (fld) {
-          assert.equal($('input[name="' + fld + '_date"]').attr('type'), 'date');
+          element = form.getElement(fld);
+          $fieldset = element.attributes._view.$el;
+          assert.equal($fieldset.find('input[name="' + fld + '_date"]').attr('type'), 'date');
         });
         nativetime.forEach(function (fld) {
-          assert.equal($('input[name="' + fld + '_time"]').attr('type'), 'time');
+          element = form.getElement(fld);
+          $fieldset = element.attributes._view.$el;
+          assert.equal($fieldset.find('input[name="' + fld + '_time"]').attr('type'), 'time');
         });
         setTimeout(done, 197);
       });
@@ -121,6 +129,51 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           assert.equal($elem.next('div').hasClass('picker'), true);
           assert.equal($elem.next('div').hasClass('picker--time'), true);
         });
+      });
+
+      suite('readonly, hidden', function () {
+        var readonly = [
+            'dateTimeRonlyNone',
+            'dateTimeRonlyNow',
+            'dateTimeRonlyNowP',
+            'dateTimeRonlyNowPM'
+          ],
+          hidden = [
+            'dateTimeHiddenNone',
+            'dateTimeHiddenNow',
+            'dateTimeHiddenNowP',
+            'dateTimeHddenNowPM'
+          ];
+
+        test('check if readonly fields are actually readonly', function () {
+          var form = Forms.current,
+            element,
+            $fieldset;
+
+          readonly.forEach(function(fld) {
+            element = form.getElement(fld);
+            $fieldset = element.attributes._view.$el;
+            //should not contain any input fields
+            assert.equal($fieldset.find("input").length, 0);
+            assert.equal(element.attributes.picker, "shown");
+            assert(element.attributes.readonly);
+          });
+        });
+
+        test('check if hidden fields are actually hidden', function () {
+          var form = Forms.current,
+            element,
+            $fieldset;
+          hidden.forEach(function(fld) {
+            element = form.getElement(fld);
+            $fieldset = element.attributes._view.$el;
+            //should have display: none set in stylesheet
+            assert.equal($fieldset.css('display'), 'none');
+            assert.equal(element.attributes.picker, "hidden");
+            assert(element.attributes.hidden);
+          });
+        });
+
       });
 
     }); // END: suite('Form', ...)
