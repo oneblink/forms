@@ -1,7 +1,40 @@
 define(['models/element'], function (Element) {
   'use strict';
 
-  var FileElement = Element.extend({
+  var FileElement
+    , cameraDestinationType;
+
+  /*
+    We'll set the camera destination type here, but it can still be overridden by setting BMP.BIC.attributes.destinationType, same as the image quality and scale options
+
+     http://plugins.cordova.io/#/package/org.apache.cordova.camera
+
+     "NOTE: Photo resolution on newer devices is quite good. Photos selected from the device's gallery are not downscaled to a lower quality, even if a quality parameter is specified. To avoid common memory problems, set Camera.destinationType to FILE_URI rather than DATA_URL."
+  */
+  try{
+    cameraDestinationType = window.camera.DestinationType || navigator.camera.DestinationType;
+  } catch(e){
+    //console && console.warn("Camera not available");
+  }
+
+/**
+  @class FileElement
+  @classdesc Represents a file, usually an image.
+
+  @type Backbone.Model
+  @implements Forms.Element
+
+  @property {object}  attributes        - Backbone Attributes object
+  @property {number}  attributes.blob   - file blob data, in base64 format
+  @property {number}  height            -
+  @property {number}  width             -
+  @property {number}  progress          -
+  @property {number}  uuid              -
+  @property {number}  accept            - "image" if the model will hold an image from the device camera
+  @property {boolean} readonly          - if true, BlobReadOnlyElement View will be used.
+  @property {boolean} capture           - if true, and the device supports "getUserMedia", "WebRTCImageElement" View will be used.
+*/
+  FileElement = Element.extend({
     defaults: _.extend({}, Element.prototype.defaults, {
       height: 0,
       width: 0,
@@ -13,6 +46,10 @@ define(['models/element'], function (Element) {
     initialize: function () {
       Element.prototype.initialize.call(this);
 
+/**
+  @event FileElement#change
+  @description Fired when the value attribute has changed
+*/
       this.on('change:value', function () {
         var value;
         value = this.get('value');
@@ -29,16 +66,24 @@ define(['models/element'], function (Element) {
         }
       }, this);
 
+      /*
+        TODO : this function doesnt seem to exist anywhere on the prototype chain should be removed if not needed.
+        */
       this.on('change:xhr', this.onChangeXHR, this);
     },
 
+/**
+  @method initializeView
+  @description Initializes the correct view based on the model's attributes.
+
+*/
     initializeView: function () {
       var Forms = BMP.Forms,
         view,
-        accept = this.attributes.accept;
+        accept = this.get('accept') || "";
 
       this.removeView();
-      if (this.attributes.readonly) {
+      if (this.get('readonly')) {
         view = new Forms._views.BlobReadOnlyElement({model: this});
       } else if (BMP.BlinkGap.hasCamera() && accept.indexOf('image') === 0) {
         view = new Forms._views.BGImageElement({model: this});
@@ -50,11 +95,21 @@ define(['models/element'], function (Element) {
       this.set('_view', view);
     },
 
+/**
+  @method toCameraOptions
+  @description Builds an object that conforms to the Cordova camera API options. values are taken from the BMP.BIC.attributes object.
+
+  @returns {object} An object that conforms to the [Cordova options spec]{@link http://plugins.cordova.io/#/package/org.apache.cordova.camera}
+*/
     toCameraOptions: function () {
-      var options = {},
+      var options = { },
       cameraOpts,
       // attrs = {'imageCaptureQuality':40, 'imageCaptureScale': 60, 'cameraOptions': '{"quality":45}'};
       attrs = BMP.BIC.attributes || {};
+
+      if ( !_.isUndefined(cameraDestinationType)){
+        options.destinationType = cameraDestinationType;
+      }
 
       if (_.isNumber(attrs.imageCaptureQuality)) {
         options.quality = attrs.imageCaptureQuality;
@@ -75,11 +130,24 @@ define(['models/element'], function (Element) {
       }
       return options;
     },
+/**
+  @method getUserMediaPresent
+  @description Test to check if the device can prompt the user for access to media devices. See [getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia)
 
+  @returns {boolean} True if the function exists.
+*/
     getUserMediaPresent: function () {
       return window.URL && window.URL.createObjectURL && (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
     },
 
+/**
+  @method setBlobFromString
+  @description Sets the blob attribute to the passed in Base64 encoded jpeg image.
+
+  @param {string} data A Base64 Encoded Jpeg Image. If falsey, nothing will be done.
+
+  @returns {boolean} True if the function exists.
+*/
     setBlobFromString: function (data) {
       var blob;
       if (!data) { return; }
