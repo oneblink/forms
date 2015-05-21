@@ -320,35 +320,37 @@ define(function (require) {
       }
       return value;
     },
-    xmlToJson: function (xml) {
-      var result = {},
-        nodes,
-        object = [],
-        subform,
-        childItems,
-        nodeName,
-        json = {};
+    xmlToJson: function (xml, output) {
+      var result = output || {};
+      var nodes = xml.childNodes;
+      var root = xml.nodeName;
+      var res = {};
 
-      if (xml.hasChildNodes()) {
-        nodes = xml.childNodes;
-        _.each(nodes, function (item) {
-          if (item.hasChildNodes()) {
-            childItems = item.childNodes;
-            nodeName = item.nodeName;
-            _.each(childItems, function (childItem) {
-              if (childItem.childElementCount > 0) {
-                subform = Form.xmlToJson(childItem);
-                json[childItem.nodeName] = subform[childItem.nodeName];
-              } else if (childItem.firstChild !== null) {
-                json[childItem.nodeName] = childItem.firstChild.nodeValue;
-              }
-            });// 2nd for loop
-
-            object.push(json);
+      _.each(nodes, function (node) {
+          res = Form.xmlToJsonform(node, {});
+          if (!_.isArray(result[root])) {
+            result[root] = [];
           }
-        });//1st for loop
-      }
-      result[nodeName] = object;
+          if (!_.isEmpty(res)) {
+            result[root].push(res);
+          }
+      });
+      return result;
+    },
+    xmlToJsonform: function (xml) {
+      var result = {};
+      var nodes = xml.childNodes;
+      var res;
+
+      _.each(nodes, function (node) {
+        if (node.childElementCount === 0) {
+          result[node.nodeName] = node.textContent;
+        } else {
+          res = Form.xmlToJson(node, {});
+          result[node.nodeName] = res[node.nodeName];
+        }
+
+      });
       return result;
     }
 
