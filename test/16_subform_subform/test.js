@@ -146,6 +146,79 @@ define(['BlinkForms', 'backbone', 'BIC'], function (Forms, Backbone) {
 
       });
 
+      test('Edit form with subforms', function (done) {
+        var form = Forms.current;
+        var element = {
+          id: '41',
+          Name: 'Dasy',
+          Address: [
+            {
+              "id": "51",
+              "Detail": "Great work",
+              "_action": "edit",
+              "Exp": [
+                {
+                  "id": "1",
+                  "Rank": "45",
+                  "_action": "edit"
+                }
+              ]
+            },
+            {
+              "id": "52",
+              "Detail": "Bad news",
+              "_action": "edit",
+              "Exp": [
+                {
+                  "id": "2",
+                  "Rank": "89",
+                  "_action": "edit"
+                },
+                {
+                  "id": "3",
+                  "Rank": "88",
+                  "_action": "edit"
+                }
+              ]
+            },
+            {
+              "id": "53",
+              "Detail": "Quite Day",
+              "_action": "edit",
+              "Exp": [
+
+              ]
+            }
+          ]
+        };
+        $.ajax({
+          type: "GET",
+          url: "getformrecord.xml",
+          dataType: "xml"}).then(
+          function (data) {
+            var rec = {}, node, nodes;
+            nodes = data.evaluate('//' + form.attributes.name, data);
+            node = nodes.iterateNext();
+            _.each(node.children, function (key) {
+              rec[key.nodeName] = key.innerHTML;
+            });
+            form.setRecord(rec).then(function () {
+              form.data().then(function (formdata) {
+                var keys = _.keys(rec);
+                _.each(keys, function(k) {
+                  assert.deepEqual(formdata[k], element[k]);
+                  assert.ok(formdata[k], k + " does not exist");
+                });
+                done();
+              }, function () {
+                assert(false, "failed to set record");
+                done();
+              });
+            });
+          }
+        );
+      });
+
       suite('after .setRecord()', function () {
 
         var form;
