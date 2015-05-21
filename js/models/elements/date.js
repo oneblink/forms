@@ -12,6 +12,20 @@ define([
         dateValue = null,
         timeValue = null;
 
+      /* THIS CODE NEEDS TO BE REMOVED WITH PLATFORM 2.26+ */
+      if (attr.picker) {
+        switch(attr.picker) {
+          case "shown":
+            attr.readonly = true;
+            break;
+          case "hidden":
+            attr.hidden = true;
+            break;
+          default:
+            break;
+        }
+      }
+
       Element.prototype.initialize.call(this);
       this.on('change:_date change:_time', this.prepareValue);
       this.on('change:value', this.prepareDateTime);
@@ -71,7 +85,6 @@ define([
 
       this.removeView();
       if (attr.readonly) {
-        this.removeView();
         View = Forms._views.ReadOnlyElement;
         view = new View({model: this});
       } else if (parseInt(attr.nativeDatetimePicker, 10) === 1
