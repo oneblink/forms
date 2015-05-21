@@ -66,11 +66,12 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $calc = $view.children('.ui-btn').children('button');
 
         $calc.trigger('click');
-        form.data().then(function (data) {
-          assert.equal(data.calc, "test11test22");
-          done();
-        });
-
+        setTimeout(function () {
+          form.data().then(function (data) {
+            assert.equal(data.calc, "test11test22");
+            done();
+          });
+        }, 200);
       });
 
       test('changing field value does not run behaviour', function (done) {

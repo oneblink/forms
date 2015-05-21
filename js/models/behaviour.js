@@ -1,7 +1,13 @@
 define(function (require) {
-  var Elements = require('collections/elements'),
-    Behaviour,
-    Expression = BMP.Expression;
+  var queue = require('queue-async');
+  var q = queue(10);
+
+  /** @type {Boolean} is the Behaviours queue empty? */
+  var qEmpty = true;
+
+  var Elements = require('collections/elements');
+  var Behaviour;
+  var Expression = BMP.Expression;
 
   Expression.fn['formelement.value'] = function (name) {
     return this.getElement(name).val();
@@ -103,6 +109,7 @@ define(function (require) {
 
       this.on('remove', this.close, this);
     },
+
     hookupTriggers: function () {
       var self = this,
         attrs = this.attributes,
@@ -118,7 +125,7 @@ define(function (require) {
           'populated': 'formPopulated'
         };
 
-      elements.off(attrs.event, this.runCheck, this);
+      elements.off(null, this.execute, this);
 
       outputTargets = this.getOutputTargets();
       if (attrs.trigger.formElements.indexOf('*') !== -1) {
@@ -126,14 +133,16 @@ define(function (require) {
         elements.set(form.attributes.elements.models.filter(function (m) {
           // prevent monitoring of output targets (possible loops)
           return outputTargets.indexOf(m.attributes.name) === -1;
-        }));
+        }), { silent: true });
+        // we disable the Backbone.Collection#set() events for a >10x speed-up
 
       } else {
         attrs.trigger.formElements.filter(function (name) {
           // only proceed with elements that are not output targets
           return outputTargets.indexOf(name) === -1;
         }).forEach(function (name) {
-          elements.add(form.getElement(name));
+          elements.add(form.getElement(name), { silent: true });
+          // we disable the Backbone.Collection#add() events for a speed-up
         });
       }
 
@@ -142,40 +151,75 @@ define(function (require) {
         attrs.trigger.formEvents.forEach(function(i) {
           //if event exists in event dictionary, use it
           if (eventDict[i]) {
-            form[eventFrequencyDict[eventDict[i]]](eventDict[i], self.runCheck, self);
+            form[eventFrequencyDict[eventDict[i]]](eventDict[i], self.execute, self);
           } else {
             //otherwise assign that listener on event
-            form.on(i, self.runCheck, self);
+            form.on(i, self.execute, self);
           }
         });
       }
-      elements.on(attrs.event, this.runCheck, this);
+
+      elements.on(attrs.event, this.execute, this);
     },
+
+    execute: function () {
+      var me = this;
+      q.defer(function (done) {
+        return me.runCheck()
+        .then(function (result) {
+          me.runActions(result);
+          setTimeout(done, Behaviour.EXECUTE_SLEEP);
+        }, function (err) {
+          window.console.error('Behaviour-Check: ', err);
+          setTimeout(done, Behaviour.EXECUTE_SLEEP);
+        });
+      });
+      if (qEmpty) {
+        qEmpty = false;
+        setTimeout(function () {
+          q.awaitAll(function () {
+            qEmpty = true;
+            BMP.Forms.trigger('behavioursExecuted');
+          });
+        }, 0);
+      }
+    },
+
+    /**
+     * @returns {Promise} resolved with a {Boolean} result
+     */
     runCheck: function () {
       var check, exp,
         self = this;
       //if check is not set returns true
       if (!this.attributes.check) {
-        this.runActions(true);
-        return;
+        return Promise.resolve(true);
       }
       if (this.attributes.check) {
         check = this.getCheck(this.attributes.check);
         if (check && check.exp) {
-          //also send context and expressions that needs to be bound to context
-          exp = new Expression(check.exp, self.attributes.form, Behaviour.BOUND_EXPRESSIONS);
+          try {
+            //also send context and expressions that needs to be bound to context
+            exp = new Expression(
+              check.exp,
+              self.attributes.form,
+              Behaviour.BOUND_EXPRESSIONS
+            );
+          } catch (err) {
+            window.console.error('Behaviour: ' + self.attributes.name);
+            window.console.error(err);
+            return Promise.resolve(false);
+          }
 
           //evaluate now returns promise
-          exp.evaluate().then(function (args) {
-            self.runActions(args);
-          }, function (args) {
-            window.console.error("Behaviour-Check: ", args);
-          });
-          return;
+          return exp.evaluate();
         }
       }
       // TODO: handle checks with functions
+      window.console.warning("unsupported Behaviour-Check (missing Expression");
+      return Promise.resolve(false);
     },
+
     runActions: function (result) {
       var self = this;
 
@@ -204,6 +248,7 @@ define(function (require) {
         });
       }
     },
+
     runAction: function (name, isReversed) {
       var action = this.getAction(name),
         form = this.attributes.form,
@@ -242,6 +287,7 @@ define(function (require) {
         form.getElement(action.outputTarget).val(result);
       }
     },
+
     runExpression: function(form, action, targetElement, propValuesByExp) {
       var exp,
         promises = [],
@@ -263,6 +309,7 @@ define(function (require) {
         window.console.error("Behaviour-Action: " + action, args);
       });
     },
+
     runJavaScript: function (form, string) {
       var js, result, placeholders, value;
       js = null;
@@ -295,6 +342,7 @@ define(function (require) {
       }
       return result;
     },
+
     getCheck: function (name) {
       try {
         return this.attributes.form.attributes._checks.filter(function (c) {
@@ -304,6 +352,7 @@ define(function (require) {
         return null;
       }
     },
+
     getAction: function (name) {
       try {
         return this.attributes.form.attributes._actions.filter(function (a) {
@@ -313,6 +362,7 @@ define(function (require) {
         return null;
       }
     },
+
     getActionsNames: function () {
       return this.attributes.actions.map(function (a) {
         return a.action;
@@ -320,6 +370,7 @@ define(function (require) {
         return a.action;
       }));
     },
+
     getOutputTargets: function () {
       var allActions, names, myActions;
       try {
@@ -337,6 +388,7 @@ define(function (require) {
         return [];
       }
     },
+
     getReversedAction: function (action) {
       var isReversible;
 
@@ -362,19 +414,24 @@ define(function (require) {
       }
       return null;
     },
+
     close: function () {
-      var attrs = this.attributes;
-      attrs.elements.off(attrs.event, this.runCheck, this);
-      attrs.elements.reset();
+      var elements = this.attributes.elements;
+      elements.off(null, this.execute, this);
+      elements.reset();
 
       this.off('remove', this.close, this);
     }
   }, {
+    // static properties
+
+    EXECUTE_SLEEP: 10,
+
     BOUND_EXPRESSIONS: [
       'formelement.value',
       'injectelemval'
     ],
-    // static properties
+
     /**
      * @param {Object} attrs attributes for this model.
      * @param {Form} form parent to associate with new Section.
@@ -392,6 +449,7 @@ define(function (require) {
       behaviour = new Behaviour(attrs);
       return behaviour;
     },
+
     /**
      * @param {Array} actions array of Strings and Objects
      * @returns {Object[]} array of Objects { action: "...", autoReverse: true|false }

@@ -19,7 +19,14 @@ define('expression', ['feature!promises'], function (Promise) {
       this.bindContext(ctx, names);
     }
 
+    if (!def.operator || typeof def.operator !== 'string') {
+      throw new TypeError('Expression must have an operator');
+    }
     this.operator = def.operator.toLowerCase();
+    if (!Expression.fn[this.operator]) {
+      throw new Error('unknown Expression operator: ' + this.operator);
+    }
+
     this.operands = def.operands || [];
 
     this.operands.forEach(function (op, index) {
@@ -43,12 +50,7 @@ define('expression', ['feature!promises'], function (Promise) {
         'contains',
         '!contains'
       ];
-    if (!this.operator) {
-      return Promise.reject(new Error('missing operator'));
-    }
-    if (!Expression.fn[this.operator]) {
-      return Promise.reject(new Error('unknown operator: ' + this.operator));
-    }
+
     args = this.operands.map(function (op) {
       if (_.isString(op) || _.isNumber(op) || _.isBoolean(op) || _.isNull(op)) {
         // primitive types are fine

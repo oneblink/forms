@@ -72,6 +72,7 @@ define(function (require) {
       }, 0);
 
     },
+
     close: function () {
       var attrs = this.attributes;
       if (attrs._view) {

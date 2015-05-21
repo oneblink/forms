@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 
     clean: {
       build: {
-        src: ['BlinkForms*.js*', 'js/*.min.js']
+        src: ['build', 'js/locales/**/i18n.js']
       }
     },
 
@@ -38,7 +38,7 @@ module.exports = function (grunt) {
       compile: {
         options: {
           baseUrl: 'js',
-          dir: 'js/build',
+          dir: 'build',
 //          optimize: 'uglify2',
           optimize: 'none',
           uglify: {
@@ -61,6 +61,7 @@ module.exports = function (grunt) {
             picker: '../node_modules/pickadate/lib/picker',
             'picker.date': '../node_modules/pickadate/lib/picker.date',
             'picker.time': '../node_modules/pickadate/lib/picker.time',
+            'queue-async': '../node_modules/queue-async/queue',
             geolocation: '../node_modules/geolocation/geolocation',
             rivets: '../node_modules/rivets/dist/rivets',
             formslib: '../node_modules/blinkmobile-forms/dist/formslib',
@@ -93,7 +94,7 @@ module.exports = function (grunt) {
     uglify: {
       'Forms3+jQM': {
         options: {
-          sourceMap: 'js/build/views/forms3jqm.js.map',
+          sourceMap: 'build/views/forms3jqm.js.map',
           sourceMappingURL: 'forms3jqm.js.map', // fix reference in .min.js
           sourceMapPrefix: 3, // fix reference in .js.map
           beautify: {
@@ -102,8 +103,8 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          'js/build/views/forms3jqm.min.js': [
-            'js/build/views/forms3jqm.js'
+          'build/views/forms3jqm.min.js': [
+            'build/views/forms3jqm.js'
           ]
         }
       }
@@ -143,7 +144,7 @@ module.exports = function (grunt) {
           'Gruntfile.js',
           'js/**/*',
           'js/locales/**/i18n.js',
-          '!js/build/**/*',
+          '!build/**/*',
           'parts/*'
         ],
         tasks: [
