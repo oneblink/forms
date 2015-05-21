@@ -13,6 +13,7 @@
     "moment": "2.10.3",
     "node-uuid": "1.4.3",
     "pickadate": "amsul/pickadate.js#3.5.5",
+    "queue-async": "^1.0.7",
     "rivets": "0.6.8"
   },
   "devDependencies": {

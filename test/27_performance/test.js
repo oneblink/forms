@@ -2,6 +2,19 @@
 /*global assert*/ // chai
 
 define(['BlinkForms', 'BIC'], function (Forms) {
+  // var start, end, interval, intervals;
+
+  // suite('responsiveness test', function () {
+  //
+  //   test('start', function () {
+  //     intervals = 0;
+  //     start = new Date();
+  //     interval = setInterval(function () {
+  //       intervals += 1;
+  //     }, 50);
+  //   });
+  //
+  // });
 
   suite('27: performance', function () {
     var $page = $('[data-role=page]'),
@@ -24,17 +37,15 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       test('initialise with form.json', function (done) {
         var form;
 
-        console.time('getDefinition');
-
         Forms.getDefinition('inspection', 'add').then(function (def) {
-
-          console.timeEnd('getDefinition');
 
           console.time('initialize');
 
           Forms.initialize(def);
 
           console.timeEnd('initialize');
+
+          console.time('behavioursExecuted');
 
           form = Forms.current;
           assert.equal($.type(form), 'object');
@@ -56,16 +67,42 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         console.timeEnd('append');
 
         $.mobile.page({}, $page);
+
+        console.time('jQueryMobile enhance');
+
         $page.trigger('pagecreate');
         $page.show();
+
+        console.timeEnd('jQueryMobile enhance');
       });
 
-      test('blah', function () {
-
+      test('behavioursExecuted event', function (done) {
+        Forms.once('behavioursExecuted', function () {
+          console.timeEnd('behavioursExecuted');
+          done();
+        });
       });
 
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)
+
+  // suite('responsiveness test', function () {
+  //
+  //   test('end', function () {
+  //     var timeTaken;
+  //     var expectedIntervals;
+  //     var minIntervals, maxIntervals;
+  //     clearTimeout(interval);
+  //     end = new Date();
+  //     timeTaken = end - start;
+  //     expectedIntervals = timeTaken / 50;
+  //     minIntervals = 0.9 * expectedIntervals;
+  //     maxIntervals = 1.1 * expectedIntervals;
+  //     assert(intervals > minIntervals, intervals + ' > ' + minIntervals);
+  //     assert(intervals < maxIntervals, intervals + ' < ' + maxIntervals);
+  //   });
+  //
+  // });
 
 });
