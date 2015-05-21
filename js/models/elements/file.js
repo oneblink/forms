@@ -11,10 +11,12 @@ define(['models/element'], function (Element) {
 
      "NOTE: Photo resolution on newer devices is quite good. Photos selected from the device's gallery are not downscaled to a lower quality, even if a quality parameter is specified. To avoid common memory problems, set Camera.destinationType to FILE_URI rather than DATA_URL."
   */
-  try{
+  try {
     cameraDestinationType = window.camera.DestinationType || navigator.camera.DestinationType;
-  } catch(e){
-    //console && console.warn("Camera not available");
+  } catch(e) {
+    if (window.console && window.console.warn) {
+      window.console.warn("Camera not available");
+    }
   }
 
 /**

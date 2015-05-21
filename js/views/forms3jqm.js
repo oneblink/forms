@@ -31,6 +31,7 @@ define(function (require) {
     DatePickadateElement: require('views/jqm/elements/date_pickadate'),
     HiddenElement: require('views/jqm/elements/hidden'),
     NumberElement: require('views/jqm/elements/number'),
+    SliderElement: require('views/jqm/elements/slider'),
     TelephoneElement: require('views/jqm/elements/telephone'),
     PasswordElement: require('views/jqm/elements/password'),
     EmailElement: require('views/jqm/elements/email'),
