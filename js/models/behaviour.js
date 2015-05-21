@@ -125,7 +125,7 @@ define(function (require) {
           'populated': 'formPopulated'
         };
 
-      elements.off(attrs.event, this.runCheck, this);
+      elements.off(null, this.execute, this);
 
       outputTargets = this.getOutputTargets();
       if (attrs.trigger.formElements.indexOf('*') !== -1) {
@@ -133,14 +133,16 @@ define(function (require) {
         elements.set(form.attributes.elements.models.filter(function (m) {
           // prevent monitoring of output targets (possible loops)
           return outputTargets.indexOf(m.attributes.name) === -1;
-        }));
+        }), { silent: true });
+        // we disable the Backbone.Collection#set() events for a >10x speed-up
 
       } else {
         attrs.trigger.formElements.filter(function (name) {
           // only proceed with elements that are not output targets
           return outputTargets.indexOf(name) === -1;
         }).forEach(function (name) {
-          elements.add(form.getElement(name));
+          elements.add(form.getElement(name), { silent: true });
+          // we disable the Backbone.Collection#add() events for a speed-up
         });
       }
 
