@@ -1,6 +1,40 @@
 # Changelog
 
-## Unreleased
+
+## v3.3.2 - 2015-05-22
+
+### Changed
+
+- FORMS-159: behaviours (e.g. conditional logic, calculations) optimised
+
+    - impact on forms initialisation is drastically reduced
+
+    - Nexus 7 2012 with 468 elements and 268 behaviours down from 199 seconds to
+      29 seconds
+
+    - behaviours are also executed asynchronously in batches to keep the UI
+      responsive to user input
+
+    - new event `BMP.Forms.on('behavioursExecuted', /* ... */)` triggered when
+      queued behaviours are complete
+
+    - HelpDesk: 3391-TFCB-0747
+
+
+### Fixed
+
+- FORMS-156: display read-only dates and times as expected
+
+- FORMS-162: hidden dates and times behave as expected
+
+- FORMS-174: numeric sliders display correct values when turning pages
+
+- FORMS-166: explicitly request Base64 data from Cordova Camera API
+
+    - necessary for upcoming Windows app compatibility
+
+- FORMS-167: support form records XML where sub-form definition has a different
+  name to the containing sub-form element on the parent form
 
 
 ## v3.3.1 - 2015-05-11
