@@ -67,7 +67,7 @@ module.exports = function (grunt) {
             formslib: '../node_modules/blinkmobile-forms/dist/formslib',
             uuid: '../node_modules/node-uuid/uuid',
             // Require.JS plugins
-            text: '../bower_components/requirejs-text/text'
+            text: '../node_modules/text/text'
           },
           modules: [
             {

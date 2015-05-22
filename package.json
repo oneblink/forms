@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "almond": "0.3.1",
+    "amd-feature": "jensarps/AMD-feature#v1.2.1",
     "blinkgap-utils": "git://github.com/blinkmobile/blinkgap-utils#500774457d",
     "blinkmobile-forms": "blinkmobile/forms#v2.0.0",
     "geolocation": "git://github.com/blinkmobile/geolocation#v1.0.0",
@@ -31,7 +32,10 @@
     "grunt-eslint": "^13.0",
     "grunt-exec": "~0.4",
     "grunt-mocha": "~0.4",
+    "html5shiv": "~3.7.2",
     "messageformat": "~0.2.1",
-    "mocha": "~2.2"
+    "mocha": "~2.2",
+    "requirejs": "~2.1",
+    "text": "requirejs/text#2.0.14"
   }
 }
