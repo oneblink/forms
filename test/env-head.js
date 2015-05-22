@@ -12,8 +12,8 @@
 
   require.config({
     paths: {
-      backbone: 'http://cdnp.blinkm.co/backbonejs/1.0.0/backbone-min',
-      jquery: 'http://cdnp.blinkm.co/jquery/1.11.1/jquery-1.11.1',
+      backbone: 'http://cdnp.blinkm.co/backbonejs/1.1.2/backbone-min',
+      jquery: 'http://cdnp.blinkm.co/jquery/1.11.3/jquery-1.11.3.min',
       jquerymobile: 'http://cdnp.blinkm.co/jquery.mobile/1.3.2/jquery.mobile-1.3.2.min',
       underscore: 'http://cdnp.blinkm.co/lodash/2.4.1/lodash.underscore.min',
       BlinkForms: '../../build/views/forms3jqm',
