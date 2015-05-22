@@ -83,6 +83,19 @@ define(function () {
           },
           {
             'default': {
+              name: 'numberSlider',
+              label: 'Number withSlider',
+              type: 'number',
+              min: 15,
+              max: 400,
+              step: 5,
+              useSlider: true,
+              defaultValue: 35,
+              page: 2
+            }
+          },
+          {
+            'default': {
               name: 'currency',
               label: 'Currency',
               type: 'number',

@@ -8,7 +8,7 @@ node_modules
 /nbproject
 
 # build output
-js/build
+build
 js/locales
 /BlinkForms*.js*
 test/lib

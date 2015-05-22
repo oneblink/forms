@@ -40,17 +40,20 @@ define(['models/element'], function (Element) {
     },
     initializeView: function () {
       var Forms = BMP.Forms,
-      View,
-      view;
+        attrs = this.attributes,
+        min = attrs.min,
+        max = attrs.max,
+        view;
 
-      if (this.attributes.readonly) {
-        this.removeView();
-        View = Forms._views.ReadOnlyElement;
+      this.removeView();
+      if (attrs.readonly) {
+        view = new Forms._views.ReadOnlyElement({model: this});
+      } else if (_.isNumber(min) && _.isNumber(max) && attrs.useSlider) {
+        view = new Forms._views.SliderElement({model: this});
       } else {
-        return Element.prototype.initializeView.call(this);
+        view = new Forms._views.NumberElement({model: this});
       }
 
-      view = new View({model: this});
       this.set('_view', view);
       return view;
     },
