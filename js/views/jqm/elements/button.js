@@ -26,7 +26,7 @@ define(['views/jqm/element'], function (ElementView) {
       }).text(label);
 
       $button.on('click', function () {
-        self.model.trigger('change');
+        self.model.trigger('change', self.model);
       });
 
       this.$el.append($button);
