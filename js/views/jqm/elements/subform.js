@@ -12,60 +12,86 @@ define(function (require) {
     },
     render: function () {
       var attrs = this.model.attributes,
-        name = attrs.plusButtonLabel,
-        $button,
-        counter;
-
-      if (_.isEmpty(name) && attrs.label) {
-        name = attrs.label;
-      }
-
-      if (_.isEmpty(name)) {
-        name = attrs.name;
-      }
+        $button;
 
       $button = $('<button></button>').attr({
         type: 'button',
         'data-icon': 'plus',
         'data-action': 'add'
-      }).text(name);
+      }).text(attrs.plusButtonLabel);
 
       $button.on('click', this.onAddClick.bind(this));
 
-      this.$el.attr('data-form', name);
+      this.$el.attr('data-form', attrs.subform);
       this.$el.prepend($button);
       this.model.attributes.forms.on('add remove', this.onFormsChange, this);
 
       if (attrs.preload) {
-        for (counter = 0; counter < attrs.preload; counter++) {
-          this.model.add();
-        }
+        this.addSubformRecursive(attrs.preload);
       }
 
       this.onFormsChange();
     },
+    addSubformRecursive: function(max) {
+      var self = this,
+        attrs = this.model.attributes;
+      self.model.add().then(function () {
+        if(attrs.forms.length < max) {
+          self.addSubformRecursive(max);
+        }
+      });
+    },
     onAddClick: function () {
-      this.model.add();
+      var self = this,
+        attrs = self.model.attributes,
+        $add = self.$el.children('button').add(self.$el.children('.ui-btn').children('button'));
+      $add.button('disable');
+      self.model.add().then(function() {
+        if (!attrs.maxSubforms || self.model.getRealLength() < attrs.maxSubforms) {
+          $add.button('enable');
+        }
+      });
     },
     onFormsChange: function () {
       var Forms,
+        attrs,
         me,
-        view;
+        view,
+        $add,
+        label,
+        realLength;
       Forms = BMP.Forms;
       me = this;
+
+      attrs = me.model.attributes;
+      $add = me.$el.children('button').add(me.$el.children('.ui-btn').children('button'));
+      label = attrs.plusButtonLabel + me.model.getButtonLabel();
+      realLength = me.model.getRealLength();
+
+      $add.text(label);
+      $add.button();
+      $add.button('refresh');
+
+      if (!attrs.maxSubforms || realLength < attrs.maxSubforms ) {
+        $add.button('enable');
+      } else if (realLength >= attrs.maxSubforms) {
+        $add.button('disable');
+      }
 
       this.model.attributes.forms.forEach(function (form) {
         var body$, previous$, action;
         // make sure each SubForm model in the SubFormField's collection has a view
-        if (!form.attributes._view) {
-          form.attributes._view = new Forms._views.SubForm({
-            model: form
-          });
-        }
-        view = form.attributes._view;
         action = form.attributes._action;
 
         if (action !== 'remove') {
+          if (!form.attributes._view) {
+            form.attributes._view = new Forms._views.SubForm({
+              model: form
+            });
+          }
+
+          view = form.attributes._view;
+
           if (!view || !view.$el || !view.$el.children().length) {
             // prevent calling render() over and over as "add" buttons go crazy
             form.$form = view.$el; // backwards-compatibility, convenience

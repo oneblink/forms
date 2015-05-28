@@ -13,14 +13,6 @@ define(function (require) {
         name = parentElement.attributes.minusButtonLabel,
         $button;
 
-      if (_.isEmpty(name) && parentElement.attributes.label) {
-        name = parentElement.attributes.label;
-      }
-
-      if (_.isEmpty(name)) {
-        name = parentElement.attributes.name;
-      }
-
       $button = $('<button></button>').attr({
         type: 'button',
         'data-icon': 'minus',

@@ -24,6 +24,23 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         attrs.preload = Number(attrs.preload);
       }
 
+      //plusButtonLabel
+      if (_.isEmpty(attrs.plusButtonLabel) && attrs.label) {
+        attrs.plusButtonLabel = attrs.label;
+      }
+
+      if (_.isEmpty(attrs.plusButtonLabel)) {
+        attrs.plusButtonLabel = attrs.name;
+      }
+      //minusButtonLabel
+      if (_.isEmpty(attrs.minusButtonLabel) && attrs.label) {
+        attrs.minusButtonLabel = attrs.label;
+      }
+
+      if (_.isEmpty(attrs.minusButtonLabel)) {
+        attrs.minusButtonLabel = attrs.name;
+      }
+
       this.attributes.forms.on('add remove', this.updateFieldErrors, this);
       this.off('change', this.updateErrors, this);
     },
@@ -88,6 +105,7 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
           _action: 'remove',
           id: form.getElement('id').get('value')
         };
+        forms.trigger('remove');
       } else {
         form.close();
         forms.remove(form);
@@ -174,7 +192,8 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
     },
     validateField: function (attrs) {
       var forms,
-        errors = {};
+        errors = {},
+        realLength = this.getRealLength();
 
       if (attrs === undefined) {
         attrs = this.attributes;
@@ -183,17 +202,17 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
       forms = attrs.forms;
 
       //check if there is any subform added
-      if (forms && (attrs.required && forms.length === 0 || attrs.minSubforms && attrs.minSubforms === 1 && forms.length === 0)) {
+      if (forms && (attrs.required && realLength === 0 || attrs.minSubforms && attrs.minSubforms === 1 && realLength === 0)) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
       }
       // check for max subforms
-      if (forms && attrs.maxSubforms && forms.length > attrs.maxSubforms) {
+      if (forms && attrs.maxSubforms && realLength > attrs.maxSubforms) {
         errors.value = errors.value || [];
         errors.value.push({code: 'MAXSUBFORM', MAX: attrs.maxSubforms});
       }
       // check for min subforms
-      if (forms && attrs.minSubforms && attrs.minSubforms > 1 && forms.length < attrs.minSubforms) {
+      if (forms && attrs.minSubforms && attrs.minSubforms > 1 && realLength < attrs.minSubforms) {
         errors.value = errors.value || [];
         errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
       }
@@ -202,7 +221,24 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         return errors;
       }
     },
-
+    getButtonLabel: function() {
+      var attrs = this.attributes,
+        additionalString = "";
+      if (attrs.maxSubforms) {
+        additionalString = " (" + this.getRealLength() + "/" + attrs.maxSubforms + ")";
+      }
+      return additionalString;
+    },
+    getRealLength: function() {
+      var forms = this.attributes.forms,
+        counter = 0;
+      forms.forEach(function(v) {
+        if (v.get("_action") !== "remove") {
+          counter++;
+        }
+      });
+      return counter;
+    },
     validate: function (attrs) {
       var forms,
         err,

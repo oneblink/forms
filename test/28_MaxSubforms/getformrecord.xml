@@ -1,0 +1,40 @@
+<xml>
+  <form1>
+    <id>1</id>
+    <Name>Parent</Name>
+    <Location>
+      <Address>
+        <id>1</id>
+        <Detail>Subform 1</Detail>
+        <Phone>
+          <PhoneForm>
+            <id>1</id>
+            <Phone>SUB SUB 1.1</Phone>
+          </PhoneForm>
+        </Phone>
+      </Address>
+      <Address>
+        <id>2</id>
+        <Detail>Subform 2</Detail>
+        <Phone>
+          <PhoneForm>
+            <id>2</id>
+            <Phone>SUB SUB 2.1</Phone>
+          </PhoneForm>
+          <PhoneForm>
+            <id>3</id>
+            <Phone>SUB SUB 2.2</Phone>
+          </PhoneForm>
+        </Phone>
+      </Address>
+      <Address>
+        <Detail>Subform 3</Detail>
+        <Phone>
+          <PhoneForm>
+            <Phone>SUB SUB 3.1</Phone>
+          </PhoneForm>
+        </Phone>
+      </Address>
+    </Location>
+  </form1>
+</xml>
