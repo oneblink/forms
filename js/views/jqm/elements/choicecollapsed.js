@@ -96,8 +96,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         }
       }
 
-      if (!attr.nativeMenu) {
-        select.selectmenu();
+      if (!attr.nativeMenu && this.$el.children('.ui-select').length) {
         select.selectmenu('refresh');
       }
 

@@ -446,6 +446,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.equal(element.val(), 'First value', 'model.value = "First value"');
       });
 
+      test('FORMS-177 # BIC-JQM: Multiselect boxes don\'t always work as expected', function () {
+        var form = Forms.current,
+          element = form.getElement('multiee'),
+          $fieldset = element.attributes._view.$el,
+          $a = $fieldset.find('a');
+
+        assert.equal($a.length, 1);
+
+        $a.trigger('click');
+
+        assert.equal($('body').find($a.attr('href')).length, 1);
+      });
+
     }); // END: suite('Form', ...)
 
     suite('change page', function () {

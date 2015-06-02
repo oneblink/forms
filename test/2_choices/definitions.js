@@ -170,6 +170,20 @@ define(function () {
               placeholderText: 'user@host',
               page: 1
             }
+          },
+          {
+            'default': {
+              name: 'multiee',
+              label: 'Multi E without other',
+              type: 'multi',
+              mode: 'collapsed',
+              other: false,
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
           }
         ]
       }
