@@ -103,6 +103,17 @@ define(function () {
           },
           {
             'default': {
+              name: 'number3',
+              label: 'Number without default',
+              type: 'number',
+              min: "15",
+              max: "400",
+              step: "5",
+              defaultValue: ""
+            }
+          },
+          {
+            'default': {
               name: 'currency',
               label: 'Currency',
               type: 'number',

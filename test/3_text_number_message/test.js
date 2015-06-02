@@ -133,6 +133,15 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       });
 
+      test('FORMS-161 # Have number fields default to empty', function() {
+        var form = Forms.current,
+          element = form.getElement('number3');
+
+        assert(element.attributes.defaultValue === "", "number3: defaultValue is not empty");
+        assert(element.get('value') === "", "element value is " + element.get('value'));
+
+      });
+
     });
 
     suite('headings', function () {
