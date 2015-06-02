@@ -459,6 +459,20 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.equal($('body').find($a.attr('href')).length, 1);
       });
 
+      test('FORMS-179 # Radio button and check box groups sometimes contain an "Undefined" option', function () {
+        var form = Forms.current,
+          checkbox = form.getElement('Checkboxes'),
+          $chkEl = checkbox.attributes._view.$el,
+          radio = form.getElement('Radios'),
+          $radEl = radio.attributes._view.$el;
+
+        checkbox.set('value', ["test"]);
+        assert.equal($chkEl.find('input[type="text"]').length, 0, "textbox for checkboxes is visible");
+        radio.set('value', "test");
+        assert.equal($radEl.find('input[type="text"]').length, 0, "textbox for radios is visible");
+
+      });
+
     }); // END: suite('Form', ...)
 
     suite('change page', function () {

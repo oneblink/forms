@@ -123,7 +123,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         $input.prop('checked', _.indexOf(value, $input.val()) !== -1);
       });
 
-      if (_.contains(value, 'other') || _.difference(value, _.keys(model.attributes.options)).length > 0) {
+      if (model.attributes.other && (_.contains(value, 'other') || _.difference(value, _.keys(model.attributes.options)).length > 0)) {
         renderOther = true;
         view.$el.find('input[value = other]').prop('checked', true);
       }
