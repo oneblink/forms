@@ -50,6 +50,7 @@ define(function (require) {
     ReadOnlyElement: require('views/jqm/elements/readonly'),
     BlobReadOnlyElement: require('views/jqm/elements/blob_readonly'),
     LocationReadOnlyElement: require('views/jqm/elements/location_readonly'),
+    LocationNativeElement: require('views/jqm/elements/location_native'),
     SelectReadOnlyElement: require('views/jqm/elements/select_readonly'),
     MultiReadOnlyElement: require('views/jqm/elements/multi_readonly'),
     WebRTCImageElement: require('views/jqm/elements/webrtc_image')

@@ -36,6 +36,7 @@
     "messageformat": "~0.2.1",
     "mocha": "~2.2",
     "requirejs": "~2.1",
-    "text": "requirejs/text#2.0.14"
+    "text": "requirejs/text#2.0.14",
+    "sinon": "^1.14.1"
   }
 }
