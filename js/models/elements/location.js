@@ -13,6 +13,8 @@ define(['models/element', 'geo'], function (Element, geo) {
 
       if (this.attributes.readonly) {
         view = new Forms._views.LocationReadOnlyElement({model: this});
+      } else if (window.MSApp || window.WinJS || window.Windows) {
+        view = new Forms._views.LocationNativeElement({model: this});
       } else {
         view = new Forms._views.LocationElement({model: this});
       }

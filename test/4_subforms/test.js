@@ -43,7 +43,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $content.append(form.$form);
 
         $doc.one('pageinit', function () {
-          done();
+          form.attributes.preloadPromise.then(function() {
+            done();
+          });
         });
 
         $.mobile.page({}, $page);
@@ -79,17 +81,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('remove 1st `notes` subForm + check MINUS button label', function (done) {
-        var subFormElement = Forms.current.getElement('notes'),
-          subForms = subFormElement.attributes.forms,
-          subForm = subForms.at(0),
-          $view = subForm.attributes._view.$el,
+        var subFormElement, subForms, subForm, $view, $remove;
+        subFormElement = Forms.current.getElement('notes');
+        subForms = subFormElement.attributes.forms;
+
+        subForms.once("add", function() {
+          subForm = subForms.at(0);
+          $view = subForm.attributes._view.$el;
           $remove = $view.children('.ui-btn').children('button');
 
-        assert($remove.html(), "Notes", "label for MINUS `Notes` subForm not set properly");
-        $remove.trigger('click');
-        setTimeout(function () {
+          assert($remove.html(), "Notes", "label for MINUS `Notes` subForm not set properly");
+          $remove.trigger('click');
           done();
-        }, 0);
+        });
       });
 
       //------------------------------------------------------------------------
@@ -116,17 +120,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('remove 1st `reviews` subForm + check MINUS button label', function (done) {
-        var subFormElement = Forms.current.getElement('reviews'),
-          subForms = subFormElement.attributes.forms,
-          subForm = subForms.at(0),
-          $view = subForm.attributes._view.$el,
+        var subFormElement, subForms, subForm, $view, $remove;
+        subFormElement = Forms.current.getElement('reviews');
+        subForms = subFormElement.attributes.forms;
+
+        subForms.once("add", function() {
+          subForm = subForms.at(0);
+          $view = subForm.attributes._view.$el;
           $remove = $view.children('.ui-btn').children('button');
 
-        assert($remove.html(), "reviews", "label for MINUS `reviews` subForm not set properly");
-        $remove.trigger('click');
-        setTimeout(function () {
+          assert($remove.html(), "reviews", "label for MINUS `reviews` subForm not set properly");
+          $remove.trigger('click');
           done();
-        }, 0);
+        });
       });
 
       //------------------------------------------------------------------------
@@ -141,9 +147,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.equal(subForms.length, 0, 'no subForms yet');
         assert($add.html(), "PLUS", "label for ADD `Comments` subForm not set properly");
         $add.trigger('click');
-        setTimeout(function () {
+        subForms.once("add", function() {
           done();
-        }, 0);
+        });
       });
 
       test('Data has _action set properly', function (done) {
@@ -163,9 +169,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         assert.equal(subForms.length, 1, '1 subForm');
         $add.trigger('click');
-        setTimeout(function () {
-          done();
-        }, 0);
+        done();
       });
 
       test('test subForms', function (done) {
@@ -176,18 +180,20 @@ define(['BlinkForms', 'BIC'], function (Forms) {
             { comment: 'def', '_action': 'add' }
           ];
 
-        assert.equal(subForms.length, 2, '2 subForms');
-        subForms.at(0).getElement('comment').val('abc');
-        subForms.at(1).getElement('comment').val('def');
-        subFormElement.data()
-          .then(function (d) {
-            assert.deepEqual(d, testData, 'subFormElement data');
-            return Forms.current.data();
-          })
-          .then(function (d) {
-            assert.deepEqual(d.comments, testData, 'total form data');
-            done();
-          });
+        subForms.once("add", function() {
+          assert.equal(subForms.length, 2, '2 subForms');
+          subForms.at(0).getElement('comment').val('abc');
+          subForms.at(1).getElement('comment').val('def');
+          subFormElement.data()
+            .then(function (d) {
+              assert.deepEqual(d, testData, 'subFormElement data');
+              return Forms.current.data();
+            })
+            .then(function (d) {
+              assert.deepEqual(d.comments, testData, 'total form data');
+              done();
+            });
+        });
       });
 
       test('remove 1st subForm', function (done) {
@@ -273,27 +279,30 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       test('remove subForm (leaving no placeholders)', function (done) {
-        var subFormElement = Forms.current.getElement('comments'),
-          subForms = subFormElement.attributes.forms,
-          subForm = subForms.at(1),
-          $view = subForm.attributes._view.$el,
+        var subFormElement, subForms, subForm, $view, $remove;
+        subFormElement = Forms.current.getElement('comments');
+        subForms = subFormElement.attributes.forms;
+
+        subForms.once("add", function() {
+          subForm = subForms.at(1);
+          $view = subForm.attributes._view.$el;
           $remove = $view.children('.ui-btn').children('button');
 
-        //will have one section available in DOM
-        assert.equal($view.children('section').length, 1);
-        assert.equal(subForms.length, 2);
-        assert.equal(subForms.size(), 2);
+          //will have one section available in DOM
+          assert.equal($view.children('section').length, 1);
+          assert.equal(subForms.length, 2);
+          assert.equal(subForms.size(), 2);
 
-        $remove.trigger('click');
-        setTimeout(function () {
-          //will have zero section available in DOM
-          assert.equal($view.children('section').length, 0);
-          assert.equal(subForms.length, 1);
-          assert.equal(subForms.size(), 1);
-          done();
-        }, 0);
+          $remove.trigger('click');
+          setTimeout(function () {
+            //will have zero section available in DOM
+            assert.equal($view.children('section').length, 0);
+            assert.equal(subForms.length, 1);
+            assert.equal(subForms.size(), 1);
+            done();
+          }, 0);
+        });
       });
-
     });
 
     suite('incomplete: Edit Form', function () {

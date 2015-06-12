@@ -170,6 +170,48 @@ define(function () {
               placeholderText: 'user@host',
               page: 1
             }
+          },
+          {
+            'default': {
+              name: "Checkboxes",
+              label: 'Checkboxs without other',
+              type: 'multi',
+              mode: 'expanded',
+              other: false,
+              options: {
+                "Female": 'female',
+                "Male": 'male'
+              },
+              layout: "vertical"
+            }
+          },
+          {
+            'default': {
+              name: "Radios",
+              label: 'Radios without other',
+              type: 'select',
+              mode: 'expanded',
+              other: false,
+              options: {
+                "Female": 'female',
+                "Male": 'male'
+              },
+              layout: "vertical"
+            }
+          },
+          {
+            'default': {
+              name: 'multiee',
+              label: 'Multi E without other',
+              type: 'multi',
+              mode: 'collapsed',
+              other: false,
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
           }
         ]
       }

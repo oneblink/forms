@@ -1,0 +1,7 @@
+<xml>
+  <TestForm>
+    <id>1</id>
+    <location1>{"latitude":-33.867487,"longitude":151.20699,"altitude":null,"accuracy":25000,"altitudeAccuracy":null,"heading":null,"speed":null}</location1>
+    <location2>{"latitude":-34.867487,"longitude":150.20699,"altitude":null,"accuracy":25000,"altitudeAccuracy":null,"heading":null,"speed":null}</location2>
+  </TestForm>
+</xml>

@@ -4,12 +4,15 @@ define(['views/jqm/element',
   'use strict';
   var LocationElementView = ElementView.extend({
     render: function () {
+      //load google maps
+      BMP.Forms.loadMapScript();
+      this.renderButtons();
+    },
+    renderButtons: function() {
       var $locateButton, $clearButton, $div, $button;
       var i18n = window.i18n['BMP/Forms/elements'];
       var self = this;
 
-      //load google maps
-      BMP.Forms.loadMapScript();
       this.$el.empty();
       this.renderLabel();
 
@@ -26,7 +29,7 @@ define(['views/jqm/element',
       this.$el.append($div);
       this.renderFigure();
 
-      $locateButton.find('button').on('click', $.proxy(LocationElementView.onButtonClick, this));
+      $locateButton.find('button').on('click', $.proxy(self.constructor.onButtonClick, this));
       $clearButton.find('button').on('click', $.proxy(LocationElementView.onClear, this));
 
       this.bindRivets();
@@ -121,9 +124,24 @@ define(['views/jqm/element',
       event.preventDefault();
       return false;
     },
+    enableLocationButton: function () {
+      var view = this,
+        i18n = window.i18n['BMP/Forms/elements'];
+
+      //enable location button
+      view.$el.find('button').first().button('enable');
+      view.$el.find('.ui-btn-text').first().text(i18n.LOCATION_BUTTON);
+    },
+    disableLocationButton: function () {
+      var view = this,
+        i18n = window.i18n['BMP/Forms/elements'];
+
+      //disable button till location located
+      view.$el.find('button').first().button('disable');
+      view.$el.find('.ui-btn-text').first().text(i18n.LOCATING_SHORT);
+    },
     onButtonClick: function (event) {
-      var i18n = window.i18n['BMP/Forms/elements'],
-        view = this,
+      var self = this,
         model = this.model,
         $div = $(html),
         options = {
@@ -148,9 +166,7 @@ define(['views/jqm/element',
       $form = $div.children('form');
       $form.on('submit', $.proxy(LocationElementView.onDone, this));
 
-      //disable button till location located
-      view.$el.find('button').first().button('disable');
-      view.$el.find('.ui-btn-text').first().text(i18n.LOCATING_SHORT);
+      self.constructor.disableLocationButton.bind(this)();
 
       value = model.get('value');
       if (_.isEmpty(value) || !value.latitude || !value.longitude) {
@@ -160,18 +176,15 @@ define(['views/jqm/element',
           $div.find('input').val(JSON.stringify(value));
           LocationElementView.initializeMap(value, $div);
           //enable location button
-          view.$el.find('button').first().button('enable');
-          view.$el.find('.ui-btn-text').first().text(i18n.LOCATION_BUTTON);
+          self.constructor.enableLocationButton.bind(self)();
         }, function () { // onError (err)
           //enable location button
-          view.$el.find('button').first().button('enable');
-          view.$el.find('.ui-btn-text').first().text(i18n.LOCATION_BUTTON);
+          self.constructor.enableLocationButton.bind(self)();
         });
       } else {
         LocationElementView.initializeMap(value, $div);
         //enable location button
-        view.$el.find('button').first().button('enable');
-        view.$el.find('.ui-btn-text').first().text(i18n.LOCATION_BUTTON);
+        self.constructor.enableLocationButton.bind(self)();
       }
 
       //finally creating and poping up map

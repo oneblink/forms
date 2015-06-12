@@ -24,8 +24,43 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         attrs.preload = Number(attrs.preload);
       }
 
+      //plusButtonLabel
+      if (_.isEmpty(attrs.plusButtonLabel) && attrs.label) {
+        attrs.plusButtonLabel = attrs.label;
+      }
+
+      if (_.isEmpty(attrs.plusButtonLabel)) {
+        attrs.plusButtonLabel = attrs.name;
+      }
+      //minusButtonLabel
+      if (_.isEmpty(attrs.minusButtonLabel) && attrs.label) {
+        attrs.minusButtonLabel = attrs.label;
+      }
+
+      if (_.isEmpty(attrs.minusButtonLabel)) {
+        attrs.minusButtonLabel = attrs.name;
+      }
+
+      if (attrs.preload) {
+        attrs.preloadPromise = this.addSubformRecursive(attrs.preload);
+      } else {
+        attrs.preloadPromise = Promise.resolve();
+      }
+
       this.attributes.forms.on('add remove', this.updateFieldErrors, this);
       this.off('change', this.updateErrors, this);
+    },
+    addSubformRecursive: function(max) {
+      var self = this,
+        attrs = this.attributes;
+      return self.add().then(function (form) {
+        return form.attributes.preloadPromise;
+      }).then(function () {
+        if(attrs.forms.length < max) {
+          return self.addSubformRecursive(max);
+        }
+        return Promise.resolve();
+      });
     },
     add: function (action) {
       // TODO: there is too much DOM stuff here to be in the model
@@ -46,7 +81,7 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
             if (forms) {
               forms.add(form);
             }
-            resolve();
+            resolve(form);
           } catch (err) {
             reject(err);
           }
@@ -88,6 +123,7 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
           _action: 'remove',
           id: form.getElement('id').get('value')
         };
+        forms.trigger('remove');
       } else {
         form.close();
         forms.remove(form);
@@ -131,36 +167,36 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
           resolve();
           return;
         }
-
-        //remove all preloaded forms
-        while (forms.length > 0) {
-          me.remove(forms.length - 1);
-        }
-
-        while (forms.length + addPromises.length < data.length) {
-          action = "add";
-          if (data[counter].id) {
-            action = "edit";
+        Promise.all([me.attributes.preloadPromise]).then(function() {
+          //remove all preloaded forms
+          while (forms.length > 0) {
+            me.remove(forms.length - 1);
           }
-          addPromises.push(me.add(action));
-          counter++;
-        }
-        // wait for extra (blank) records to be added
-        Promise.all(addPromises).then(function () {
-          promises = [];
-          data.forEach(function (record, index) {
-            promises.push(forms.at(index).setRecord(record));
-          });
 
-          // wait for records to be populated
-          Promise.all(promises).then(function (values) {
-            resolve(values);
+          while (forms.length + addPromises.length < data.length) {
+            action = "add";
+            if (data[counter].id) {
+              action = "edit";
+            }
+            addPromises.push(me.add(action));
+            counter++;
+          }
+          // wait for extra (blank) records to be added
+          Promise.all(addPromises).then(function () {
+            promises = [];
+            data.forEach(function (record, index) {
+              promises.push(forms.at(index).setRecord(record));
+            });
+
+            // wait for records to be populated
+            Promise.all(promises).then(function (values) {
+              resolve(values);
+            }, function () {
+              reject();
+            });
           }, function () {
             reject();
           });
-
-        }, function () {
-          reject();
         });
       });
     },
@@ -174,7 +210,8 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
     },
     validateField: function (attrs) {
       var forms,
-        errors = {};
+        errors = {},
+        realLength = this.getRealLength();
 
       if (attrs === undefined) {
         attrs = this.attributes;
@@ -183,17 +220,17 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
       forms = attrs.forms;
 
       //check if there is any subform added
-      if (forms && (attrs.required && forms.length === 0 || attrs.minSubforms && attrs.minSubforms === 1 && forms.length === 0)) {
+      if (forms && (attrs.required && realLength === 0 || attrs.minSubforms && attrs.minSubforms === 1 && realLength === 0)) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
       }
       // check for max subforms
-      if (forms && attrs.maxSubforms && forms.length > attrs.maxSubforms) {
+      if (forms && attrs.maxSubforms && realLength > attrs.maxSubforms) {
         errors.value = errors.value || [];
         errors.value.push({code: 'MAXSUBFORM', MAX: attrs.maxSubforms});
       }
       // check for min subforms
-      if (forms && attrs.minSubforms && attrs.minSubforms > 1 && forms.length < attrs.minSubforms) {
+      if (forms && attrs.minSubforms && attrs.minSubforms > 1 && realLength < attrs.minSubforms) {
         errors.value = errors.value || [];
         errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
       }
@@ -202,7 +239,24 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         return errors;
       }
     },
-
+    getButtonLabel: function() {
+      var attrs = this.attributes,
+        additionalString = "";
+      if (attrs.maxSubforms) {
+        additionalString = " (" + this.getRealLength() + "/" + attrs.maxSubforms + ")";
+      }
+      return additionalString;
+    },
+    getRealLength: function() {
+      var forms = this.attributes.forms,
+        counter = 0;
+      forms.forEach(function(v) {
+        if (v.get("_action") !== "remove") {
+          counter++;
+        }
+      });
+      return counter;
+    },
     validate: function (attrs) {
       var forms,
         err,

@@ -50,7 +50,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'inspection');
-          done();
+          form.attributes.preloadPromise.then(function() {
+            done();
+          });
         }, function () {
           assert.fail(true, false, 'getDefinition failed!');
           done();

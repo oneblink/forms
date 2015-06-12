@@ -437,15 +437,15 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         suiteSetup(function () {
           var form = BMP.Forms.current;
 
-          form.getElement('number').val('');
+          form.getElement('number').val(null);
         });
 
         test('record data includes Calculation fields', function (done) {
           var form = BMP.Forms.current;
           setTimeout(function () {
             form.data().then(function (data) {
-              assert.equal(data.calc1exp, 0);
-              assert.equal(data.calc2fn, 0);
+              assert.notOk(data.calc1exp);
+              assert.notOk(data.calc2fn);
               done();
             });
           }, 200);

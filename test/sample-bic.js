@@ -47,12 +47,13 @@ define([
         reject(def);
         return;
       }
-
-      try {
-        resolve(Forms.flattenDefinition(def, action));
-      } catch (err) {
-        reject(err);
-      }
+      setTimeout(function() {
+        try {
+          resolve(Forms.flattenDefinition(def, action));
+        } catch (err) {
+          reject(err);
+        }
+      }, 100);
     });
   };
 

@@ -18,7 +18,8 @@ define(function (require) {
         Behaviour = Forms._models.Behaviour,
         pages,
         elements,
-        behaviours;
+        behaviours,
+        preloadPromises = [];
 
       Forms.setAttributesFromClass(this, [
         '_actions',
@@ -46,12 +47,18 @@ define(function (require) {
       if (elements && _.isArray(elements)) {
         // TODO: allow pages to be redeclared per-action
         elements = _.map(elements, function (e) {
-          return Element.create(e, self);
+          var element = Element.create(e, self);
+          if (element.attributes.preloadPromise) {
+            preloadPromises.push(element.attributes.preloadPromise);
+          }
+          return element;
         });
       } else {
         elements = [];
       }
       this.attributes.elements = new Elements(elements);
+
+      this.attributes.preloadPromise = Promise.all(preloadPromises);
 
       behaviours = this.attributes._behaviours;
       delete this.attributes._behaviours;

@@ -13,6 +13,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
      */
     suiteSetup(function () {
       $content.empty();
+      this.timeout(4000);
       delete Forms.current;
     });
 
@@ -44,7 +45,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $content.append(form.$form);
 
         $doc.one('pageinit', function () {
-          done();
+          form.attributes.preloadPromise.then(function() {
+            done();
+          });
         });
 
         $.mobile.page({}, $page);
@@ -154,7 +157,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         suiteSetup(function (done) {
           var form = Forms.current;
-
+          this.timeout(4000);
           form.setRecord(record).then(function () {
             done();
           });
@@ -207,13 +210,15 @@ define(['BlinkForms', 'BIC'], function (Forms) {
             subsubform;
 
           assert.equal(subForms.length, 4);
-          $add.trigger('click');
-          setTimeout(function () {
+          subForms.once('add', function(subform) {
             assert.equal(subForms.length, 5);
             subsubform = subForms.at(4);
-            assert.equal(subsubform.getElement('Phone').attributes.forms.length, 1);
-            done();
-          }, 0);
+            subform.attributes.preloadPromise.then(function() {
+              assert.equal(subsubform.getElement('Phone').attributes.forms.length, 1);
+              done();
+            });
+          });
+          $add.trigger('click');
         });
 
         test('Subforms has correct actions', function (done) {
