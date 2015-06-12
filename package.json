@@ -18,10 +18,9 @@
     "rivets": "0.6.8"
   },
   "devDependencies": {
-    "assert": "Jxck/assert#ac895ade8d",
-    "assertive-chai": "^2.0",
     "bic-jqm": "blinkmobile/bic-v3#master",
     "bluebird": "^2.9",
+    "chai": "^3.0.0",
     "es5-shim": "^4.1",
     "grunt": "~0.4",
     "grunt-contrib-clean": "~0.6",
@@ -36,7 +35,7 @@
     "messageformat": "~0.2.1",
     "mocha": "~2.2",
     "requirejs": "~2.1",
-    "text": "requirejs/text#2.0.14",
-    "sinon": "^1.14"
+    "sinon": "^1.14",
+    "text": "requirejs/text#2.0.14"
   }
 }
