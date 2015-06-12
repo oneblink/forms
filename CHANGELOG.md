@@ -1,6 +1,38 @@
 # Changelog
 
 
+## v3.3.3 - 2015-06-12
+
+
+### Changed
+
+- FORMS-160: client-side validation of sub-form limits now enforced
+
+    - users cannot add more sub-forms once the maximum (if any) is reached
+
+
+### Fixed
+
+- FORMS-120: worked around a positioning issue with the date picker on iOS
+
+- FORMS-183: `Form#setRecord()` now strictly waits for all sub-form preloading
+  to finish, to avoid duplication of preloaded sub-forms
+
+- FORMS-169: detect when Google maps are unavailable (e.g. upcoming Windows app)
+  and use alternatives
+
+    - for now, this means no static map image after confirming location
+
+- FORMS-177: collapsed multi-select fields with pop-ups now behave as expected
+
+- FORMS-179: expanded select and multi-select fields (no pop-up) no longer have
+  a mysterious "undefined" option appear
+
+    - further, the "other" text box now never appears if not enabled in settings
+
+- FORMS-161: number fields with no default now start out empty (instead of "0")
+
+
 ## v3.3.2 - 2015-05-22
 
 ### Changed
