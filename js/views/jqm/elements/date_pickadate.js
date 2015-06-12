@@ -2,6 +2,17 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
   'use strict';
 
   var DatePickadateElement = DateView.extend({
+    renderParent: function () {
+      var $body = $('body'),
+        $pickerHolder;
+
+      $pickerHolder = $("<div></div>");
+      $pickerHolder.attr({
+        'class': 'ui-body-c'
+      });
+      $body.append($pickerHolder);
+      DatePickadateElement.pickadateParent = $pickerHolder;
+    },
     renderDate: function () {
       var $input,
         attr = this.model.attributes,
@@ -41,6 +52,10 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
     render: function () {
       var type = this.model.get('type'),
         $label;
+
+      if (!DatePickadateElement.pickadateParent) {
+        this.renderParent();
+      }
 
       this.$el.empty();
       this.renderLabel();
@@ -100,6 +115,7 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
         default:
         }
       }
+      settings.container = DatePickadateElement.pickadateParent;
       return settings;
     },
     prepareTimeSettings: function () {
@@ -110,6 +126,7 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
       if (attr.minuteStep) {
         settings.interval = parseInt(attr.minuteStep, 10);
       }
+      settings.container = DatePickadateElement.pickadateParent;
       return settings;
     },
     mapDateFormats: {
@@ -126,6 +143,9 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
       'h_mm_ss': 'hh:i A',//HH:MM:SS AM/PM %r
       'h_mm': 'hh:i A' //HH:MM AM/PM
     }
+  }, {
+    // static
+    pickadateParent: null
   });
 
   return DatePickadateElement;

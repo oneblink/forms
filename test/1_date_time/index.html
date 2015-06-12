@@ -17,7 +17,21 @@
 </head>
 <body>
 <div data-role="page" data-url="/">
-    <header data-role="header"></header>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:100,400' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+  <div data-role="panel" id="mypanel" data-theme="b" data-display="overlay">
+    <a href="#my-header" data-theme="b" data-rel="close" data-role="button" data-icon="arrow-l" data-iconpos="notext">Hide menu</a>
+    <a data-corners="false" data-theme="b" data-role="button" data-icon="home" data-iconpos="right" class="panelButton">Home</a>
+    <a data-corners="false" data-theme="b" data-role="button" data-icon="arrow-d" data-iconpos="right" class="panelButton">App Demos</a>
+    <a data-corners="true" data-theme="b" data-role="button" data-icon="arrow-r" data-iconpos="right" class="panelButton">Sales Master App</a>
+  </div>
+
+  <div data-role="header" style="overflow:hidden;">
+    <a href="#mypanel" data-icon="bars" class="ui-btn-left" data-theme="b" data-iconpos="notext" data-inline="true">Menu</a>
+    <a back data-icon="back" class="ui-btn-right" data-theme="b" data-iconpos="left" >Back</a>
+    <center><a home><img src="https://d2g691qpj752hh.cloudfront.net/blinkmobile/partners/BlinkMobile_Interactive_Logo_250px.png" height="45" border="0" /></a></center>
+  </div><!-- /header -->
     <div data-role="content" role="main"></div>
     <footer data-role="footer"></footer>
 </div>
