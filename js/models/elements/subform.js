@@ -41,8 +41,26 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         attrs.minusButtonLabel = attrs.name;
       }
 
+      if (attrs.preload) {
+        attrs.preloadPromise = this.addSubformRecursive(attrs.preload);
+      } else {
+        attrs.preloadPromise = Promise.resolve();
+      }
+
       this.attributes.forms.on('add remove', this.updateFieldErrors, this);
       this.off('change', this.updateErrors, this);
+    },
+    addSubformRecursive: function(max) {
+      var self = this,
+        attrs = this.attributes;
+      return self.add().then(function (form) {
+        return form.attributes.preloadPromise;
+      }).then(function () {
+        if(attrs.forms.length < max) {
+          return self.addSubformRecursive(max);
+        }
+        return Promise.resolve();
+      });
     },
     add: function (action) {
       // TODO: there is too much DOM stuff here to be in the model
@@ -63,7 +81,7 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
             if (forms) {
               forms.add(form);
             }
-            resolve();
+            resolve(form);
           } catch (err) {
             reject(err);
           }
@@ -149,36 +167,36 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
           resolve();
           return;
         }
-
-        //remove all preloaded forms
-        while (forms.length > 0) {
-          me.remove(forms.length - 1);
-        }
-
-        while (forms.length + addPromises.length < data.length) {
-          action = "add";
-          if (data[counter].id) {
-            action = "edit";
+        Promise.all([me.attributes.preloadPromise]).then(function() {
+          //remove all preloaded forms
+          while (forms.length > 0) {
+            me.remove(forms.length - 1);
           }
-          addPromises.push(me.add(action));
-          counter++;
-        }
-        // wait for extra (blank) records to be added
-        Promise.all(addPromises).then(function () {
-          promises = [];
-          data.forEach(function (record, index) {
-            promises.push(forms.at(index).setRecord(record));
-          });
 
-          // wait for records to be populated
-          Promise.all(promises).then(function (values) {
-            resolve(values);
+          while (forms.length + addPromises.length < data.length) {
+            action = "add";
+            if (data[counter].id) {
+              action = "edit";
+            }
+            addPromises.push(me.add(action));
+            counter++;
+          }
+          // wait for extra (blank) records to be added
+          Promise.all(addPromises).then(function () {
+            promises = [];
+            data.forEach(function (record, index) {
+              promises.push(forms.at(index).setRecord(record));
+            });
+
+            // wait for records to be populated
+            Promise.all(promises).then(function (values) {
+              resolve(values);
+            }, function () {
+              reject();
+            });
           }, function () {
             reject();
           });
-
-        }, function () {
-          reject();
         });
       });
     },

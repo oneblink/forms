@@ -26,20 +26,7 @@ define(function (require) {
       this.$el.prepend($button);
       this.model.attributes.forms.on('add remove', this.onFormsChange, this);
 
-      if (attrs.preload) {
-        this.addSubformRecursive(attrs.preload);
-      }
-
       this.onFormsChange();
-    },
-    addSubformRecursive: function(max) {
-      var self = this,
-        attrs = this.model.attributes;
-      self.model.add().then(function () {
-        if(attrs.forms.length < max) {
-          self.addSubformRecursive(max);
-        }
-      });
     },
     onAddClick: function () {
       var self = this,

@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'bluebird', 'BIC'], function (Forms, Promise) {
 
   suite('18: Subforms with pages', function () {
     var $page = $('[data-role=page]'),
@@ -37,7 +37,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
       });
 
-      test('render form for jQuery Mobile', function () {
+      test('render form for jQuery Mobile', function (done) {
         var form = Forms.current;
 
         $content.append(form.$form);
@@ -45,34 +45,37 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $.mobile.page({}, $page);
         $page.trigger('pagecreate');
         $page.show();
+        form.attributes.preloadPromise.then(function() {
+          done();
+        });
       });
 
       test('testing subform paging', function (done) {
         var form = Forms.current,
           pages = form.attributes.pages,
           subFormElement,
-          $view,
-          $add,
           subForms,
           testData = [
             { Rank: 1, _action: 'add' },
             { Rank: 2, _action: 'add' },
             { Rank: 3, _action: 'add' }
-          ];
+          ],
+          addPromises = [];
+
+        this.timeout(3000);
 
         //move to page 1 (page having subform)
         pages['goto'](1);
         subFormElement = Forms.current.getElement('subform01');
-        $view = subFormElement.attributes._view.$el;
-        $add = $view.children('.ui-btn').children('button');
-        //adding 1st subform
-        $add.trigger('click');
-        //adding 2nd subform
-        $add.trigger('click');
-        //adding 3rd subform
-        $add.trigger('click');
 
-        setTimeout(function () {
+        //switched to adding subforms using .add()
+        //instead of clicking on add button
+        //other tests can confirm add click works alright
+        addPromises.push(subFormElement.add());
+        addPromises.push(subFormElement.add());
+        addPromises.push(subFormElement.add());
+
+        Promise.all(addPromises).then(function() {
           subForms = subFormElement.attributes.forms;
           //adding data to subform elements
           subForms.at(0).getElement('Rank').val('1');
@@ -89,7 +92,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
               assert.deepEqual(d, testData, 'subFormElement data');
               done();
             });
-        }, 0);
+        });
 
       });
 
