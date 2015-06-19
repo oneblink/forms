@@ -68,10 +68,6 @@ define(['models/element'], function (Element) {
         }
       }, this);
 
-      /*
-        TODO : this function doesnt seem to exist anywhere on the prototype chain should be removed if not needed.
-        */
-      this.on('change:xhr', this.onChangeXHR, this);
     },
 
 /**
@@ -82,7 +78,7 @@ define(['models/element'], function (Element) {
     initializeView: function () {
       var Forms = BMP.Forms,
         view,
-        accept = this.get('accept') || "";
+        accept = this.get('accept') || '';
 
       this.removeView();
       if (this.get('readonly')) {
