@@ -94,6 +94,19 @@ define(['models/element'], function (Element) {
     },
 
 /**
+override because super#validate() checks "value", and we need to check "blob"
+*/
+    validate: function (attrs) {
+      var errors = {};
+      attrs = attrs || this.attributes;
+      if (attrs.required && !attrs.blob) {
+        errors.value = errors.value || [];
+        errors.value.push({code: 'REQUIRED'});
+      }
+      return _.isEmpty(errors) ? undefined : errors;
+    },
+
+/**
   @method toCameraOptions
   @description Builds an object that conforms to the Cordova camera API options. values are taken from the answer space config settings.
 
