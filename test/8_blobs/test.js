@@ -133,6 +133,41 @@ define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
         form.set('isPopulating', false);
       });
 
+      suite('"required" validation', function () {
+        var reqEl;
+
+        suiteSetup(function (done) {
+          reqEl = Forms.current.getElement('file_r');
+          reqEl.val('');
+          setTimeout(done, 0);
+        });
+
+        test('#val("") fails validation', function () {
+          var errors;
+          reqEl.val('');
+          errors = reqEl.validate();
+          assert.isObject(errors);
+          assert.isArray(errors.value);
+          assert.lengthOf(errors.value, 1);
+          assert.deepEqual(errors.value[0], { code: 'REQUIRED' });
+        });
+
+        test('#val("...") passes validation', function () {
+          var errors;
+          reqEl.setBlobFromString('data:image/jpeg;base64,abc123');
+          errors = reqEl.validate();
+          assert(!errors);
+        });
+
+        test('#setBlobFromString("...") passes validation', function () {
+          var errors;
+          reqEl.val('data:image/jpeg;base64,abc123');
+          errors = reqEl.validate();
+          assert(!errors);
+        });
+
+      });
+
       suite('#setBlobFromString()', function () {
         var element;
 
