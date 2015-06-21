@@ -1,4 +1,4 @@
-define(['models/page', 'waitfor'], function (Page, waitFor) {
+define(['models/page', 'poll-until'], function (Page, pollUntil) {
   return Backbone.Collection.extend({
     model: Page,
     'goto': function (index) {
@@ -30,7 +30,7 @@ define(['models/page', 'waitfor'], function (Page, waitFor) {
       currentPage = self.current;
       currentform = currentPage.attributes.form;
 
-      waitFor(function () {
+      pollUntil(function () {
         var aBody$;
         if (currentPage.attributes._view) {
           aBody$ = currentPage.attributes._view.$el.closest('body');

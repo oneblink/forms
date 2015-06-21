@@ -1,8 +1,7 @@
 define(function (require) {
   'use strict';
-  var Forms, FormsLib;
+  var Forms;
 
-  FormsLib = require('formslib');
   Forms = window.BMP.Forms;
 
   _.extend(Forms, Backbone.Events);
@@ -37,9 +36,22 @@ define(function (require) {
 
   Forms.uuid = require('uuid');
 
-  Forms.castPropertyValues = FormsLib.castPropertyValues;
-  Forms.flattenDefinition = FormsLib.flattenDefinition;
-  Forms.parseClass = FormsLib.parseClass;
+  Forms.castPropertyValues = require('@blinkmobile/cast-property-types');
+  Forms.flattenDefinition = function (def, variant) {
+    var flatten = require('@blinkmobile/varied-definition').flatten;
+    return flatten(def, variant, {
+      nesting: [
+        '_elements',
+        '_sections',
+        '_pages',
+        '_behaviours',
+        '_checks',
+        '_actions'
+      ],
+      selection: ['_elements']
+    });
+  };
+  Forms.parseClass = require('@blinkmobile/html-class-data').decode;
 
   /**
   * if the model has a "class" attribute, then set its attributes by parsing it

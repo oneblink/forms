@@ -57,14 +57,17 @@ module.exports = function (grunt) {
             jquerymobile: 'empty:',
             underscore: 'empty:',
             // libraries to be built-in
+            '@blinkmobile/cast-property-types': '../node_modules/@blinkmobile/cast-property-types/dist/index',
+            '@blinkmobile/html-class-data': '../node_modules/@blinkmobile/html-class-data/dist/index',
+            '@blinkmobile/varied-definition': '../node_modules/@blinkmobile/varied-definition/dist/index',
             moment: '../node_modules/moment/min/moment.min',
             picker: '../node_modules/pickadate/lib/picker',
             'picker.date': '../node_modules/pickadate/lib/picker.date',
             'picker.time': '../node_modules/pickadate/lib/picker.time',
+            'poll-until': '../node_modules/poll-until/poll-until',
             'queue-async': '../node_modules/queue-async/queue',
             geolocation: '../node_modules/geolocation/geolocation',
             rivets: '../node_modules/rivets/dist/rivets',
-            formslib: '../node_modules/blinkmobile-forms/dist/formslib',
             uuid: '../node_modules/node-uuid/uuid',
             // Require.JS plugins
             text: '../node_modules/text/text'
