@@ -158,6 +158,16 @@ define(['BlinkForms', 'bluebird', 'BIC'], function (Forms, Promise) {
         assert.notEqual(section2, newSection, 'page2 section changed');
       });
 
+      test('no crazy nested buttons', function () {
+        var crazy$ = $('div.ui-btn > div.ui-btn > button.ui-btn-hidden');
+        assert.lengthOf(crazy$, 0);
+      });
+
+      test('no crazy nested inputs', function () {
+        var crazy$ = $('div.ui-input-text > div.ui-input-text > input.ui-input-text');
+        assert.lengthOf(crazy$, 0);
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)
