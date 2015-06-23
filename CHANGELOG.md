@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.3.4 - 2015-06-23
+
+
+### Fixed
+
+- FORMS-185: do jQueryMobile widget enhancements just once for our views
+
+    - this prevents the visible weirdness when turning pages with sub-forms
+
+- FORMS-163: fix the XPath operator used with Behaviours and Expressions
+
+    - combined with BIC-152 and PLATFORM-1558 (BMP v2.26.0), the Cascading
+      Selects feature from the Form Builder is now supported
+
+- FORMS-184: "required" validation for image fields now passes when populated
+
+
 ## v3.3.3 - 2015-06-12
 
 
