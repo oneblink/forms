@@ -43,7 +43,7 @@ define(function (require) {
         result = [];
         nodes = xml.evaluate(xpath, xml);
         node = nodes.iterateNext();
-        if (!_.isEmpty(node)) {
+        if (node && node.children) {
           _.each(node.children, function (key) {
             result.push(key);
           });
