@@ -32,6 +32,7 @@ define(['views/jqm/element'], function (ElementView) {
       ElementView.prototype.initialize.call(this);
     },
     render: function () {
+      this.$el.fieldcontain();
       this.bindRivets();
     }
   });

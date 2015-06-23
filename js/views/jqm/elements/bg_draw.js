@@ -17,6 +17,7 @@ define([
       this.$el.append($div);
 
       $button.on('click', $.proxy(BGDrawElementView.onButtonClick, this));
+      $button.button();
     },
 
     remove: function () {

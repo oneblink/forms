@@ -29,6 +29,7 @@ define(['views/jqm/element'], function (ElementView) {
         });
       }
 
+      this.$el.fieldcontain();
       this.bindRivets();
     }
   });

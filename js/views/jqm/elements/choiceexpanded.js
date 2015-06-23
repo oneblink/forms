@@ -40,6 +40,9 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         this.model.on('change:value', this.onMultiValueChange, this);
         this.onMultiValueChange();
       }
+
+      $fieldset.controlgroup();
+      this.$el.fieldcontain();
     },
 
     '_renderOptions': function () {
@@ -84,15 +87,16 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
           model: this.model
         }, this.onMultiInputClick);
       }
-
     },
 
     renderOptions: function () {
-      var attrs = this.model.attributes,
-        type = attrs.type;
+      var attrs = this.model.attributes;
+      var type = attrs.type;
+
       this.render();
       this.$el.find('label > input').checkboxradio();
-      this.$el.children('fieldset').controlgroup().addClass('ui-field-contain');
+      this.$el.children('fieldset').controlgroup();
+      this.$el.fieldcontain();
       if (type === 'select') {
         this.onSelectValueChange();
       } else { // type === 'multi'
@@ -130,7 +134,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
       $inputs.checkboxradio().checkboxradio('refresh');
 
-      ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
+      this.renderOtherText(renderOther);
 
       if (_.difference(value, _.keys(model.attributes.options)).length > 0) {
         view.$el.find('input[type = text]').val(_.difference(value, _.keys(model.attributes.options)));
@@ -158,7 +162,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         return $(val).text().trim();
       });
 
-      ChoiceElementView.prototype.renderOtherText.call(this, _.contains(values, 'other'));
+      this.renderOtherText(_.contains(values, 'other'));
 
       if (!_.contains(_.keys(this.model.get('options')), this.model.get('value')) && this.model.get('value') !== 'other') {
         // Also need to fill the text box back in, in addition to selecting radio

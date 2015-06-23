@@ -43,6 +43,8 @@ define([
 
       $new.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
       $existing.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
+      $new.button();
+      $existing.button();
     },
     /*
       @function remove

@@ -168,6 +168,12 @@ define(['BlinkForms', 'bluebird', 'BIC'], function (Forms, Promise) {
         assert.lengthOf(crazy$, 0);
       });
 
+      test('all [data-role=fieldcontain] enhanced', function () {
+        var fieldcontain$ = $('[data-role=fieldcontain]');
+        var enhanced$ = $('[data-role=fieldcontain].ui-field-contain');
+        assert.equal(fieldcontain$.length, enhanced$.length);
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)

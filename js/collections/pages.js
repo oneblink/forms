@@ -8,6 +8,8 @@ define(['models/page', 'poll-until'], function (Page, pollUntil) {
         index = 0;
       }
       self.current = null;
+
+      // TODO: separate out the View parts, they don't belong here
       this.forEach(function (page, number) {
         var form = page.attributes.form,
           view;
@@ -18,7 +20,6 @@ define(['models/page', 'poll-until'], function (Page, pollUntil) {
           view = page.attributes._view;
           view.render();
           form.attributes._view.$el.append(view.el);
-          form.attributes._view.$el.trigger('create');
         } else {
           view = page.attributes._view;
           if (view) {
@@ -39,6 +40,12 @@ define(['models/page', 'poll-until'], function (Page, pollUntil) {
       }, null, function () {
         BMP.Forms.trigger('formInjected', currentform);
         BMP.Forms.trigger('pageInjected', currentPage);
+        currentPage.attributes.elements.forEach(function (el) {
+          var view = el.attributes._view;
+          if (typeof view.onAttached === 'function') {
+            view.onAttached();
+          }
+        });
       });
     }
   });
