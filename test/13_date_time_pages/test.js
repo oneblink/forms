@@ -111,6 +111,12 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         //assert.equal($input.hasClass('picker__input'), true);
       });
 
+      test('all [data-role=fieldcontain] enhanced', function () {
+        var fieldcontain$ = $('[data-role=fieldcontain]');
+        var enhanced$ = $('[data-role=fieldcontain].ui-field-contain');
+        assert.equal(fieldcontain$.length, enhanced$.length);
+      });
+
     }); // END: suite('Pages', ...)
 
   }); // END: suite('1', ...)

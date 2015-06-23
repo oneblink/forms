@@ -26,6 +26,7 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
         'rv-value': 'm:_date'
       });
       this.$el.append($input);
+      $input.textinput();
 
       return this;
     },
@@ -42,6 +43,7 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
         'rv-value': 'm:_time'
       });
       this.$el.append($input);
+      $input.textinput();
 
       return this;
     },
@@ -74,6 +76,7 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
         this.renderTime();
       }
 
+      this.$el.fieldcontain();
       this.bindRivets();
       return this;
     },
