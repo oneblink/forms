@@ -30,6 +30,8 @@ define(['views/jqm/element'], function (ElementView) {
       });
 
       this.$el.append($button);
+      this.$el.fieldcontain();
+      $button.button();
       this.bindRivets();
     }
   });

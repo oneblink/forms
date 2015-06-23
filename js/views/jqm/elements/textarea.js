@@ -1,24 +1,18 @@
-define(['views/jqm/elements/text'], function (TextElementView) {
+define(function (require) {
   'use strict';
 
-  var TextAreaElementView = TextElementView.extend({
-    render: function () {
-      var $input,
-        name = this.model.get('name');
+  var HTMLElementView = require('views/jqm/elements/html');
 
-      this.$el.empty();
-      this.renderLabel();
-
-      $input = $('<textarea></textarea>');
-      $input.attr({
+  return HTMLElementView.extend({
+    createElement: function () {
+      var name = this.model.get('name');
+      var input$ = $('<textarea></textarea>');
+      input$.attr({
         name: name,
         'rv-value': 'm:value',
         'rv-placeholder': 'm:placeholderText'
       });
-      this.$el.append($input);
-      this.bindRivets();
+      return input$;
     }
   });
-
-  return TextAreaElementView;
 });

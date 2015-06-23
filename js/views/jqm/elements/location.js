@@ -7,6 +7,7 @@ define(['views/jqm/element',
       //load google maps
       BMP.Forms.loadMapScript();
       this.renderButtons();
+      this.$el.fieldcontain();
     },
     renderButtons: function() {
       var $locateButton, $clearButton, $div, $button;
@@ -32,14 +33,12 @@ define(['views/jqm/element',
       $locateButton.find('button').on('click', $.proxy(self.constructor.onButtonClick, this));
       $clearButton.find('button').on('click', $.proxy(LocationElementView.onClear, this));
 
+      $button.find('button').button();
+
       this.bindRivets();
       this.model.on('change:value', this.renderFigure, this);
-
-      BMP.Forms.once('formInjected', function () {
-        self.model.on('change:value', self.setClearButton, self);
-        self.setClearButton();
-      });
     },
+
     setClearButton: function() {
       var value = this.model.get('value'),
         $clearButton = this.$el.find('[data-action=clear]');
@@ -49,6 +48,7 @@ define(['views/jqm/element',
         $clearButton.button('disable');
       }
     },
+
     renderFigure: function () {
       var $figure,
         $figcaption,
@@ -92,10 +92,16 @@ define(['views/jqm/element',
       $figure.append($img);
       self.$el.append($figure);
     },
+
     remove: function () {
       this.$el.children('button').off('click');
       this.model.off('change:value', this.renderFigure, this);
       return ElementView.prototype.remove.call(this);
+    },
+
+    onAttached: function () {
+      this.model.on('change:value', this.setClearButton, this);
+      this.setClearButton();
     }
   }, {
     // static properties and methods

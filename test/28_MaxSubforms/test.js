@@ -137,9 +137,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
               assert.equal(subForms.length, 3);
               assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
               done();
-            }, 0);
-          }, 0);
-        }, 0);
+            }, 100);
+          }, 100);
+        }, 100);
       });
     });
 
@@ -253,7 +253,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           assert.equal(subForms.length, 3);
           assert.equal(subFormElement.getRealLength(), 1);
           done();
-        }, 0);
+        }, 100);
       });
 
     });

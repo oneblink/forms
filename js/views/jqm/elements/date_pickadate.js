@@ -13,11 +13,11 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
       $body.append($pickerHolder);
       DatePickadateElement.pickadateParent = $pickerHolder;
     },
+
     renderDate: function () {
       var $input,
         attr = this.model.attributes,
-        name = attr.name,
-        self = this;
+        name = attr.name;
 
       //pre-HTML5 fallback
       $input = $('<input type="text" />');
@@ -26,16 +26,15 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
         'rv-value': 'm:_date'
       });
       this.$el.append($input);
-      BMP.Forms.once('formInjected', function () {
-        $input.pickadate(self.prepareDateSettings());
-      });
+      $input.textinput();
+
       return this;
     },
+
     renderTime: function () {
       var $input,
         attr = this.model.attributes,
-        name = attr.name,
-        self = this;
+        name = attr.name;
 
       //pre-HTML5 fallback
       $input = $('<input type="text" />');
@@ -44,11 +43,11 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
         'rv-value': 'm:_time'
       });
       this.$el.append($input);
-      BMP.Forms.once('formInjected', function () {
-        $input.pickatime(self.prepareTimeSettings());
-      });
+      $input.textinput();
+
       return this;
     },
+
     render: function () {
       var type = this.model.get('type'),
         $label;
@@ -77,9 +76,11 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
         this.renderTime();
       }
 
+      this.$el.fieldcontain();
       this.bindRivets();
       return this;
     },
+
     prepareDateSettings: function () {
       var attr = this.model.attributes,
         settings = {};
@@ -118,6 +119,7 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
       settings.container = DatePickadateElement.pickadateParent;
       return settings;
     },
+
     prepareTimeSettings: function () {
       var attr = this.model.attributes,
         settings = {};
@@ -142,6 +144,20 @@ define(['views/jqm/elements/date', 'picker.date', 'picker.time'], function (Date
       'hh_mm_ss': 'HH:i', //HH:MM:SS
       'h_mm_ss': 'hh:i A',//HH:MM:SS AM/PM %r
       'h_mm': 'hh:i A' //HH:MM AM/PM
+    },
+
+    onAttached: function () {
+      var type = this.model.attributes.type;
+      var name = this.model.attributes.name;
+      var date$, time$;
+      if (type !== 'time') {
+        date$ = this.$el.find('input[name=' + name + '_date]');
+        date$.pickadate(this.prepareDateSettings());
+      }
+      if (type !== 'date') {
+        time$ = this.$el.find('input[name=' + name + '_time]');
+        time$.pickatime(this.prepareTimeSettings());
+      }
     }
   }, {
     // static

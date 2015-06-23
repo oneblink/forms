@@ -1,26 +1,29 @@
 {
-  "name": "forms",
-  "version": "3.3.3",
+  "name": "@blinkmobile/forms",
+  "version": "3.3.4",
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
   "scripts": {
     "test": "grunt test"
   },
   "dependencies": {
+    "@blinkmobile/cast-property-types": "1.0.0",
+    "@blinkmobile/html-class-data": "1.0.0",
+    "@blinkmobile/varied-definition": "1.0.0",
     "almond": "0.3.1",
     "amd-feature": "jensarps/AMD-feature#v1.2.1",
     "blinkgap-utils": "git://github.com/blinkmobile/blinkgap-utils#500774457d",
-    "blinkmobile-forms": "blinkmobile/forms#v2.0.0",
     "geolocation": "git://github.com/blinkmobile/geolocation#v1.0.0",
     "moment": "2.10.3",
     "node-uuid": "1.4.3",
     "pickadate": "amsul/pickadate.js#3.5.5",
+    "poll-until": "1.0.0",
     "queue-async": "1.0.7",
     "rivets": "0.6.8"
   },
   "devDependencies": {
     "bic-jqm": "blinkmobile/bic-v3#master",
     "bluebird": "^2.9",
-    "chai": "^3.0.0",
+    "chai": "^3.0",
     "es5-shim": "^4.1",
     "grunt": "~0.4",
     "grunt-contrib-clean": "~0.6",
@@ -28,7 +31,7 @@
     "grunt-contrib-requirejs": "~0.4",
     "grunt-contrib-uglify": "~0.9",
     "grunt-contrib-watch": "~0.6",
-    "grunt-eslint": "^14.0",
+    "grunt-eslint": "^15.0",
     "grunt-exec": "~0.4",
     "grunt-mocha": "~0.4",
     "html5shiv": "~3.7",
@@ -37,5 +40,6 @@
     "requirejs": "~2.1",
     "sinon": "^1.14",
     "text": "requirejs/text#2.0.14"
-  }
+  },
+  "license": "BSD-3-Clause"
 }

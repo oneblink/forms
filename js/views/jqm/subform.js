@@ -24,6 +24,7 @@ define(function (require) {
       FormView.prototype.render.call(this);
 
       this.$el.prepend($button);
+      $button.button();
     },
     onRemoveClick: function () {
       this.model.parentElement.remove(this.model);

@@ -37,6 +37,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       test('initialise with form.json', function (done) {
         var form;
 
+        this.timeout(3e3); // default is 2e3, sometimes just need a bit longer
+
         Forms.getDefinition('inspection', 'add').then(function (def) {
 
           console.time('initialize');

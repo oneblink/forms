@@ -20,6 +20,14 @@ define(function () {
           },
           {
             'default': {
+              name: 'file_r',
+              label: 'File R',
+              type: 'file',
+              required: true
+            }
+          },
+          {
+            'default': {
               name: 'image_capture',
               label: 'Take Photo',
               type: 'file',

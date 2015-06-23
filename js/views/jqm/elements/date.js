@@ -43,6 +43,7 @@ define(['views/jqm/element'], function (ElementView) {
         this.renderTime();
       }
 
+      this.$el.fieldcontain();
       this.bindRivets();
       return this;
     }

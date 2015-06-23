@@ -16,6 +16,7 @@ define([
       this.$el.append($div);
 
       $button.on('click', $.proxy(WebRTCImageElementView.onButtonClick, this));
+      $button.button();
     },
 
     remove: function () {
