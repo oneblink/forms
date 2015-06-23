@@ -29,6 +29,8 @@ define(['views/jqm/element'], function (ElementView) {
       this.renderControls();
       this.renderFigure();
 
+      this.$el.fieldcontain();
+
       this.bindRivets();
       this.model.on('change:blob', function () {
         this.model.updateWarning();

@@ -18,6 +18,7 @@ define([
       this.$el.append($div);
 
       $button.on('click', $.proxy(DrawElementView.onButtonClick, this));
+      $button.button();
     },
 
     remove: function () {

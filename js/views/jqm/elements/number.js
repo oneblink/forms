@@ -1,19 +1,14 @@
-define(['views/jqm/element'], function (ElementView) {
+define(function (require) {
   'use strict';
 
-  var NumberElementView = ElementView.extend({
-    render: function () {
-      var $input,
-        attrs = this.model.attributes,
-        name = attrs.name;
+  var HTMLElementView = require('views/jqm/elements/html');
 
-      this.$el.empty();
-      this.renderLabel();
-
+  return HTMLElementView.extend({
+    createElement: function () {
+      var name = this.model.get('name');
       // TODO: HTML4-fallback for buggy HTML5 browsers
-      $input = $('<input type="number" />');
-
-      $input.attr({
+      var input$ = $('<input type="number" />');
+      input$.attr({
         name: name,
         'rv-min': 'm:min',
         'rv-max': 'm:max',
@@ -21,14 +16,7 @@ define(['views/jqm/element'], function (ElementView) {
         'rv-step': 'm:step',
         'rv-placeholder': 'm:placeholderText'
       });
-
-      this.$el.append($input);
-      this.bindRivets();
-    },
-    remove: function () {
-      return ElementView.prototype.remove.call(this);
+      return input$;
     }
   });
-
-  return NumberElementView;
 });

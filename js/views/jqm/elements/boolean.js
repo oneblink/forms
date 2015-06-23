@@ -21,6 +21,8 @@ define(['views/jqm/element'], function (ElementView) {
       });
 
       this.$el.append($input);
+      this.$el.fieldcontain();
+
       this.bindRivets();
       model.on('change:value', this.onValueChange, this);
       this.onValueChange();

@@ -122,6 +122,10 @@ define(['rivets'], function (rivets) {
       if (this.rivet) {
         this.rivet.unbind();
       }
+      // preserve existing (jQM) classes so that Rivets doesn't remove them
+      if (this.el.className && this.el.hasAttribute('rv-class') && this.model.attributes.hasOwnProperty('class')) {
+        this.model.attributes['class'] += ' ' + this.el.className;
+      }
       this.rivet = rivets.bind(this.el, {m: this.model});
     }
   });

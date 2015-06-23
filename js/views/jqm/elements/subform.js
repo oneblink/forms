@@ -26,6 +26,7 @@ define(function (require) {
       this.$el.prepend($button);
       this.model.attributes.forms.on('add remove', this.onFormsChange, this);
 
+      this.$el.fieldcontain();
       this.onFormsChange();
     },
     onAddClick: function () {
@@ -97,7 +98,7 @@ define(function (require) {
           }
         }
       });
-      this.$el.trigger('create');
+      // this.$el.trigger('create');
     }
   });
 });

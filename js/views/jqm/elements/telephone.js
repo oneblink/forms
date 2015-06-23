@@ -1,24 +1,18 @@
-define(['views/jqm/element'], function (ElementView) {
+define(function (require) {
   'use strict';
 
-  var TelephoneElementView = ElementView.extend({
-    render: function () {
-      var $input,
-        name = this.model.get('name');
+  var HTMLElementView = require('views/jqm/elements/html');
 
-      this.$el.empty();
-      this.renderLabel();
-
-      $input = $('<input type="tel" />');
-      $input.attr({
+  return HTMLElementView.extend({
+    createElement: function () {
+      var name = this.model.get('name');
+      var input$ = $('<input type="tel" />');
+      input$.attr({
         name: name,
         'rv-value': 'm:value',
         'rv-placeholder': 'm:placeholderText'
       });
-      this.$el.append($input);
-      this.bindRivets();
+      return input$;
     }
   });
-
-  return TelephoneElementView;
 });

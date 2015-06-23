@@ -523,6 +523,24 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         assert.equal(select$.val(), 'y');
       });
 
+      test('all [data-role=fieldcontain] enhanced', function () {
+        var fieldcontain$ = $('[data-role=fieldcontain]');
+        var enhanced$ = $('[data-role=fieldcontain].ui-field-contain');
+        assert.equal(fieldcontain$.length, enhanced$.length);
+      });
+
+      test('all non-native fields should be jQM-enhanced', function () {
+        Forms.current.get('elements')
+        .where({ nativeMenu: false })
+        .forEach(function (el) {
+          var name = el.get('name');
+          var view$ = el.get('_view').$el;
+          var select$ = view$.find('select');
+          var enhSelect$ = select$.closest('.ui-select');
+          assert.equal(select$.length, enhSelect$.length, name + ': <select> enhanced');
+        });
+      });
+
     });
 
   }); // END: suite('1', ...)

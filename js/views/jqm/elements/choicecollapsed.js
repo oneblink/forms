@@ -16,7 +16,8 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
 
       if (type === 'select') {
         $input.attr({
-          name: name
+          name: name,
+          'data-native-menu': attr.nativeMenu
         });
       } else { // type === 'multi'
         $input.attr({
@@ -28,19 +29,19 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       }
 
       if (attr.nativeMenu) {
-        $input.attr({"data-role": "none"});
+        $input.attr({'data-role': 'none'});
       }
 
       this.$el.append($input);
 
       this.renderOptions();
+      this.$el.fieldcontain();
 
       this.bindRivets();
       $input.on('change', function () {
         that.model.set('value', that.prepModelValue());
       });
       this.model.on('change:value', this.onValueChange, this);
-      this.onValueChange();
     },
 
     renderOptions: function () {
@@ -63,10 +64,6 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
       if (attrs.other || attrs.canSpecifyOther) {
         $otherOption = $('<option value="other">other</option>');
         $input.append($otherOption);
-      }
-
-      if (!attrs.nativeMenu && this.$el.children('.ui-select').length) {
-        $input.selectmenu('refresh');
       }
 
       this.onValueChange();
@@ -100,7 +97,7 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         select.selectmenu('refresh');
       }
 
-      ChoiceElementView.prototype.renderOtherText.call(this, renderOther);
+      this.renderOtherText(renderOther);
 
       // Also need to fill the text box back in, in addition to selecting radio
       if (attr.type === 'select') {
@@ -122,6 +119,15 @@ define(['views/jqm/elements/choice'], function (ChoiceElementView) {
         value = "";
       }
       return value;
+    },
+
+    onAttached: function () {
+      var attrs = this.model.attributes;
+      var select$ = this.$el.find('select');
+      var isEnhancementNeeded = !attrs.nativeMenu || attrs.type === 'multi';
+      if (isEnhancementNeeded && !this.$el.children('.ui-select').length) {
+        select$.selectmenu();
+      }
     }
   });
 
