@@ -19,6 +19,9 @@ define(function () {
         }
         view = el.attributes._view;
         view.render();
+        if (view.renderHint) {
+          view.renderHint();
+        }
         if (type === 'hidden') {
           self.$el.prepend(view.el);
         } else {
