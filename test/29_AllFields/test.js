@@ -89,7 +89,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $elem = $view.children();
 
           assert.equal($elem.last()[0].tagName, "SPAN");
-          assert($($elem.last()[0]).hasClass('hint'));
+          assert($($elem.last()[0]).hasClass('bm-formelement__bm-hint'));
           assert.equal($($elem[$elem.length - 2])[0].tagName, 'LABEL');
           assert.equal($($elem[$elem.length - 2]).text(), "");
         });
@@ -118,7 +118,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $elem = $view.children();
 
           assert.equal($elem.last()[0].tagName, "SPAN");
-          assert($($elem.last()[0]).hasClass('hint'));
+          assert($($elem.last()[0]).hasClass('bm-formelement__bm-hint'));
           assert.notEqual($($elem[$elem.length - 2])[0].tagName, 'LABEL');
         });
       });
@@ -150,7 +150,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
           $elem = $view.children();
 
-          assert.lengthOf($elem.find('.hint'), 0);
+          assert.lengthOf($elem.find('.bm-formelement__bm-hint'), 0);
         });
       });
     });
