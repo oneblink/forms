@@ -507,6 +507,24 @@ define(function () {
               "maxWidthPrefix": "characters",
               "page": 1
             }
+          },
+          {
+            "default": {
+              "name": "select_box2",
+              "type": "select",
+              "label": "Select Box",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "hint": "select box (One, Two, Three)",
+              "options": {
+                "One": "One",
+                "Two": "Two",
+                "Three": "Three"
+              },
+              "dataSource": "static",
+              "mode": "collapsed",
+              "page": 1
+            }
           }
         ],
         "_checks": [
@@ -723,7 +741,8 @@ define(function () {
           "conditional_radio",
           "conditional_calc",
           "subform",
-          "validation_req"
+          "validation_req",
+          "select_box2"
         ]
       },
       "edit": {
@@ -768,7 +787,8 @@ define(function () {
           "conditional_radio",
           "conditional_calc",
           "subform",
-          "validation_req"
+          "validation_req",
+          "select_box2"
         ]
       },
       "view": {
@@ -813,7 +833,8 @@ define(function () {
           "conditional_radio",
           "conditional_calc",
           "subform",
-          "validation_req"
+          "validation_req",
+          "select_box2"
         ]
       },
       "delete": {
@@ -858,7 +879,8 @@ define(function () {
           "conditional_radio",
           "conditional_calc",
           "subform",
-          "validation_req"
+          "validation_req",
+          "select_box2"
         ]
       }
     },
@@ -887,6 +909,23 @@ define(function () {
               "label": "Subform Text",
               "page": 0
             }
+          },
+          {
+            "default": {
+              "name": "subform_select",
+              "type": "select",
+              "label": "Subform Select",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "options": {
+                "alpha": "alpha",
+                "beta": "beta",
+                "gamma": "gamma"
+              },
+              "dataSource": "static",
+              "mode": "collapsed",
+              "page": 0
+            }
           }
         ],
         "_checks": [],
@@ -911,7 +950,8 @@ define(function () {
         "downloadModeList": null,
         "recordsToDisplay": null,
         "_elements": [
-          "subform_text"
+          "subform_text",
+          "subform_select"
         ]
       },
       "search": {
@@ -932,7 +972,8 @@ define(function () {
         "hidden": null,
         "action": "add",
         "_elements": [
-          "subform_text"
+          "subform_text",
+          "subform_select"
         ]
       },
       "edit": {
@@ -944,7 +985,8 @@ define(function () {
         "hidden": "1",
         "action": "edit",
         "_elements": [
-          "subform_text"
+          "subform_text",
+          "subform_select"
         ]
       },
       "view": {
@@ -956,7 +998,8 @@ define(function () {
         "hidden": "1",
         "action": "view",
         "_elements": [
-          "subform_text"
+          "subform_text",
+          "subform_select"
         ]
       },
       "delete": {
@@ -968,7 +1011,8 @@ define(function () {
         "hidden": "1",
         "action": "delete",
         "_elements": [
-          "subform_text"
+          "subform_text",
+          "subform_select"
         ]
       }
     }

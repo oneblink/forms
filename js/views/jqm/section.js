@@ -42,6 +42,9 @@ define(function () {
       });
       this.model.unset('_view');
       result = Backbone.View.prototype.remove.call(this);
+      //not sure if this still needs to be here or not,
+      // but don't see anything breaking
+      this.$el.remove();
       delete this.model;
       delete this.$el;
       delete this.el;

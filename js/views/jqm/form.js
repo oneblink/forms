@@ -30,6 +30,14 @@ define(function () {
         $footer.append(this.model.attributes.footer);
         this.$el.append($footer);
       }
+    },
+    onAttached: function () {
+      this.model.get('pages').current.attributes.elements.forEach(function (el) {
+        var view = el.attributes._view;
+        if (typeof view.onAttached === 'function') {
+          view.onAttached();
+        }
+      });
     }
   });
 
