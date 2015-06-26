@@ -8,6 +8,9 @@ define(function (require) {
     remove: function () {
       this.$el.children('.ui-btn').children('button').off('click');
       this.model.attributes.forms.off('change', this.onFormsChange, this);
+      this.model.attributes.forms.forEach(function (form) {
+        form.get('_view').remove();
+      });
       return ElementView.prototype.remove.call(this);
     },
     render: function () {
@@ -99,6 +102,11 @@ define(function (require) {
         }
       });
       // this.$el.trigger('create');
+    },
+    onAttached: function () {
+      this.model.attributes.forms.forEach(function (form) {
+        form.attributes._view.onAttached();
+      });
     }
   });
 });

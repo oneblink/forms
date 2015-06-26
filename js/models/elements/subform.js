@@ -19,6 +19,8 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
       if (isNaN(Number(attrs.preload))) {
         if (attrs.preload !== "no" && attrs.preloadNum) {
           attrs.preload = Number(attrs.preloadNum);
+        } else if (attrs.preload === "no") {
+          delete attrs.preload;
         }
       } else if (!isNaN(Number(attrs.preload))) {
         attrs.preload = Number(attrs.preload);

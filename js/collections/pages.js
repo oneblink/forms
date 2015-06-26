@@ -40,12 +40,7 @@ define(['models/page', 'poll-until'], function (Page, pollUntil) {
       }, null, function () {
         BMP.Forms.trigger('formInjected', currentform);
         BMP.Forms.trigger('pageInjected', currentPage);
-        currentPage.attributes.elements.forEach(function (el) {
-          var view = el.attributes._view;
-          if (typeof view.onAttached === 'function') {
-            view.onAttached();
-          }
-        });
+        currentform.attributes._view.onAttached();
       });
     }
   });

@@ -33,6 +33,42 @@ define(['rivets'], function (rivets) {
       });
       this.$el.append($label);
     },
+    renderHint: function () {
+      var self = this,
+        attrs = self.model.attributes,
+        $hint,
+        $label,
+        blackListHintFields = ['boolean', 'file'],
+        fullWidthHints = ['heading', 'subForm'];
+
+      //if there is no hint available in attributes
+      //no need to add any element
+      if (!attrs.hint || blackListHintFields.indexOf(attrs.type) !== -1) {
+        return;
+      }
+
+      //for subform and heading fields,
+      //no label required
+      if (fullWidthHints.indexOf(attrs.type) === -1) {
+        $label = $(document.createElement('label'));
+
+        $label.attr({
+          'class': 'ui-input-text'
+        });
+
+        this.$el.append($label);
+      }
+
+      $hint = $(document.createElement('span'));
+
+      $hint.attr({
+        'class': 'bm-formelement__bm-hint'
+      });
+
+      $hint.text(attrs.hint);
+
+      this.$el.append($hint);
+    },
     render: function () {
       throw new Error('Element.render is only an interface');
     },
