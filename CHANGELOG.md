@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v3.3.5 - 2015-06-26
+
+
+### Fixed
+
+- FORMS-188: subforms no longer preload 1 by default when it has no preload
+
+- FORMS-61: hints configured in Form Builder now display for most field types
+
+    - single checkbox, and file (e.g. camera, gallery, etc) do not have hints
+
+    - hints have `.bm-formelement__bm-hint` CSS class, to be customisable
+
+    - default styling for this CSS class includes in future BIC release
+
+- FORMS-190: subforms' "remove" button now works after turning pages
+
+    - subform elements (i.e. select / multi-select fields) render properly, too
+
+
 ## v3.3.4 - 2015-06-23
 
 
