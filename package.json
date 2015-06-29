@@ -1,5 +1,6 @@
 {
   "name": "@blinkmobile/forms",
+  "description": "execute a definition, creating Models and Views to capture data from users",
   "version": "3.3.5",
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
   "scripts": {
