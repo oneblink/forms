@@ -8,15 +8,16 @@
   },
   "dependencies": {
     "@blinkmobile/cast-property-types": "1.0.0",
+    "@blinkmobile/geolocation": "1.0.1",
     "@blinkmobile/html-class-data": "1.0.0",
+    "@blinkmobile/jqpromise": "1.0.1",
     "@blinkmobile/varied-definition": "1.0.0",
     "almond": "0.3.1",
     "amd-feature": "jensarps/AMD-feature#v1.2.1",
     "blinkgap-utils": "git://github.com/blinkmobile/blinkgap-utils#500774457d",
-    "geolocation": "git://github.com/blinkmobile/geolocation#v1.0.0",
     "moment": "2.10.3",
     "node-uuid": "1.4.3",
-    "pickadate": "amsul/pickadate.js#3.5.5",
+    "pickadate": "3.5.5",
     "poll-until": "1.0.0",
     "queue-async": "1.0.7",
     "rivets": "0.6.8"

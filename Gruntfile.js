@@ -58,7 +58,9 @@ module.exports = function (grunt) {
             underscore: 'empty:',
             // libraries to be built-in
             '@blinkmobile/cast-property-types': '../node_modules/@blinkmobile/cast-property-types/dist/index',
+            '@blinkmobile/geolocation': '../node_modules/@blinkmobile/geolocation/geolocation',
             '@blinkmobile/html-class-data': '../node_modules/@blinkmobile/html-class-data/dist/index',
+            '@blinkmobile/jqpromise': '../node_modules/@blinkmobile/jqpromise/dist/index',
             '@blinkmobile/varied-definition': '../node_modules/@blinkmobile/varied-definition/dist/index',
             moment: '../node_modules/moment/min/moment.min',
             picker: '../node_modules/pickadate/lib/picker',
@@ -66,7 +68,6 @@ module.exports = function (grunt) {
             'picker.time': '../node_modules/pickadate/lib/picker.time',
             'poll-until': '../node_modules/poll-until/poll-until',
             'queue-async': '../node_modules/queue-async/queue',
-            geolocation: '../node_modules/geolocation/geolocation',
             rivets: '../node_modules/rivets/dist/rivets',
             uuid: '../node_modules/node-uuid/uuid',
             // Require.JS plugins

@@ -1,5 +1,5 @@
 /*eslint-disable new-cap*/ // i18n functions are not constructors
-define(['geolocation'], function (geolocation) {
+define(['@blinkmobile/geolocation'], function (geolocation) {
 
   return {
 
