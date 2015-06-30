@@ -57,21 +57,21 @@ module.exports = function (grunt) {
             jquerymobile: 'empty:',
             underscore: 'empty:',
             // libraries to be built-in
-            '@blinkmobile/cast-property-types': '../node_modules/@blinkmobile/cast-property-types/dist/index',
-            '@blinkmobile/geolocation': '../node_modules/@blinkmobile/geolocation/geolocation',
-            '@blinkmobile/html-class-data': '../node_modules/@blinkmobile/html-class-data/dist/index',
-            '@blinkmobile/jqpromise': '../node_modules/@blinkmobile/jqpromise/dist/index',
-            '@blinkmobile/varied-definition': '../node_modules/@blinkmobile/varied-definition/dist/index',
-            moment: '../node_modules/moment/min/moment.min',
-            picker: '../node_modules/pickadate/lib/picker',
-            'picker.date': '../node_modules/pickadate/lib/picker.date',
-            'picker.time': '../node_modules/pickadate/lib/picker.time',
-            'poll-until': '../node_modules/poll-until/poll-until',
-            'queue-async': '../node_modules/queue-async/queue',
-            rivets: '../node_modules/rivets/dist/rivets',
-            uuid: '../node_modules/node-uuid/uuid',
+            '@blinkmobile/cast-property-types': 'node_modules/@blinkmobile/cast-property-types/dist/index',
+            '@blinkmobile/geolocation': 'node_modules/@blinkmobile/geolocation/geolocation',
+            '@blinkmobile/html-class-data': 'node_modules/@blinkmobile/html-class-data/dist/index',
+            '@blinkmobile/jqpromise': 'node_modules/@blinkmobile/jqpromise/dist/index',
+            '@blinkmobile/varied-definition': 'node_modules/@blinkmobile/varied-definition/dist/index',
+            moment: 'node_modules/moment/min/moment.min',
+            picker: 'node_modules/pickadate/lib/picker',
+            'picker.date': 'node_modules/pickadate/lib/picker.date',
+            'picker.time': 'node_modules/pickadate/lib/picker.time',
+            'poll-until': 'node_modules/poll-until/poll-until',
+            'queue-async': 'node_modules/queue-async/queue',
+            rivets: 'node_modules/rivets/dist/rivets',
+            uuid: 'node_modules/node-uuid/uuid',
             // Require.JS plugins
-            text: '../node_modules/text/text'
+            text: 'node_modules/text/text'
           },
           modules: [
             {
@@ -82,12 +82,11 @@ module.exports = function (grunt) {
           wrap: {
             startFile: [
               'js/models/expression.js',
-              'parts/00-start.frag',
-              'node_modules/almond/almond.js',
-              'parts/01-jquery.frag'
+              // 'parts/00-start.frag',
+              // 'parts/01-jquery.frag'
             ],
             endFile: [
-              'parts/99-end.frag',
+              // 'parts/99-end.frag',
               'js/locales/en/i18n.js'
             ]
           }
