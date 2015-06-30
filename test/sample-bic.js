@@ -16,6 +16,9 @@ define([
   'use strict';
 
   var $submitPopup, $footer, $grid, $colB;
+
+  window.Promise = window.Promise || Promise;
+
   $submitPopup = $('<div></div>').attr({
     id: 'submitPopup',
     'data-role': 'popup',
