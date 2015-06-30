@@ -18,7 +18,6 @@ define(function (require) {
       this.$el.removeData('model');
       this.model.unset('_view');
       this.stopListening(this.model.get('elements'));
-      this.removeErrorList();
 
       return Backbone.View.prototype.remove.call(this);
     },
@@ -100,27 +99,6 @@ define(function (require) {
           }
         });
       }.bind(this));
-    },
-
-    /**
-     * Shows the forms summary view
-     */
-    renderErrors: function(){
-      if ( !this.errorSummaryView ) {
-        this.errorSummaryView = new BMP.Forms._views.ErrorSummary({model: this.model});
-      }
-      this.errorSummaryView.model = this.model;
-      this.$el.append(this.errorSummaryView.render().$el);
-    },
-
-    /**
-     * removes the error summary view
-     */
-    removeErrorList: function(){
-      if ( this.errorSummaryView ){
-        this.errorSummaryView.remove();
-        this.errorSummaryView = null;
-      }
     },
 
     onAttached: function () {

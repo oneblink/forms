@@ -42,8 +42,6 @@ define(function (require) {
     LocationNativeElement: require('views/jqm/elements/location_native'),
     SelectReadOnlyElement: require('views/jqm/elements/select_readonly'),
     MultiReadOnlyElement: require('views/jqm/elements/multi_readonly'),
-    WebRTCImageElement: require('views/jqm/elements/webrtc_image'),
-
-    ErrorSummary: require('views/jqm/error-summary')
+    WebRTCImageElement: require('views/jqm/elements/webrtc_image')
   };
 });
