@@ -17,6 +17,9 @@ define(function (require) {
       events.proxyUnbindFormElementEvents(this, this.model, this.formElementEvents);
       this.$el.removeData('model');
       this.model.unset('_view');
+      this.stopListening(this.model.get('elements'));
+      this.removeErrorList();
+
       return Backbone.View.prototype.remove.call(this);
     },
 
@@ -43,6 +46,81 @@ define(function (require) {
       }
 
       events.proxyBindFormElementEvents(this, this.model, this.formElementEvents);
+    },
+
+    /**
+     * Finds an element and focuses it. Will change the page and scroll
+     * position if it needs to
+     * @param  {string|ElementModel} elementModel Name, cid or ElementModel used
+     * to be scrolled to
+     *
+     *
+     * @returns {Promise} Resolved with the ElementView that was scrolled to
+     * when the animation completes successfully or rejected if the
+     * animation fails.
+     */
+    goToField: function(elementModel){
+      if ( !elementModel){
+        return Promise.reject(new Error('No field specified'));
+      }
+
+      if ( typeof elementModel === 'string'){
+        elementModel = this.model.getElement(elementModel);
+      }
+
+      if ( !elementModel ){
+        return Promise.reject(new Error('Could not find element'));
+      }
+
+      return new Promise(function(resolve, reject){
+        var pageIdOfElement;
+        var pageCollection;
+
+        pageCollection = this.model.get('pages');
+
+//this is pretty hacky but it means not re-writing the form/subform rendering system
+        if (elementModel.get('parentElement')){
+          pageIdOfElement = elementModel.get('parentElement').get('page').index();
+        } else {
+          pageIdOfElement = elementModel.get('page').index();
+        }
+
+        if ( pageCollection.current && pageIdOfElement !== pageCollection.current.index()){
+          pageCollection['goto'](pageIdOfElement);
+        }
+
+        elementModel.get('_view').scrollTo({
+          duration: 100,
+          always: function(resultPromise){
+            resultPromise.then(function(){
+              resolve(elementModel.get('_view'));
+            }, function(){
+              reject(new Error('Scroll Animaiton Failed'));
+            });
+          }
+        });
+      }.bind(this));
+    },
+
+    /**
+     * Shows the forms summary view
+     */
+    renderErrors: function(){
+      if ( !this.errorSummaryView ) {
+        this.errorSummaryView = new BMP.Forms._views.ErrorSummary({model: this.model});
+      }
+      this.errorSummaryView.model = this.model;
+      this.$el.append(this.errorSummaryView.render().$el);
+    },
+
+    /**
+     * removes the error summary view
+     */
+    removeErrorList: function(){
+      if ( this.errorSummaryView ){
+        this.errorSummaryView.remove();
+        this.errorSummaryView = null;
+      }
     },
 
     onAttached: function () {

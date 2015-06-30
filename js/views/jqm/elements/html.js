@@ -17,6 +17,8 @@ define(function (require) {
 
       this.$el.fieldcontain();
       $input.textinput();
+      $input.attr('cid', this.model.cid);
+      this.renderErrors();
     }
   });
 });

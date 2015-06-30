@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 
     exec: {
       messageformat: {
-        cmd: 'node_modules/messageformat/bin/messageformat.js -l en js/locales/en js/locales/en/i18n.js'
+        cmd: 'node node_modules/messageformat/bin/messageformat.js -l en js/locales/en js/locales/en/i18n.js'
       }
     },
 

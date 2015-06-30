@@ -3,7 +3,7 @@ define(['models/elements/text'], function (TextElement) {
 
   var TextAreaElement = TextElement.extend({
     initialize: function () {
-      TextElement.prototype.initialize.call(this);
+      TextElement.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
       var Forms = BMP.Forms,

@@ -57,7 +57,6 @@ define(function (require) {
         }
       });
       attrs.sections = sections;
-
       this.on('remove', this.close, this);
     },
     initializeView: function () {

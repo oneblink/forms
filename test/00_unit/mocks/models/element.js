@@ -15,7 +15,9 @@ define(function(){
     removeView: noop,
     close: noop,
     initializeView: noop,
-    val: noop
+    val: noop,
+    setExternalErrors: noop,
+    hasErrors: noop
   }, {
     create: noop
   });

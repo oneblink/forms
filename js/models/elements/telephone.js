@@ -3,7 +3,7 @@ define(['models/element'], function (Element) {
 
   var TelephoneElement = Element.extend({
     initialize: function () {
-      Element.prototype.initialize.call(this);
+      Element.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
       var Forms = BMP.Forms,

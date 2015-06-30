@@ -3,7 +3,7 @@ define(['models/element', 'geo'], function (Element, geo) {
 
   var LocationElement = Element.extend({
     initialize: function () {
-      Element.prototype.initialize.call(this);
+      Element.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
       var Forms = BMP.Forms,
@@ -27,6 +27,8 @@ define(['models/element', 'geo'], function (Element, geo) {
       if (!geo.isSupported) {
         errors.value.push('unsupported in this browser');
         self.set('errors', errors);
+        this.validationError = errors;
+        this.trigger('invalid', this);
         return Promise.reject(new Error(errors.value[0]));
       }
       return geo.getCurrentPosition(options)
@@ -38,6 +40,8 @@ define(['models/element', 'geo'], function (Element, geo) {
         }, function (error) { // onError
           errors.value.push(geo.getErrorMessage(error));
           self.set('errors', errors);
+          this.validationError = errors;
+          this.trigger('invalid', this);
           return Promise.reject(error);
         });
     }

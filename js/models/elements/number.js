@@ -1,5 +1,6 @@
-define(['models/element'], function (Element) {
+define(function (require) {
   'use strict';
+  var Element = require('models/element');
 
   var NumberElement = Element.extend({
     initialize: function () {
@@ -36,7 +37,7 @@ define(['models/element'], function (Element) {
         attrs.min = 0;
       }
 
-      Element.prototype.initialize.call(this);
+      Element.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
       var Forms = BMP.Forms,
@@ -89,6 +90,8 @@ define(['models/element'], function (Element) {
       maxDecimals: function (value, maxDecimals) {
         var regexp = new RegExp('^(?:(-)?\\d*\\.\\d{1,' + maxDecimals + '}|\\d+)$');
         return regexp.test(value);
+        // var pos = ('' + value).reverse().indexOf('.');
+        // return -1 === pos || pos < maxDecimals;
       },
       minDecimals: function (value, minDecimals) {
         //todo: int validates against min-decimals, regexp needs to be fixed
@@ -97,7 +100,7 @@ define(['models/element'], function (Element) {
       }
     },
     validate: function (attrs) {
-      var errors = Element.prototype.validate.call(this) || {};
+      var errors = Element.prototype.validate.apply(this, arguments) || {};
       if (attrs === undefined) {
         attrs = this.attributes;
       }
@@ -121,6 +124,7 @@ define(['models/element'], function (Element) {
           errors.value.push({code: 'MINDECIMALS', MIN: attrs.minDecimals});
         }
       }
+
       return _.isEmpty(errors) ? undefined : errors;
     }
   });

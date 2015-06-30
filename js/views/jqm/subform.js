@@ -6,23 +6,22 @@ define(function (require) {
 
     attributes: {},
 
-    remove: function () {
-      this.$el.children('.ui-btn').children('button').off('click');
-      return FormView.prototype.remove.call(this);
+    events: {
+      'click [data-onclick="remove-subform"]': 'onRemoveClick'
     },
+
+    renderErrors: $.noop,
 
     render: function () {
       var parentElement = this.model.parentElement,
         name = parentElement.attributes.minusButtonLabel,
         $button;
 
-      $button = $('<button></button>').attr({
+      $button = $('<button data-onclick="remove-subform"></button>').attr({
         type: 'button',
         'data-icon': 'minus',
         'data-action': 'remove'
       }).text(name);
-
-      $button.on('click', this.onRemoveClick.bind(this));
 
       FormView.prototype.render.call(this);
 

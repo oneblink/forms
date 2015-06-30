@@ -5,9 +5,20 @@ define(function (require) {
 
   return ElementView.extend({
     tagName: 'section',
+
+    // events: {
+    //   'click [data-onclick="onAddClick"]': 'onAddClick'
+    // },
+
+    initialize: function(){
+      this.listenTo(this.model, 'update:fieldErrors', this.renderErrors.bind(this) );
+      ElementView.prototype.initialize.apply(this, arguments);
+    },
+
     remove: function () {
-      this.$el.children('.ui-btn').children('button').off('click');
+      //this.$el.children('.ui-btn').children('button').off('click');
       this.model.attributes.forms.off('change', this.onFormsChange, this);
+      this.stopListening(this.model, 'invalid change:value change:blob');
       this.model.attributes.forms.forEach(function (form) {
         form.get('_view').remove();
       });
@@ -17,7 +28,7 @@ define(function (require) {
       var attrs = this.model.attributes,
         $button;
 
-      $button = $('<button></button>').attr({
+      $button = $('<button data-onclick="onAddClick"></button>').attr({
         type: 'button',
         'data-icon': 'plus',
         'data-action': 'add'
@@ -28,16 +39,15 @@ define(function (require) {
       this.$el.attr('data-form', attrs.subform);
       this.$el.prepend($button);
       this.model.attributes.forms.on('add remove', this.onFormsChange, this);
-
       this.$el.fieldcontain();
       this.onFormsChange();
     },
     onAddClick: function () {
-      var self = this,
-        attrs = self.model.attributes,
-        $add = self.$el.children('button').add(self.$el.children('.ui-btn').children('button'));
+      var self = this;
+      var attrs = self.model.attributes;
+      var $add = self.$el.children('button').add(self.$el.children('.ui-btn').children('button'));
       $add.button('disable');
-      self.model.add().then(function() {
+      return self.model.add().then(function(){
         if (!attrs.maxSubforms || self.model.getRealLength() < attrs.maxSubforms) {
           $add.button('enable');
         }

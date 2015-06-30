@@ -46,7 +46,7 @@ define(['models/element'], function (Element) {
     }),
 
     initialize: function () {
-      Element.prototype.initialize.call(this);
+      Element.prototype.initialize.apply(this, arguments);
 
 /**
   @event FileElement#change

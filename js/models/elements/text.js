@@ -3,7 +3,7 @@ define(['models/element'], function (Element) {
 
   var TextElement = Element.extend({
     initialize: function () {
-      Element.prototype.initialize.call(this);
+      Element.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
       var Forms = BMP.Forms,
@@ -22,7 +22,7 @@ define(['models/element'], function (Element) {
       return view;
     },
     validate: function (attrs) {
-      var errors = Element.prototype.validate.call(this) || {};
+      var errors = Element.prototype.validate.apply(this, arguments) || {};
       if (attrs === undefined) {
         attrs = this.attributes;
       }
