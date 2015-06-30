@@ -1,5 +1,5 @@
 define([
-  'models/element',
+  'forms/models/element',
   'moment'
 ], function (Element, moment) {
   'use strict';

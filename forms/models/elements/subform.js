@@ -1,7 +1,18 @@
 define(function (require) {
   'use strict';
-  var SubFormModel = require('models/subform');
-  var ElementModel = require('models/element');
+
+  // foreign modules
+
+  var _ = require('underscore');
+  var Backbone = require('backbone');
+
+  // local modules
+
+  var SubFormModel = require('forms/models/subform');
+  var ElementModel = require('forms/models/element');
+
+  // this module
+
   var SubFormsCollection;
 
   //SubFormsCollection = ElementCollection.extend({

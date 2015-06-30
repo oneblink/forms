@@ -1,4 +1,4 @@
-define(['views/jqm/elements/location'], function (LocationElementView) {
+define(['forms/jqm/elements/location'], function (LocationElementView) {
   'use strict';
   var LocationNativeElementView = LocationElementView.extend({
     render: function () {

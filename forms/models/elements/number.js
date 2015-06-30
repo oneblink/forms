@@ -2,6 +2,17 @@ define(function (require) {
   'use strict';
   var Element = require('models/element');
 
+  // foreign modules
+
+  var $ = require('jquery');
+  var _ = require('underscore');
+
+  // local modules
+
+  var Element = require('forms/models/element');
+
+  // this module
+
   var NumberElement = Element.extend({
     initialize: function () {
       var self = this,

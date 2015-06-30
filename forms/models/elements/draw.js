@@ -1,4 +1,4 @@
-define(['models/elements/file'], function (FileElement) {
+define(['forms/models/elements/file'], function (FileElement) {
   'use strict';
 
   return FileElement.extend({

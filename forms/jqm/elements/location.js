@@ -1,5 +1,5 @@
-define(['views/jqm/element',
-'text!views/jqm/templates/location.html'
+define(['forms/jqm/element',
+'text!forms/jqm/templates/location.html'
 ], function (ElementView, html) {
   'use strict';
   var LocationElementView = ElementView.extend({

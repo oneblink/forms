@@ -1,5 +1,15 @@
-define(['models/elements/text'], function (TextElement) {
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var _ = require('underscore');
+
+  // local modules
+
+  var TextElement = require('forms/models/elements/text');
+
+  // this module
 
   var EmailElement = TextElement.extend({
     initialize: function () {

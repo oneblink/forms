@@ -13,5 +13,4 @@ node_modules
 
 # build output
 build
-/BlinkForms*.js*
-i18n.js
+forms/locales/en/i18n.js

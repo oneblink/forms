@@ -1,8 +1,8 @@
 define(function (require) {
+  'use strict';
 
-  var ElementModel = require('models/element')
-    , formsErrors = require('blink-forms-errors');
-
+  var ElementModel = require('forms/models/element');
+  var formsErrors = require('forms/blink-forms-errors');
 
   function addErrorText(error){
     error.text = formsErrors.toErrorString(error);

@@ -1,6 +1,6 @@
 define(function (require) {
 
-  var events = require('events');
+  var events = require('forms/events');
 
   var FormView = Backbone.View.extend({
     tagName: 'form',

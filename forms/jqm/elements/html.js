@@ -1,7 +1,7 @@
 define(function (require) {
   'use strict';
 
-  var ElementView = require('views/jqm/element');
+  var ElementView = require('forms/jqm/element');
 
   return ElementView.extend({
     render: function () {

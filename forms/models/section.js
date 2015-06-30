@@ -1,10 +1,21 @@
 define(function (require) {
-  var Element = require('models/element'),
-    Section;
+  'use strict';
+
+  // foreign modules
+
+  var _ = require('underscore');
+
+  // local modules
+
+  var Element = require('forms/models/element');
+
+  // this module
+
+  var Section;
 
   Section = Element.extend({
     initialize: function () {
-      var Elements = require('collections/elements'),
+      var Elements = require('forms/collections/elements'),
         attrs = this.attributes;
 
       attrs.elements = new Elements();

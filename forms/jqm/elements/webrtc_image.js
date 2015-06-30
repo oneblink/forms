@@ -1,5 +1,5 @@
 define([
-  'views/jqm/elements/file'
+  'forms/jqm/elements/file'
 ], function (FileElementView) {
   'use strict';
   var WebRTCImageElementView;

@@ -1,6 +1,6 @@
 define([
-  'views/jqm/elements/file',
-  'text!views/jqm/templates/bg_image.html'
+  'forms/jqm/elements/file',
+  'text!forms/jqm/templates/bg_image.html'
 ], function (FileElementView, html) {
   'use strict';
   var BGCameraElementView;

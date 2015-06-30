@@ -4,7 +4,17 @@
  * @module ElementModel
  * @exports Element
  */
-define(function () {
+define(function (require) {
+  'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+  var _ = require('underscore');
+  var Backbone = require('backbone');
+
+  // this module
+
   var Element;
 
   Element = Backbone.Model.extend({

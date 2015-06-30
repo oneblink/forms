@@ -1,4 +1,4 @@
-define(['views/jqm/element'], function (ElementView) {
+define(['forms/jqm/element'], function (ElementView) {
   'use strict';
 
   var ReadOnlyElementView = ElementView.extend({

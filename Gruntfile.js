@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 
     clean: {
       build: {
-        src: ['build', 'js/locales/**/i18n.js']
+        src: ['build', 'forms/locales/**/i18n.js']
       }
     },
 
@@ -30,15 +30,16 @@ module.exports = function (grunt) {
 
     exec: {
       messageformat: {
-        cmd: 'node node_modules/messageformat/bin/messageformat.js -l en js/locales/en js/locales/en/i18n.js'
+        cmd: 'node node_modules/messageformat/bin/messageformat.js -l en forms/locales/en forms/locales/en/i18n.js'
       }
     },
 
     requirejs: {
       compile: {
         options: {
-          baseUrl: 'js',
+          baseUrl: '.',
           dir: 'build',
+          skipDirOptimize: false,
 //          optimize: 'uglify2',
           optimize: 'none',
           uglify: {
@@ -51,6 +52,7 @@ module.exports = function (grunt) {
             warnings: false
           },
           paths: {
+            // exclude these from the build (load from CDN)
             backbone: 'empty:',
             bluebird: 'empty:',
             jquery: 'empty:',
@@ -75,19 +77,23 @@ module.exports = function (grunt) {
           },
           modules: [
             {
-              name: 'views/forms3jqm',
-              include: ['main', 'moment', 'picker.date', 'picker.time']
+              name: 'forms/jqm',
+              include: [
+                'forms/main',
+                'moment',
+                'picker.date',
+                'picker.time'
+              ]
             }
           ],
           wrap: {
             startFile: [
-              'js/models/expression.js',
               // 'parts/00-start.frag',
               // 'parts/01-jquery.frag'
             ],
             endFile: [
-              // 'parts/99-end.frag',
-              'js/locales/en/i18n.js'
+              'parts/99-end.frag',
+              'forms/locales/en/i18n.js'
             ]
           }
         }
@@ -97,17 +103,17 @@ module.exports = function (grunt) {
     uglify: {
       'Forms3+jQM': {
         options: {
-          sourceMap: 'build/views/forms3jqm.js.map',
-          sourceMappingURL: 'forms3jqm.js.map', // fix reference in .min.js
-          sourceMapPrefix: 3, // fix reference in .js.map
+          sourceMap: true,
+          sourceMapName: 'build/forms3jqm.js.map',
+          sourceMapIncludeSources: true,
           beautify: {
             width: 80,
             max_line_len: 80
           }
         },
         files: {
-          'build/views/forms3jqm.min.js': [
-            'build/views/forms3jqm.js'
+          'build/forms3jqm.min.js': [
+            'build/forms/jqm.js'
           ]
         }
       }
@@ -138,16 +144,16 @@ module.exports = function (grunt) {
     watch: {
       i18n: {
         files: [
-          '!js/locales/**/*',
-          '!js/locales/**/i18n.js'
+          '!forms/locales/**/*',
+          '!forms/locales/**/i18n.js'
         ],
         tasks: 'messageformat'
       },
       src: {
         files: [
           'Gruntfile.js',
-          'js/**/*',
-          'js/locales/**/i18n.js',
+          'forms/**/*',
+          'forms/locales/**/i18n.js',
           '!build/**/*',
           'parts/*'
         ],

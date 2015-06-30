@@ -1,4 +1,4 @@
-define(['views/jqm/elements/number'], function (NumberElementView) {
+define(['forms/jqm/elements/number'], function (NumberElementView) {
   'use strict';
 
   var SliderElementView = NumberElementView.extend({

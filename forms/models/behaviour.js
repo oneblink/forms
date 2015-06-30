@@ -1,11 +1,21 @@
 define(function (require) {
+  'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+  var _ = require('underscore');
+  var Backbone = require('backbone');
   var queue = require('queue-async');
+
+  // this module
+
   var q = queue(10);
 
   /** @type {Boolean} is the Behaviours queue empty? */
   var qEmpty = true;
 
-  var Elements = require('collections/elements');
+  var Elements = require('forms/collections/elements');
   var Behaviour;
   var Expression = BMP.Expression;
 

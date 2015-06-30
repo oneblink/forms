@@ -1,5 +1,15 @@
-define(['models/elements/select'], function (SelectElement) {
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var _ = require('underscore');
+
+  // local modules
+
+  var SelectElement = require('forms/models/elements/select');
+
+  // this module
 
   var MultiElement = SelectElement.extend({
     initialize: function () {

@@ -11,40 +11,53 @@
  */
 define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+  var _ = require('underscore');
+  var Backbone = require('backbone');
+
+  // this module
+
   var Forms;
+
+  window.BMP = window.BMP || {};
+
+  window.BMP.Expression = require('forms/expression');
 
   Forms = window.BMP.Forms;
 
   _.extend(Forms, Backbone.Events);
 
-  _.extend(Forms, require('events'));
+  _.extend(Forms, require('forms/events'));
 
   Forms._models = {
-    Form: require('models/form'),
-    SubForm: require('models/subform'),
-    SubFormElement: require('models/elements/subform'),
-    Behaviour: require('models/behaviour'),
-    Page: require('models/page'),
-    Section: require('models/section'),
-    Element: require('models/element'),
-    HeadingElement: require('models/elements/heading'),
-    MessageElement: require('models/elements/message'),
-    DateElement: require('models/elements/date'),
-    HiddenElement: require('models/elements/hidden'),
-    NumberElement: require('models/elements/number'),
-    TelephoneElement: require('models/elements/telephone'),
-    PasswordElement: require('models/elements/password'),
-    EmailElement: require('models/elements/email'),
-    URLElement: require('models/elements/url'),
-    TextElement: require('models/elements/text'),
-    TextAreaElement: require('models/elements/textarea'),
-    BooleanElement: require('models/elements/boolean'),
-    SelectElement: require('models/elements/select'),
-    MultiElement: require('models/elements/multi'),
-    LocationElement: require('models/elements/location'),
-    FileElement: require('models/elements/file'),
-    DrawElement: require('models/elements/draw'),
-    ButtonElement: require('models/elements/button')
+    Form: require('forms/models/form'),
+    SubForm: require('forms/models/subform'),
+    SubFormElement: require('forms/models/elements/subform'),
+    Behaviour: require('forms/models/behaviour'),
+    Page: require('forms/models/page'),
+    Section: require('forms/models/section'),
+    Element: require('forms/models/element'),
+    HeadingElement: require('forms/models/elements/heading'),
+    MessageElement: require('forms/models/elements/message'),
+    DateElement: require('forms/models/elements/date'),
+    HiddenElement: require('forms/models/elements/hidden'),
+    NumberElement: require('forms/models/elements/number'),
+    TelephoneElement: require('forms/models/elements/telephone'),
+    PasswordElement: require('forms/models/elements/password'),
+    EmailElement: require('forms/models/elements/email'),
+    URLElement: require('forms/models/elements/url'),
+    TextElement: require('forms/models/elements/text'),
+    TextAreaElement: require('forms/models/elements/textarea'),
+    BooleanElement: require('forms/models/elements/boolean'),
+    SelectElement: require('forms/models/elements/select'),
+    MultiElement: require('forms/models/elements/multi'),
+    LocationElement: require('forms/models/elements/location'),
+    FileElement: require('forms/models/elements/file'),
+    DrawElement: require('forms/models/elements/draw'),
+    ButtonElement: require('forms/models/elements/button')
   };
 
   Forms.uuid = require('uuid');

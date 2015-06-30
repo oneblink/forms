@@ -1,6 +1,6 @@
 define([
-  'views/jqm/element',
-  'views/jqm/elements/location'
+  'forms/jqm/element',
+  'forms/jqm/elements/location'
   ], function (ElementView, LocationElementView) {
     'use strict';
     var LocationReadOnlyElement;

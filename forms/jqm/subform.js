@@ -1,5 +1,5 @@
 define(function (require) {
-  var FormView = require('views/jqm/form');
+  var FormView = require('forms/jqm/form');
 
   return FormView.extend({
     tagName: 'section',

@@ -4,10 +4,22 @@
  * - only used immediately within a form (not deeper in)
  */
 define(function (require) {
-  var Elements = require('collections/elements'),
-    Section = require('models/section'),
-    Sections,
-    Page;
+  'use strict';
+
+  // foreign modules
+
+  var _ = require('underscore');
+  var Backbone = require('backbone');
+
+  // local modules
+
+  var Elements = require('forms/collections/elements');
+  var Section = require('forms/models/section');
+
+  // this module
+
+  var Sections;
+  var Page;
 
   Sections = Backbone.Collection.extend({
     model: Section

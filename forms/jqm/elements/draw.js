@@ -1,6 +1,6 @@
 define([
-  'views/jqm/elements/file',
-  'text!views/jqm/templates/signaturePad.html'
+  'forms/jqm/elements/file',
+  'text!forms/jqm/templates/signaturePad.html'
 ], function (FileElementView, html) {
   'use strict';
   var signaturePad, DrawElementView;

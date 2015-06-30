@@ -1,5 +1,12 @@
-define(['models/element', 'geo'], function (Element, geo) {
+define(function (require) {
   'use strict';
+
+  // local modules
+
+  var Element = require('forms/models/element');
+  var geo = require('forms/geo');
+
+  // this module
 
   var LocationElement = Element.extend({
     initialize: function () {

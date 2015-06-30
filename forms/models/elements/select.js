@@ -1,5 +1,15 @@
-define(['models/element'], function (Element) {
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var _ = require('underscore');
+
+  // local modules
+
+  var Element = require('forms/models/element');
+
+  // this module
 
   var defaults = _.clone(Element.prototype.defaults);
   defaults.mode = 'collapsed';

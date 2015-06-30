@@ -9,6 +9,5 @@ node_modules
 
 # build output
 build
-js/locales
-/BlinkForms*.js*
+forms/locales
 test/lib

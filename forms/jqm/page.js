@@ -1,4 +1,4 @@
-define(['views/jqm/section'], function (SectionView) {
+define(['forms/jqm/section'], function (SectionView) {
   var PageView = SectionView.extend({
     tagName: 'section',
     initialize: function () {

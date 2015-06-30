@@ -1,4 +1,4 @@
-define(['models/page', 'poll-until'], function (Page, pollUntil) {
+define(['forms/models/page', 'poll-until'], function (Page, pollUntil) {
   return Backbone.Collection.extend({
     model: Page,
     'goto': function (index) {

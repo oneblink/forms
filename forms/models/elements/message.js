@@ -1,4 +1,4 @@
-define(['models/element'], function (Element) {
+define(['forms/models/element'], function (Element) {
   'use strict';
 
   var MessageElement = Element.extend({

@@ -1,4 +1,12 @@
-define('expression', ['feature!promises'], function (Promise) {
+define(function (require) {
+  'use strict';
+
+  // foreign modules
+
+  var _ = require('underscore');
+
+  // this module
+
   var Expression;
 
   /**

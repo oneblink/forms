@@ -1,4 +1,4 @@
-define(['models/elements/text'], function (TextElement) {
+define(['forms/models/elements/text'], function (TextElement) {
   'use strict';
 
   var TextAreaElement = TextElement.extend({

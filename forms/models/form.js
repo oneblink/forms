@@ -1,11 +1,23 @@
 define(function (require) {
-  var Elements = require('collections/elements'),
-    Pages = require('collections/pages'),
-    invalidWrapperFn,
-    isSubForm,
-    Form;
+  'use strict';
 
-  invalidWrapperFn = function(fn){
+  // foreign modules
+
+  var $ = require('jquery');
+  var _ = require('underscore');
+  var Backbone = require('backbone');
+
+  // local modules
+
+  var Elements = require('forms/collections/elements');
+  var Pages = require('forms/collections/pages');
+
+  // this module
+
+  var Form;
+  var invalidWrapperFn, isSubForm;
+
+  invalidWrapperFn = function (fn) {
     return function(options){
       var elementCollection = this.get('elements'),
           validate = options && options.validate || false,
@@ -23,7 +35,7 @@ define(function (require) {
     };
   };
 
-  isSubForm = function(elementModel){
+  isSubForm = function (elementModel) {
     return elementModel.get('type') === 'subForm';
   };
 

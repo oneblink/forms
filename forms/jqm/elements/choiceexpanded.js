@@ -1,4 +1,4 @@
-define(['views/jqm/elements/choice'], function (ChoiceElementView) {
+define(['forms/jqm/elements/choice'], function (ChoiceElementView) {
   'use strict';
 
   var ChoiceExpandedElementView = ChoiceElementView.extend({
