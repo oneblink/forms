@@ -3,11 +3,14 @@ define(function (require) {
 
   return FormView.extend({
     tagName: 'section',
+
     attributes: {},
+
     remove: function () {
       this.$el.children('.ui-btn').children('button').off('click');
       return FormView.prototype.remove.call(this);
     },
+
     render: function () {
       var parentElement = this.model.parentElement,
         name = parentElement.attributes.minusButtonLabel,
@@ -23,9 +26,15 @@ define(function (require) {
 
       FormView.prototype.render.call(this);
 
+      this.$el.attr(
+        'data-record-index',
+        parentElement.get('forms').indexOf(this.model)
+      );
+
       this.$el.prepend($button);
       $button.button();
     },
+
     onRemoveClick: function () {
       this.model.parentElement.remove(this.model);
     }

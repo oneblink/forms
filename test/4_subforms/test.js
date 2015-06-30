@@ -305,6 +305,48 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
     });
 
+    suite('after #setRecord(...) with IDs', function () {
+
+      suiteSetup(function (done) {
+        BMP.Forms.current.setRecord({
+          comments: [
+            { id: 123, comment: 'abc', '_action': 'edit' },
+            { id: 456, comment: 'def', '_action': 'edit' }
+          ]
+        }).then(function () { done(); });
+      });
+
+      test('section[data-record-index]', function () {
+        BMP.Forms.current.getElement('comments').get('forms')
+        .map(function (model) {
+          return model.get('_view');
+        })
+        .forEach(function (view, index) {
+          assert.equal(view.$el.attr('data-record-index'), '' + index);
+        });
+      });
+
+      test('section[data-record-id]', function () {
+        BMP.Forms.current.getElement('comments').get('forms')
+        .forEach(function (model) {
+          var $el = model.get('_view').$el;
+          assert.equal(
+            $el.attr('data-record-id'),
+            '' + model.getElement('id').val()
+          );
+        });
+      });
+
+      test('section[data-form]', function () {
+        BMP.Forms.current.getElement('comments').get('forms')
+        .forEach(function (model) {
+          var $el = model.get('_view').$el;
+          assert.equal($el.attr('data-form'), 'form2');
+        });
+      });
+
+    });
+
     suite('incomplete: Edit Form', function () {
 
       test('initialise with form.json');

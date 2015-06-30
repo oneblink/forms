@@ -29,6 +29,22 @@ define(['BlinkForms', 'BIC'], function () {
       assert.isFunction(window.BMP.Forms.uuid.v4);
     });
 
+    test('BMP.Forms.proxyBindEntityEvents is a function', function () {
+      assert.isFunction(window.BMP.Forms.proxyBindEntityEvents);
+    });
+
+    test('BMP.Forms.proxyUnbindEntityEvents is a function', function () {
+      assert.isFunction(window.BMP.Forms.proxyUnbindEntityEvents);
+    });
+
+    test('BMP.Forms.proxyBindFormElementEvents is a function', function () {
+      assert.isFunction(window.BMP.Forms.proxyBindFormElementEvents);
+    });
+
+    test('BMP.Forms.proxyUnbindFormElementEvents is a function', function () {
+      assert.isFunction(window.BMP.Forms.proxyUnbindFormElementEvents);
+    });
+
   });
 
 });

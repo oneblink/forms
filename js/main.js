@@ -6,6 +6,8 @@ define(function (require) {
 
   _.extend(Forms, Backbone.Events);
 
+  _.extend(Forms, require('events'));
+
   Forms._models = {
     Form: require('models/form'),
     SubForm: require('models/subform'),
