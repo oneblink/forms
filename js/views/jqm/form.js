@@ -1,4 +1,7 @@
-define(function () {
+define(function (require) {
+
+  var events = require('events');
+
   var FormView = Backbone.View.extend({
     tagName: 'form',
 
@@ -6,8 +9,12 @@ define(function () {
       'novalidate': 'novalidate'
     },
 
+    formElementEvents: {
+      'id': { 'change:value': 'onChangedId' }
+    },
+
     remove: function () {
-      this.unhookId();
+      events.proxyUnbindFormElementEvents(this, this.model, this.formElementEvents);
       this.$el.removeData('model');
       this.model.unset('_view');
       return Backbone.View.prototype.remove.call(this);
@@ -35,15 +42,7 @@ define(function () {
         this.$el.append($footer);
       }
 
-      this.hookId();
-    },
-
-    hookId: function () {
-      var idEl = this.model.getElement('id');
-      if (idEl) {
-        idEl.on('change:value', this.onChangedId, this);
-        this.onChangedId();
-      }
+      events.proxyBindFormElementEvents(this, this.model, this.formElementEvents);
     },
 
     onAttached: function () {
@@ -57,13 +56,6 @@ define(function () {
 
     onChangedId: function () {
       this.$el.attr('data-record-id', this.model.getElement('id').val());
-    },
-
-    unhookId: function () {
-      var idEl = this.model.getElement('id');
-      if (idEl) {
-        idEl.off('change:value', this.onChangedId, this);
-      }
     }
 
   });
