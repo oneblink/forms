@@ -1,4 +1,12 @@
 define(function (require) {
+  'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+
+  // this module
+
   var FormView = require('forms/jqm/form');
 
   return FormView.extend({

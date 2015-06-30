@@ -8,6 +8,11 @@ define(function (require) {
   var Backbone = require('backbone');
   var queue = require('queue-async');
 
+  // local modules
+
+  var Elements = require('forms/collections/elements');
+  var Expression = require('forms/expression');
+
   // this module
 
   var q = queue(10);
@@ -15,9 +20,7 @@ define(function (require) {
   /** @type {Boolean} is the Behaviours queue empty? */
   var qEmpty = true;
 
-  var Elements = require('forms/collections/elements');
   var Behaviour;
-  var Expression = BMP.Expression;
 
   Expression.fn['formelement.value'] = function (name) {
     return this.getElement(name).val();

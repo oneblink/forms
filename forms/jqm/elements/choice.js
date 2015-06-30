@@ -1,5 +1,16 @@
-define(['forms/jqm/element'], function (ElementView) {
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+  var _ = require('underscore');
+
+  // local modules
+
+  var ElementView = require('forms/jqm/element');
+
+  // this module
 
   var ChoiceElementView = ElementView.extend({
 

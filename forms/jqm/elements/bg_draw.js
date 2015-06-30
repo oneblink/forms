@@ -1,7 +1,16 @@
-define([
-  'forms/jqm/elements/file'
-], function (FileElementView) {
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+
+  // local modules
+
+  var FileElementView = require('forms/jqm/elements/file');
+
+  // this module
+
   var BGDrawElementView;
 
   BGDrawElementView = FileElementView.extend({

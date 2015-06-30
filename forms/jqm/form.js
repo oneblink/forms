@@ -1,6 +1,16 @@
 define(function (require) {
+  'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+  var Backbone = require('backbone');
+
+  // local modules
 
   var events = require('forms/events');
+
+  // this module
 
   var FormView = Backbone.View.extend({
     tagName: 'form',

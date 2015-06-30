@@ -1,8 +1,17 @@
-define([
-  'forms/jqm/elements/file',
-  'text!forms/jqm/templates/bg_image.html'
-], function (FileElementView, html) {
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+
+  // local modules
+
+  var FileElementView = require('forms/jqm/elements/file');
+  var html = require('text!forms/jqm/templates/bg_image.html');
+
+  // this module
+
   var BGCameraElementView;
 
   /**

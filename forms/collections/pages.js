@@ -1,4 +1,18 @@
-define(['forms/models/page', 'poll-until'], function (Page, pollUntil) {
+define(function (require) {
+  'use strict';
+
+  // foreign modules
+
+  var _ = require('underscore');
+  var Backbone = require('backbone');
+
+  // local modules
+
+  var Page = require('forms/models/page');
+  var pollUntil = require('poll-until');
+
+  // this module
+
   return Backbone.Collection.extend({
     model: Page,
     'goto': function (index) {

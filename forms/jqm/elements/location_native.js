@@ -1,5 +1,16 @@
-define(['forms/jqm/elements/location'], function (LocationElementView) {
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+  var _ = require('underscore');
+
+  // local modules
+
+  var LocationElementView = require('forms/jqm/elements/location');
+
+  // this module
   var LocationNativeElementView = LocationElementView.extend({
     render: function () {
       this.renderButtons();

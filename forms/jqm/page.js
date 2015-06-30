@@ -1,4 +1,6 @@
 define(['forms/jqm/section'], function (SectionView) {
+  'use strict';
+
   var PageView = SectionView.extend({
     tagName: 'section',
     initialize: function () {

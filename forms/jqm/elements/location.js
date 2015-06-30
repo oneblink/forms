@@ -1,7 +1,19 @@
-define(['forms/jqm/element',
-'text!forms/jqm/templates/location.html'
-], function (ElementView, html) {
+/*globals google:false*/
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+  var _ = require('underscore');
+
+  // local modules
+
+  var ElementView = require('forms/jqm/element');
+  var html = require('text!forms/jqm/templates/location.html');
+
+  // this module
+
   var LocationElementView = ElementView.extend({
     render: function () {
       //load google maps

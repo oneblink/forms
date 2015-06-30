@@ -10,7 +10,8 @@ define([
   'definitions',
   'BMP.Blob',
   'BMP.BlinkGap',
-  'feature!es5'
+  'feature!es5',
+  'jquerymobile'
 ], function (Promise, $, _, Forms, defs) {
   'use strict';
 

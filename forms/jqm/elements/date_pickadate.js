@@ -1,7 +1,22 @@
-define(['forms/jqm/elements/date', 'picker.date', 'picker.time'], function (DateView) {
+define(function (require) {
   'use strict';
 
-  var DatePickadateElement = DateView.extend({
+  // foreign modules
+
+  var $ = require('jquery');
+
+  // local modules
+
+  var DateView = require('forms/jqm/elements/date');
+
+  // this module
+
+  var DatePickadateElement;
+
+  require('picker.date');
+  require('picker.time');
+
+  DatePickadateElement = DateView.extend({
     renderParent: function () {
       var $body = $('body'),
         $pickerHolder;

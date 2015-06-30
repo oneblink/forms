@@ -1,5 +1,15 @@
-define(['forms/jqm/element'], function (ElementView) {
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var _ = require('underscore');
+
+  // local modules
+
+  var ElementView = require('forms/jqm/element');
+
+  // this module
 
   var MultiReadOnlyElementView = ElementView.extend({
     render: function () {

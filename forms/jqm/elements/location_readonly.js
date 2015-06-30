@@ -1,19 +1,18 @@
-define([
-  'forms/jqm/element',
-  'forms/jqm/elements/location'
-  ], function (ElementView, LocationElementView) {
-    'use strict';
-    var LocationReadOnlyElement;
+define(function (require) {
+  'use strict';
 
-    LocationReadOnlyElement = LocationElementView.extend({
-      render: function () {
-        this.$el.empty();
-        this.renderLabel();
+  // local modules
 
-        this.bindRivets();
-        this.model.on('change:value', this.renderFigure, this);
-      }
-    });
+  var LocationElementView = require('forms/jqm/elements/location');
 
-    return LocationReadOnlyElement;
+  return LocationElementView.extend({
+    render: function () {
+      this.$el.empty();
+      this.renderLabel();
+
+      this.bindRivets();
+      this.model.on('change:value', this.renderFigure, this);
+    }
   });
+
+});

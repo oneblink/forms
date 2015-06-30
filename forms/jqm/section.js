@@ -1,4 +1,12 @@
-define(function () {
+define(function (require) {
+  'use strict';
+
+  // foreign modules
+
+  var Backbone = require('backbone');
+
+  // this module
+
   var SectionView = Backbone.View.extend({
     tagName: 'section',
     initialize: function () {

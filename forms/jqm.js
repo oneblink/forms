@@ -6,6 +6,10 @@ define(function (require) {
   var $ = require('jquery');
   var rivets = require('rivets');
 
+  // local modules
+
+  var Forms = require('forms/main');
+
   // this module
 
   require('jquerymobile');
@@ -15,7 +19,7 @@ define(function (require) {
   rivets.adapters[':'] = require('forms/config/rivets-adaptor');
   rivets.binders.input = require('forms/config/rivets-keypress-binder');
 
-  return {
+  Forms._views = {
     Form: require('forms/jqm/form'),
     SubForm: require('forms/jqm/subform'),
     SubFormElement: require('forms/jqm/elements/subform'),
@@ -53,4 +57,6 @@ define(function (require) {
     MultiReadOnlyElement: require('forms/jqm/elements/multi_readonly'),
     WebRTCImageElement: require('forms/jqm/elements/webrtc_image')
   };
+
+  return Forms._views;
 });

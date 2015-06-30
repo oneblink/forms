@@ -23,6 +23,7 @@ define(function (require) {
   var Forms;
 
   window.BMP = window.BMP || {};
+  window.BMP.Forms = window.BMP.Forms || {};
 
   window.BMP.Expression = require('forms/expression');
 

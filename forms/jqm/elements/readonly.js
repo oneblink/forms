@@ -1,5 +1,15 @@
-define(['forms/jqm/element'], function (ElementView) {
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+
+  // local modules
+
+  var ElementView = require('forms/jqm/element');
+
+  // this module
 
   var ReadOnlyElementView = ElementView.extend({
     render: function () {

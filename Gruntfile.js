@@ -58,6 +58,7 @@ module.exports = function (grunt) {
             jquery: 'empty:',
             jquerymobile: 'empty:',
             underscore: 'empty:',
+            signaturepad: 'empty:',
             // libraries to be built-in
             '@blinkmobile/cast-property-types': 'node_modules/@blinkmobile/cast-property-types/dist/index',
             '@blinkmobile/geolocation': 'node_modules/@blinkmobile/geolocation/geolocation',
@@ -79,11 +80,11 @@ module.exports = function (grunt) {
             {
               name: 'forms/jqm',
               include: [
-                'forms/main',
                 'moment',
                 'picker.date',
                 'picker.time'
-              ]
+              ],
+              insertRequire: ['forms/jqm']
             }
           ],
           wrap: {

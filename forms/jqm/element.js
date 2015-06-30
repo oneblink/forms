@@ -1,7 +1,19 @@
 define(function (require) {
+  'use strict';
 
+  // foreign modules
+
+  var $ = require('jquery');
+  var _ = require('underscore');
+  var Backbone = require('backbone');
   var rivets = require('rivets');
-  var formsErrors = require('blink-forms-errors');
+
+  // local modules
+
+  var formsErrors = require('forms/blink-forms-errors');
+
+  // this module
+
   //IE aniamtes html, everything else does body.
   //known issue- in IE, BIC wont animate due to the above and jQuery mobile conflicting with all methods
   //of detection.

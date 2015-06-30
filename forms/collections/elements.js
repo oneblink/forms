@@ -1,8 +1,17 @@
 define(function (require) {
   'use strict';
 
+  // foreign modules
+
+  var _ = require('underscore');
+  var Backbone = require('backbone');
+
+  // local modules
+
   var ElementModel = require('forms/models/element');
   var formsErrors = require('forms/blink-forms-errors');
+
+  // this module
 
   function addErrorText(error){
     error.text = formsErrors.toErrorString(error);

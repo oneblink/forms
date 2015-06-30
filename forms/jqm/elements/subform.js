@@ -1,7 +1,15 @@
 define(function (require) {
   'use strict';
 
+  // foreign modules
+
+  var $ = require('jquery');
+
+  // local modules
+
   var ElementView = require('forms/jqm/element');
+
+  // this module
 
   return ElementView.extend({
     tagName: 'section',

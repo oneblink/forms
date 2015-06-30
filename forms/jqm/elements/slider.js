@@ -1,5 +1,15 @@
-define(['forms/jqm/elements/number'], function (NumberElementView) {
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+
+  // local modules
+
+  var NumberElementView = require('forms/jqm/elements/number');
+
+  // this module
 
   var SliderElementView = NumberElementView.extend({
     renderSlider: function () {
