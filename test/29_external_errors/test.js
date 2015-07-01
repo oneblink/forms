@@ -36,7 +36,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       element.val('1'); //field is marked aas required in the definition
       Forms.current.setErrors(externalErrors);
 
-      assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-list-item').text().indexOf('This is custom text'), -1);
+      assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
       assert.equal(Forms.current.getErrors().textBox1[0].CUSTOM, 'This is custom text');
     });
 
@@ -47,7 +47,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       element.val('1'); //field is marked aas required in the definition
       element.setExternalErrors(externalErrors);
 
-      assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-list-item').text().indexOf('This is custom text'), -1);
+      assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
       assert.equal(Forms.current.getErrors().textBox1[0].CUSTOM, 'This is custom text');
     });
 

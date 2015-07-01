@@ -2,11 +2,17 @@ define(function (require) {
   'use strict';
   var SubFormModel = require('models/subform');
   var ElementModel = require('models/element');
-  var ElementCollection = require('collections/elements');
   var SubFormsCollection;
 
-  SubFormsCollection = ElementCollection.extend({
-    model: SubFormModel
+  //SubFormsCollection = ElementCollection.extend({
+  SubFormsCollection = Backbone.Collection.extend({
+    model: SubFormModel,
+    getSubforms: function(){
+      return this.invoke('getSubforms');
+    },
+    getInvalidElements: function(limit){
+      return this.invoke('getInvalidElements', limit);
+    }
   });
 
   return ElementModel.extend({

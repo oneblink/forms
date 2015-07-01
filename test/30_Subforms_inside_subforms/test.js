@@ -15,7 +15,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $.mobile.page({}, $page);
           $page.trigger('pagecreate');
           $page.show();
-          Forms.current.set('numErrorsShown', 0); //dont want a limit
           $(window).scrollTop(0);
         });
     });
@@ -126,7 +125,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                  })
                  .then(function(){
                     var subForms = Forms.current.getSubforms();
-                    var moreSubforms = subForms.second_level_form.invoke('getSubforms');
+                    var moreSubforms = subForms.second_level_form.getSubforms();
                     var invalidThirdLevel;
                     //make sure we have an error
                     assert.isAbove(moreSubforms.length, 0);

@@ -7,17 +7,15 @@ define(function (require) {
     attributes: {},
 
     events: {
-      'click [data-onclick="remove-subform"]': 'onRemoveClick'
+      'click [data-onclick="onRemoveClick"]': 'onRemoveClick'
     },
-
-    renderErrors: $.noop,
 
     render: function () {
       var parentElement = this.model.parentElement,
         name = parentElement.attributes.minusButtonLabel,
         $button;
 
-      $button = $('<button data-onclick="remove-subform"></button>').attr({
+      $button = $('<button data-onclick="onRemoveClick"></button>').attr({
         type: 'button',
         'data-icon': 'minus',
         'data-action': 'remove'

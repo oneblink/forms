@@ -14,10 +14,11 @@
     <script src="../../../../../../node_modules/grunt-mocha/phantomjs/bridge.js"></script>
     <script src="../../../../../../node_modules/assert/assert.js"></script>
     <script src="../../../../../../node_modules/assertive-chai/dist/assertive-chai.js"></script>
-    <script src="http://d1c6dfkb81l78v.cloudfront.net/blink/require/4/require.min.js"></script>
     <script src='http://cdnp.blinkm.co/jquery/1.11.1/jquery-1.11.1.js'></script>
     <script src='http://cdnp.blinkm.co/lodash/2.4.1/lodash.underscore.min.js'></script>
     <script src='http://cdnp.blinkm.co/backbonejs/1.1.2/backbone-min.js'></script>
+    <script src="http://d1c6dfkb81l78v.cloudfront.net/blink/require/4/require.min.js"></script>
+    
 </head>
 <body>
 <div data-role="page" data-url="/">
@@ -51,14 +52,14 @@
                 /* use the paths here to use a pre existing interface for mocking with sinon or to point to the actual dependency if it cannot be mocked.
                  eg :
                 */
-                'models/element' : '../../../../../../test/00_unit/mocks/element',
-                'blink-forms-errors': '../../../../../../test/00_unit/mocks/blink-forms-errors',
+                'models/element' : '../../../../mocks/models/element',
+                'blink-forms-errors': '../../../../mocks/blink-forms-errors',
 
                 /*
                     When running as a grunt task we need to specify the full
                     path to the file being tested
                 */
-                'collections/elements' : '../../../../../../js/collections/elements.js'
+                'collections/elements' : '../../../../../../js/collections/elements'
             }
         };
     }
@@ -71,5 +72,6 @@
         mocha.run();
     });
 </script>
+
 </body>
 </html>

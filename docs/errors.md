@@ -5,16 +5,18 @@ Field Errors
 ============
 
 Form Field Elements are validated as you type and when the field loses focus. When a error is found, a list of errors is appended to the DOM inside the elements container
-
-    <div data-role="fieldcontain" rv-class="m:class" data-name="third_level_req" data-element-type="text" class="bm_invalid ui-field-contain ui-body ui-br">
-        <label rv-text="m:label" class="ui-input-text">Third Level Req *</label>
-        <div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c">
-            <input type="text" name="third_level_req" rv-value="m:value" rv-input="m:value" rv-placeholder="m:placeholderText" class="ui-input-text ui-body-c" cid="c155">
+    
+    <form class='bm-form-invalid'>
+        <div data-role="fieldcontain" rv-class="m:class" data-name="third_level_req" data-element-type="text" class="bm-formelement-invalid ui-field-contain ui-body ui-br">
+            <label rv-text="m:label" class="ui-input-text">Third Level Req *</label>
+            <div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c">
+                <input type="text" name="third_level_req" rv-value="m:value" rv-input="m:value" rv-placeholder="m:placeholderText" class="ui-input-text ui-body-c" cid="c155">
+            </div>
+            <ul class="bm-errors__bm-list">
+                <li class="bm-errors__bm-listitem">must not be empty</li>
+            </ul>
         </div>
-        <ul class="bm-errors__bm-list">
-            <li class="bm-errors__bm-list-item">must not be empty</li>
-        </ul>
-    </div>
+    </form>
 
 **Note** Element Models now include the unique cid of the model as an attribute on the HTML. This value can be passed to ````BMP.Forms.current.getElement(cid)```` to find the element, even if it exists in a sub form.
 
@@ -23,13 +25,15 @@ Styling
 
 The following classes will allow you to style the errors:
 
-- .bm_invalid - Applied to the container element when a field value fails validation
-- .bm-errors__bm-list - The unordered list of error messages
-- .bm-errors__bm-list-item - An error in the list of messages
+- `.bm-form-invalid`  - Applied to the containing form when a field value fails validation
+- `.bm-formelement-invalid` - Applied to the container element when a field value fails validation
+- `.bm-errors__bm-list` - The unordered list of error messages
+- `.bm-errors__bm-listitem` - An error in the list of messages
 
 
 Getting Field errors
 --------------------
+For compatibility reasons with past releases, we allow the retreval for error objects. The preferred way of doing this is now outlined in "Getting an array of invalid models" below
 
 An error is an array of objects that take the form of:
 
@@ -67,6 +71,8 @@ You can retrieve errors in 3 places
 the global counterparts for the above are
 - for a single element ````BMP.Forms.current.getElement('element_name').validationError
 - for the entire current form ````BMP.Forms.current.getFieldErrors()````
+
+##Getting an array of invalid models##
 
 It is important to note that if there is a form element with the same name (for example, a subform appears twice with a missing required field) then the better option is to use ````elementCollection.getInvalid(123)```` or if you dont have access to a collection of elements, ````BMP.Forms.current.getInvalidElements({limit: 123})```` will get all invalid elements for the current form. Both of these functions will also decend through subforms.
 
@@ -129,76 +135,15 @@ eg To set a custom error and override a default error to multiple elements:
     
 Please note once validation is run on the model (eg when the user types or selects an option), all previous errors will be removed. This includes custom errors.
 
-Form Error Summary
-==================
-
-When a field has errors, a list of errors is displayed at the bottom of the form. By default, only 4 are shown and the option to display whatever is left is available. Tapping or clicking on a name will take you to the error.
-
-Styling
--------
-The following is the default template for the summary
-
-    <div data-corners="true" data-theme="a" data-shadow="true" class="bm-errors"><h6 class="bm-errors__bm-title">Form Error Summary</h6>
-    <ul class="bm-errors__bm-list ui-grid-a">
-      
-      <li class="bm-errors__bm-list-item ui-block-b">
-        <a href="" class="goto-field-trigger" for="c1" title="no longer than 10 characters">textBox1</a>
-      </li>
-      
-      <li class="bm-errors__bm-list-item ui-block-b">
-        <a href="" class="goto-field-trigger" for="c12" title="must not be higher than 100">number1</a>
-      </li>
-      
-      <li class="bm-errors__bm-list-item ui-block-b">
-        <a href="" class="goto-field-trigger" for="c123" title="must not be empty">password1</a>
-      </li>
-      
-      <li class="bm-errors__bm-list-item ui-block-b">
-        <a href="" class="blink-goto-field-trigger" for="c1234" title="must not be empty">text</a>
-      </li>
-      
-    </ul>
-
-      <a href="" class="blink-show-all-trigger">Show 8 more…</a>
-    </div>
-
-
-it has the following css structure which can be styled how you like.
-    div.bm-errors
-        h6.bm-errors__bm-title
-        ul.bm-errors__bm-list
-            li.bm-errors__bm-list-item
-
-
-Overriding the default template
--------------------------------
-You can change the template used to render the list of errors by overriding the  function on ````BMP.Forms._views.ErrorSummary.template```` 
-
-During error rendering, if any errors are on the form, the template function is called with one parameter: ````{ errors: errorObjectList }```` where errorObjectList is the same format as defined above, but it also has 2 non-eumerable properties: ````length```` and ````total````
-
-- length is how many errors are in the errorObjectList
-- total is how many errors are in the form.
-
-Tap/Click Events
-------------
-The default errors summary has 2 tap/click events. ````gotoField```` and ````showAll````. If you override the default template, you can add these events to any element by assigning them the following classes:
-
-gotoField() : ".blink-goto-field-trigger"
-showAll(): "blink-show-all-trigger"
-
-
-Extending/Overriding the error summary behaviour
-------------------------------------------------
-To extend or override the behaviour, replace ````BMP.Forms._views.ErrorSummary```` with your own BackboneView.
 
 Useful functions
 ----------------
 
 ````elementView.scrollTo(options)````
-Will scroll the form to so that the element is at the top of the page. ````options```` is passed on to [jQuery.animate](http://api.jquery.com/animate/)
+If an element is visible, it will scroll the form to so that the element is at the top of the page. ````options```` is passed on to [jQuery.animate](http://api.jquery.com/animate/)
 
 ````BMP.Forms.current.get('_view').scrollTo(elementName|elementCID)````
-Will find an element and trigger the scrollTo function. it Returns a promise that will be resolved with the Element View when the animation completes or rejected if the animation fails.
+Will find an element in a form, even if it is in a subform on a different page and trigger the scrollTo function. it Returns a promise that will be resolved with the Element View when the animation completes or rejected if the animation fails.
 
 ````BMP.Forms.blinkFormsErrorHelper````
 #### toErrorString ####

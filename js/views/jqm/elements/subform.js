@@ -6,17 +6,13 @@ define(function (require) {
   return ElementView.extend({
     tagName: 'section',
 
-    // events: {
-    //   'click [data-onclick="onAddClick"]': 'onAddClick'
-    // },
-
     initialize: function(){
       this.listenTo(this.model, 'update:fieldErrors', this.renderErrors.bind(this) );
       ElementView.prototype.initialize.apply(this, arguments);
     },
 
     remove: function () {
-      //this.$el.children('.ui-btn').children('button').off('click');
+      this.$el.children('.ui-btn').children('button').off('click');
       this.model.attributes.forms.off('change', this.onFormsChange, this);
       this.stopListening(this.model, 'invalid change:value change:blob');
       this.model.attributes.forms.forEach(function (form) {

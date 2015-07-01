@@ -1,51 +1,36 @@
 /*eslint-env mocha*/
 /*global assert:true*/ // chai
 /*global sinon:true*/
+/*global _:true*/
+/*global Backbone:true*/
+
 /*
   To ensure correct, isolated, unit test behavior,
   everything except the file being tested should be mocked or stubbed out.
 */
-define(['squire'],
-function( Squire ){
+define(['views/jqm/form'],
+function( FormView ){
   'use strict';
 
   suite('views/jqm/form.js', function(){
     var formView; //test subject
 
-    var injector;
-
-    var errorSummaryMock;
-    var FormsMock;
     var elementModelMock;
     var elementsCollectionMock;
     var formModelMock;
 
-    setup(function(done){
-      errorSummaryMock = new Backbone.View();
-      FormsMock = _.extend({}, Backbone.Events);
+    setup(function(){
       elementModelMock = new Backbone.Model();
       elementsCollectionMock = new Backbone.Collection();
       formModelMock = new Backbone.Model({ elements: elementsCollectionMock });
 
-      injector = new Squire();
-
-      injector.mock({
-          'main': FormsMock,
-          'views/jqm/error-summary': errorSummaryMock
-        })
-        .require(['views/jqm/form'], function(FormView){
-          //#################
-          formView = new FormView({ model: formModelMock });
-          done();
-        });
+      formView = new FormView({ model: formModelMock });
     });
 
     teardown(function(){
-      FormsMock = null;
       formView = null;
       formModelMock = null;
       elementsCollectionMock = null;
-      errorSummaryMock = null;
       elementModelMock = null;
     });
 
@@ -55,7 +40,7 @@ function( Squire ){
         return formView.goToField().then(function(){
           throw new Error('goToField should not of been resolved.');
         }, function(err){
-          assert.equal(err.message, 'No field name specified');
+          assert.equal(err.message, 'No field specified');
         });
 
       });
@@ -102,16 +87,6 @@ function( Squire ){
           assert.equal(returnedModel, elementView);
         });
       });
-    });
-
-    test('it should listen to the change:value and invalid events on element Collection', function(){
-      var renderErrorsStub = sinon.stub(formView, 'renderErrors', function(){});
-
-      elementsCollectionMock.trigger('invalid');
-      assert.isTrue(renderErrorsStub.calledOnce);
-      elementsCollectionMock.trigger('change:value');
-      assert.isTrue(renderErrorsStub.calledTwice);
-      renderErrorsStub.restore();
     });
   });
 });

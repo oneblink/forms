@@ -42,21 +42,21 @@ function( ElementModel /* change this to whatever you want */ ){
       test('should keep the current errors', function(){
           model1.setExternalErrors([{code: 'blah1'}], {merge: true});
           assert.equal(model1.validationError.value.length, 2);
-          assert.equal(model1.validationError.value[0].code, 'EMAIL');
-          assert.equal(model1.validationError.value[1].code, 'blah1');
+          assert.equal(model1.validationError.value[0].code, 'blah1');
+          assert.equal(model1.validationError.value[1].code, 'EMAIL');
 
           model2.setExternalErrors([{code: 'blah2'}, {code: 'blah3'}, {code: 'blah4'}], {merge: true});
           assert.equal(model2.validationError.value.length, 5);
-          assert.equal(model2.validationError.value[0].code, 'MAX');
-          assert.equal(model2.validationError.value[1].code, 'REQUIRED');
+          assert.equal(model2.validationError.value[0].code, 'blah4');
+          assert.equal(model2.validationError.value[1].code, 'blah3');
           assert.equal(model2.validationError.value[2].code, 'blah2');
-          assert.equal(model2.validationError.value[3].code, 'blah3');
-          assert.equal(model2.validationError.value[4].code, 'blah4');
+          assert.equal(model2.validationError.value[3].code, 'REQUIRED');
+          assert.equal(model2.validationError.value[4].code, 'MAX');
 
           model3.setExternalErrors([{code: 'blah3'}, {code: 'blah4'}], {merge: true});
           assert.equal(model3.validationError.value.length, 2);
-          assert.equal(model3.validationError.value[0].code, 'blah3');
-          assert.equal(model3.validationError.value[1].code, 'blah4');
+          assert.equal(model3.validationError.value[0].code, 'blah4');
+          assert.equal(model3.validationError.value[1].code, 'blah3');
         });
 
         test('should not keep the current field errors', function(){
@@ -65,31 +65,31 @@ function( ElementModel /* change this to whatever you want */ ){
           assert.equal(model1.validationError.value[0].code, 'blah1');
         });
 
-        test('should default to not keeping the current field errors', function(){
+        test('should default to keeping the current field errors', function(){
           model1.setExternalErrors([{code: 'blah1'}]);
-          assert.equal(model1.validationError.value.length, 1);
+          assert.equal(model1.validationError.value.length, 2);
           assert.equal(model1.validationError.value[0].code, 'blah1');
         });
 
         test('should handle an empty error list when merging', function(){
           model3.setExternalErrors([{code: 'blah3'}, {code: 'blah4'}], {merge: true});
           assert.equal(model3.validationError.value.length, 2);
-          assert.equal(model3.validationError.value[0].code, 'blah3');
-          assert.equal(model3.validationError.value[1].code, 'blah4');
+          assert.equal(model3.validationError.value[0].code, 'blah4');
+          assert.equal(model3.validationError.value[1].code, 'blah3');
         });
 
         test('should handle an empty error list when not merging', function(){
           model3.setExternalErrors([{code: 'blah3'}, {code: 'blah4'}], {merge: false});
           assert.equal(model3.validationError.value.length, 2);
-          assert.equal(model3.validationError.value[0].code, 'blah3');
-          assert.equal(model3.validationError.value[1].code, 'blah4');
+          assert.equal(model3.validationError.value[0].code, 'blah4');
+          assert.equal(model3.validationError.value[1].code, 'blah3');
         });
 
         test('should handle an empty error list when not merging and merge is default', function(){
           model3.setExternalErrors([{code: 'blah3'}, {code: 'blah4'}]);
           assert.equal(model3.validationError.value.length, 2);
-          assert.equal(model3.validationError.value[0].code, 'blah3');
-          assert.equal(model3.validationError.value[1].code, 'blah4');
+          assert.equal(model3.validationError.value[0].code, 'blah4');
+          assert.equal(model3.validationError.value[1].code, 'blah3');
         });
     });
   });

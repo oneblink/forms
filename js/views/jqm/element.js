@@ -97,7 +97,7 @@ define(function (require) {
         $(document.createElement('ul'))
           .addClass('bm-warning__bm-list')
           .append( _.map(warning.value, function(w){
-            return $(document.createElement('li')).text(formsErrors.toWarningString(w)).addClass('bm-warning__bm-list-item');
+            return $(document.createElement('li')).text(formsErrors.toWarningString(w)).addClass('bm-warning__bm-listitem');
           }))
           .appendTo(this.$el);
       }
@@ -123,12 +123,19 @@ define(function (require) {
               text = formsErrors.toErrorString(error);
             }
 
-            return $(document.createElement('li')).text(text).addClass('bm-errors__bm-list-item');
+            return $(document.createElement('li')).text(text).addClass('bm-errors__bm-listitem');
           }, this))
           .appendTo(this.$el);
       }
 
-      this.$el[this.model.validationError ? 'addClass' : 'removeClass']('bm_invalid');
+      if ( this.model.validationError ){
+        this.$el.addClass('bm-formelement-invalid');
+        this.$el.closest('form').addClass('bm-form-invalid');
+      } else {
+        this.$el.removeClass('bm-formelement-invalid');
+        this.$el.closest('form').removeClass('bm-form-invalid');
+      }
+
     },
 
     onChangeHidden: function () {

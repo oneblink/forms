@@ -2,6 +2,7 @@ define(function (require) {
   var Elements = require('collections/elements'),
     Pages = require('collections/pages'),
     invalidWrapperFn,
+    isSubForm,
     Form;
 
   invalidWrapperFn = function(fn){
@@ -20,6 +21,10 @@ define(function (require) {
 
       return elementCollection[fn](limit);
     };
+  };
+
+  isSubForm = function(elementModel){
+    return elementModel.get('type') === 'subForm';
   };
 
   Form = Backbone.Model.extend({
@@ -148,10 +153,9 @@ define(function (require) {
 
       if ( !element && name !== 'id' ){
         //this is supposed to recursively search sub forms for an element.
-        element = _.reduce(this.getSubforms(), function(memo, subForm){
-          var t = _.compact(subForm.invoke('getElement', name));
-          return t.length ? t[0] : memo;
-        }, undefined);
+        element = _.head(_.reduce(this.getSubforms(), function(memo, subForm){
+          return memo.concat(_.compact(subForm.invoke('getElement', name)));
+        }, []));
       }
 
       if (!element && name === 'id') {
@@ -166,16 +170,14 @@ define(function (require) {
 
     /**
      * Returns an object of subforms that are within the form
-     * @return {Object} Keys are the names of the subforms
+     * @return {Object} Keys are the names of the subforms, Values are a Sub Form collection
      */
     getSubforms: function(){
-      return this.get('elements').reduce(function(memo, elementModel){
-        if ( elementModel.get('type') === 'subForm' ){
-          memo = memo || {};
-          memo[elementModel.id] = elementModel.get('forms');
-        }
-        return memo;
-      }, undefined);
+      return _.reduce( this.get('elements').filter(isSubForm), function(memo, elementModel){
+                memo = memo || {}; //create in here so we return undefined if we have no subforms.
+                memo[elementModel.id] = elementModel.get('forms');
+                return memo;
+              }, undefined);
     },
 
 
