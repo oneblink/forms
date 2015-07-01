@@ -17,6 +17,13 @@ define(function (require) {
   require('picker.time');
 
   DatePickadateElement = DateView.extend({
+
+    // explicitly inherit events from super
+    events: DateView.prototype.events,
+
+    // explicitly inherit modelEvents from super
+    modelEvents: DateView.prototype.modelEvents,
+
     renderParent: function () {
       var $body = $('body'),
         $pickerHolder;
@@ -38,7 +45,7 @@ define(function (require) {
       $input = $('<input type="text" />');
       $input.attr({
         name: name + '_date',
-        'rv-value': 'm:_date'
+        'data-onchange': 'onDateVChange'
       });
       this.$el.append($input);
       $input.textinput();
@@ -55,7 +62,7 @@ define(function (require) {
       $input = $('<input type="text" />');
       $input.attr({
         name: name + '_time',
-        'rv-value': 'm:_time'
+        'data-onchange': 'onTimeVChange'
       });
       this.$el.append($input);
       $input.textinput();
@@ -174,6 +181,7 @@ define(function (require) {
         time$.pickatime(this.prepareTimeSettings());
       }
     }
+
   }, {
     // static
     pickadateParent: null

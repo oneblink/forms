@@ -117,7 +117,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         });
       });
 
-      test('pickerElements outside page', function() {
+      test('pickerElements outside page', function (done) {
         var form = Forms.current,
           element,
           $fieldset,
@@ -144,7 +144,9 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             assert.equal($body.find("#" + $input.attr('id') + "_root.picker--time").length, 1);
             assert.equal($body.find("#" + $input.attr('id') + "_root.picker--time").parent().hasClass('ui-body-c'), true);
           });
-        }, 100);
+
+          done();
+        }, 1e3);
       });
 
       suite('readonly, hidden', function () {
