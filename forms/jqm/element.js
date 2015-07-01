@@ -10,6 +10,7 @@ define(function (require) {
 
   // local modules
 
+  var events = require('forms/events');
   var formsErrors = require('forms/blink-forms-errors');
 
   // this module
@@ -37,10 +38,19 @@ define(function (require) {
       this.bindRivets();
       this.onChangeHidden();
       this.model.isValid();
+
+      if (this.modelEvents) {
+        events.proxyBindEntityEvents(this, this.model, this.modelEvents);
+      }
     },
     remove: function () {
       this.$el.removeData('model');
       this.model.off(null, null, this);
+
+      if (this.modelEvents) {
+        events.proxyUnbindEntityEvents(this, this.model, this.modelEvents);
+      }
+
       if (this.rivet) {
         this.rivet.unbind();
       }

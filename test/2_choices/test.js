@@ -239,7 +239,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
             return wait(500);
           })
           .then(function () {
-            assert.equal(element.val(), '', name + ': empty value');
+            assert.equal(element.val(), options[0], name + ': default value');
             assert.equal($fieldset.find('.ui-btn-active').css('width'), '0px');
 
             element.val(options[0]);
@@ -272,7 +272,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
             return wait(500);
           })
           .then(function () {
-            assert.equal(element.val(), '', name + ': empty value');
+            assert.equal(element.val(), options[0], name + ': default value');
             assert.equal($fieldset.find('.ui-btn-active').css('width'), '0px');
 
             $fieldset.find('div.ui-slider-switch').trigger('mousedown').trigger('mouseup').trigger('click');

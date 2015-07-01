@@ -13,16 +13,23 @@ define(function (require) {
   // this module
 
   var BooleanElementView = ElementView.extend({
+    events: {
+      'change [data-onchange="onChange"]': 'onChange'
+    },
+
+    modelEvents: {
+      'change:value': 'onValueChange'
+    },
+
     render: function () {
       var $input;
-      var model = this.model;
 
       this.$el.empty();
       this.renderLabel();
 
       $input = $('<select></select>');
       $input.attr({
-        'rv-value': 'm:value',
+        'data-onchange': 'onChange',
         'data-role': 'slider'
       });
 
@@ -35,12 +42,22 @@ define(function (require) {
       this.$el.fieldcontain();
 
       this.bindRivets();
-      model.on('change:value', this.onValueChange, this);
+    },
+
+    onAttached: function () {
       this.onValueChange();
     },
+
+    onChange: function (event) {
+      this.model.set('value', $(event.target).val());
+    },
+
     onValueChange: function () {
-      this.$el.children('select').slider().slider('refresh');
+      var input$ = this.$el.children('select');
+      input$.val(this.model.val());
+      input$.slider().slider('refresh');
     }
+
   });
 
   return BooleanElementView;
