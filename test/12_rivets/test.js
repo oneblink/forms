@@ -1,9 +1,9 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['jquery', 'BlinkForms', 'sinon', 'BIC'], function ($, Forms, sinon) {
+define(['jquery', 'BlinkForms', 'testUtils', 'BIC'], function ($, Forms, testUtils) {
   'use strict';
-sinon.stopfuckingwarningme = true;
+
   suite('12: rivets / data-binding', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
@@ -52,6 +52,8 @@ sinon.stopfuckingwarningme = true;
         $page.trigger('pagecreate');
         $page.show();
       });
+
+      testUtils.defineLabelTest();
 
     }); // END: suite('Form', ...)
 

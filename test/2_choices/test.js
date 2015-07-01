@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   var originalOptions = { a: 'alpha', b: 'beta', g: 'gamma' };
   var newOptions = { d: 'delta', e: 'epsilon', z: 'zeta' };
@@ -59,6 +59,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.trigger('pagecreate');
         $page.show();
       });
+
+      testUtils.defineLabelTest();
 
       test('select+other bindings between model and "other" input', function () {
         var form = Forms.current;

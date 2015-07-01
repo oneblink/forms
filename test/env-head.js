@@ -29,7 +29,8 @@
       feature: '../../node_modules/amd-feature/feature',
       'es5-shim': '../../node_modules/es5-shim/es5-shim.min',
       implementations: '../lib/implementations',
-      sinon: '../../node_modules/sinon/lib/sinon'
+      sinon: '../../node_modules/sinon/lib/sinon',
+      testUtils: '../lib/utils'
     },
     shim: {
       'BMP.Blob': {

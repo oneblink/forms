@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert, sinon*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('23_1: Location Native field', function () {
     var $doc = $(document),
@@ -57,6 +57,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.trigger('pagecreate');
         $page.show();
       });
+
+      testUtils.defineLabelTest();
 
       test('Render form with data', function (done) {
         var form = Forms.current;
