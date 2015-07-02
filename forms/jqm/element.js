@@ -11,7 +11,7 @@ define(function (require) {
   // local modules
 
   var events = require('forms/events');
-  var formsErrors = require('forms/blink-forms-errors');
+  var formsErrors = require('forms/error-helpers');
 
   // this module
 

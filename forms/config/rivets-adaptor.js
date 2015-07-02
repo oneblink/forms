@@ -1,7 +1,13 @@
 define(function(require){
   'use strict';
-  var validate = { validate: true }
-    , validationRules = require('config/auto-attribute-validation');
+
+  // local modules
+
+  var validationRules = require('forms/config/auto-attribute-validation');
+
+  // this module
+
+  var validate = { validate: true };
 
 /*
   rivets adaptor for backbone that supports the built in backbone

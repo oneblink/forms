@@ -2,8 +2,16 @@
  * @module  forms/blinkFormsError
  * @exports blinkFormsError
  */
-define(function(){
+define(function (require) {
   'use strict';
+
+  // foreign modules
+
+  var _ = require('underscore');
+
+  // this module
+
+  var blinkFormsError;
 
   var toString = function(i18n){
     return function(val){
@@ -13,7 +21,7 @@ define(function(){
     };
   };
 
-  var blinkFormsError = BMP.Forms.blinkFormsErrorHelper = {
+  blinkFormsError = {
     /**
      * converts a forms error object to an error string
      * @type {string}

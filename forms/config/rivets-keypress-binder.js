@@ -1,9 +1,14 @@
 define(function(require){
   'use strict';
 
-  var rivets = require('rivets')
-      //input event is possibly not supported on ie mobile, so if not, keypress.
-    , eventName = 'oninput' in document.createElement('input') ? 'input' : 'keypress';
+  // foreign modules
+
+  var rivets = require('rivets');
+
+  // this module
+
+  //input event is possibly not supported on ie mobile, so if not, keypress.
+  var eventName = 'oninput' in document.createElement('input') ? 'input' : 'keypress';
 
   /**
    *  Rivets binder for keypress/input events. Delegates to the already

@@ -1,6 +1,5 @@
 define(function (require) {
   'use strict';
-  var Element = require('models/element');
 
   // foreign modules
 

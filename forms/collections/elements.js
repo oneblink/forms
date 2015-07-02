@@ -9,7 +9,7 @@ define(function (require) {
   // local modules
 
   var ElementModel = require('forms/models/element');
-  var formsErrors = require('forms/blink-forms-errors');
+  var formsErrors = require('forms/error-helpers');
 
   // this module
 

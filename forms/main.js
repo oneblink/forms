@@ -33,6 +33,8 @@ define(function (require) {
 
   _.extend(Forms, require('forms/events'));
 
+  BMP.Forms.errorHelpers = require('forms/error-helpers');
+
   Forms._models = {
     Form: require('forms/models/form'),
     SubForm: require('forms/models/subform'),

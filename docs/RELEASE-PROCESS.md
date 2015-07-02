@@ -57,7 +57,7 @@ The "desired additions" are:
 
 1. `mkdir -p blink/forms/3/x.x.x`
 
-2. `cp -v path/to/forms/build/views/forms3jqm.* blink/forms/3/x.x.x/`
+2. `cp -v path/to/forms/build/forms3jqm.* blink/forms/3/x.x.x/`
 
 - double-check that it follows similar patterns to previous releases
 
