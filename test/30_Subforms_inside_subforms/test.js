@@ -92,11 +92,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                   assert.isAbove(invalid.length, 0);
 
                   //get the first invalid element and scroll
-                  invalid[0].errors[0].get('_view').scrollTo({
-                    always: function(){
-                      assert.notEqual($(window).scrollTop(), origScrollTop);
-                      done();
-                    }
+                  invalid[0].errors[0].get('_view').scrollTo().then(function(){
+                    assert.notEqual($(window).scrollTop(), origScrollTop);
+                    done();
                   });
                  });
     });
@@ -121,18 +119,16 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                     invalidThirdLevel = moreSubforms[0].third_level_form.models[0].getInvalidElements();
                     assert.isAbove(invalidThirdLevel.errors.length, 0);
 
-                    invalidThirdLevel.errors[0].get('_view').scrollTo({
-                      always: function(){
-                        assert.notEqual($(window).scrollTop(), origScrollTop);
-                        done();
-                      }
+                    invalidThirdLevel.errors[0].get('_view').scrollTo().then(function(){
+                      assert.notEqual($(window).scrollTop(), origScrollTop);
+                      done();
                     });
                  });
     });
 
     test('subform invalid events bubble up to Forms.current', function(done){
       var view = Forms.current.getElement('second_level_form').get('_view');
-      
+
       view.onAddClick()
           .then(function(){
             Forms.current.on('invalid', function(model, error){
@@ -146,7 +142,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     test('subform change:value events bubble up to Forms.current', function(done){
       var view = Forms.current.getElement('second_level_form').get('_view');
-      
+
       view.onAddClick()
           .then(function(){
             Forms.current.on('change:value', function(model, val){
@@ -160,7 +156,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
 
     test('3rd level subform invalid events bubble up to Forms.current', function(done){
-      var origScrollTop = $(window).scrollTop();
       var view = Forms.current.getElement('second_level_form').get('_view');
 
       return view.onAddClick() //add second level
@@ -182,7 +177,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     });
 
     test('3rd level subform invalid events bubble up to Forms.current', function(done){
-      var origScrollTop = $(window).scrollTop();
       var view = Forms.current.getElement('second_level_form').get('_view');
 
       return view.onAddClick() //add second level

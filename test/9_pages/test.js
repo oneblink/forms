@@ -209,9 +209,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
       });
 
-      test('Forms.current.get("_view").goToField() can goto fields on other pages', function(){
+      test('Forms.current.get("_view").goToElement() can goto fields on other pages', function(){
         var previousPage = BMP.Forms.current.get('pages').current.cid;
-        Forms.current.get("_view").goToField('email');
+        Forms.current.get("_view").goToElement('email');
 
         assert.notEqual(BMP.Forms.current.get('pages').current.cid, previousPage);
         assert.isTrue($('[name="email"]').is(':visible'));

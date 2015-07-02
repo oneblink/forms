@@ -179,7 +179,7 @@ define(['BlinkForms', 'bluebird', 'BIC'], function (Forms, Promise) {
         var previousPage;
         pages['goto'](0);
         previousPage = pages.current.cid;
-        Forms.current.get("_view").goToField('status');
+        Forms.current.get("_view").goToElement('status');
 
         assert.notEqual(pages.current.cid, previousPage);
       });

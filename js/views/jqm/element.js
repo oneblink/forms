@@ -2,14 +2,10 @@ define(function (require) {
 
   var rivets = require('rivets');
   var formsErrors = require('blink-forms-errors');
-  var $body = (function(){
-    //IE aniamtes html, everything else does body.
-    var $b = $('body');
-    $b.scrollTop(100);
-    return $b.scrollTop() > 0 ? $b : $('html');
-  }());
-
-  $body.scrollTop(0);
+  //IE aniamtes html, everything else does body.
+  //known issue- in IE, BIC wont animate due to the above and jQuery mobile conflicting with all methods
+  //of detection.
+  var $body = $('html, body');
 
   return Backbone.View.extend({
     tagName: 'div',
@@ -173,9 +169,9 @@ define(function (require) {
      * @param  {Object} options Passed to [jQuery.animate](http://api.jquery.com/animate/)
      */
     scrollTo: function(options){
-      $body.animate({
+      return Promise.resolve($body.animate({
         scrollTop: this.$el.offset().top
-      }, options);
+      }, options).promise());
     }
   });
 });

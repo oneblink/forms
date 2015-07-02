@@ -54,7 +54,7 @@ define(function (require) {
      * @return {object} - { fieldname: [errors] }
      *
      * @example
-     * collection.getFieldErrors(2);
+     * collection.getErrors(2);
      * // => {
      * //       modelName : [{code: 'MAXDECIMALS', <errorname>: value, text: "pretty error message" }, {code: 'MINDECIMALS', <errorname>: value, text: "pretty error message"}],
      * //       modelName2: [{code: 'MAXDECIMALS', <errorname>: value2, text: "pretty error message"}, {code: 'MINDECIMALS', <errorname>: value2, text: "pretty error message"}],
@@ -62,7 +62,7 @@ define(function (require) {
      * //       total: 12
      * //    }
      */
-    getFieldErrors: function(fieldLimit){
+    getErrors: function(fieldLimit){
       var errors;
       var length;
 

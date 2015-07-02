@@ -32,9 +32,7 @@ define(function (require) {
       answerSpace: '',
       'class': '',
       isPopulating: false,
-      uuid: '',
-
-      numErrorsShown: 4
+      uuid: ''
     },
     initialize: function () {
       var Forms = BMP.Forms,
@@ -206,7 +204,7 @@ define(function (require) {
           //   total: 12
           //}
     */
-   getErrors: invalidWrapperFn('getFieldErrors'),
+   getErrors: invalidWrapperFn('getErrors'),
 
     /**
     * official Blink API

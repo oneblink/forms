@@ -42,17 +42,17 @@ function( ElementsCollection, ElementModel ){
       model4 = null;
     });
 
-    suite('#getFieldErrors()', function(){
+    suite('#getErrors()', function(){
       test('should return 3 error objects', function(){
-        assert.equal(_.keys(elementsCollection.getFieldErrors()).length, 3);
+        assert.equal(_.keys(elementsCollection.getErrors()).length, 3);
       });
 
       test('should limit the return to the first error', function(){
-        assert.equal(_.keys(elementsCollection.getFieldErrors(1)).length, 1);
+        assert.equal(_.keys(elementsCollection.getErrors(1)).length, 1);
       });
 
       test('should handle negative numbers', function(){
-        assert.equal(_.keys(elementsCollection.getFieldErrors(-10)).length, 0);
+        assert.equal(_.keys(elementsCollection.getErrors(-10)).length, 0);
       });
     });
 

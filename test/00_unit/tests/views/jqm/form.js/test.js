@@ -34,11 +34,11 @@ function( FormView ){
       elementModelMock = null;
     });
 
-    suite('#goToField()', function(){
+    suite('#goToElement()', function(){
 
       test('it should reject becasue fieldName is empty', function(){
-        return formView.goToField().then(function(){
-          throw new Error('goToField should not of been resolved.');
+        return formView.goToElement().then(function(){
+          throw new Error('goToElement should not of been resolved.');
         }, function(err){
           assert.equal(err.message, 'No field specified');
         });
@@ -51,8 +51,8 @@ function( FormView ){
 
         formModelMock.getElement = getElementStub;
 
-        return formView.goToField('abc').then(function(){
-          throw new Error('goToField should not of been resolved.');
+        return formView.goToElement('abc').then(function(){
+          throw new Error('goToElement should not of been resolved.');
         }, function(err){
           assert.equal(err.message, 'Could not find element');
         });
@@ -83,7 +83,7 @@ function( FormView ){
           current: indexObj
         });
 
-        return formView.goToField('test').then(function(returnedModel){
+        return formView.goToElement('test').then(function(returnedModel){
           assert.equal(returnedModel, elementView);
         });
       });

@@ -58,7 +58,7 @@ define(function (require) {
      * when the animation completes successfully or rejected if the
      * animation fails.
      */
-    goToField: function(elementModel){
+    goToElement: function(elementModel){
       if ( !elementModel){
         return Promise.reject(new Error('No field specified'));
       }
@@ -88,16 +88,10 @@ define(function (require) {
           pageCollection['goto'](pageIdOfElement);
         }
 
-        elementModel.get('_view').scrollTo({
-          duration: 100,
-          always: function(resultPromise){
-            resultPromise.then(function(){
-              resolve(elementModel.get('_view'));
-            }, function(){
-              reject(new Error('Scroll Animaiton Failed'));
-            });
-          }
-        });
+        elementModel.get('_view').scrollTo({ duration: 100 }).then(
+          function(){ resolve(elementModel.get('_view')); },
+          function(){ reject(new Error('Scroll Animaiton Failed')); }
+        );
       }.bind(this));
     },
 
