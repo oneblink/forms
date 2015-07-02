@@ -41,6 +41,7 @@
     "mocha": "~2.2",
     "requirejs": "~2.1",
     "sinon": "^1.14",
+    "squirejs": "^0.2.1",
     "text": "requirejs/text#2.0.14"
   },
   "license": "BSD-3-Clause"

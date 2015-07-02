@@ -3,7 +3,7 @@ define(['models/elements/text'], function (TextElement) {
 
   var URLElement = TextElement.extend({
     initialize: function () {
-      TextElement.prototype.initialize.call(this);
+      TextElement.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
       var Forms = BMP.Forms,
@@ -14,7 +14,7 @@ define(['models/elements/text'], function (TextElement) {
         this.removeView();
         View = Forms._views.ReadOnlyElement;
       } else {
-        return TextElement.prototype.initializeView.call(this);
+        return TextElement.prototype.initializeView.apply(this, arguments);
       }
 
       view = new View({model: this});

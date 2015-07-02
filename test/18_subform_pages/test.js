@@ -174,6 +174,16 @@ define(['BlinkForms', 'bluebird', 'BIC'], function (Forms, Promise) {
         assert.equal(fieldcontain$.length, enhanced$.length);
       });
 
+      test('Fields in subforms on other pages can be found and scrolled to', function(){
+        var pages = Forms.current.get('pages');
+        var previousPage;
+        pages['goto'](0);
+        previousPage = pages.current.cid;
+        Forms.current.get("_view").goToElement('status');
+
+        assert.notEqual(pages.current.cid, previousPage);
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)

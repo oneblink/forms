@@ -3,20 +3,8 @@ define(function (require) {
 
   $.mobile.page.prototype.options.keepNative = '[type^=time], [type^=date]';
 
-  rivets.adapters[':'] = {
-    subscribe: function (obj, keypath, callback) {
-      obj.on('change:' + keypath, callback);
-    },
-    unsubscribe: function (obj, keypath, callback) {
-      obj.off('change:' + keypath, callback);
-    },
-    read: function (obj, keypath) {
-      return obj.get(keypath);
-    },
-    publish: function (obj, keypath, value) {
-      obj.set(keypath, value);
-    }
-  };
+  rivets.adapters[':'] = require('config/rivets-adaptor');
+  rivets.binders.input = require('config/rivets-keypress-binder');
 
   return {
     Form: require('views/jqm/form'),
@@ -24,6 +12,7 @@ define(function (require) {
     SubFormElement: require('views/jqm/elements/subform'),
     Page: require('views/jqm/page'),
     Section: require('views/jqm/section'),
+
     Element: require('views/jqm/element'),
     HeadingElement: require('views/jqm/elements/heading'),
     MessageElement: require('views/jqm/elements/message'),

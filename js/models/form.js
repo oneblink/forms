@@ -1,7 +1,31 @@
 define(function (require) {
   var Elements = require('collections/elements'),
     Pages = require('collections/pages'),
+    invalidWrapperFn,
+    isSubForm,
     Form;
+
+  invalidWrapperFn = function(fn){
+    return function(options){
+      var elementCollection = this.get('elements'),
+          validate = options && options.validate || false,
+          limit = options && options.limit || 0;
+
+      if ( !elementCollection ){
+        return undefined;
+      }
+
+      if ( validate ){
+        elementCollection.invoke('isValid');
+      }
+
+      return elementCollection[fn](limit);
+    };
+  };
+
+  isSubForm = function(elementModel){
+    return elementModel.get('type') === 'subForm';
+  };
 
   Form = Backbone.Model.extend({
     defaults: {
@@ -29,7 +53,6 @@ define(function (require) {
         '_pages',
         '_sections'
       ]);
-
       pages = this.attributes._pages;
       delete this.attributes._pages;
       if (pages && _.isArray(pages)) {
@@ -57,6 +80,10 @@ define(function (require) {
         elements = [];
       }
       this.attributes.elements = new Elements(elements);
+      //bubble element events up through the form model.
+      this.attributes.elements.on('all', function(){
+        this.trigger.apply( this, arguments );
+      }, this);
 
       this.attributes.preloadPromise = Promise.all(preloadPromises);
 
@@ -121,6 +148,14 @@ define(function (require) {
     */
     getElement: function (name) {
       var element = this.attributes.elements.get(name);
+
+      if ( !element && name !== 'id' ){
+        //this is supposed to recursively search sub forms for an element.
+        element = _.head(_.reduce(this.getSubforms(), function(memo, subForm){
+          return memo.concat(_.compact(subForm.invoke('getElement', name)));
+        }, []));
+      }
+
       if (!element && name === 'id') {
         element = this.attributes.elements.add({
           name: name,
@@ -130,6 +165,47 @@ define(function (require) {
       }
       return element;
     },
+
+    /**
+     * Returns an object of subforms that are within the form
+     * @return {Object} Keys are the names of the subforms, Values are a Sub Form collection
+     */
+    getSubforms: function(){
+      return _.reduce( this.get('elements').filter(isSubForm), function(memo, elementModel){
+                memo = memo || {}; //create in here so we return undefined if we have no subforms.
+                memo[elementModel.id] = elementModel.get('forms');
+                return memo;
+              }, undefined);
+    },
+
+
+    /**
+     * Gets a list of invalid elements for the form and its subforms.
+     *
+     * @param {Object} options - options object. *validate: true* will force validation
+     * on each object. *limit:{number}* will return the first <limit> fields
+     */
+    getInvalidElements: invalidWrapperFn('getInvalid'),
+
+    /**
+    * official Blink API
+    *
+    * @param {Object} options - options object. *validate: true* will force validation
+    * on each object. *limit:{number}* will return the first <limit> fields
+    * @returns {Object} Keys are element names, Values are error arrays.
+    *
+    * @example
+          Forms.current.getErrors()
+          //returns:
+          //{
+          //   modelName : [{code: 'MAXDECIMALS', <errorname>: value, text: "pretty error message" }, {code: 'MINDECIMALS', <errorname>: value, text: "pretty error message"}],
+          //   modelName2: [{code: 'MAXDECIMALS', <errorname>: value2, text: "pretty error message"}, {code: 'MINDECIMALS', <errorname>: value2, text: "pretty error message"}],
+          //   length: 2,
+          //   total: 12
+          //}
+    */
+   getErrors: invalidWrapperFn('getErrors'),
+
     /**
     * official Blink API
     */
@@ -274,6 +350,22 @@ define(function (require) {
         });
       });
     },
+
+    /**
+     * Official Blink API - Sets the errors on a form.
+     * @param {Object} errorList - An array of key/value where keys are Element Names and values are the error lists for that element.
+     * @param {Object} options   - {merge: true}
+     */
+    /* eslint-disable no-unused-vars */ //stop eslint compaining about options and errorList not being used.
+    setErrors: function(errorList, options){
+      var elementsCollection = this.get('elements');
+      if (!elementsCollection){
+        return false;
+      }
+      return elementsCollection.setErrors.apply( elementsCollection, arguments );
+    },
+
+    /* eslint-enable no-unused-vars */
     /**
     * official Blink API
     */
@@ -281,26 +373,6 @@ define(function (require) {
       if (!arguments.length) {
         return this.getRecord();
       }
-    },
-    /**
-    * official Blink API
-    */
-    getErrors: function () {
-      var me = this,
-        errors = {};
-
-      //no validation needs to be performed if action is remove
-      if (me.attributes._action === "remove") {
-        return undefined;
-      }
-
-      me.attributes.elements.forEach(function (el) {
-        el.updateErrors();
-        if (!_.isEmpty(el.attributes.errors)) {
-          errors[el.attributes.name] = el.attributes.errors.value;
-        }
-      });
-      return _.isEmpty(errors) ? undefined : errors;
     }
   }, {
     // static properties

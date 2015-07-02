@@ -1,4 +1,12 @@
-define(['rivets'], function (rivets) {
+define(function (require) {
+
+  var rivets = require('rivets');
+  var formsErrors = require('blink-forms-errors');
+  //IE aniamtes html, everything else does body.
+  //known issue- in IE, BIC wont animate due to the above and jQuery mobile conflicting with all methods
+  //of detection.
+  var $body = $('html, body');
+
   return Backbone.View.extend({
     tagName: 'div',
     attributes: {
@@ -7,14 +15,16 @@ define(['rivets'], function (rivets) {
     },
     initialize: function () {
       var element = this.model;
+      element.on('invalid change:value', this.renderErrors, this);
+      //element.on('change:warning', this.renderWarning, this);
+      element.on('change:hidden', this.onChangeHidden, this);
+
       this.$el.attr('data-name', element.attributes.name);
       this.$el.attr('data-element-type', element.attributes.type);
       this.$el.data('model', element);
       this.bindRivets();
       this.onChangeHidden();
-      element.on('change:errors', this.renderErrors, this);
-      //element.on('change:warning', this.renderWarning, this);
-      element.on('change:hidden', this.onChangeHidden, this);
+      this.model.isValid();
     },
     remove: function () {
       this.$el.removeData('model');
@@ -72,69 +82,58 @@ define(['rivets'], function (rivets) {
     render: function () {
       throw new Error('Element.render is only an interface');
     },
+    //TODO: with the event removed are warnings still used ?
     renderWarning: function () {
-      var attrs, $warningList, warning, $warningElement, i18n;
-      attrs = this.model.attributes;
-      i18n = window.i18n['BMP/Forms/warning'];
-      // TODO: do this via bindings with rivets
-      if (this.$el.children('ul').length > 0) {
-        this.$el.children('ul').remove();
-      }
-      $warningList = $(document.createElement('ul'));
+      var attrs, warning;
+
+      this.$el.children('.bm-warning__bm-list').remove();
       warning = attrs.warning || {};
 
       if (!_.isEmpty(warning)) {
-        _.each(warning.value, function (val) {
-          var text, fn;
-          fn = _.isFunction(i18n[val.code]) && i18n[val.code];
-          if (!text) {
-            text = fn ? fn(val) : JSON.stringify(val);
-          }
-          $warningElement = $(document.createElement('li'));
-          $warningElement.text(text);
-          $warningList.append($warningElement);
-        });
-      }
-      if (this.$el.children('ul').length === 0 && !_.isEmpty(warning)) {
-        this.$el.append($warningList);
+        $(document.createElement('ul'))
+          .addClass('bm-warning__bm-list')
+          .append( _.map(warning.value, function(w){
+            return $(document.createElement('li')).text(formsErrors.toWarningString(w)).addClass('bm-warning__bm-listitem');
+          }))
+          .appendTo(this.$el);
       }
     },
-    renderErrors: function () {
-      var attrs, $errorList, errors, $errorElement, i18n;
-      attrs = this.model.attributes;
-      i18n = window.i18n['BMP/Forms/validation'];
-      // TODO: do this via bindings with rivets
-      if (this.$el.children('ul').length > 0) {
-        this.$el.children('ul').remove();
-      }
-      $errorList = $(document.createElement('ul'));
-      errors = attrs.errors || {};
+    renderErrors: function (model, validaitonErrors) {
+      var attrs = this.model.attributes;
+      var errors = this.model.validationError || validaitonErrors;
 
-      if (!_.isEmpty(errors)) {
-        _.each(errors.value, function (error) {
-          var text, fn;
-          $errorElement = $(document.createElement('li'));
-          fn = _.isFunction(i18n[error.code]) && i18n[error.code];
-          if (error.code === 'PATTERN') {
-            text = attrs.hint || attrs.toolTip || attrs.title;
-          }
-          if (!text) {
-            text = fn ? fn(error) : JSON.stringify(error);
-          }
-          $errorElement.text(text);
-          $errorList.append($errorElement);
-        });
+      // TODO: do this via bindings with rivets
+      this.$el.children('.bm-errors__bm-list').remove();
+
+      if (errors) {
+        $(document.createElement('ul'))
+          .addClass('bm-errors__bm-list')
+          .append(_.map(errors.value, function(error){
+            var text;
+
+            if (error.code === 'PATTERN') {
+              text = attrs.hint || attrs.toolTip || attrs.title;
+            }
+
+            if (!text) {
+              text = formsErrors.toErrorString(error);
+            }
+
+            return $(document.createElement('li')).text(text).addClass('bm-errors__bm-listitem');
+          }, this))
+          .appendTo(this.$el);
       }
-//      $el = this.$el.find('[rv-value]');
-//      if ($el.length && $el[0].checkValidity && !$el[0].checkValidity()) {
-//        $errorElement = $(document.createElement('li'));
-//        $errorElement.text('checkValidity error');
-//        $errorList.append($errorElement);
-//      }
-      if (this.$el.children('ul').length === 0 && !_.isEmpty(errors)) {
-        this.$el.append($errorList);
+
+      if ( this.model.validationError ){
+        this.$el.addClass('bm-formelement-invalid');
+        this.$el.closest('form').addClass('bm-form-invalid');
+      } else {
+        this.$el.removeClass('bm-formelement-invalid');
+        this.$el.closest('form').removeClass('bm-form-invalid');
       }
+
     },
+
     onChangeHidden: function () {
       var hidden = this.model.attributes.hidden;
       if (hidden) {
@@ -163,6 +162,16 @@ define(['rivets'], function (rivets) {
         this.model.attributes['class'] += ' ' + this.el.className;
       }
       this.rivet = rivets.bind(this.el, {m: this.model});
+    },
+
+    /**
+     * Scrolls an element into view
+     * @param  {Object} options Passed to [jQuery.animate](http://api.jquery.com/animate/)
+     */
+    scrollTo: function(options){
+      return Promise.resolve($body.animate({
+        scrollTop: this.$el.offset().top
+      }, options).promise());
     }
   });
 });

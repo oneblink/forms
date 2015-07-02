@@ -1,9 +1,9 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
+define(['jquery', 'BlinkForms', 'sinon', 'BIC'], function ($, Forms, sinon) {
   'use strict';
-
+sinon.stopfuckingwarningme = true;
   suite('12: rivets / data-binding', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
@@ -86,6 +86,16 @@ define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
             element.set('value', 123);
             assert.equal(input$.val(), 123);
           });
+
+//           test('backbone is told to validate', function(){
+//             var spy = sinon.spy(element, 'set');
+//             var input$ = view.$el.find('input, textarea').first();
+
+//             input$.focus().val(123).blur();
+// window.console.log(spy.args);
+//             assert.equal(spy.args[0][2].validate, true);
+//             spy.reset();
+//           });
 
         });
 

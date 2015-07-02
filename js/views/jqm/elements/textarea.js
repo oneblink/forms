@@ -10,6 +10,7 @@ define(function (require) {
       input$.attr({
         name: name,
         'rv-value': 'm:value',
+        'rv-input': 'm:value',
         'rv-placeholder': 'm:placeholderText'
       });
       return input$;

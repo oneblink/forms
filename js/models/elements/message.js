@@ -18,7 +18,7 @@ define(['models/element'], function (Element) {
         }
       });
 
-      Element.prototype.initialize.call(this);
+      Element.prototype.initialize.apply(this, arguments);
     },
     /**
      * official Blink API

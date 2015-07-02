@@ -11,7 +11,7 @@ define(['models/element'], function (Element) {
     defaults: defaults,
     initialize: function () {
       var attrs;
-      Element.prototype.initialize.call(this);
+      Element.prototype.initialize.apply(this, arguments);
 
       attrs = this.attributes;
 

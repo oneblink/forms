@@ -3,7 +3,7 @@ define(['models/elements/file'], function (FileElement) {
 
   return FileElement.extend({
     initialize: function () {
-      FileElement.prototype.initialize.call(this);
+      FileElement.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
       var Forms = BMP.Forms,

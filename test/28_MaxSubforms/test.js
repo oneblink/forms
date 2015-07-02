@@ -118,7 +118,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
           $add.trigger("click");
 
-          setTimeout(function () {
+          subForms.once('add', function() {
             //then there will be 3 subforms + 1 marked removed
             assert.equal(subFormElement.getRealLength(), 3);
             assert.equal(subForms.length, 4);
@@ -248,7 +248,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         $add.trigger("click");
 
-        setTimeout(function() {
+        subForms.once('add', function() {
           assert.equal($add.prop('disabled'), true);
           assert.equal(subForms.length, 3);
           assert.equal(subFormElement.getRealLength(), 1);

@@ -1,3 +1,9 @@
+/**
+ * Element Model Module
+ *
+ * @module ElementModel
+ * @exports Element
+ */
 define(function () {
   var Element;
 
@@ -37,7 +43,7 @@ define(function () {
         }
       }
 
-      this.set('value', attrs.defaultValue);
+      this.set('value', attrs.defaultValue, {silent: true, validate: false});
       if (!attrs.label && attrs.type !== 'message') {
         if (attrs.prefix) {
           attrs.label = attrs.name + ' ' + attrs.prefix;
@@ -47,7 +53,7 @@ define(function () {
       }
 
       //FORMS-137 # Fields that are set to required are not marked as such in anyway (no *)
-      if (attrs.required && attrs.label && attrs.type !== "subForm") {
+      if (attrs.required && attrs.label && attrs.type !== 'subForm') {
         attrs.label += " *";
       }
 
@@ -55,8 +61,8 @@ define(function () {
         this.set('label', attrs.label);
       }
 
-      this.on('change', this.updateErrors, this);
-      // this.on('change:blob', this.updateWarning, this);
+      //backward compatability.
+      this.on('invalid change:value', this.updateErrors, this);
 
       this.on('remove', this.close, this);
     },
@@ -65,20 +71,57 @@ define(function () {
       if (attrs === undefined) {
         attrs = this.attributes;
       }
+
       if (attrs.required && !attrs.value) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
+
       }
       if (attrs.pattern && attrs.value &&
           !new RegExp(attrs.pattern).test(attrs.value)) {
         errors.value = errors.value || [];
         errors.value.push({code: 'PATTERN', PATTERN: attrs.pattern});
+
       }
+
       return _.isEmpty(errors) ? undefined : errors;
     },
+    /* @deprecated */
     updateErrors: function () {
-      this.set('errors', this.validate());
+      this.set('errors', this.validationError, {validate: false, silent: true});
     },
+
+    hasErrors: function(){
+      return this.validationError && !_.isEmpty(this.validationError);
+    },
+
+    /**
+     * sets the current model.validationError property to elementErrorList.
+     * Fires an 'invalid' event with (model, serverErrors) as params.
+     * Any errors set here will be at the front of the array, and take
+     * precedence.
+     *
+     * @param {array|object} elementErrorList - An array of Error objects
+     * @param {object} options - set merge:false to NOT merge errors
+     *
+     * @fires model.invalid
+     */
+    setExternalErrors: function(elementErrorList, options){
+      var errors = [];
+      options = options || {merge: true};
+
+      if ( options.merge && this.validationError ){
+          errors = this.validationError.value || errors;
+      }
+
+      if (!_.isArray(errors)){
+         errors = [errors];
+      }
+
+      this.validationError = { value: _.uniq(errors.concat(elementErrorList).reverse()) };
+      this.trigger('invalid', this, elementErrorList);
+    },
+
     warn: function () {
       var warning = {};
       warning.value = warning.value || [];
@@ -151,11 +194,19 @@ define(function () {
      * official Blink API
      */
     val: function (value) {
+      var attrs;
+
       if (value === undefined) {
         return this.get('value');
       }
 
-      this.set('value', value);
+      attrs = _.extend({}, this.attributes, {value: value});
+      this.validationError = this.validate(attrs);
+      if ( this.validationError){
+        this.trigger('invalid', this, this.validationError);
+      }
+
+      this.set('value', value, {validate: false});
       return value;
     }
   }, {

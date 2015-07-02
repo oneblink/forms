@@ -13,6 +13,7 @@ define(function (require) {
         'rv-min': 'm:min',
         'rv-max': 'm:max',
         'rv-value': 'm:value',
+        'rv-input': 'm:value',
         'rv-step': 'm:step',
         'rv-placeholder': 'm:placeholderText'
       });

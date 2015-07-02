@@ -1,3 +1,14 @@
+/**
+ * Event used to scroll an element into view
+ *
+ * @event Forms~scrollTo
+ * @property {string} name - The name of the element.
+ */
+
+/**
+ * @module  Forms
+ * @exports Forms
+ */
 define(function (require) {
   'use strict';
   var Forms;

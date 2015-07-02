@@ -1,11 +1,12 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
-
 define([
   'underscore',
+  'sinon',
   'BlinkForms',
   'BIC'
-], function (_, Forms) {
+
+], function (_, sinon, Forms) {
 
   suite('i18n', function () {
     /*eslint-disable new-cap*/
@@ -327,7 +328,7 @@ define([
         }, 0);
       });
 
-      test('maxinum number of subforms test', function (done) {
+      test('maximum number of subforms test', function (done) {
         var subFormElement = Forms.current.getElement('comments'),
           $view = subFormElement.attributes._view.$el,
           $add = $view.children('.ui-btn').children('button'),
@@ -385,6 +386,23 @@ define([
             });
           });
         });
+      });
+
+      test('validation events are bubbled via Forms.current', function(){
+        var form = Forms.current,
+          element = form.getElement('city'),
+          listenerSpy = sinon.spy();
+
+        form.on('invalid change:value change:blob', listenerSpy);
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        element.val('');
+        assert.isObject(element.validate(), 'now has a validation error');
+        assert.isArray(element.validate().value, 'something wrong with value');
+
+        assert.isAbove(listenerSpy.callCount, 0);
+        listenerSpy.reset();
+
       });
     }); // END: suite('Form', ...)
 

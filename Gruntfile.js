@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 
     exec: {
       messageformat: {
-        cmd: 'node_modules/messageformat/bin/messageformat.js -l en js/locales/en js/locales/en/i18n.js'
+        cmd: 'node node_modules/messageformat/bin/messageformat.js -l en js/locales/en js/locales/en/i18n.js'
       }
     },
 
@@ -119,7 +119,8 @@ module.exports = function (grunt) {
         src: ['test/*/index.html'],
         options: {
           run: false,
-          timeout: 10000
+          timeout: 10000,
+          log: true
         }
       }
     },

@@ -1,18 +1,26 @@
-define(['models/subform', 'models/element'], function (SubForm, Element) {
+define(function (require) {
   'use strict';
+  var SubFormModel = require('models/subform');
+  var ElementModel = require('models/element');
+  var SubFormsCollection;
 
-  var SubForms;
-
-  SubForms = Backbone.Collection.extend({
-    model: SubForm
+  //SubFormsCollection = ElementCollection.extend({
+  SubFormsCollection = Backbone.Collection.extend({
+    model: SubFormModel,
+    getSubforms: function(){
+      return this.invoke('getSubforms');
+    },
+    getInvalidElements: function(limit){
+      return this.invoke('getInvalidElements', limit);
+    }
   });
 
-  return Element.extend({
+  return ElementModel.extend({
     initialize: function () {
       var attrs;
 
-      Element.prototype.initialize.call(this);
-      this.attributes.forms = new SubForms();
+      ElementModel.prototype.initialize.apply(this, arguments);
+      this.attributes.forms = new SubFormsCollection();
 
       attrs = this.attributes;
       //currently server sets preload to either "admin_defined" or "no"
@@ -49,8 +57,13 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         attrs.preloadPromise = Promise.resolve();
       }
 
-      this.attributes.forms.on('add remove', this.updateFieldErrors, this);
-      this.off('change', this.updateErrors, this);
+      this.attributes.forms.on('add remove invalid change:value change:blob', this.updateFieldErrors, this);
+      this.off('invalid change:value change:blob');
+
+      //make sure that all form events are bubbled up through this subform
+      this.attributes.forms.on('all', function(){
+        this.trigger.apply( this, arguments );
+      }, this);
     },
     addSubformRecursive: function(max) {
       var self = this,
@@ -73,12 +86,16 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         Forms = BMP.Forms;
 
       action = action || "add";
-
       return new Promise(function (resolve, reject) {
         Forms.getDefinition(name, action).then(function (def) {
           var form;
           try {
-            form = SubForm.create(def, action);
+            //the elements themselves need to know who the parent is.
+            _.each(def._elements, function(element){
+              element.parentElement = self;
+            });
+            form = SubFormModel.create(def, action);
+            self.listenTo(form.get('elements'), 'invalid change:value change:blob', self.validate.bind(self));
             form.parentElement = self;
             if (forms) {
               forms.add(form);
@@ -120,6 +137,7 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
       if (form.get('_action') === 'edit') {
         if (form.attributes._view) {
           form.attributes._view.remove();
+          this.stopListening(form.get('elements'));
         }
         form.attributes = {
           _action: 'remove',
@@ -207,14 +225,14 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         return this.getRecord();
       }
     },
-    updateFieldErrors: function () {
-      this.set('errors', this.validateField());
+    updateFieldErrors: function (){
+      this.validationError = this.validateField();
+      this.set('errors', this.validationError);
     },
     validateField: function (attrs) {
       var forms,
         errors = {},
         realLength = this.getRealLength();
-
       if (attrs === undefined) {
         attrs = this.attributes;
       }
@@ -236,7 +254,6 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         errors.value = errors.value || [];
         errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
       }
-
       if (!_.isEmpty(errors)) {
         return errors;
       }
@@ -252,7 +269,11 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
     getRealLength: function() {
       var forms = this.attributes.forms,
         counter = 0;
-      forms.forEach(function(v) {
+
+      if ( !forms ){
+        return counter;
+      }
+      forms.models.forEach(function(v) {
         if (v.get("_action") !== "remove") {
           counter++;
         }
@@ -272,10 +293,13 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
       errors = this.validateField(attrs) || {};
 
       forms = attrs.forms;
+      if ( !forms ){
+        return _.isEmpty(errors) ? undefined : errors;
+      }
 
       forms.models.forEach(function (frm) {
-        err = frm.getErrors();
-        if (err) {
+        err = frm.getErrors({validate: true});
+        if (!_.isEmpty(err)) {
           subformErrorCounter++;
         }
       });
@@ -286,9 +310,7 @@ define(['models/subform', 'models/element'], function (SubForm, Element) {
         errors.value.push({code: 'SUBFORM'});
       }
 
-      if (!_.isEmpty(errors)) {
-        return errors;
-      }
+      return _.isEmpty(errors) ? undefined : errors;
     }
   });
 });

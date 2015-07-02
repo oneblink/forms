@@ -6,9 +6,8 @@ define(function (require) {
 
     attributes: {},
 
-    remove: function () {
-      this.$el.children('.ui-btn').children('button').off('click');
-      return FormView.prototype.remove.call(this);
+    events: {
+      'click [data-onclick="onRemoveClick"]': 'onRemoveClick'
     },
 
     render: function () {
@@ -16,13 +15,11 @@ define(function (require) {
         name = parentElement.attributes.minusButtonLabel,
         $button;
 
-      $button = $('<button></button>').attr({
+      $button = $('<button data-onclick="onRemoveClick"></button>').attr({
         type: 'button',
         'data-icon': 'minus',
         'data-action': 'remove'
       }).text(name);
-
-      $button.on('click', this.onRemoveClick.bind(this));
 
       FormView.prototype.render.call(this);
 

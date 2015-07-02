@@ -13,10 +13,13 @@ define(function (require) {
       $input = this.createElement();
 
       this.$el.append($input);
-      this.bindRivets();
 
+      this.bindRivets();
+      this.model.isValid();
       this.$el.fieldcontain();
       $input.textinput();
+      $input.attr('cid', this.model.cid);
+      this.renderErrors();
     }
   });
 });
