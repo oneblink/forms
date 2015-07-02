@@ -20,8 +20,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     });
 
     teardown(function(){
-      // $content.empty();
-      // delete Forms.current;
+      Forms.current.off();
+      $content.empty();
+      delete Forms.current;
     });
 
     test('Top Level elements collection returns 1 sub form', function(){
@@ -36,9 +37,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       }
 
       assert.equal(counter, 1);
-
-      $content.empty();
-      delete Forms.current;
     });
 
     test('2nd level form returns 1 subform', function(){
@@ -50,9 +48,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         subSubForms = subForms.second_level_form.invoke('getSubforms')[0];
         assert.isDefined(subSubForms.third_level_form);
-
-        $content.empty();
-        delete Forms.current;
       });
     });
 
@@ -67,9 +62,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                     assert.equal(subForms.second_level_form.length, 2);
                     subSubForms = subForms.second_level_form.models[0].getSubforms();
                     assert.isDefined(subSubForms.third_level_form);
-
-                    $content.empty();
-                    delete Forms.current;
                   });
     });
 
@@ -86,9 +78,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                     assert.equal(subForms.second_level_form.length, 2);
                     subSubForms = subForms.second_level_form.models[0].getSubforms();
                     assert.isDefined(subSubForms.third_level_form);
-
-                    $content.empty();
-                    delete Forms.current;
                   });
     });
 
@@ -106,8 +95,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                   invalid[0].errors[0].get('_view').scrollTo({
                     always: function(){
                       assert.notEqual($(window).scrollTop(), origScrollTop);
-                      $content.empty();
-                      delete Forms.current;
                       done();
                     }
                   });
@@ -140,6 +127,79 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                         done();
                       }
                     });
+                 });
+    });
+
+    test('subform invalid events bubble up to Forms.current', function(done){
+      var view = Forms.current.getElement('second_level_form').get('_view');
+      
+      view.onAddClick()
+          .then(function(){
+            Forms.current.on('invalid', function(model, error){
+              assert.equal(model.id, 'second_required');
+              assert.equal(error.value[0].code, 'REQUIRED');
+              done();
+            });
+            Forms.current.getElement('second_required').val('');
+          });
+    });
+
+    test('subform change:value events bubble up to Forms.current', function(done){
+      var view = Forms.current.getElement('second_level_form').get('_view');
+      
+      view.onAddClick()
+          .then(function(){
+            Forms.current.on('change:value', function(model, val){
+              assert.equal(model.id, 'second_required');
+              assert.equal(val, 123);
+              done();
+            });
+            Forms.current.getElement('second_required').val(123);
+          });
+    });
+
+
+    test('3rd level subform invalid events bubble up to Forms.current', function(done){
+      var origScrollTop = $(window).scrollTop();
+      var view = Forms.current.getElement('second_level_form').get('_view');
+
+      return view.onAddClick() //add second level
+                 .then(function(){
+                    var t = Forms.current.getElement('third_level_form').get('_view');
+                    return t.onAddClick(); //add third level
+                 })
+                 .then(function(){
+                    var thirdLevelRequiredField = Forms.current.getElement('third_level_req');
+
+                    Forms.current.on('invalid', function(model, error){
+                      assert.equal(model.id, 'third_level_req');
+                      assert.equal(error.value[0].code, 'REQUIRED');
+                      done();
+                    });
+
+                    thirdLevelRequiredField.val('');
+                 });
+    });
+
+    test('3rd level subform invalid events bubble up to Forms.current', function(done){
+      var origScrollTop = $(window).scrollTop();
+      var view = Forms.current.getElement('second_level_form').get('_view');
+
+      return view.onAddClick() //add second level
+                 .then(function(){
+                    var t = Forms.current.getElement('third_level_form').get('_view');
+                    return t.onAddClick(); //add third level
+                 })
+                 .then(function(){
+                    var thirdLevelRequiredField = Forms.current.getElement('third_level_req');
+
+                    Forms.current.on('change:value', function(model, value){
+                      assert.equal(model.id, 'third_level_req');
+                      assert.equal(value, 'hello');
+                      done();
+                    });
+
+                    thirdLevelRequiredField.val('hello');
                  });
     });
   });

@@ -9,7 +9,7 @@ define(function (require) {
     return function(options){
       var elementCollection = this.get('elements'),
           validate = options && options.validate || false,
-          limit = options && options.limit || this.get('numErrorsShown');
+          limit = options && options.limit || 0;
 
       if ( !elementCollection ){
         return undefined;

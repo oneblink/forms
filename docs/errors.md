@@ -78,7 +78,7 @@ It is important to note that if there is a form element with the same name (for 
 
 Events
 ------
-The standard Backbone [invalid](http://backbonejs.org/#Events-catalog) event is triggered on the element model when validation fails. This also bubbles up to the collection that contains the element, which in turn bubbles through BMP.Forms.current via ````BMP.Forms.current#invalid```` and ````BMP.Forms.current#change:value````
+The standard Backbone [Events](http://backbonejs.org/#Events-catalog) are triggered on the element model. They also bubble up to the collection that contains the element, which in turn bubbles through BMP.Forms.current, allowing you to listen to events like ````change:value```` or ````invalid```` on either the element model, the subform model the element model is part of, or the entire form.
 
 
 Manually Setting Field Errors
@@ -142,7 +142,7 @@ Useful functions
 ````elementView.scrollTo(options)````
 If an element is visible, it will scroll the form to so that the element is at the top of the page. ````options```` is passed on to [jQuery.animate](http://api.jquery.com/animate/)
 
-````BMP.Forms.current.get('_view').scrollTo(elementName|elementCID)````
+````BMP.Forms.current.get('_view').goToField(elementName|elementCID)````
 Will find an element in a form, even if it is in a subform on a different page and trigger the scrollTo function. it Returns a promise that will be resolved with the Element View when the animation completes or rejected if the animation fails.
 
 ````BMP.Forms.blinkFormsErrorHelper````

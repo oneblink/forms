@@ -203,7 +203,7 @@ define(function () {
       attrs = _.extend({}, this.attributes, {value: value});
       this.validationError = this.validate(attrs);
       if ( this.validationError){
-        this.trigger('invalid', this, value);
+        this.trigger('invalid', this, this.validationError);
       }
 
       this.set('value', value, {validate: false});

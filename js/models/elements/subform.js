@@ -59,6 +59,11 @@ define(function (require) {
 
       this.attributes.forms.on('add remove invalid change:value change:blob', this.updateFieldErrors, this);
       this.off('invalid change:value change:blob');
+
+      //make sure that all form events are bubbled up through this subform
+      this.attributes.forms.on('all', function(){
+        this.trigger.apply( this, arguments );
+      }, this);
     },
     addSubformRecursive: function(max) {
       var self = this,
@@ -223,8 +228,6 @@ define(function (require) {
     updateFieldErrors: function (){
       this.validationError = this.validateField();
       this.set('errors', this.validationError);
-
-      this.trigger('invalid', this, this.validationError );
     },
     validateField: function (attrs) {
       var forms,
