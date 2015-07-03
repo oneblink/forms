@@ -2,6 +2,8 @@
 
 execute a definition, creating Models and Views to capture data from users
 
+[![Build Status](https://travis-ci.org/blinkmobile/forms.png)](https://travis-ci.org/blinkmobile/forms)
+
 
 ## Semantic Versioning
 
