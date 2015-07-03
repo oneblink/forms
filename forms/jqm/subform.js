@@ -1,0 +1,47 @@
+define(function (require) {
+  'use strict';
+
+  // foreign modules
+
+  var $ = require('jquery');
+
+  // this module
+
+  var FormView = require('forms/jqm/form');
+
+  return FormView.extend({
+    tagName: 'section',
+
+    attributes: {},
+
+    events: {
+      'click [data-onclick="onRemoveClick"]': 'onRemoveClick'
+    },
+
+    render: function () {
+      var parentElement = this.model.parentElement,
+        name = parentElement.attributes.minusButtonLabel,
+        $button;
+
+      $button = $('<button data-onclick="onRemoveClick"></button>').attr({
+        type: 'button',
+        'data-icon': 'minus',
+        'data-action': 'remove'
+      }).text(name);
+
+      FormView.prototype.render.call(this);
+
+      this.$el.attr(
+        'data-record-index',
+        parentElement.get('forms').indexOf(this.model)
+      );
+
+      this.$el.prepend($button);
+      $button.button();
+    },
+
+    onRemoveClick: function () {
+      this.model.parentElement.remove(this.model);
+    }
+  });
+});

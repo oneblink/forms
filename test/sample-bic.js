@@ -10,11 +10,15 @@ define([
   'definitions',
   'BMP.Blob',
   'BMP.BlinkGap',
-  'feature!es5'
+  'feature!es5',
+  'jquerymobile'
 ], function (Promise, $, _, Forms, defs) {
   'use strict';
 
   var $submitPopup, $footer, $grid, $colB;
+
+  window.Promise = window.Promise || Promise;
+
   $submitPopup = $('<div></div>').attr({
     id: 'submitPopup',
     'data-role': 'popup',

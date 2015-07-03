@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   var nativedate = [
     'date',
@@ -67,6 +67,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.show();
       });
 
+      testUtils.defineLabelTest();
+
       test('use datetime field - avoid undefined', function () {
         var form = Forms.current,
           element = form.getElement('datetimenonative'),
@@ -115,34 +117,35 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
       });
 
-      test('pickerElements outside page', function() {
-        var form = Forms.current,
-          element,
-          $fieldset,
-          $input,
-          $body = $('body');
+      ['_date', '_time'].forEach(function (subtype) {
+        var elements = subtype === '_date' ? pickadate : pickatime;
 
-        setTimeout(function () {
-          pickadate.forEach(function (fld) {
-            element = form.getElement(fld);
-            $fieldset = element.attributes._view.$el;
-            $input = $fieldset.find('input[name="' + fld + '_date"]');
+        elements.forEach(function (fld) {
 
-            assert.equal($input.hasClass('picker__input'), true);
-            assert.equal($body.find("#" + $input.attr('id') + "_root.picker").length, 1);
-            assert.equal($body.find("#" + $input.attr('id') + "_root.picker").parent().hasClass('ui-body-c'), true);
+          test('pickerElements outside page: ' + fld, function (done) {
+            var form = Forms.current;
+
+            this.timeout(3e3);
+
+            setTimeout(function () {
+
+              var element = form.getElement(fld);
+              var $fieldset = element.attributes._view.$el;
+              var $input = $fieldset.find('input[name="' + fld + subtype + '"]');
+              var $root = $("#" + $input.attr('id') + "_root.picker");
+
+              assert.equal($input.hasClass('picker__input'), true);
+              assert.equal($root.length, 1);
+              assert.equal($root.parent().hasClass('ui-body-c'), true);
+
+              assert(!!element);
+
+              done();
+            }, 300);
           });
 
-          pickatime.forEach(function (fld) {
-            element = form.getElement(fld);
-            $fieldset = element.attributes._view.$el;
-            $input = $fieldset.find('input[name="' + fld + '_time"]');
+        });
 
-            assert.equal($input.hasClass('picker__input'), true);
-            assert.equal($body.find("#" + $input.attr('id') + "_root.picker--time").length, 1);
-            assert.equal($body.find("#" + $input.attr('id') + "_root.picker--time").parent().hasClass('ui-body-c'), true);
-          });
-        }, 100);
       });
 
       suite('readonly, hidden', function () {

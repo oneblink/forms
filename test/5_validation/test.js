@@ -4,9 +4,9 @@ define([
   'underscore',
   'sinon',
   'BlinkForms',
+  'testUtils',
   'BIC'
-
-], function (_, sinon, Forms) {
+], function (_, sinon, Forms, testUtils) {
 
   suite('i18n', function () {
     /*eslint-disable new-cap*/
@@ -81,6 +81,8 @@ define([
           done();
         });
       });
+
+      testUtils.defineLabelTest();
 
     }); // END: suite('Form', ...)
 

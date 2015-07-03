@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'bluebird', 'BIC'], function (Forms, Promise) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('18: Subforms with pages', function () {
     var $page = $('[data-role=page]'),
@@ -49,6 +49,8 @@ define(['BlinkForms', 'bluebird', 'BIC'], function (Forms, Promise) {
           done();
         });
       });
+
+      testUtils.defineLabelTest();
 
       test('testing subform paging', function (done) {
         var form = Forms.current,

@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
   suite('4: subForms', function () {
     var $doc = $(document),
       $page = $('[data-role=page]'),
@@ -52,6 +52,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.trigger('pagecreate');
         $page.show();
       });
+
+      testUtils.defineLabelTest();
 
     }); // END: suite('Form', ...)
 

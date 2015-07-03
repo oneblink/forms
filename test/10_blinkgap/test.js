@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert:true*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('10: blinkgap', function () {
     var $page = $('[data-role=page]'),
@@ -86,6 +86,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.trigger('pagecreate');
         $page.show();
       });
+
+      testUtils.defineLabelTest();
 
     }); // END: suite('Form', ...)
 
