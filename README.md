@@ -73,5 +73,5 @@ In the root of the project's working directory, run:
     npm test
 
 This installs the required plugins for Grunt, and then uses Grunt to
-build the project into `js/build`. For the jQueryMobile version of Forms v3,
-check the `js/build/views/` directory.
+build the project into `build`. The build output includes both the core and the
+jQueryMobile views.
