@@ -70,6 +70,17 @@ define(function (require) {
       return this;
     },
 
+    onAttached: function () {
+      var type = this.model.get('type');
+
+      if (type !== 'time') {
+        this.onDateMChange();
+      }
+      if (type !== 'date') {
+        this.onTimeMChange();
+      }
+    },
+
     onDateVChange: function (event) {
       this.model.set('_date', $(event.target).val());
     },

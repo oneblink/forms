@@ -41,7 +41,7 @@ define([
             dateValue = moment(Date.parse(attr.defaultDateDate));
           }
           if (dateValue !== null) {
-            this.set('value', dateValue.format(dateFormat));
+            this.set('_date', dateValue.format(dateFormat));
           }
           break;
         case 'time':
@@ -52,7 +52,7 @@ define([
             timeValue = moment().add(parseInt(attr.nowPlusAmount, 10), 'm');
           }
           if (timeValue !== null) {
-            this.set('value', timeValue.format(timeFormat));
+            this.set('_time', timeValue.format(timeFormat));
           }
           break;
         case 'datetime':

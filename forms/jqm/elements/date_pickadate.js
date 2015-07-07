@@ -147,7 +147,10 @@ define(function (require) {
         settings = {};
 
       settings.format = this.mapTimeFormats[attr.timeFormat] || "HH:i";
-      if (attr.minuteStep) {
+      //pickatime slows down things, when interval is small
+      //default interval is 1, and setting it explicit to 1 slows down things
+      //so if minute step is one don't set it and let it pick default
+      if (attr.minuteStep && parseInt(attr.minuteStep, 10) !== 1) {
         settings.interval = parseInt(attr.minuteStep, 10);
       }
       settings.container = DatePickadateElement.pickadateParent;
@@ -169,16 +172,22 @@ define(function (require) {
     },
 
     onAttached: function () {
+      var self = this;
       var type = this.model.attributes.type;
       var name = this.model.attributes.name;
       var date$, time$;
+      DateView.prototype.onAttached.call(this);
       if (type !== 'time') {
         date$ = this.$el.find('input[name=' + name + '_date]');
         date$.pickadate(this.prepareDateSettings());
       }
       if (type !== 'date') {
         time$ = this.$el.find('input[name=' + name + '_time]');
-        time$.pickatime(this.prepareTimeSettings());
+        //slows down rending if interval is set to small number
+        //so set timeout
+        setTimeout(function() {
+          time$.pickatime(self.prepareTimeSettings());
+        }, 0);
       }
     }
 
