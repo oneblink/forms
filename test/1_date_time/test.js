@@ -21,7 +21,67 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
     'datetimenow'
   ];
 
+  function defineModelToViewTests() {
+    test('model->value', function (done) {
+      setTimeout(function() {
+        Forms.current.get('elements').forEach(function (el) {
+          var value = el.val();
+          var name = el.get('name');
+          var time = el.get('_time');
+          var time$ = el.get('_view').$el.find('input[name$=_time]');
+          var date$ = el.get('_view').$el.find('input[name$=_date]');
+          var date = el.get('_date');
+          var type = el.get('type');
+          if (value && !el.get('readonly')) {
+            if (type !== 'time') {
+              assert.lengthOf(date$, 1, name + ': has DOM date');
+              assert.equal(date$.val(), date, name + ': DOM date value');
+            }
+            if (type !== 'date') {
+              assert.lengthOf(time$, 1, name + ': has DOM time');
+              assert.equal(time$.val(), time, name + ': DOM time value');
+            }
+          }
+        });
+        done();
+      }, 1e3);
+    });
+  }
 
+  function defineViewToModelTests() {
+    test('view->model', function (done) {
+      setTimeout(function() {
+        Forms.current.get('elements').forEach(function (el) {
+          var date;
+          var time;
+          var value = el.val();
+          var name = el.get('name');
+          var time$ = el.get('_view').$el.find('input[name$=_time]');
+          var date$ = el.get('_view').$el.find('input[name$=_date]');
+          var type = el.get('type');
+          if (value && !el.get('readonly')) {
+            if (type !== 'time') {
+              date = "2015-06-10";
+              date$.val(date);
+              date$.trigger('change');
+              assert.lengthOf(date$, 1, name + ': has DOM date');
+              assert.equal(date$.val(), date, name + ': DOM date value');
+              assert.equal(date$.val(), el.get('_date'), name + ': _date value');
+            }
+            if (type !== 'date') {
+              time = "10:00";
+              time$.val(time);
+              time$.trigger('change');
+              assert.lengthOf(time$, 1, name + ': has DOM time');
+              assert.equal(time$.val(), time, name + ': DOM time value');
+              assert.equal(time$.val(), el.get('_time'), name + ': _time value');
+            }
+          }
+        });
+        done();
+      }, 1e3);
+    });
+  }
 
   suite('1: date/time', function () {
     var $page = $('[data-role=page]'),
@@ -68,6 +128,27 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       });
 
       testUtils.defineLabelTest();
+
+      test('all now and now_plus models have non-empty values', function () {
+        Forms.current.get('elements').forEach(function (el) {
+          var defaultValue = el.get('defaultValue');
+          if (defaultValue && defaultValue.indexOf('now') !== -1) {
+            assert.ok(el.val(), el.get('name') + ': non-empty');
+          }
+        });
+      });
+
+      test('all models with no default have non-empty values', function () {
+        Forms.current.get('elements').forEach(function (el) {
+          var defaultValue = el.get('defaultValue');
+          if (!defaultValue) {
+            assert.notOk(el.val(), el.get('name') + ': empty');
+          }
+        });
+      });
+
+      defineModelToViewTests();
+      defineViewToModelTests();
 
       test('use datetime field - avoid undefined', function () {
         var form = Forms.current,
@@ -191,6 +272,8 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           });
         });
 
+        defineModelToViewTests();
+        defineViewToModelTests();
       });
 
     }); // END: suite('Form', ...)
