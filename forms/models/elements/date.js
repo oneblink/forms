@@ -12,6 +12,24 @@ define([
         dateValue = null,
         timeValue = null;
 
+      //native date field requires RFC3339
+      //http://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today
+      if (attr.nativeDatetimePicker) {
+        attr.nativeDatetimePicker = parseInt(attr.nativeDatetimePicker, 10);
+        if (attr.nativeDatetimePicker === 1) {
+          attr.dateFormat = "YYYY-MM-DD";
+        }
+      }
+      if (attr.nativeDatePicker) {
+        attr.nativeDatePicker = parseInt(attr.nativeDatePicker, 10);
+        if (attr.nativeDatePicker === 1) {
+          attr.dateFormat = "YYYY-MM-DD";
+        }
+      }
+      if (attr.nativeTimePicker) {
+        attr.nativeTimePicker = parseInt(attr.nativeTimePicker, 10);
+      }
+
       /* THIS CODE NEEDS TO BE REMOVED WITH PLATFORM 2.26+ */
       if (attr.picker) {
         switch(attr.picker) {
@@ -87,9 +105,9 @@ define([
       if (attr.readonly) {
         View = Forms._views.ReadOnlyElement;
         view = new View({model: this});
-      } else if (parseInt(attr.nativeDatetimePicker, 10) === 1
-          || parseInt(attr.nativeDatePicker, 10) === 1
-          || parseInt(attr.nativeTimePicker, 10) === 1) {
+      } else if (attr.nativeDatetimePicker === 1
+          || attr.nativeDatePicker === 1
+          || attr.nativeTimePicker === 1) {
         view = new Forms._views.DateElement({model: this});
       } else {
         view = new Forms._views.DatePickadateElement({model: this});

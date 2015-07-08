@@ -276,6 +276,35 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         defineViewToModelTests();
       });
 
+
+      suite('native, date assignment', function () {
+        var native = [
+          //'dateTimeNativePickerNone',
+          'dateTimeNativePickerNow',
+          'dateTimeNativePickerNowP',
+          'dateTimeNativePckerNowPM'
+        ];
+
+        test('check if date fields have correct values', function () {
+          var form = Forms.current,
+            element,
+            $fieldset,
+            $input;
+
+          native.forEach(function(fld) {
+            element = form.getElement(fld);
+            $fieldset = element.attributes._view.$el;
+            //should contain date field
+            $input = $fieldset.find("input[type='date']");
+            assert.equal($input.length, 1);
+            assert($input.val(), "no value assigned to $input");
+          });
+        });
+
+        defineModelToViewTests();
+        defineViewToModelTests();
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)
