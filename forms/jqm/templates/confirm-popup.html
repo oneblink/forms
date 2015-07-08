@@ -1,0 +1,22 @@
+<div data-role="header" class="ui-header">
+  <h3 class="ui-title bm-popup__header"><%= attributes.header %></h3>
+</div>
+<div data-role="main" class="ui-main ui-content">
+  <p class="bm-popup__message">
+    <%= attributes.message %>
+  </p>
+  <a href="#"
+     data-onclick="onCancelClick" 
+     data-role="button" 
+     data-icon="<%= attributes.cancelButtonIcon %>" 
+     data-inline="true"
+     data-theme="c">
+      <%= attributes.cancelButtonText %>
+  </a>
+  <a href="" 
+     data-onclick="onContinueClick" 
+     data-role="button" 
+     data-icon="<%= attributes.confirmButtonIcon %>" 
+     data-inline="true" 
+     data-theme="c"><%= attributes.confirmButtonText %></a>
+</div>

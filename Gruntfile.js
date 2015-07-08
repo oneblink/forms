@@ -65,6 +65,7 @@ module.exports = function (grunt) {
             '@blinkmobile/html-class-data': 'node_modules/@blinkmobile/html-class-data/dist/index',
             '@blinkmobile/jqpromise': 'node_modules/@blinkmobile/jqpromise/dist/index',
             '@blinkmobile/varied-definition': 'node_modules/@blinkmobile/varied-definition/dist/index',
+            'typed-errors': 'node_modules/js-typed-errors/dist/typed-errors',
             moment: 'node_modules/moment/min/moment.min',
             picker: 'node_modules/pickadate/lib/picker',
             'picker.date': 'node_modules/pickadate/lib/picker.date',

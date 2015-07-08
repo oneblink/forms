@@ -13,6 +13,8 @@ define(function (require) {
   var events = require('forms/events');
   var formsErrors = require('forms/error-helpers');
 
+  var NotImplementedError = require('typed-errors').NotImplementedError;
+
   // this module
 
   //IE aniamtes html, everything else does body.
@@ -102,7 +104,7 @@ define(function (require) {
       this.$el.append($hint);
     },
     render: function () {
-      throw new Error('Element.render is only an interface');
+      throw new NotImplementedError('Element.render is only an interface');
     },
     //TODO: with the event removed are warnings still used ?
     renderWarning: function () {
