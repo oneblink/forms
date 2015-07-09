@@ -44,7 +44,7 @@ define(function (require) {
       );
 
       this.$el.prepend($button);
-      $button.button();
+      $button.button().addClass('bm-button bm-remove');
     },
 
     /**

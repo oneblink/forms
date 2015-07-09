@@ -19,7 +19,9 @@ define(function(require){
 
     render: function(){
       this.$el.append(this.template(this.model));
+      this.$el.attr('cid', this.model.cid);
       $('[data-role="button"]', this.$el ).button();
+
       return this;
     },
 
@@ -28,7 +30,7 @@ define(function(require){
     },
 
     onCancelClick: function(){
-      this._reject(false);
+      this._reject(new Error('User Canceled the dialog'));
     }
 
   });

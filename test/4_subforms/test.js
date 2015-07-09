@@ -66,6 +66,8 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
     }); // END: suite('Form', ...)
 
+/////////////////////////////////////////////////////////////////////////////////
+
     suite('Sub-Forms', function () {
 
       //------------------------------------------------------------------------
@@ -318,7 +320,67 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       });
     });
 
-////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+
+    suite('subform buttons', function(){
+
+      test('add button should add a new subform', function(done){
+        var commentsSubForm = Forms.current.getElement('comments');
+        var $addButton = commentsSubForm.get('_view').$el.find('.bm-button.bm-add');
+        var startingLength = commentsSubForm.get('forms').length;
+
+        $addButton.trigger('click');
+
+        //since adding a subform is an async process
+        setTimeout(function(){
+          assert.isAbove(commentsSubForm.get('forms').length, startingLength);
+          done();
+        }, 250);
+      });
+
+      test('remove button should show a popup, and do nothing on cancel', function(done){
+        var commentsSubForm = Forms.current.getElement('comments');
+
+        commentsSubForm.add().then(function(){
+          var $removeButton = commentsSubForm.get('_view').$el.find('.bm-button.bm-remove');
+          var startingLength = commentsSubForm.get('forms').length;
+          $removeButton.trigger('click');
+          //since adding a subform is an async process
+          setTimeout(function(){
+            assert.isAbove($('.bm-popup.bm-confirm').length, 0);
+            $('.bm-popup.bm-confirm').find('.bm-cancel').trigger('click');
+            setTimeout(function(){
+              assert.equal(commentsSubForm.get('forms').length, startingLength);
+              done();
+            }, 250);
+          }, 250);
+        });
+      });
+
+      test('remove button should show a popup, and remove on confirm.', function(done){
+        var commentsSubForm = Forms.current.getElement('comments');
+        var startingLength = commentsSubForm.get('forms').length;
+
+        commentsSubForm.add().then(function(){
+          var $removeButton = commentsSubForm.get('_view').$el.find('.bm-button.bm-remove');
+
+          $removeButton.trigger('click');
+          //since adding a subform is an async process
+          setTimeout(function(){
+            assert.isAbove($('.bm-popup.bm-confirm').length, 0);
+            $('.bm-popup.bm-confirm').find('.bm-confirm').trigger('click');
+            setTimeout(function(){
+              assert.equal(commentsSubForm.get('forms').length, startingLength);
+              done();
+            }, 250);
+          }, 250);
+        });
+      });
+    });
+
+
+
+////////////////////////////////////////////////////////////////////////////////
 
 
     suite('after #setRecord(...) with IDs', function () {
