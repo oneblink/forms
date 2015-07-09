@@ -20,10 +20,10 @@ define(function(require){
       title: '',
       message: '',
 
-      cancelButtonText: 'Cancel',
+      cancelButtonText: 'No',
       cancelButtonIcon: 'delete',
 
-      confirmButtonText: 'Confirm',
+      confirmButtonText: 'Yes',
       confirmButtonIcon: 'check',
 
       dissmissible: true

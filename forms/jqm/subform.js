@@ -12,8 +12,10 @@ define(function (require) {
   var ConfirmModel = require('forms/models/popup');
   var confirmOptions = {
     dissmissible: false,
-    header: 'Confirm Removal',
-    message: 'Are you sure you want to remove this subform? This action cannot be undone.'
+    header: 'Confirm',
+    message: '<center><p>Are you sure you want to remove this subform?</p><p>This action cannot be undone.</p></center>',
+    cancelButtonIcon: '',
+    confirmButtonIcon: ''
   };
 
   return FormView.extend({

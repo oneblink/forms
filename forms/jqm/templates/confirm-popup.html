@@ -1,24 +1,36 @@
-<div data-role="header" class="ui-header">
-  <h3 class="ui-title bm-popup__header"><%= attributes.header %></h3>
-</div>
-<div data-role="main" class="ui-main ui-content">
-  <p class="bm-popup__message">
+<style>
+  @media all and (max-width: 320px){
+    .bm-popup__buttons > .ui-block-a,
+    .bm-popup__buttons > .ui-block-b{
+      float:none;
+      width:auto;
+    }
+  }
+</style>
+<div data-role="content" class="ui-main ui-content">
+  <div class="bm-popup__message">
     <%= attributes.message %>
-  </p>
-  <a href="#"
-     class="bm-button bm-cancel"
-     data-onclick="onCancelClick" 
-     data-role="button" 
-     data-icon="<%= attributes.cancelButtonIcon %>" 
-     data-inline="true"
-     data-theme="c">
-      <%= attributes.cancelButtonText %>
-  </a>
-  <a href="" 
-     class="bm-button bm-confirm"
-     data-onclick="onContinueClick" 
-     data-role="button" 
-     data-icon="<%= attributes.confirmButtonIcon %>" 
-     data-inline="true" 
-     data-theme="c"><%= attributes.confirmButtonText %></a>
+  </div>
+  <fieldset class="bm-popup__buttons ui-grid-a">
+    <div class="ui-block-a">
+      <a href="#"
+         class="bm-button bm-cancel"
+         data-onclick="onCancelClick" 
+         data-role="button" 
+         data-icon="<%= attributes.cancelButtonIcon %>"
+         data-theme="c">
+          <%= attributes.cancelButtonText %>
+      </a>
+    </div>
+    <div class="ui-block-b">
+      <a href="" 
+         class="bm-button bm-confirm"
+         data-onclick="onContinueClick" 
+         data-role="button" 
+         data-icon="<%= attributes.confirmButtonIcon %>" 
+         data-theme="a">
+          <%= attributes.confirmButtonText %>
+      </a>
+    </div>
+   </fieldset>
 </div>
