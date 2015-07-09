@@ -312,22 +312,16 @@ define([
         assert.equal(errorCounter, errors.length, "(" + counter + ") number of total error doesn't match");
       }
 
-      test('subform require, min=1 subform test', function (done) {
+      test('subform require, min=1 subform test', function () {
         var subFormElement = Forms.current.getElement('comments'),
           subForms = subFormElement.attributes.forms,
           subForm = subForms.at(0),
-          $subformView = subForm.attributes._view.$el,
-          $remove = $subformView.children('.ui-btn').children('button'),
           errors = ['REQUIRED'];
 
         assert.equal(subForms.length, 1, 'no subForms yet');
 
-        $remove.trigger('click');
-
-        setTimeout(function () {
-          subformValidationTest(errors, subFormElement, 1);
-          done();
-        }, 0);
+        subForm.parentElement.remove(subForm);
+        subformValidationTest(errors, subFormElement, 1);
       });
 
       test('maximum number of subforms test', function (done) {

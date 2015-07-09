@@ -32,13 +32,15 @@ define(function (require) {
       var attrs = this.model.attributes,
         $button;
 
-      $button = $('<button data-onclick="onAddClick"></button>').attr({
+      $button = $('<button data-onclick="onAddClick" class="bm-button bm-add"></button>').attr({
         type: 'button',
         'data-icon': 'plus',
         'data-action': 'add'
       }).text(attrs.plusButtonLabel);
 
-      $button.on('click', this.onAddClick.bind(this));
+      $button.on('click', function(e){
+        this.onAddClick(e);
+      }.bind(this));
 
       this.$el.attr('data-form', attrs.subform);
       this.$el.prepend($button);
