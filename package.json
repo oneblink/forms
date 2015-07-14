@@ -14,7 +14,7 @@
     "@blinkmobile/varied-definition": "1.0.0",
     "amd-feature": "jensarps/AMD-feature#v1.2.1",
     "blinkgap-utils": "git://github.com/blinkmobile/blinkgap-utils#500774457d",
-    "js-typed-errors": "simonmarklar/js-typed-errors",
+    "js-typed-errors": "simonmarklar/js-typed-errors#21bd090",
     "moment": "2.10.3",
     "node-uuid": "1.4.3",
     "pickadate": "3.5.5",
