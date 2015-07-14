@@ -27,6 +27,7 @@
     "bluebird": "^2.9",
     "chai": "^3.0",
     "es5-shim": "^4.1",
+    "eslint": "^0.24.1",
     "grunt": "~0.4",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "~0.6",
