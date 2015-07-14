@@ -620,13 +620,13 @@ define(function () {
             "add": {
               "labelPlacement": "default",
               "labelStyle": "Plain",
-              "dateFormat": "dd_mm_yyyy",
+              "dateFormat": "yyyy_mm_dd",
               "timeFormat": "hh_mm"
             },
             "edit": {
               "labelPlacement": "default",
               "labelStyle": "Plain",
-              "dateFormat": "dd_mm_yyyy",
+              "dateFormat": "yyyy_mm_dd",
               "timeFormat": "hh_mm"
             },
             "view": {
@@ -738,6 +738,59 @@ define(function () {
               "labelStyle": "Plain",
               "dateFormat": "dd_mm_yyyy",
               "timeFormat": "hh_mm"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimeNativePickerNow",
+              "type": "datetime",
+              "label": "Date Time Native Picker Now",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "picker",
+              "dateFormat": "mm_dd_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now",
+              "minuteStep": "1",
+              "defaultValue": "now",
+              "page": 0,
+              "nativeDatetimePicker": "1"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimeNativePickerNowP",
+              "type": "datetime",
+              "label": "Date Time Native Picker NowP +1day",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "picker",
+              "dateFormat": "mm_dd_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now_plus",
+              "nowPlusAmount": "1440",
+              "minuteStep": "1",
+              "defaultValue": "now_plus",
+              "page": 0,
+              "nativeDatetimePicker": "1"
+            }
+          },
+          {
+            "default": {
+              "name": "dateTimeNativePckerNowPM",
+              "type": "datetime",
+              "label": "Date Time Native Picker NowP -2day",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "picker",
+              "dateFormat": "mm_dd_yyyy",
+              "timeFormat": "hh_mm",
+              "defaultTimestamp": "now_plus",
+              "nowPlusAmount": "-2880",
+              "minuteStep": "1",
+              "defaultValue": "now_plus",
+              "page": 0,
+              "nativeDatetimePicker": "1"
             }
           }
         ]
