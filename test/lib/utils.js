@@ -42,6 +42,12 @@ define(['BlinkForms'], function (Forms) {
           }
         });
       });
+    },
+
+    wait: function (ms) {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, ms);
+      });
     }
 
   };
