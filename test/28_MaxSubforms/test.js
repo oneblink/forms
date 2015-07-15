@@ -92,56 +92,85 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         form = Forms.current;
       });
 
-      test("getRealLength, getButtonLabel", function(done) {
+      suite("getRealLength, getButtonLabel", function () {
         var subFormElement, $fieldEl, $add, subForms, subForm, $view, $remove, attr;
 
-        subFormElement = form.getElement('Location');
-        attr = subFormElement.attributes;
-        $fieldEl = subFormElement.attributes._view.$el;
-        $add = $fieldEl.children('.ui-btn').children('button');
-        subForms = subFormElement.attributes.forms;
+        suiteSetup(function () {
+          subFormElement = form.getElement('Location');
+          attr = subFormElement.attributes;
+          $fieldEl = subFormElement.attributes._view.$el;
+          $add = $fieldEl.children('.ui-btn').children('button');
+          subForms = subFormElement.attributes.forms;
+        });
 
-        subForm = subForms.at(0);
-        $view = subForm.attributes._view.$el;
-        $remove = $view.children('.ui-btn').children('button');
-
-        //initially there will be 3 subforms
-        assert.equal(subFormElement.getRealLength(), 3);
-        assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
-
-
-        $remove.trigger('click');
-
-        setTimeout(function () {
-          //then there will be 2 subforms + 1 marked removed
-          assert.equal(subFormElement.getRealLength(), 2);
-          assert.equal(subForms.length, 3);
+        test('initial state', function () {
+          //initially there will be 3 subforms
+          assert.equal(subFormElement.getRealLength(), 3);
           assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
+        });
 
-          $add.trigger("click");
+        test('click 1st remove button', function (done) {
+          subForm = subForms.at(0);
+          $view = subForm.attributes._view.$el;
+          $remove = $view.children('.ui-btn').children('button');
 
-          subForms.once('add', function() {
+          Promise.resolve()
+          .then(function () {
+            $remove.trigger('click');
+            return testUtils.wait(300);
+          })
+          .then(function () {
+            $('.bm-popup.bm-confirm').find('[data-onclick="onContinueClick"]').trigger('click');
+            return testUtils.wait(300);
+          })
+          .then(function () {
+            //then there will be 2 subforms + 1 marked removed
+            assert.equal(subFormElement.getRealLength(), 2);
+            assert.equal(subForms.length, 3);
+            assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
+            done();
+          });
+        });
+
+        test('click add button', function (done) {
+          Promise.resolve()
+          .then(function () {
+            $add.trigger("click");
+            return new Promise(function (resolve) {
+              subForms.once('add', function() { resolve(); });
+            });
+          })
+          .then(function () {
             //then there will be 3 subforms + 1 marked removed
             assert.equal(subFormElement.getRealLength(), 3);
             assert.equal(subForms.length, 4);
             assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
+            done();
+          });
+        });
 
-            //remove newly added subform
-            subForm = subForms.at(3);
-            $view = subForm.attributes._view.$el;
-            $remove = $view.children('.ui-btn').children('button');
+        test('remove newly added subform', function (done) {
+          subForm = subForms.at(3);
+          $view = subForm.attributes._view.$el;
+          $remove = $view.children('.ui-btn').children('button');
 
+          Promise.resolve()
+          .then(function () {
             $remove.trigger('click');
-
-            setTimeout(function () {
-              //then there will be 2 subforms + 1 marked removed
-              assert.equal(subFormElement.getRealLength(), 2);
-              assert.equal(subForms.length, 3);
-              assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
-              done();
-            }, 100);
-          }, 100);
-        }, 100);
+            return testUtils.wait(300);
+          })
+          .then(function () {
+            $('.bm-popup.bm-confirm').find('[data-onclick="onContinueClick"]').trigger('click');
+            return testUtils.wait(300);
+          })
+          .then(function () {
+            //then there will be 2 subforms + 1 marked removed
+            assert.equal(subFormElement.getRealLength(), 2);
+            assert.equal(subForms.length, 3);
+            assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
+            done();
+          });
+        });
       });
     });
 
@@ -178,12 +207,19 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         $view = subForm.attributes._view.$el;
         $remove = $view.children('.ui-btn').children('button');
 
-        $remove.trigger('click');
-
-        setTimeout(function() {
+        Promise.resolve()
+        .then(function () {
+          $remove.trigger('click');
+          return testUtils.wait(300);
+        })
+        .then(function () {
+          $('.bm-popup.bm-confirm').find('[data-onclick="onContinueClick"]').trigger('click');
+          return testUtils.wait(300);
+        })
+        .then(function () {
           assert.equal($add.prop('disabled'), false);
           done();
-        }, 0);
+        });
       });
 
     });
@@ -201,6 +237,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       });
 
       test("'add' button should be disabled because it has 2 subforms (preloaded from getFormRecord)", function() {
+        assert.equal(subFormElement.getRealLength(), 2);
         assert.equal($add.prop('disabled'), true);
       });
 
@@ -212,18 +249,27 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         $view = subForm.attributes._view.$el;
         $remove = $view.children('.ui-btn').children('button');
 
-        $remove.trigger("click");
+        $remove.trigger('click');
 
-        setTimeout(function() {
+        Promise.resolve()
+        .then(function () {
+          $remove.trigger('click');
+          return testUtils.wait(300);
+        })
+        .then(function () {
+          $('.bm-popup.bm-confirm').find('[data-onclick="onContinueClick"]').trigger('click');
+          return testUtils.wait(300);
+        })
+        .then(function () {
           //maxSubform is 1 so button will still stay disabled
           assert.equal($add.prop('disabled'), true);
           assert.equal(subForms.length, 2);
           assert.equal(subFormElement.getRealLength(), 1);
           done();
-        }, 0);
+        });
       });
 
-      test("'add' button enabled after removing one more form", function(done) {
+      test("'add' button enabled after removing one more form", function (done) {
         var subForms, subForm, $view, $remove;
 
         subForms = subFormElement.attributes.forms;
@@ -232,30 +278,42 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         $view = subForm.attributes._view.$el;
         $remove = $view.children('.ui-btn').children('button');
 
-        $remove.trigger("click");
-
-        setTimeout(function() {
-          //maxSubform is 1 so button will still stay disabled
+        Promise.resolve()
+        .then(function () {
+          $remove.trigger('click');
+          return testUtils.wait(300);
+        })
+        .then(function () {
+          $('.bm-popup.bm-confirm').find('[data-onclick="onContinueClick"]').trigger('click');
+          return testUtils.wait(300);
+        })
+        .then(function () {
+          //maxSubform is 1 so button will still be enabled
           assert.equal($add.prop('disabled'), false);
           assert.equal(subForms.length, 2);
           assert.equal(subFormElement.getRealLength(), 0);
           done();
-        }, 0);
+        });
       });
 
-      test("'add' button disabled after adding one form", function(done) {
+      test("'add' button disabled after adding one form", function (done) {
         var subForms;
 
         subForms = subFormElement.attributes.forms;
 
-        $add.trigger("click");
-
-        subForms.once('add', function() {
+        Promise.resolve()
+        .then(function () {
+          $add.trigger("click");
+          return new Promise(function (resolve) {
+            subForms.once('add', function() { resolve(); });
+          });
+        })
+        .then(function () {
           assert.equal($add.prop('disabled'), true);
           assert.equal(subForms.length, 3);
           assert.equal(subFormElement.getRealLength(), 1);
           done();
-        }, 100);
+        });
       });
 
     });
