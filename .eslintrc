@@ -7,21 +7,10 @@
   },
   "globals": {
     "BMP": true,
-    /* 3rd-party Libraries */
-    "$": false,
-    "_": false,
-    "Backbone": false,
-    "rivets": false,
-    "Q": false,
-    "moment": false,
-    "google": false,
     /* Web Platform APIs */
     "MediaStreamTrack": false,
-    "Promise": false
   },
   "rules": {
-    /* project-specific exceptions */
-    "strict": 0, /* this is taken care of during the build process */
     /* Possible Errors */
     "no-extra-parens": 2,
     "dot-notation": [2, { "allowKeywords": false }],

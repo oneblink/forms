@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('9: pages', function () {
     var $page = $('[data-role=page]'),
@@ -46,6 +46,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.trigger('pagecreate');
         $page.show();
       });
+
+      testUtils.defineLabelTest();
 
     }); // END: suite('Form', ...)
 
@@ -208,6 +210,14 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           done();
         });
       });
+
+      test('Forms.current.get("_view").goToElement() can goto fields on other pages', function(){
+        var previousPage = BMP.Forms.current.get('pages').current.cid;
+        Forms.current.get("_view").goToElement('email');
+
+        assert.notEqual(BMP.Forms.current.get('pages').current.cid, previousPage);
+        assert.isTrue($('[name="email"]').is(':visible'));
+      } );
 
     }); // END: suite('Pages', ...)
 

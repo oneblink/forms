@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'backbone', 'BIC'], function (Forms, Backbone) {
+define(['BlinkForms', 'backbone', 'testUtils', 'BIC'], function (Forms, Backbone, testUtils) {
   var record$, record, $xml;
 
   suite('getformrecord.xml', function () {
@@ -145,6 +145,8 @@ define(['BlinkForms', 'backbone', 'BIC'], function (Forms, Backbone) {
         $page.show();
 
       });
+
+      testUtils.defineLabelTest();
 
       test('Edit form with subforms', function (done) {
         var form = Forms.current;

@@ -3,15 +3,16 @@
 # 3rd-party / vendor
 bower_components
 node_modules
+npm-debug.log
 
 # JetBrains IntelliJ IDEA files
 /.idea/workspace.xml
 /.idea/dictionaries
 /.idea/runConfigurations
 
+BlinkForms.sublime-*
 /nbproject
 
 # build output
 build
-/BlinkForms*.js*
-i18n.js
+forms/locales/en/i18n.js

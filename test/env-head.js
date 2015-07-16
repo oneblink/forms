@@ -12,11 +12,11 @@
 
   require.config({
     paths: {
-      backbone: 'http://cdnp.blinkm.co/backbonejs/1.1.2/backbone-min',
-      jquery: 'http://cdnp.blinkm.co/jquery/1.11.3/jquery-1.11.3.min',
-      jquerymobile: 'http://cdnp.blinkm.co/jquery.mobile/1.3.2/jquery.mobile-1.3.2.min',
-      underscore: 'http://cdnp.blinkm.co/lodash/2.4.1/lodash.underscore.min',
-      BlinkForms: '../../build/views/forms3jqm',
+      backbone: 'http://cdnp.blinkm.co/backbonejs/1.1.2/backbone',
+      jquery: 'http://cdnp.blinkm.co/jquery/1.11.3/jquery-1.11.3',
+      jquerymobile: 'http://cdnp.blinkm.co/jquery.mobile/1.3.2/jquery.mobile-1.3.2',
+      underscore: 'http://cdnp.blinkm.co/lodash/2.4.1/lodash.underscore',
+      BlinkForms: '../../build/forms3jqm.min',
       BIC: '../sample-bic',
       'BMP.Blob': '../lib/bmp-blobs',
       'BMP.BlinkGap': '../../node_modules/blinkgap-utils/BMP.BlinkGap',
@@ -28,7 +28,9 @@
       bluebird: '../../node_modules/bluebird/js/browser/bluebird.min',
       feature: '../../node_modules/amd-feature/feature',
       'es5-shim': '../../node_modules/es5-shim/es5-shim.min',
-      implementations: '../lib/implementations'
+      implementations: '../lib/implementations',
+      sinon: '../../node_modules/sinon/lib/sinon',
+      testUtils: '../lib/utils'
     },
     shim: {
       'BMP.Blob': {

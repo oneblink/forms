@@ -1,11 +1,12 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
-
 define([
   'underscore',
+  'sinon',
   'BlinkForms',
+  'testUtils',
   'BIC'
-], function (_, Forms) {
+], function (_, sinon, Forms, testUtils) {
 
   suite('i18n', function () {
     /*eslint-disable new-cap*/
@@ -80,6 +81,8 @@ define([
           done();
         });
       });
+
+      testUtils.defineLabelTest();
 
     }); // END: suite('Form', ...)
 
@@ -309,25 +312,19 @@ define([
         assert.equal(errorCounter, errors.length, "(" + counter + ") number of total error doesn't match");
       }
 
-      test('subform require, min=1 subform test', function (done) {
+      test('subform require, min=1 subform test', function () {
         var subFormElement = Forms.current.getElement('comments'),
           subForms = subFormElement.attributes.forms,
           subForm = subForms.at(0),
-          $subformView = subForm.attributes._view.$el,
-          $remove = $subformView.children('.ui-btn').children('button'),
           errors = ['REQUIRED'];
 
         assert.equal(subForms.length, 1, 'no subForms yet');
 
-        $remove.trigger('click');
-
-        setTimeout(function () {
-          subformValidationTest(errors, subFormElement, 1);
-          done();
-        }, 0);
+        subForm.parentElement.remove(subForm);
+        subformValidationTest(errors, subFormElement, 1);
       });
 
-      test('maxinum number of subforms test', function (done) {
+      test('maximum number of subforms test', function (done) {
         var subFormElement = Forms.current.getElement('comments'),
           $view = subFormElement.attributes._view.$el,
           $add = $view.children('.ui-btn').children('button'),
@@ -385,6 +382,23 @@ define([
             });
           });
         });
+      });
+
+      test('validation events are bubbled via Forms.current', function(){
+        var form = Forms.current,
+          element = form.getElement('city'),
+          listenerSpy = sinon.spy();
+
+        form.on('invalid change:value change:blob', listenerSpy);
+        assert.isUndefined(element.validate(), 'no validation errors');
+
+        element.val('');
+        assert.isObject(element.validate(), 'now has a validation error');
+        assert.isArray(element.validate().value, 'something wrong with value');
+
+        assert.isAbove(listenerSpy.callCount, 0);
+        listenerSpy.reset();
+
       });
     }); // END: suite('Form', ...)
 

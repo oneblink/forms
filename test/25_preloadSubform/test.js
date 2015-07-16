@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('25: preload subForms and validate _action assignment', function () {
     var $doc = $(document),
@@ -55,6 +55,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.show();
       });
 
+      testUtils.defineLabelTest();
+
       suite('Preload subforms', function () {
 
         test('Parent form loaded subform correctly', function () {
@@ -87,8 +89,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           }
 
         });
-        //test('', function () {});
-
       });
 
       suite('Subforms record holds more number of values then preload limit', function () {
@@ -221,7 +221,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $add.trigger('click');
         });
 
-        test('Subforms has correct actions', function (done) {
+        test('Subforms has correct actions', function () {
           var element = Forms.current.getElement('Address'),
             subForms = element.attributes.forms,
             subform,
@@ -248,101 +248,77 @@ define(['BlinkForms', 'BIC'], function (Forms) {
               }
             }
           }
-          done();
         });
 
-        test("remove newly added subform (no placeholders)", function(done) {
+        test("remove newly added subform (no placeholders)", function() {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForms = subFormElement.attributes.forms,
-            subForm = subForms.at(4),
-            $view = subForm.attributes._view.$el,
-            $remove = $view.children('.ui-btn').children('button');
+            subForm = subForms.at(4);
 
           assert.equal(subForms.length, 5);
-          $remove.trigger('click');
-          setTimeout(function () {
-            assert.equal(subForms.length, 4);
-            form.data().then(function (data) {
-              assert.equal(data.Address.length, 4);
-              done();
-            });
-          }, 0);
+          subForm.parentElement.remove(subForm);
+          assert.equal(subForms.length, 4);
+          return form.data().then(function (data) {
+            assert.equal(data.Address.length, 4);
+          });
+
+
         });
 
-        test("remove subform with id (with placeholder)", function(done) {
+        test("remove subform with id (with placeholder)", function() {
+          var form = Forms.current,
+            subFormElement = form.getElement('Address'),
+            subForm = subFormElement.get('forms').at(3);
+
+          assert.equal(subFormElement.get('forms').length, 4);
+          subForm.parentElement.remove(subForm);
+          return form.data().then(function (data) {
+            assert.equal(data.Address.length, 4);
+            assert.equal(data.Address[3]._action, "remove");
+            assert.equal(data.Address[3].id, 4);
+          });
+        });
+
+        test("remove sub-subform with id (with placeholder)", function() {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForms = subFormElement.attributes.forms,
-            subForm = subForms.at(3),
-            $view = subForm.attributes._view.$el,
-            $remove = $view.children('.ui-btn').children('button');
+            subForm = subForms.at(2);
 
           assert.equal(subForms.length, 4);
-          $remove.trigger('click');
-          setTimeout(function () {
-            assert.equal(subForms.length, 4);
-            form.data().then(function (data) {
-              assert.equal(data.Address.length, 4);
-              assert.equal(data.Address[3]._action, "remove");
-              assert.equal(data.Address[3].id, 4);
-              done();
-            });
-          }, 0);
-        });
-
-        test("remove sub-subform with id (with placeholder)", function(done) {
-          var form = Forms.current,
-            subFormElement = form.getElement('Address'),
-            subForms = subFormElement.attributes.forms,
-            subForm = subForms.at(2),
-            $view,
-            $remove;
-
           //sub-subform
           subFormElement = subForm.getElement('Phone');
           subForms = subFormElement.attributes.forms;
-          subForm = subForms.at(0);
-          $view = subForm.attributes._view.$el;
-          $remove = $view.children('.ui-btn').children('button');
+
+          subForms.at(0).parentElement.remove(subForms.at(0));
 
           assert.equal(subForms.length, 3);
-          $remove.trigger('click');
-          setTimeout(function () {
-            assert.equal(subForms.length, 3);
-            form.data().then(function (data) {
-              assert.equal(data.Address[2].Phone.length, 3);
-              assert.equal(data.Address[2].Phone[0]._action, "remove");
-              assert.equal(data.Address[2].Phone[0].id, 3);
-              done();
-            });
-          }, 0);
+          return form.data().then(function (data) {
+            assert.equal(data.Address[2].Phone.length, 3);
+            assert.equal(data.Address[2].Phone[0]._action, "remove");
+            assert.equal(data.Address[2].Phone[0].id, 3);
+          });
         });
 
-        test("remove preloaded sub-subform (with out placeholder)", function(done) {
+        test("remove preloaded sub-subform (with out placeholder)", function() {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForms = subFormElement.attributes.forms,
-            subForm = subForms.at(0),
-            $view,
-            $remove;
+            subForm = subForms.at(0);
 
           //sub-subform
           subFormElement = subForm.getElement('Phone');
           subForms = subFormElement.attributes.forms;
           subForm = subForms.at(0);
-          $view = subForm.attributes._view.$el;
-          $remove = $view.children('.ui-btn').children('button');
 
           assert.equal(subForms.length, 1);
-          $remove.trigger('click');
-          setTimeout(function () {
-            assert.equal(subForms.length, 0);
-            form.data().then(function (data) {
-              assert.equal(data.Address[0].Phone.length, 0);
-              done();
-            });
-          }, 0);
+
+          subForm.parentElement.remove(subForm);
+          assert.equal(subForms.length, 0);
+          return form.data().then(function (data) {
+            assert.equal(data.Address[0].Phone.length, 0);
+          });
         });
 
       });

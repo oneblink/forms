@@ -1,6 +1,6 @@
 /*global assert*/ // chai
 
-define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
+define(['backbone', 'BlinkForms', 'testUtils', 'BIC'], function (Backbone, Forms, testUtils) {
 
   var mockXhrUpload = new Backbone.Model();
   mockXhrUpload.addEventListener = function (type, handler) {
@@ -65,6 +65,8 @@ define(['backbone', 'BlinkForms', 'BIC'], function (Backbone, Forms) {
         $page.trigger('pagecreate');
         $page.show();
       });
+
+      testUtils.defineLabelTest();
 
       test('location button is enabled', function (done) {
         var form = Forms.current,

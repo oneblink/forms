@@ -1,50 +1,53 @@
-# Blink Forms v3
+# BlinkMobile Forms
 
-This is a prototype and testing ground for the next evolution of the
-Blink Forms UI implementation.
+execute a definition, creating Models and Views to capture data from users
 
-## Version Numbers
+[![Build Status](https://travis-ci.org/blinkmobile/forms.png)](https://travis-ci.org/blinkmobile/forms)
 
-This project is NOT versioned according to Semantic Versioning. Rather, it is versioned according to our [Shifted Semantic Versioning](https://github.com/blinkmobile/docs/wiki/Process:-Semantic-Versioning#shifted-semantic-versioning).
 
-## Modular approach
+## Semantic Versioning
 
-A high-priority goal for this library is that it be possible to extend. We will not be able to anticipate all the ways customers will wish to use Blink Forms, so it is important that such customers are able to integrate with and extend core functionality.
+This project follows [Semantic Versioning](http://semver.org/) principles.
 
-As part of this philosophy, as well as for other benefits, the functionality of Blink Forms v3 is divided into 3 modules.
 
-### Blink Forms core
+## Approach
+
+A high-priority goal for this library is that it be possible to extend.
+Customers should be able to:
+
+- use the default implementation as-is
+- tweak behaviour of one or more components to better suit their needs
+- replace in full the default implementation of a particular component
+
+
+### Core (Models)
 
 - Backbone.JS Models
 - field validation
+- i18n / translations of all visible text
 - JavaScript API
 
-We aspire to eventually share the same core Blink Forms logic across all versions and modes of our Blink Intelligent Client. Maintenance of shared functionality will be easier and benefit all BICs simultaneously.
 
-### DOM integration
+### DOM (Views)
 
 - Backbone.JS Views
 - DOM manipulation
 
-We restrict all DOM code to this pluggable module. We have started with an implementation of this module for BIC v3 (jQuery Mobile), but eventually we may complement this with a module for BIC v2. These BIC versions require different DOM structures, so it makes sense to keep this code separate.
+We target jQueryMobile 1.3.x for our Views now, but it should be possible to
+reimplement this layer without affecting work done in the Core.
 
-As a side-effect of this approach, it should eventually be feasible for innovative customers to substitute in their own partial or complete implementations of this module.
 
 ### [BIC integration](BIC.md)
 
 - network access
 - client-side persistent-storage
 
-This is not so much a module as it is an API. This likely won't be developed entirely within this project, rather it will be developed as part of the consuming BIC.
-
-It is assumed that the BIC will select the appropriate DOM integration module. Further, the BIC must implement several methods, event handlers, etc in order to properly enable Blink Forms functionality.
-
-BIC v2 and v3 have drastically different behaviours, so allowing this part to be declared elsewhere yet with a common API facilitates maintenance and development.
-
-By documenting this API, innovative customers will be able to more deeply integrate their own code with Blink Forms.
+These are not handled with the Forms project. We expect other parts of a
+solution (e.g. BIC) to provide these as services that Forms may consume.
 
 
 ## Instructions
+
 
 ### Prerequisites
 
@@ -58,6 +61,7 @@ install with:
 
 Note: take care to install this "globally" i.e. with `-g`
 
+
 ### Build Process
 
 As you've probably guessed, we use Grunt as our task-based build tool
@@ -65,10 +69,9 @@ for JavaScript.
 
 In the root of the project's working directory, run:
 
-    npm update
-    bower install
-    grunt
+    npm install; npm update
+    npm test
 
 This installs the required plugins for Grunt, and then uses Grunt to
-build the project into `js/build`. For the jQueryMobile version of Forms v3,
-check the `js/build/views/` directory.
+build the project into `build`. The build output includes both the core and the
+jQueryMobile views.

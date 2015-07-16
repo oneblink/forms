@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'bluebird', 'BIC'], function (Forms, Promise) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('18: Subforms with pages', function () {
     var $page = $('[data-role=page]'),
@@ -49,6 +49,8 @@ define(['BlinkForms', 'bluebird', 'BIC'], function (Forms, Promise) {
           done();
         });
       });
+
+      testUtils.defineLabelTest();
 
       test('testing subform paging', function (done) {
         var form = Forms.current,
@@ -172,6 +174,16 @@ define(['BlinkForms', 'bluebird', 'BIC'], function (Forms, Promise) {
         var fieldcontain$ = $('[data-role=fieldcontain]');
         var enhanced$ = $('[data-role=fieldcontain].ui-field-contain');
         assert.equal(fieldcontain$.length, enhanced$.length);
+      });
+
+      test('Fields in subforms on other pages can be found and scrolled to', function(){
+        var pages = Forms.current.get('pages');
+        var previousPage;
+        pages['goto'](0);
+        previousPage = pages.current.cid;
+        Forms.current.get("_view").goToElement('status');
+
+        assert.notEqual(pages.current.cid, previousPage);
       });
 
     }); // END: suite('Form', ...)

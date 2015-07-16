@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 
     clean: {
       build: {
-        src: ['build', 'js/locales/**/i18n.js']
+        src: ['build', 'forms/locales/**/i18n.js']
       }
     },
 
@@ -30,15 +30,16 @@ module.exports = function (grunt) {
 
     exec: {
       messageformat: {
-        cmd: 'node_modules/messageformat/bin/messageformat.js -l en js/locales/en js/locales/en/i18n.js'
+        cmd: 'node node_modules/messageformat/bin/messageformat.js -l en forms/locales/en forms/locales/en/i18n.js'
       }
     },
 
     requirejs: {
       compile: {
         options: {
-          baseUrl: 'js',
+          baseUrl: '.',
           dir: 'build',
+          skipDirOptimize: false,
 //          optimize: 'uglify2',
           optimize: 'none',
           uglify: {
@@ -51,43 +52,50 @@ module.exports = function (grunt) {
             warnings: false
           },
           paths: {
+            // exclude these from the build (load from CDN)
             backbone: 'empty:',
             bluebird: 'empty:',
             jquery: 'empty:',
             jquerymobile: 'empty:',
             underscore: 'empty:',
+            signaturepad: 'empty:',
             // libraries to be built-in
-            '@blinkmobile/cast-property-types': '../node_modules/@blinkmobile/cast-property-types/dist/index',
-            '@blinkmobile/html-class-data': '../node_modules/@blinkmobile/html-class-data/dist/index',
-            '@blinkmobile/varied-definition': '../node_modules/@blinkmobile/varied-definition/dist/index',
-            moment: '../node_modules/moment/min/moment.min',
-            picker: '../node_modules/pickadate/lib/picker',
-            'picker.date': '../node_modules/pickadate/lib/picker.date',
-            'picker.time': '../node_modules/pickadate/lib/picker.time',
-            'poll-until': '../node_modules/poll-until/poll-until',
-            'queue-async': '../node_modules/queue-async/queue',
-            geolocation: '../node_modules/geolocation/geolocation',
-            rivets: '../node_modules/rivets/dist/rivets',
-            uuid: '../node_modules/node-uuid/uuid',
+            '@blinkmobile/cast-property-types': 'node_modules/@blinkmobile/cast-property-types/dist/index',
+            '@blinkmobile/geolocation': 'node_modules/@blinkmobile/geolocation/geolocation',
+            '@blinkmobile/html-class-data': 'node_modules/@blinkmobile/html-class-data/dist/index',
+            '@blinkmobile/jqpromise': 'node_modules/@blinkmobile/jqpromise/dist/index',
+            '@blinkmobile/varied-definition': 'node_modules/@blinkmobile/varied-definition/dist/index',
+            'typed-errors': 'node_modules/js-typed-errors/dist/typed-errors',
+            moment: 'node_modules/moment/min/moment.min',
+            picker: 'node_modules/pickadate/lib/picker',
+            'picker.date': 'node_modules/pickadate/lib/picker.date',
+            'picker.time': 'node_modules/pickadate/lib/picker.time',
+            'poll-until': 'node_modules/poll-until/poll-until',
+            'queue-async': 'node_modules/queue-async/queue',
+            rivets: 'node_modules/rivets/dist/rivets',
+            uuid: 'node_modules/node-uuid/uuid',
             // Require.JS plugins
-            text: '../node_modules/text/text'
+            text: 'node_modules/text/text'
           },
           modules: [
             {
-              name: 'views/forms3jqm',
-              include: ['main', 'moment', 'picker.date', 'picker.time']
+              name: 'forms/jqm',
+              include: [
+                'moment',
+                'picker.date',
+                'picker.time'
+              ],
+              insertRequire: ['forms/jqm']
             }
           ],
           wrap: {
             startFile: [
-              'js/models/expression.js',
-              'parts/00-start.frag',
-              'node_modules/almond/almond.js',
-              'parts/01-jquery.frag'
+              // 'parts/00-start.frag',
+              // 'parts/01-jquery.frag'
             ],
             endFile: [
               'parts/99-end.frag',
-              'js/locales/en/i18n.js'
+              'forms/locales/en/i18n.js'
             ]
           }
         }
@@ -97,17 +105,17 @@ module.exports = function (grunt) {
     uglify: {
       'Forms3+jQM': {
         options: {
-          sourceMap: 'build/views/forms3jqm.js.map',
-          sourceMappingURL: 'forms3jqm.js.map', // fix reference in .min.js
-          sourceMapPrefix: 3, // fix reference in .js.map
+          sourceMap: true,
+          sourceMapName: 'build/forms3jqm.js.map',
+          sourceMapIncludeSources: true,
           beautify: {
             width: 80,
             max_line_len: 80
           }
         },
         files: {
-          'build/views/forms3jqm.min.js': [
-            'build/views/forms3jqm.js'
+          'build/forms3jqm.min.js': [
+            'build/forms/jqm.js'
           ]
         }
       }
@@ -118,7 +126,8 @@ module.exports = function (grunt) {
         src: ['test/*/index.html'],
         options: {
           run: false,
-          timeout: 10000
+          timeout: 10000,
+          log: true
         }
       }
     },
@@ -137,16 +146,16 @@ module.exports = function (grunt) {
     watch: {
       i18n: {
         files: [
-          '!js/locales/**/*',
-          '!js/locales/**/i18n.js'
+          '!forms/locales/**/*',
+          '!forms/locales/**/i18n.js'
         ],
         tasks: 'messageformat'
       },
       src: {
         files: [
           'Gruntfile.js',
-          'js/**/*',
-          'js/locales/**/i18n.js',
+          'forms/**/*',
+          'forms/locales/**/i18n.js',
           '!build/**/*',
           'parts/*'
         ],

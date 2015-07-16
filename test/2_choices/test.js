@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   var originalOptions = { a: 'alpha', b: 'beta', g: 'gamma' };
   var newOptions = { d: 'delta', e: 'epsilon', z: 'zeta' };
@@ -53,6 +53,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.trigger('pagecreate');
         $page.show();
       });
+
+      testUtils.defineLabelTest();
 
       test('select+other bindings between model and "other" input', function () {
         var form = Forms.current;
@@ -219,54 +221,73 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       });
 
-      test('boolean 0/1', function (done) {
-        var form = Forms.current,
-          element = form.getElement('boolean'),
-          $fieldset = element.attributes._view.$el;
+      ['boolean', 'question'].forEach(function (name) {
 
-        element.val('');
-        assert.equal(element.val(), 0, 'model.value is 0');
-        assert.equal($fieldset.find('ui-btn-active').length, 0, 'jQM is blank');
+        test(name + ': model->view', function (done) {
+          var form = Forms.current,
+            element = form.getElement(name),
+            options = Object.keys(element.get('options')),
+            $fieldset = element.attributes._view.$el;
 
-        element.val(0);
-        assert.equal(element.val(), 0, 'model.value = 0');
+          Promise.resolve()
+          .then(function () {
+            element.val('');
+            return testUtils.wait(500);
+          })
+          .then(function () {
+            assert.equal(element.val(), options[0], name + ': default value');
+            assert.equal($fieldset.find('.ui-btn-active').css('width'), '0px');
 
-        setTimeout(function () {
-          element.val(1);
-          assert.equal(element.val(), 1, 'model.value = 1');
+            element.val(options[0]);
+            return testUtils.wait(500);
+          })
+          .then(function () {
+            assert.equal(element.val(), options[0], name + ': value=' + options[0]);
+            assert.equal($fieldset.find('.ui-btn-active').css('width'), '0px');
 
-          setTimeout(function () {
+            element.val(options[1]);
+            return testUtils.wait(500);
+          })
+          .then(function () {
+            assert.equal(element.val(), options[1], name + ': value=' + options[1]);
+            assert.notEqual($fieldset.find('.ui-btn-active').css('width'), '0px');
+          })
+          .then(done, done);
+
+        });
+
+        test(name + ': view->model', function (done) {
+          var form = Forms.current,
+            element = form.getElement(name),
+            options = Object.keys(element.get('options')),
+            $fieldset = element.attributes._view.$el;
+
+          Promise.resolve()
+          .then(function () {
+            element.val('');
+            return testUtils.wait(500);
+          })
+          .then(function () {
+            assert.equal(element.val(), options[0], name + ': default value');
+            assert.equal($fieldset.find('.ui-btn-active').css('width'), '0px');
+
             $fieldset.find('div.ui-slider-switch').trigger('mousedown').trigger('mouseup').trigger('click');
-            assert.equal(element.val(), 0, 'model.value = 0');
-            done();
-          }, 500);
+            return testUtils.wait(500);
+          })
+          .then(function () {
+            assert.equal(element.val(), options[1], name + ': value=' + options[1]);
+            assert.notEqual($fieldset.find('.ui-btn-active').css('width'), '0px');
 
-        }, 500);
-
-      });
-
-      test('boolean n/y', function (done) {
-        var form = Forms.current,
-          element = form.getElement('question'),
-          $fieldset = element.attributes._view.$el;
-
-        element.val('');
-        assert.equal(element.val(), 'n', 'model.value is "n"');
-        assert.equal($fieldset.find('ui-btn-active').length, 0, 'jQM is blank');
-
-        element.val('n');
-        assert.equal(element.val(), 'n', 'model.value = "n"');
-
-        setTimeout(function () {
-          element.val('y');
-          assert.equal(element.val(), 'y', 'model.value = "y"');
-
-          setTimeout(function () {
             $fieldset.find('div.ui-slider-switch').trigger('mousedown').trigger('mouseup').trigger('click');
-            assert.equal(element.val(), 'n', 'model.value = "n"');
-            done();
-          }, 500);
-        }, 500);
+            return testUtils.wait(500);
+          })
+          .then(function () {
+            assert.equal(element.val(), options[0], name + ': value=' + options[0]);
+            assert.equal($fieldset.find('.ui-btn-active').css('width'), '0px');
+          })
+          .then(done, done);
+
+        });
 
       });
 

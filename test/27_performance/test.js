@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
   // var start, end, interval, intervals;
 
   // suite('responsiveness test', function () {
@@ -86,6 +86,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           done();
         });
       });
+
+      testUtils.defineLabelTest();
 
     }); // END: suite('Form', ...)
 
