@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v3.4.0 - 2015-07-16
+
+
+### Added
+
+- FORMS-181: APIs and events for managing custom client and server errors
+
+    - see [docs/errors.md](docs/errors.md) for more details
+
+- FORMS-187: HTML attributes for Forms and Sub-Forms
+
+    - see [docs/css-selectors.md](docs/css-selectors.md) for more details
+
+
+### Changed
+
+- FORMS-199: Forms modules are no longer private, can be `require()`ed globally
+
+    - improves determinism during boot, improves maintainability
+
+    - offers new avenues for extensibility
+
+- FORMS-193: confirmation prompt when users remove sub-form records
+
+
+### Fixed
+
+- FORMS-201: native date picker displays "now" and "now +" values
+
+
 ## v3.3.5 - 2015-06-26
 
 

@@ -372,7 +372,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             setTimeout(function(){
               assert.equal(commentsSubForm.get('forms').length, startingLength);
               done();
-            }, 250);
+            }, 400);
           }, 250);
         });
       });

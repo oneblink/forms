@@ -10,12 +10,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
   var multiWithOther = [ 'multic', 'multie', 'multif', 'multig' ];
   var selectWithOther = [ 'selectc', 'selecte', 'selectf', 'selecth' ];
 
-  function wait (ms) {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, ms);
-    });
-  }
-
   suite('2: options', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
@@ -238,21 +232,21 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           Promise.resolve()
           .then(function () {
             element.val('');
-            return wait(500);
+            return testUtils.wait(500);
           })
           .then(function () {
             assert.equal(element.val(), options[0], name + ': default value');
             assert.equal($fieldset.find('.ui-btn-active').css('width'), '0px');
 
             element.val(options[0]);
-            return wait(500);
+            return testUtils.wait(500);
           })
           .then(function () {
             assert.equal(element.val(), options[0], name + ': value=' + options[0]);
             assert.equal($fieldset.find('.ui-btn-active').css('width'), '0px');
 
             element.val(options[1]);
-            return wait(500);
+            return testUtils.wait(500);
           })
           .then(function () {
             assert.equal(element.val(), options[1], name + ': value=' + options[1]);
@@ -271,21 +265,21 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           Promise.resolve()
           .then(function () {
             element.val('');
-            return wait(500);
+            return testUtils.wait(500);
           })
           .then(function () {
             assert.equal(element.val(), options[0], name + ': default value');
             assert.equal($fieldset.find('.ui-btn-active').css('width'), '0px');
 
             $fieldset.find('div.ui-slider-switch').trigger('mousedown').trigger('mouseup').trigger('click');
-            return wait(500);
+            return testUtils.wait(500);
           })
           .then(function () {
             assert.equal(element.val(), options[1], name + ': value=' + options[1]);
             assert.notEqual($fieldset.find('.ui-btn-active').css('width'), '0px');
 
             $fieldset.find('div.ui-slider-switch').trigger('mousedown').trigger('mouseup').trigger('click');
-            return wait(500);
+            return testUtils.wait(500);
           })
           .then(function () {
             assert.equal(element.val(), options[0], name + ': value=' + options[0]);

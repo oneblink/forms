@@ -135,7 +135,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.3.5';
+  Forms.version = '3.4.0';
   Forms.supports = {};
 
   Forms.supports.blob = (function () {
