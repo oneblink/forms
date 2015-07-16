@@ -45,7 +45,7 @@ define(function(require){
 
         this.$el.popup('open');
         this.$el.one('popupafterclose', function(){
-          Backbone.View.prototype.remove.apply(this, arguments);
+          this.remove();
         }.bind(this));
       }.bind(this));
 

@@ -1,11 +1,18 @@
 define(function(require){
   'use strict';
 
+  // foreign modules
+
   var _ = require('underscore');
   var $ = require('jquery');
+  var Backbone = require('backbone');
+
+  // local modules
 
   var PopupView = require('forms/jqm/popup');
   var template = require('text!forms/jqm/templates/confirm-popup.html');
+
+  // this module
 
   var ConfirmPopup = PopupView.extend({
     template: _.template(template),
@@ -26,6 +33,7 @@ define(function(require){
     remove: function(){
       $('[data-onclick="onCancelClick"]', this.$el).off('click');
       $('[data-onclick="onContinueClick"]', this.$el).off('click');
+      Backbone.View.prototype.remove.apply(this, arguments);
     },
 
     onContinueClick: function(){
