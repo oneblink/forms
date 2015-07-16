@@ -23,10 +23,6 @@ define(function (require) {
 
     attributes: {},
 
-    events: {
-      'click [data-onclick="onRemoveClick"]': 'onRemoveClick'
-    },
-
     render: function () {
       var parentElement = this.model.parentElement,
         name = parentElement.attributes.minusButtonLabel,
@@ -36,7 +32,8 @@ define(function (require) {
         type: 'button',
         'data-icon': 'minus',
         'data-action': 'remove'
-      }).text(name);
+      }).text(name)
+        .on('click', this.onRemoveClick.bind(this));
 
       FormView.prototype.render.call(this);
 

@@ -2,9 +2,7 @@ define(function(require){
 	'use strict';
 
   var Backbone = require('backbone');
-  var $ = require('jquery');
   var _ = require('underscore');
-
 
   var NotImplementedError = require('typed-errors').NotImplementedError;
   /**
@@ -16,7 +14,8 @@ define(function(require){
     attributes: {
       'data-theme': 'c',
       'data-position-to': 'window',
-      'data-transition': 'pop'
+      'data-transition': 'pop',
+      'data-role': 'popup'
     },
 
     initialize: function(){
@@ -38,14 +37,23 @@ define(function(require){
       if ( this._promise ){
         return this._promise;
       }
-
       this._promise = new Promise(function(resolve, reject){
         this._resolve = resolve;
         this._reject = reject;
 
-        $('body').append( this.render().$el );
-        this.$el = this.$el.popup().popup('open');
+        this.$el = this.render().$el.popup();
+
+        this.$el.popup('open');
+        this.$el.one('popupafterclose', function(){
+          Backbone.View.prototype.remove.apply(this, arguments);
+        }.bind(this));
       }.bind(this));
+
+      this._promise['catch'](function(err){
+        if ( err.message !== 'cancel' ){
+          window.console.log('popup error:', err);
+        }
+      });
 
       return this._promise;
     },
@@ -55,8 +63,6 @@ define(function(require){
       this._resolve = null;
       this._reject = null;
       this._promise = null;
-
-      Backbone.View.prototype.remove.apply(this, arguments);
     }
   });
 

@@ -12,17 +12,20 @@ define(function(require){
 
     className: 'bm-popup bm-confirm',
 
-    events: {
-      'click [data-onclick="onCancelClick"]': 'onCancelClick',
-      'click [data-onclick="onContinueClick"]': 'onContinueClick'
-    },
-
     render: function(){
       this.$el.append(this.template(this.model));
       this.$el.attr('cid', this.model.cid);
+
       $('[data-role="button"]', this.$el ).button();
+      $('[data-onclick="onCancelClick"]', this.$el).on('click', _.debounce(this.onCancelClick.bind(this), 250));
+      $('[data-onclick="onContinueClick"]', this.$el).on('click', _.debounce(this.onContinueClick.bind(this), 250));
 
       return this;
+    },
+
+    remove: function(){
+      $('[data-onclick="onCancelClick"]', this.$el).off('click');
+      $('[data-onclick="onContinueClick"]', this.$el).off('click');
     },
 
     onContinueClick: function(){
@@ -30,7 +33,7 @@ define(function(require){
     },
 
     onCancelClick: function(){
-      this._reject(new Error('User Canceled the dialog'));
+      this._reject(new Error('cancel'));
     }
 
   });
