@@ -28,7 +28,7 @@
 
 ### Fixed
 
-- FORMS-201: native date picker displays "now" and "now +" values
+- FORMS-189: native date picker displays "now" and "now +" values
 
 
 ## v3.3.5 - 2015-06-26
