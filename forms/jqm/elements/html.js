@@ -14,7 +14,6 @@ define(function (require) {
 
       this.$el.append($input);
 
-      this.bindRivets();
       this.model.isValid();
       this.$el.fieldcontain();
       $input.textinput();

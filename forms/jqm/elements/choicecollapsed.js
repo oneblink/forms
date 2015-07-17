@@ -48,7 +48,6 @@ define(function (require) {
       this.renderOptions();
       this.$el.fieldcontain();
 
-      this.bindRivets();
       $input.on('change', function () {
         that.model.set('value', that.prepModelValue());
       });

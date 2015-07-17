@@ -66,7 +66,6 @@ define(function (require) {
       }
 
       this.$el.fieldcontain();
-      this.bindRivets();
       return this;
     },
 

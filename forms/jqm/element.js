@@ -6,7 +6,6 @@ define(function (require) {
   var $ = require('jquery');
   var _ = require('underscore');
   var Backbone = require('backbone');
-  var rivets = require('rivets');
 
   // local modules
 
@@ -24,10 +23,12 @@ define(function (require) {
 
   return Backbone.View.extend({
     tagName: 'div',
+
     attributes: {
       'data-role': 'fieldcontain',
       'rv-class': 'm:class'
     },
+
     initialize: function () {
       var element = this.model;
       element.on('invalid change:value', this.renderErrors, this);
@@ -37,7 +38,6 @@ define(function (require) {
       this.$el.attr('data-name', element.attributes.name);
       this.$el.attr('data-element-type', element.attributes.type);
       this.$el.data('model', element);
-      this.bindRivets();
       this.onChangeHidden();
       this.model.isValid();
 
@@ -45,6 +45,7 @@ define(function (require) {
         events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       }
     },
+
     remove: function () {
       this.$el.removeData('model');
       this.model.off(null, null, this);
@@ -53,12 +54,10 @@ define(function (require) {
         events.proxyUnbindEntityEvents(this, this.model, this.modelEvents);
       }
 
-      if (this.rivet) {
-        this.rivet.unbind();
-      }
       this.model.unset('_view');
       return Backbone.View.prototype.remove.call(this);
     },
+
     renderLabel: function () {
       var $label = $(document.createElement('label'));
       $label.attr({
@@ -67,6 +66,7 @@ define(function (require) {
       });
       this.$el.append($label);
     },
+
     renderHint: function () {
       var self = this,
         attrs = self.model.attributes,
@@ -103,9 +103,11 @@ define(function (require) {
 
       this.$el.append($hint);
     },
+
     render: function () {
       throw new NotImplementedError('Element.render is only an interface');
     },
+
     //TODO: with the event removed are warnings still used ?
     renderWarning: function () {
       var attrs, warning;
@@ -122,11 +124,11 @@ define(function (require) {
           .appendTo(this.$el);
       }
     },
+
     renderErrors: function (model, validaitonErrors) {
       var attrs = this.model.attributes;
       var errors = this.model.validationError || validaitonErrors;
 
-      // TODO: do this via bindings with rivets
       this.$el.children('.bm-errors__bm-list').remove();
 
       if (errors) {
@@ -166,26 +168,19 @@ define(function (require) {
         this.show();
       }
     },
+
     hide: function () {
       this.$el.css('display', 'none');
     },
+
     show: function () {
       if (this.$el.css('display') === 'none') {
         this.$el.css('display', '');
       }
     },
+
     isHidden: function () {
       return this.$el && this.$el.css('display') === 'none';
-    },
-    bindRivets: function () {
-      if (this.rivet) {
-        this.rivet.unbind();
-      }
-      // preserve existing (jQM) classes so that Rivets doesn't remove them
-      if (this.el.className && this.el.hasAttribute('rv-class') && this.model.attributes.hasOwnProperty('class')) {
-        this.model.attributes['class'] += ' ' + this.el.className;
-      }
-      this.rivet = rivets.bind(this.el, {m: this.model});
     },
 
     /**

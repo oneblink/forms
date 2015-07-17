@@ -43,7 +43,6 @@ define(function (require) {
 
       this.$el.fieldcontain();
 
-      this.bindRivets();
       this.model.on('change:blob', function () {
         this.model.updateWarning();
         if (_.isEmpty(this.model.attributes.warning)) {

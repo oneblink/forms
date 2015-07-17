@@ -44,7 +44,6 @@ define(function (require) {
     },
     render: function () {
       this.$el.fieldcontain();
-      this.bindRivets();
     }
   });
 

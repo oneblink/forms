@@ -40,8 +40,6 @@ define(function (require) {
 
       this.$el.append($input);
       this.$el.fieldcontain();
-
-      this.bindRivets();
     },
 
     onAttached: function () {

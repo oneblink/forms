@@ -24,7 +24,6 @@ define(function (require) {
         name: name,
         'rv-value': 'm:value'
       });
-      this.bindRivets();
     }
   });
 

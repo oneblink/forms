@@ -60,7 +60,6 @@ define(function (require) {
       this.model.on('change:value', this.renderSlider, this);
       this.$el.fieldcontain();
       $input.slider();
-      this.bindRivets();
 
     },
     remove: function () {

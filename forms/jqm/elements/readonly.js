@@ -25,7 +25,6 @@ define(function (require) {
       });
 
       this.$el.append($label);
-      this.bindRivets();
     }
   });
 
