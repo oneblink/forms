@@ -15,7 +15,10 @@ define(function (require) {
     tagName: 'section',
 
     initialize: function(){
-      this.listenTo(this.model, 'update:fieldErrors', this.renderErrors.bind(this) );
+      this.listenTo(this.model, 'update:fieldErrors', function(){
+        this.renderErrors.apply(this, arguments);
+      }.bind(this) );
+
       ElementView.prototype.initialize.apply(this, arguments);
     },
 

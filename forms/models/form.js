@@ -371,6 +371,17 @@ define(function (require) {
     /* eslint-disable no-unused-vars */ //stop eslint compaining about options and errorList not being used.
     setErrors: function(errorList, options){
       var elementsCollection = this.get('elements');
+      var subForms = this.getSubforms();
+
+      _.each(subForms, function(subForm, name){
+        var subFormErrorList = _.omit(errorList[name], 'errors');
+
+        _.each(subFormErrorList, function(errors, index){
+          //we dont know which subform yet. invoke on every subform
+          subForm.invoke('setErrors', errors, options);
+        });
+      });
+
       if (!elementsCollection){
         return false;
       }

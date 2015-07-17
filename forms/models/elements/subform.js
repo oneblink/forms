@@ -266,6 +266,7 @@ define(function (require) {
         errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
       }
       if (!_.isEmpty(errors)) {
+        this.trigger('update:fieldErrors', errors);
         return errors;
       }
     },
@@ -322,6 +323,16 @@ define(function (require) {
       }
 
       return _.isEmpty(errors) ? undefined : errors;
+    },
+
+    setExternalErrors: function(elementErrorList, options){
+      //set errors on subforms
+      this.get('forms').invoke('setErrors', elementErrorList, options);
+
+      //set errors on me.
+      ElementModel.prototype.setExternalErrors.call(this, elementErrorList.errors || elementErrorList, options);
+
+      this.trigger('update:fieldErrors');
     }
   });
 });

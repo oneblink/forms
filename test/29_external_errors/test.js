@@ -97,5 +97,22 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       Forms.current.setErrors(externalErrors);
       assert.equal(Forms.current.getErrors().city[0].code, 'CUSTOM');
     });
+
+    test("We can set a custom error message on a subform", function(){
+      var errorMessages;
+      var errors = {
+        "comments": [{
+          code: 'CUSTOM',
+          CUSTOM: "this is a custom error"
+        }]
+      };
+
+      Forms.current.setErrors(errors);
+      errorMessages = Forms.current.getErrors();
+
+      assert.equal(errorMessages.comments[0].CUSTOM, 'this is a custom error');
+      assert.equal(errorMessages.comments[0].code, 'CUSTOM');
+
+    });
   });
 });
