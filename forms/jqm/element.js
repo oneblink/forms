@@ -29,11 +29,15 @@ define(function (require) {
       'rv-class': 'm:class'
     },
 
+    modelEvents: {
+      'invalid change:value': 'renderErrors',
+      // 'change:warning', 'renderWarning',
+      'change:hidden': 'onChangeHidden',
+      'change:label': 'renderLabel'
+    },
+
     initialize: function () {
       var element = this.model;
-      element.on('invalid change:value', this.renderErrors, this);
-      //element.on('change:warning', this.renderWarning, this);
-      element.on('change:hidden', this.onChangeHidden, this);
 
       this.$el.attr('data-name', element.attributes.name);
       this.$el.attr('data-element-type', element.attributes.type);
@@ -47,6 +51,7 @@ define(function (require) {
     },
 
     remove: function () {
+      this.$label = null;
       this.$el.removeData('model');
       this.model.off(null, null, this);
 
@@ -59,12 +64,11 @@ define(function (require) {
     },
 
     renderLabel: function () {
-      var $label = $(document.createElement('label'));
-      $label.attr({
-        'rv-text': 'm:label',
-        'class': 'ui-input-text'
-      });
-      this.$el.append($label);
+      if (!this.$label) {
+        this.$label = $('<label class="ui-input-text"></label>');
+        this.$el.append(this.$label);
+      }
+      this.$label.html(this.model.attributes.label || '');
     },
 
     renderHint: function () {
