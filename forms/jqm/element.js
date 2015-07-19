@@ -25,13 +25,13 @@ define(function (require) {
     tagName: 'div',
 
     attributes: {
-      'data-role': 'fieldcontain',
-      'rv-class': 'm:class'
+      'data-role': 'fieldcontain'
     },
 
     modelEvents: {
       'invalid change:value': 'renderErrors',
       // 'change:warning', 'renderWarning',
+      'change:class': 'onChangeClass',
       'change:hidden': 'onChangeHidden',
       'change:label': 'renderLabel'
     },
@@ -42,6 +42,8 @@ define(function (require) {
       this.$el.attr('data-name', element.attributes.name);
       this.$el.attr('data-element-type', element.attributes.type);
       this.$el.data('model', element);
+
+      this.onChangeClass();
       this.onChangeHidden();
       this.model.isValid();
 
@@ -162,6 +164,10 @@ define(function (require) {
         this.$el.closest('form').removeClass('bm-form-invalid');
       }
 
+    },
+
+    onChangeClass: function () {
+      this.$el.attr('class', this.model.attributes['class']);
     },
 
     onChangeHidden: function () {
