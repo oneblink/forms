@@ -13,33 +13,40 @@ define(function (require) {
 
   var MessageElementView = ElementView.extend({
     tagName: 'div',
-    attributes: {
-      'rv-class': 'm:class'
-    },
-    render: function () {
-      var element = this.model,
-        $div;
 
-      if (element.attributes.label) {
+    modelEvents: {
+      'change:html': 'renderHTML',
+      'change:class': 'onChangeClass',
+      'change:hidden': 'onChangeHidden',
+      'change:label': 'renderLabel'
+    },
+
+    renderHTML: function () {
+      if (!this.$html) {
+        if (this.model.attributes.label) {
+          this.$html = $('<div class="ui-input-text"></div>');
+          this.$el.append(this.$html);
+        } else {
+          this.$html = this.$el;
+        }
+      }
+      this.$html.html(this.model.attributes.html || '');
+    },
+
+    render: function () {
+      if (this.model.attributes.label) {
         this.$el.attr({
           'data-role': 'fieldcontain'
         });
         this.$el.empty();
         this.renderLabel();
-        $div = $('<div></div>').attr({
-          'rv-html': 'm:html',
-          'class': 'ui-input-text'
-        });
+        this.renderHTML();
 
-        this.$el.append($div);
+        this.$el.fieldcontain();
 
       } else {
-        this.$el.attr({
-          'rv-html': 'm:html'
-        });
+        this.renderHTML();
       }
-
-      this.$el.fieldcontain();
     }
   });
 
