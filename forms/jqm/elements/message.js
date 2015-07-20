@@ -14,6 +14,7 @@ define(function (require) {
   var MessageElementView = ElementView.extend({
     tagName: 'div',
 
+    // explicitly override super's modelEvents
     modelEvents: {
       'change:html': 'renderHTML',
       'change:class': 'onChangeClass',

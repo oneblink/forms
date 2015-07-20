@@ -21,6 +21,7 @@ define(function (require) {
 
     // extending super's modelEvents
     modelEvents: _.extend({}, ElementView.prototype.modelEvents, {
+      'change:placeholder': 'onPlaceholderChange',
       'change:value': 'onValueChange'
     }),
 
@@ -37,6 +38,7 @@ define(function (require) {
         this.$input.attr('cid', this.model.cid);
       }
       this.onValueChange();
+      this.onPlaceholderChange();
 
       this.model.isValid();
       this.$el.fieldcontain();
@@ -54,6 +56,19 @@ define(function (require) {
       if (next !== prev) {
         this.model.attributes.value = next;
         this.model.trigger('change:value');
+      }
+    },
+
+    onPlaceholderChange: function () {
+      var text;
+      if (!this.$input) {
+        return;
+      }
+      text = this.model.attributes.placeholderText;
+      if (!text && text !== 0) {
+        this.$input.removeAttr('placeholder');
+      } else {
+        this.$input.attr('placeholder', text);
       }
     },
 

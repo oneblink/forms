@@ -7,25 +7,16 @@ define(function (require) {
 
   // local modules
 
-  var ElementView = require('forms/jqm/element');
+  var HTMLElementView = require('forms/jqm/elements/html');
 
   // this module
 
-  var TextElementView = ElementView.extend({
-    initialize: function () {
-      // have to do this to stop Backbone from trying to change the "type"
-      this.setElement($('<input type="hidden" />')[0]);
-      ElementView.prototype.initialize.call(this);
-    },
-    render: function () {
+  return HTMLElementView.extend({
+    createElement: function () {
       var name = this.model.get('name');
-
-      this.$el.attr({
-        name: name,
-        'rv-value': 'm:value'
-      });
+      var input$ = $('<input type="hidden" />');
+      input$.attr('name', name);
+      return input$;
     }
   });
-
-  return TextElementView;
 });
