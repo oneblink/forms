@@ -16,6 +16,7 @@ define(function (require) {
 
     events: {
       'change [data-onchange=onKeyDown]': 'onKeyDown',
+      'input [data-onkeydown=onKeyDown]': 'onKeyDown',
       'keydown [data-onkeydown=onKeyDown]': 'onKeyDown'
     },
 
@@ -50,14 +51,14 @@ define(function (require) {
       return ElementView.prototype.remove.apply(this, arguments);
     },
 
-    onKeyDown: function (event) {
+    onKeyDown: _.throttle(function (event) {
       var prev = this.model.attributes.value;
       var next = $(event.target).val();
       if (next !== prev) {
         this.model.attributes.value = next;
         this.model.trigger('change:value');
       }
-    },
+    }, 500),
 
     onPlaceholderChange: function () {
       var text;
@@ -83,6 +84,10 @@ define(function (require) {
       } else {
         this.$input.val(value);
       }
+      // #isValid() probably should be in the model, but we keep it here to
+      // preserve a strict sequence: check THEN render
+      this.model.isValid();
+      this.renderErrors();
     }
   });
 });
