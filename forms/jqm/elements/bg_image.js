@@ -29,7 +29,7 @@ define(function (require) {
       @description Renders the camera controls and attaches the click events
     */
     renderControls: function () {
-      var $new, $existing, $div, PictureSourceType;
+      var PictureSourceType;
 
       try {
         PictureSourceType = window.PictureSourceType || navigator.camera.PictureSourceType;
@@ -37,23 +37,28 @@ define(function (require) {
         PictureSourceType = PictureSourceType || {};
       }
 
-      $div = $('<div class="ui-input-text"></div>');
-      $div.append(html);
+      if (!this.$controls) {
+        this.$controls = $('<div class="ui-input-text"></div>');
+        this.$el.append(this.$controls);
+        this.$controls.append(html);
+        this.$el.append(this.$controls);
+      }
 
-      $new = $div.find('button').first();
-      $new.text('Camera');
-      $new.data('SourceType', PictureSourceType.CAMERA);
+      if (!this.$camera) {
+        this.$camera = this.$controls.find('button').first();
+        this.$camera.text('Camera');
+        this.$camera.data('SourceType', PictureSourceType.CAMERA);
+        this.$camera.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
+      }
+      this.$camera.button();
 
-      $existing = $div.find('button').last();
-      $existing.text('Gallery');
-      $existing.data('SourceType', PictureSourceType.PHOTO_LIBRARY);
-
-      this.$el.append($div);
-
-      $new.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
-      $existing.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
-      $new.button();
-      $existing.button();
+      if (!this.$gallery) {
+        this.$gallery = this.$controls.find('button').last();
+        this.$gallery.text('Gallery');
+        this.$gallery.data('SourceType', PictureSourceType.PHOTO_LIBRARY);
+        this.$gallery.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
+      }
+      this.$gallery.button();
     },
     /*
       @function remove
