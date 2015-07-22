@@ -313,6 +313,28 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           }
         });
 
+        test(name + ': view->model', function () {
+          var form = Forms.current;
+          var element = form.getElement(name);
+          var $el = element.attributes._view.$el;
+          var $a = $el.children('.ui-select').find('[role=button]');
+          var $popup;
+          var $item;
+
+          $a.trigger('click');
+          $popup = $($a.attr('href'));
+          assert.lengthOf($popup, 1);
+
+          $item = $popup.find('[data-option-index=3]');
+          assert.equal($item.text().trim(), 'gamma');
+
+          $item.find('a').trigger('click');
+          if (element.attributes.type === 'multi') {
+            assert.deepEqual(element.val(), ['g']);
+          } else {
+            assert.equal(element.val(), 'g');
+          }
+        });
       });
 
       ['selectf', 'selecth'].forEach(function (name) {
@@ -327,6 +349,15 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
           element.val('');
           assert($el.find('select').val());
+        });
+
+        test(name + ': view->model', function () {
+          var form = Forms.current,
+            element = form.getElement(name),
+            $el = element.attributes._view.$el;
+
+          $el.find('select').val('g').trigger('change');
+          assert.equal(element.val(), 'g');
         });
 
       });
@@ -352,6 +383,21 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           } else {
             element.val('');
             assert.lengthOf($el.find('.ui-radio-on'), 0);
+          }
+        });
+
+        test(name + ': view->model', function () {
+          var form = Forms.current,
+            element = form.getElement(name),
+            $el = element.attributes._view.$el;
+
+
+          if (element.attributes.type === 'multi') {
+            $el.find('.ui-checkbox').eq(2).children('label').trigger('click');
+            assert.deepEqual(element.val(), ['g']);
+          } else {
+            $el.find('.ui-radio').eq(2).children('label').trigger('click');
+            assert.equal(element.val(), 'g');
           }
         });
 
