@@ -13,14 +13,14 @@ define(function (require) {
 
   return HTMLElementView.extend({
     createElement: function () {
-      var name = this.model.get('name');
+      var attrs = this.model.attributes;
       // TODO: HTML4-fallback for buggy HTML5 browsers
       var input$ = $('<input type="number" />');
-      input$.attr({
-        name: name,
-        'rv-min': 'm:min',
-        'rv-max': 'm:max',
-        'rv-step': 'm:step'
+      input$.attr('name', attrs.name);
+      ['min', 'max', 'step'].forEach(function (prop) {
+        if ($.isNumeric(attrs[prop])) {
+          input$.attr(prop, attrs[prop]);
+        }
       });
       return input$;
     },
