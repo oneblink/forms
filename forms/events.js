@@ -65,7 +65,21 @@ define(function () {
     });
   }
 
+  function stopPropagation (event) {
+    if (event && event.stopPropagation) {
+      event.stopPropagation();
+    }
+  }
+  function preventDefault (event) {
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    }
+  }
+
   return {
+
+    stopPropagation: stopPropagation,
+    preventDefault: preventDefault,
 
     proxyBindEntityEvents: proxyBindEntityEvents,
     proxyUnbindEntityEvents: proxyUnbindEntityEvents,
