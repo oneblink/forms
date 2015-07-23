@@ -110,6 +110,16 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
       });
 
+    test('type=hidden field has no view', function () {
+      var form = BMP.Forms.current,
+        element = form.getElement('id'),
+        view = element.attributes._view;
+
+      assert(!view);
+      assert.lengthOf($('input[name=id]'), 0);
+
+    });
+
     }); // END: suite('Form', ...)
 
     suite('number', function () {

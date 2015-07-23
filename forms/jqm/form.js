@@ -108,7 +108,7 @@ define(function (require) {
     onAttached: function () {
       this.model.get('pages').current.attributes.elements.forEach(function (el) {
         var view = el.attributes._view;
-        if (typeof view.onAttached === 'function') {
+        if (view && typeof view.onAttached === 'function') {
           view.onAttached();
         }
       });

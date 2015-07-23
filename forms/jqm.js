@@ -27,7 +27,6 @@ define(function (require) {
     MessageElement: require('forms/jqm/elements/message'),
     DateElement: require('forms/jqm/elements/date'),
     DatePickadateElement: require('forms/jqm/elements/date_pickadate'),
-    HiddenElement: require('forms/jqm/elements/hidden'),
     NumberElement: require('forms/jqm/elements/number'),
     SliderElement: require('forms/jqm/elements/slider'),
     TelephoneElement: require('forms/jqm/elements/telephone'),

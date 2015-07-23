@@ -181,9 +181,6 @@ define(function (require) {
       case 'boolean':
         View = Forms._views.BooleanElement;
         break;
-      case 'hidden':
-        View = Forms._views.HiddenElement;
-        break;
       case 'number':
         View = Forms._views.NumberElement;
         break;
