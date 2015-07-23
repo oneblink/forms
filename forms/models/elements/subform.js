@@ -330,7 +330,9 @@ define(function (require) {
       this.get('forms').invoke('setErrors', elementErrorList, options);
 
       //set errors on me.
-      ElementModel.prototype.setExternalErrors.call(this, elementErrorList.errors || elementErrorList, options);
+      if (elementErrorList.errors){
+        ElementModel.prototype.setExternalErrors.call(this, elementErrorList.errors, options);
+      }
 
       this.trigger('update:fieldErrors');
     }

@@ -206,6 +206,8 @@ define(function (require) {
     * on each object. *limit:{number}* will return the first <limit> fields
     * @returns {Object} Keys are element names, Values are error arrays.
     *
+    * @deprecated Please use getInvalidElements instead
+    *
     * @example
           Forms.current.getErrors()
           //returns:
@@ -376,9 +378,14 @@ define(function (require) {
       _.each(subForms, function(subForm, name){
         var subFormErrorList = _.omit(errorList[name], 'errors');
 
-        _.each(subFormErrorList, function(errors, index){
-          //we dont know which subform yet. invoke on every subform
-          subForm.invoke('setErrors', errors, options);
+        _.each(subFormErrorList, function(errors, formName){
+          var forms = subForms[name].where({name: formName});
+          _.each(errors, function(fieldError, formIndex){
+            var form = subForms[name].at(formIndex);
+            if ( form ){
+              form.setErrors(fieldError);
+            }
+          });
         });
       });
 

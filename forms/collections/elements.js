@@ -58,6 +58,8 @@ define(function (require) {
 
     /**
      * Gets a list of validationErrors currently set on the models.
+     * @deprecated
+     *
      * @param  {Number} [fieldLimit=undefined] - How many *field errors* to bring back. If
      * none specified, then all fields are returned.
      * @return {object} - { fieldname: [errors] }
@@ -74,6 +76,10 @@ define(function (require) {
     getErrors: function(fieldLimit){
       var errors;
       var length;
+
+      /*eslint-disable no-console, no-unused-expressions*/
+      console && console.warn('BlinkForms: elementCollection#getErrors is deprecated and will be removed. Please use elementModel#getInvalidElements instead.');
+      /*eslint-enable no-console, no-unused-expressions*/
 
       errors = this.reduce(addToErrorList, []);
       length = !fieldLimit ? errors.length : Math.min(errors.length, fieldLimit);
@@ -101,7 +107,7 @@ define(function (require) {
       var ret;
       var length;
       var reducer = function(memo, elementModel){
-        if ( elementModel.validationError){
+        if ( elementModel.validationError ){
           memo.push(elementModel);
         }
 

@@ -39,6 +39,7 @@ define(function (require) {
     initialize: function () {
       var element = this.model;
 
+
       this.$el.attr('data-name', element.attributes.name);
       this.$el.attr('data-element-type', element.attributes.type);
       this.$el.data('model', element);
@@ -50,6 +51,9 @@ define(function (require) {
       if (this.modelEvents) {
         events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       }
+      element.on('invalid change:value', function(){
+        this.renderErrors();
+      }, this);
     },
 
     remove: function () {
