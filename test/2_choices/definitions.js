@@ -212,6 +212,66 @@ define(function () {
                 g: 'gamma'
               }
             }
+          },
+          {
+            'default': {
+              name: 'multicollapsedrequired',
+              label: 'Multi collapsed Required',
+              type: 'multi',
+              mode: 'collapsed',
+              required: "1",
+              other: false,
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
+          },
+          {
+            'default': {
+              name: 'multiexpandedrequired',
+              label: 'Multi Expanded Required',
+              type: 'multi',
+              mode: 'expanded',
+              required: "1",
+              other: false,
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
+          },
+          {
+            'default': {
+              name: 'selectcollapsedrequired',
+              label: 'select collapsed Required',
+              type: 'select',
+              mode: 'collapsed',
+              required: "1",
+              other: false,
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
+          },
+          {
+            'default': {
+              name: 'selectexpandedrequired',
+              label: 'Select Expanded Required',
+              type: 'select',
+              mode: 'expanded',
+              required: "1",
+              other: false,
+              options: {
+                a: 'alpha',
+                b: 'beta',
+                g: 'gamma'
+              }
+            }
           }
         ]
       }
