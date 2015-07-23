@@ -4,9 +4,11 @@ define(function (require) {
   // foreign modules
 
   // var $ = require('jquery');
+  var _ = require('underscore');
 
   // local modules
 
+  var events = require('forms/events');
   var SubFormView = require('forms/jqm/subform');
   var template = require('text!forms/jqm/templates/subform-collapse.html');
 
@@ -14,44 +16,55 @@ define(function (require) {
 
   return SubFormView.extend({
     render: function () {
+      var parentAttrs = this.model.parentElement.attributes;
+
       // explictly skip super and use super-super
       BMP.Forms._views.Form.prototype.render.call(this);
       this.$el.append(template);
       this.$collapsible = this.$el.children('[data-role=collapsible]');
+      this.$collapsible.children('h3').text(parentAttrs.label || parentAttrs.name);
       this.$el.children('section').appendTo(this.$collapsible);
 
       this.$remove = this.$collapsible.children('[data-onclick=onRemoveClick]');
+      this.$remove.text(parentAttrs.minusButtonLabel);
       this.$remove.on('click', this.onRemoveClick.bind(this));
       this.$remove.button();
 
-      // this.$summary = this.$el.children('.bm-recordsummary');
+      this.$summary = this.$el.children('.bm-recordsummary');
 
       this.$collapsible.collapsible();
-      // this.$collapsible.on('collapsiblecollapse', this.onCollapse.bind(this));
-      // this.$collapsible.on('collapsibleexpand', this.onExpand.bind(this));
 
       this.$el.attr(
         'data-record-index',
         this.model.parentElement.get('forms').indexOf(this.model)
       );
+
+      this.model.parentElement.attributes.summaryPromise.then(function (names) {
+        var formElementEvents = {};
+        names.forEach(function (name) {
+          formElementEvents[name] = { 'change:value': 'renderSummary' };
+        });
+        this.formElementEvents = formElementEvents;
+        events.proxyBindFormElementEvents(this, this.model, this.formElementEvents);
+        this.renderSummary();
+      }.bind(this));
     },
 
     remove: function () {
-      // using super's remove
-      // this.$collapsible.off('collapsiblecollapse');
-      // this.$collapsible.off('collapsibleexpand');
       this.$remove.off('click');
+
+      // don't need to unbind formElementEvents, because this is done in super
+      // events.proxyUnbindFormElementEvents(this, this.model, this.formElementEvents);
+
+      // using super's remove
       return BMP.Forms._views.SubForm.prototype.remove.call(this);
     },
 
-    onCollapse: function () {
-      window.console.log('onCollapse');
-      this.$summary.show();
-    },
-
-    onExpand: function () {
-      window.console.log('onExpand');
-      this.$summary.hide();
+    renderSummary: function () {
+      var values = Object.keys(this.formElementEvents).map(function (name) {
+        return this.model.getElement(name).val();
+      }.bind(this));
+      this.$summary.text(values.join(', '));
     }
   });
 });
