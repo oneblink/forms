@@ -94,13 +94,7 @@ define(function (require) {
         action = form.attributes._action;
 
         if (action !== 'remove') {
-          if (!form.attributes._view) {
-            form.attributes._view = new Forms._views.SubForm({
-              model: form
-            });
-          }
-
-          view = form.attributes._view;
+          view = form.initializeView();
 
           if (!view || !view.$el || !view.$el.children().length) {
             // prevent calling render() over and over as "add" buttons go crazy

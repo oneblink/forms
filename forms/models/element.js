@@ -174,9 +174,6 @@ define(function (require) {
       this.removeView();
 
       switch (attrs.type) {
-        case 'subForm':
-          View = Forms._views.SubFormElement;
-          break;
         case 'heading':
           View = Forms._views.HeadingElement;
           break;
