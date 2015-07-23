@@ -26,7 +26,8 @@ define(function (require) {
       slider$ = this.$el.children('div.ui-slider');
       if (slider$.length) {
         // we are dealing with jQueryMobile-enhanced DOM structure
-        slider$.children('input').val(this.model.get('value'));
+        this.$input.val(this.model.get('value'));
+        this.$input.slider();
         this.$input.slider('refresh');
       }
     },
@@ -69,7 +70,7 @@ define(function (require) {
 
       this.model.on('change:value', this.renderSlider, this);
       this.$el.fieldcontain();
-      this.$input.slider();
+      this.renderSlider();
     },
 
     remove: function () {
