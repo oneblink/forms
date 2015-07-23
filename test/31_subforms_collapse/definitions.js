@@ -104,6 +104,20 @@ define(function () {
             }
           },
           {
+            "default": {
+              "name": "datetimenow",
+              "type": "datetime",
+              "label": "Datetimenow",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "picker",
+              "dateFormat": "yyyy_mm_dd",
+              "timeFormat": "hh_mm_ss",
+              "minuteStep": "1",
+              "defaultValue": "now"
+            }
+          },
+          {
             'default': {
               name: 'comment',
               label: 'Comment',
@@ -113,7 +127,7 @@ define(function () {
         ]
       },
       list: {
-        _elements: ['comment']
+        _elements: ['datetimenow', 'comment']
       }
     }
   ];

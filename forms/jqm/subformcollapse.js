@@ -22,7 +22,8 @@ define(function (require) {
       BMP.Forms._views.Form.prototype.render.call(this);
       this.$el.append(template);
       this.$collapsible = this.$el.children('[data-role=collapsible]');
-      this.$collapsible.children('h3').text(parentAttrs.label || parentAttrs.name);
+      this.$collapsible.children('h3').children('.bm-subform__bm-title')
+        .text(parentAttrs.label || parentAttrs.name);
       this.$el.children('section').appendTo(this.$collapsible);
 
       this.$remove = this.$collapsible.children('[data-onclick=onRemoveClick]');
@@ -30,7 +31,8 @@ define(function (require) {
       this.$remove.on('click', this.onRemoveClick.bind(this));
       this.$remove.button();
 
-      this.$summary = this.$el.children('.bm-recordsummary');
+      this.$summary = this.$collapsible.children('h3')
+        .children('.bm-subform__bm-summary');
 
       this.$collapsible.collapsible();
 
@@ -64,7 +66,7 @@ define(function (require) {
       var values = Object.keys(this.formElementEvents).map(function (name) {
         return this.model.getElement(name).val();
       }.bind(this));
-      this.$summary.text(values.join(', '));
+      this.$summary.text(_.compact(values).join(', '));
     }
   });
 });
