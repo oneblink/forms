@@ -176,6 +176,9 @@ define(function (require) {
 
     onChangeHidden: function () {
       var hidden = this.model.attributes.hidden;
+      if ( model && model.cid !== this.model.cid ){
+        return;
+      }
       if (hidden) {
         this.hide();
       } else {
@@ -185,11 +188,16 @@ define(function (require) {
 
     hide: function () {
       this.$el.css('display', 'none');
+      //when a field is hidden, we no longer care
+      //about if it is valid or not.
+      this.model.validationError = undefined;
+      this.model.trigger('change:value');
     },
 
     show: function () {
       if (this.$el.css('display') === 'none') {
         this.$el.css('display', '');
+        this.model.trigger('change:value');
       }
     },
 

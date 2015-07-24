@@ -17,9 +17,17 @@ define(function (require) {
   var Form;
   var invalidWrapperFn, isSubForm;
 
+  function isVisible(elementModel){
+    if ( !elementModel.has('hidden')){
+      return true;
+    }
+
+    return !elementModel.get('hidden');
+  }
+
   invalidWrapperFn = function (fn) {
     return function(options){
-      var elementCollection = this.get('elements'),
+      var elementCollection = new Elements(this.get('elements').filter(isVisible)),
           validate = options && options.validate || false,
           limit = options && options.limit || 0;
 
@@ -38,6 +46,7 @@ define(function (require) {
   isSubForm = function (elementModel) {
     return elementModel.get('type') === 'subForm';
   };
+
 
   Form = Backbone.Model.extend({
     defaults: {

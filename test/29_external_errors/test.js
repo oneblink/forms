@@ -39,7 +39,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       Forms.current.setErrors(externalErrors);
 
       assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
-      assert.equal(Forms.current.getErrors().textBox1[0].CUSTOM, 'This is custom text');
+      assert.equal(Forms.current.getInvalidElements().errors.get('textBox1').validationError.value[0].CUSTOM, 'This is custom text');
 
       $content.empty();
       delete Forms.current;
@@ -53,7 +53,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       element.setExternalErrors(externalErrors);
 
       assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
-      assert.equal(Forms.current.getErrors().textBox1[0].CUSTOM, 'This is custom text');
+      assert.equal(Forms.current.getInvalidElements().errors.get('textBox1').validationError.value[0].CUSTOM, 'This is custom text');
 
       $content.empty();
       delete Forms.current;
@@ -66,7 +66,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       var el = Forms.current.getElement('number1');
       el.val('afdasdasdaf');
       Forms.current.setErrors(externalErrors);
-      assert.equal(Forms.current.getErrors().number1[0].MAX, 5);
+      assert.equal(Forms.current.getInvalidElements().errors.get('number1').validationError.value[0].MAX, 5);
 
       $content.empty();
       delete Forms.current;
@@ -77,7 +77,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
            .getElement('textBox1')
            .val('1');
 
-      assert.isUndefined(Forms.current.getErrors().textBox1);
+      assert.isUndefined(Forms.current.getInvalidElements().errors.get('textBox1'));
 
       $content.empty();
       delete Forms.current;
@@ -91,10 +91,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       var form = Forms.current,
           element = form.getElement('city');
       element.val('');
-      assert.equal(Forms.current.getErrors().city.length, 1);
+      assert.equal(Forms.current.getInvalidElements().errors.get('city').validationError.value.length, 1);
 
       Forms.current.setErrors(externalErrors);
-      assert.equal(Forms.current.getErrors().city.length, 2);
+      assert.equal(Forms.current.getInvalidElements().errors.get('city').validationError.value.length, 2);
 
       $content.empty();
       delete Forms.current;
@@ -109,10 +109,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           element = form.getElement('city');
 
       element.val('');
-      assert.equal(Forms.current.getErrors().city[0].code, 'REQUIRED');
+      assert.equal(Forms.current.getInvalidElements().errors.get('city').validationError.value[0].code, 'REQUIRED');
 
       Forms.current.setErrors(externalErrors);
-      assert.equal(Forms.current.getErrors().city[0].code, 'CUSTOM');
+      assert.equal(Forms.current.getInvalidElements().errors.get('city').validationError.value[0].code, 'CUSTOM');
 
       $content.empty();
       delete Forms.current;
@@ -159,10 +159,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           var errorMessages;
 
           Forms.current.setErrors(externalErrors);
-          errorMessages = Forms.current.getErrors();
+          errorMessages = Forms.current.getElement('comments').validationError.value;
 
-          assert.equal(errorMessages.comments[0].code, 'CUSTOM');
-          assert.equal(errorMessages.comments[0].CUSTOM, 'this is a custom subform element error');
+          assert.equal(errorMessages[0].code, 'CUSTOM');
+          assert.equal(errorMessages[0].CUSTOM, 'this is a custom subform element error');
 
           $content.empty();
           delete Forms.current;
@@ -175,7 +175,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         //make sure the first sub form field of the same name has no custom error
         formElement = subFormElement.getForm(0).getElement('comment');
-        assert.equal(_.where(formElement.validationError, {code: 'CUSTOM'}).length, 0);
+        assert.equal(_.where(formElement.validationError.value, {code: 'CUSTOM'}).length, 0);
 
         //now make sure the correct sub form field has an error
         formElement = subFormElement.getForm(1).getElement('comment');
