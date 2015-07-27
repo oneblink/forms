@@ -80,7 +80,13 @@ define(function (require) {
 
     onDateMChange: function () {
       var name = this.model.attributes.name;
+      var input, picker;
       this.$el.find('input[name=' + name + '_date]').val(this.model.get('_date'));
+      input = this.$el.find('input[name=' + name + '_date]');
+      picker = input.pickadate('picker');
+      if (picker) {
+        picker.set('select', new Date(this.model.get('_date')));
+      }
     },
 
     onTimeMChange: function () {
