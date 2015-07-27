@@ -39,7 +39,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       Forms.current.setErrors(externalErrors);
 
       assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
-      assert.equal(Forms.current.getInvalidElements().errors.get('textBox1').validationError.value[0].CUSTOM, 'This is custom text');
+      assert.equal(element.validationError.value[0].CUSTOM, 'This is custom text');
 
       $content.empty();
       delete Forms.current;
@@ -53,7 +53,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       element.setExternalErrors(externalErrors);
 
       assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
-      assert.equal(Forms.current.getInvalidElements().errors.get('textBox1').validationError.value[0].CUSTOM, 'This is custom text');
+      assert.equal(element.validationError.value[0].CUSTOM, 'This is custom text');
 
       $content.empty();
       delete Forms.current;
@@ -63,21 +63,21 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       var externalErrors = {
         number1: [{code: 'MAX', MAX: 5, text: 'Field Max adjusted from 100 to 5'}]
       };
-      var el = Forms.current.getElement('number1');
-      el.val('afdasdasdaf');
+      var element = Forms.current.getElement('number1');
+      element.val('afdasdasdaf');
       Forms.current.setErrors(externalErrors);
-      assert.equal(Forms.current.getInvalidElements().errors.get('number1').validationError.value[0].MAX, 5);
+      assert.equal(element.validationError.value[0].MAX, 5);
 
       $content.empty();
       delete Forms.current;
     });
 
     test('External errors should be cleared when field is altered', function(){
-      Forms.current
-           .getElement('textBox1')
-           .val('1');
+      var element = Forms.current.getElement('textBox1');
 
-      assert.isUndefined(Forms.current.getInvalidElements().errors.get('textBox1'));
+      element.val('1');
+
+      assert.isTrue(!element.validationError);
 
       $content.empty();
       delete Forms.current;
@@ -91,10 +91,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       var form = Forms.current,
           element = form.getElement('city');
       element.val('');
-      assert.equal(Forms.current.getInvalidElements().errors.get('city').validationError.value.length, 1);
+      assert.equal(element.validationError.value.length, 1);
 
       Forms.current.setErrors(externalErrors);
-      assert.equal(Forms.current.getInvalidElements().errors.get('city').validationError.value.length, 2);
+      assert.equal(element.validationError.value.length, 2);
 
       $content.empty();
       delete Forms.current;
@@ -109,10 +109,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           element = form.getElement('city');
 
       element.val('');
-      assert.equal(Forms.current.getInvalidElements().errors.get('city').validationError.value[0].code, 'REQUIRED');
+      assert.equal(element.validationError.value[0].code, 'REQUIRED');
 
       Forms.current.setErrors(externalErrors);
-      assert.equal(Forms.current.getInvalidElements().errors.get('city').validationError.value[0].code, 'CUSTOM');
+      assert.equal(element.validationError.value[0].code, 'CUSTOM');
 
       $content.empty();
       delete Forms.current;

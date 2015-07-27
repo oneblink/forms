@@ -93,12 +93,12 @@ define(function (require) {
     /**
      * Gets a list of element models that have failed validation
      * @param  {Number} fieldLimit The number of fields to return. Defaults to 0
-     * @return {Object} An object of the form { errors: {ElementsCollection}, total, 19, length: 4}
+     * @return {Object} An object of the form { errors: [field, field, field, ...], total, 19, length: 4}
      *
      * @example
      *  //collection.getInvalid(2)
      *  // => {
-     *  // errors: ElementsCollection([textElementModel, requiredElementModel])
+     *  // errors: [textElementModel, requiredElementModel]
      *  // length: 2,
      *  // total: 14
      *  //}
@@ -118,18 +118,12 @@ define(function (require) {
       errors = this.reduce(function(memo, elementModel){
         var subFormErrors;
         if ( elementModel.get('type') === 'subForm' ){
-          subFormErrors = _.compact(elementModel.get('forms').invoke('getInvalidElements'));
-
-          if (subFormErrors.length){
-            //we now have an array of error objects for all forms in this subform
-            //pull out the error property (an ElementsCollection) and then
-            //pull out the models and faltten the structure
-            memo = _.chain(subFormErrors)
-                    .pluck('errors')
-                    .pluck('models')
-                    .flatten()
-                    .value();
-          }
+          subFormErrors = _.chain(elementModel.get('forms').invoke('getInvalidElements'))
+                            .compact()
+                            .pluck('errors')
+                            .flatten()
+                            .value();
+          memo = memo.concat(subFormErrors);
         }
 
         return reducer(memo, elementModel);
@@ -142,7 +136,7 @@ define(function (require) {
       }
 
       ret = makeLengthObj(length, errors.length);
-      ret.errors = new ElementsCollection(fieldLimit ? _.take(errors, fieldLimit) : errors);
+      ret.errors = fieldLimit ? _.take(errors, fieldLimit) : errors;
       return ret;
     },
 

@@ -91,7 +91,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                   assert.isAbove(invalid.length, 0);
 
                   //get the first invalid element and scroll
-                  return invalid.errors.at(0).get('_view').scrollTo().then(function(){
+                  return invalid.errors[0].get('_view').scrollTo().then(function(){
                     assert.notEqual($(window).scrollTop(), origScrollTop);
                   });
                  });
@@ -117,7 +117,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                     invalidThirdLevel = moreSubforms[0].third_level_form.models[0].getInvalidElements();
                     assert.isAbove(invalidThirdLevel.errors.length, 0);
 
-                    return invalidThirdLevel.errors.at(0).get('_view').scrollTo().then(function(){
+                    return invalidThirdLevel.errors[0].get('_view').scrollTo().then(function(){
                       assert.notEqual($(window).scrollTop(), origScrollTop);
                     });
                  });

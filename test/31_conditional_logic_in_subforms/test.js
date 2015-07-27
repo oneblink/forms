@@ -64,7 +64,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           Forms.current.getElement('second_required').val('a');
 
           conditionalElement.on('change:hidden', function(){
-            console.log(conditionalElement);
             assert.isDefined(conditionalElement);
             assert.equal(!conditionalElement.validationError, true);
 
