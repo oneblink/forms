@@ -4,6 +4,7 @@ define(function (require) {
   // foreign modules
 
   var $ = require('jquery');
+  var _ = require('underscore');
 
   // local modules
 
@@ -12,20 +13,38 @@ define(function (require) {
   // this module
 
   var ReadOnlyElementView = ElementView.extend({
-    render: function () {
-      var $label;
 
+    // extending super-super's modelEvents
+    modelEvents: _.extend({}, ElementView.prototype.modelEvents, {
+      'change:value': 'onValueChange'
+    }),
+
+    render: function () {
       this.$el.empty();
       this.renderLabel();
 
-      $label = $(document.createElement('label'));
-      $label.attr({
-        'rv-text': 'm:value',
-        'class': 'ui-input-text'
-      });
+      if (!this.$output) {
+        this.$output = $(document.createElement('label'));
+        this.$output.attr({
+          'class': 'ui-input-text'
+        });
+        this.$el.append(this.$output);
+      }
 
-      this.$el.append($label);
-      this.bindRivets();
+      this.onValueChange();
+    },
+
+    onValueChange: function () {
+      var value;
+      if (!this.$output) {
+        return;
+      }
+      value = this.model.attributes.value;
+      if (value || value === 0) {
+        this.$output.text(value);
+      } else {
+        this.$output.text('');
+      }
     }
   });
 

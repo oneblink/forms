@@ -35,15 +35,12 @@ define(function (require) {
 
   FileElementView = ElementView.extend({
     render: function () {
-      this.$el.empty();
       this.renderLabel();
-
       this.renderControls();
       this.renderFigure();
 
       this.$el.fieldcontain();
 
-      this.bindRivets();
       this.model.on('change:blob', function () {
         this.model.updateWarning();
         if (_.isEmpty(this.model.attributes.warning)) {
@@ -56,19 +53,20 @@ define(function (require) {
     },
 
     renderControls: function () {
-      var $input = $('<input type="file" />');
-      var name = this.model.get('name');
+      var attrs = this.model.attributes;
+      if (!this.$file) {
+        this.$file = $('<input type="file" />');
+        this.$file.attr('name', attrs.name);
+        this.$el.append(this.$file);
+        this.$file.on('change', function (event) {
+          this.onInputChange(event);
+        }.bind(this));
+      }
 
-      $input.attr({
-        name: name,
-        'rv-accept': 'm:accept'
-      });
-      $input.prop('capture', !!this.model.get('capture'));
-      this.$el.append($input);
-
-      $input.on('change', function (event) {
-        this.onInputChange(event);
-      }.bind(this));
+      if (attrs.accept) {
+        this.$file.attr('accept', attrs.accept);
+      }
+      this.$file.prop('capture', !!attrs.capture);
     },
 
     renderFigure: function () {

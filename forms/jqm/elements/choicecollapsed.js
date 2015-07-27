@@ -48,7 +48,6 @@ define(function (require) {
       this.renderOptions();
       this.$el.fieldcontain();
 
-      this.bindRivets();
       $input.on('change', function () {
         that.model.set('value', that.prepModelValue());
       });
@@ -104,7 +103,7 @@ define(function (require) {
         }
       }
 
-      if (!attr.nativeMenu && this.$el.children('.ui-select').length) {
+      if (this.$el.children('.ui-select').length) {
         select.selectmenu('refresh');
       }
 

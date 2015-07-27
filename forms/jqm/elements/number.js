@@ -13,19 +13,28 @@ define(function (require) {
 
   return HTMLElementView.extend({
     createElement: function () {
-      var name = this.model.get('name');
+      var attrs = this.model.attributes;
       // TODO: HTML4-fallback for buggy HTML5 browsers
       var input$ = $('<input type="number" />');
-      input$.attr({
-        name: name,
-        'rv-min': 'm:min',
-        'rv-max': 'm:max',
-        'rv-value': 'm:value',
-        'rv-input': 'm:value',
-        'rv-step': 'm:step',
-        'rv-placeholder': 'm:placeholderText'
+      input$.attr('name', attrs.name);
+      ['min', 'max', 'step'].forEach(function (prop) {
+        if ($.isNumeric(attrs[prop])) {
+          input$.attr(prop, attrs[prop]);
+        }
       });
       return input$;
+    },
+
+    onKeyDown: function (event) {
+      var prev = this.model.attributes.value;
+      var next = $(event.target).val();
+      if ($.isNumeric(next)) {
+        next = parseFloat(next, 10);
+      }
+      if (next !== prev) {
+        this.model.attributes.value = next;
+        this.model.trigger('change:value');
+      }
     }
   });
 });

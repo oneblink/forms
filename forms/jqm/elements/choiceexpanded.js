@@ -43,7 +43,6 @@ define(function (require) {
       this._renderOptions();
 
       if (type === 'select') {
-        this.bindRivets();
         this.model.on('change:value', this.onSelectValueChange, this);
         this.onSelectValueChange();
       } else { // type === 'multi'

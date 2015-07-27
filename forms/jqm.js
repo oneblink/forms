@@ -4,7 +4,6 @@ define(function (require) {
   // foreign modules
 
   var $ = require('jquery');
-  var rivets = require('rivets');
 
   // local modules
 
@@ -15,9 +14,6 @@ define(function (require) {
   require('jquerymobile');
 
   $.mobile.page.prototype.options.keepNative = '[type^=time], [type^=date]';
-
-  rivets.adapters[':'] = require('forms/config/rivets-adaptor');
-  rivets.binders.input = require('forms/config/rivets-keypress-binder');
 
   Forms._views = {
     Form: require('forms/jqm/form'),
@@ -31,7 +27,6 @@ define(function (require) {
     MessageElement: require('forms/jqm/elements/message'),
     DateElement: require('forms/jqm/elements/date'),
     DatePickadateElement: require('forms/jqm/elements/date_pickadate'),
-    HiddenElement: require('forms/jqm/elements/hidden'),
     NumberElement: require('forms/jqm/elements/number'),
     SliderElement: require('forms/jqm/elements/slider'),
     TelephoneElement: require('forms/jqm/elements/telephone'),

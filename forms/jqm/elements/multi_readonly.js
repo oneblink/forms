@@ -32,7 +32,6 @@ define(function (require) {
         $label = '<label class="ui-input-text">' + display + '</label>';
         self.$el.append($label);
       }, 100);
-      this.bindRivets();
     }
   });
 

@@ -10,7 +10,6 @@ define(function (require) {
       this.$el.empty();
       this.renderLabel();
 
-      this.bindRivets();
       this.model.on('change:value', this.renderFigure, this);
     }
   });

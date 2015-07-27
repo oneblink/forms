@@ -4,6 +4,7 @@ define(function (require) {
   // foreign modules
 
   var $ = require('jquery');
+  var _ = require('underscore');
 
   // local modules
 
@@ -17,10 +18,11 @@ define(function (require) {
       'change [data-onchange="onTimeVChange"]': 'onTimeVChange'
     },
 
-    modelEvents: {
+    // extending super's modelEvents
+    modelEvents: _.extend({}, ElementView.prototype.modelEvents, {
       'change:_date': 'onDateMChange',
       'change:_time': 'onDateMChange'
-    },
+    }),
 
     renderDate: function () {
       var $input,
@@ -66,7 +68,6 @@ define(function (require) {
       }
 
       this.$el.fieldcontain();
-      this.bindRivets();
       return this;
     },
 

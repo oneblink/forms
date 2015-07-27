@@ -19,8 +19,7 @@
     "node-uuid": "1.4.3",
     "pickadate": "3.5.5",
     "poll-until": "1.0.0",
-    "queue-async": "1.0.7",
-    "rivets": "0.6.8"
+    "queue-async": "1.0.7"
   },
   "devDependencies": {
     "bic-jqm": "blinkmobile/bic-v3#master",

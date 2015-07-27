@@ -25,14 +25,12 @@ define(function (require) {
         if (!el.attributes._view && typeof el.initializeView === 'function') {
           el.initializeView();
         }
-        view = el.attributes._view;
-        view.render();
-        if (view.renderHint) {
-          view.renderHint();
-        }
-        if (type === 'hidden') {
-          self.$el.prepend(view.el);
-        } else {
+        if (type !== 'hidden') {
+          view = el.attributes._view;
+          view.render();
+          if (view.renderHint) {
+            view.renderHint();
+          }
           self.$el.append(view.el);
         }
       });
@@ -46,7 +44,9 @@ define(function (require) {
     remove: function () {
       var result;
       this.model.get('elements').forEach(function (el) {
-        el.attributes._view.remove();
+        if (el.attributes._view) {
+          el.attributes._view.remove();
+        }
       });
       this.model.unset('_view');
       result = Backbone.View.prototype.remove.call(this);

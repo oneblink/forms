@@ -4,65 +4,75 @@ define(function (require) {
   // foreign modules
 
   var $ = require('jquery');
+  var _ = require('underscore');
 
   // local modules
 
+  var ElementView = require('forms/jqm/element');
   var NumberElementView = require('forms/jqm/elements/number');
 
   // this module
 
   var SliderElementView = NumberElementView.extend({
+
+    // extending super-super's modelEvents
+    modelEvents: _.extend({}, ElementView.prototype.modelEvents, {
+      'change:placeholder': 'onPlaceholderChange',
+      'change:value': 'onValueChange'
+    }),
+
     renderSlider: function () {
-      var slider$,
-        $input;
+      var slider$;
       slider$ = this.$el.children('div.ui-slider');
       if (slider$.length) {
         // we are dealing with jQueryMobile-enhanced DOM structure
-        $input = slider$.children('input').val(this.model.get('value'));
-        $input.slider('refresh');
+        this.$input.val(this.model.get('value'));
+        this.$input.slider();
+        this.$input.slider('refresh');
       }
     },
+
     render: function () {
-      var $input,
-        self = this,
+      var self = this,
         attrs = this.model.attributes,
         name = attrs.name;
 
       this.$el.empty();
       this.renderLabel();
 
-      $input = $('<input type="range" />');
-      $input.attr({
-        'data-highlight': true
-      });
+      if (!this.$input) {
+        this.$input = $('<input type="range" />');
+        this.$input.attr({
+          'data-highlight': true
+        });
+        this.$el.append(this.$input);
+        this.$el.on("change", function() {
+          var val, modelVal;
+          this.$input = $(this).find("input");
+          val = this.$input.val();
+          modelVal = self.model.get("value");
 
-      $input.attr({
+          if (modelVal !== val) {
+            self.model.set("value", this.$input.val());
+          }
+        });
+      }
+
+      this.$input.attr({
         name: name,
-        'rv-min': 'm:min',
-        'rv-max': 'm:max',
-        'value': this.model.get('value'),
-        'rv-step': 'm:step',
-        'rv-placeholder': 'm:placeholderText'
+        'value': this.model.get('value')
       });
-
-      this.$el.append($input);
-
-      this.$el.on("change", function() {
-        var val, modelVal;
-        $input = $(this).find("input");
-        val = $input.val();
-        modelVal = self.model.get("value");
-
-        if (modelVal !== val) {
-          self.model.set("value", $input.val());
+      ['min', 'max', 'step'].forEach(function (prop) {
+        if ($.isNumeric(attrs[prop])) {
+          this.$input.attr(prop, attrs[prop]);
         }
-      });
+      }.bind(this));
+
       this.model.on('change:value', this.renderSlider, this);
       this.$el.fieldcontain();
-      $input.slider();
-      this.bindRivets();
-
+      this.renderSlider();
     },
+
     remove: function () {
       this.$el.off('change');
       this.model.off('change:value');

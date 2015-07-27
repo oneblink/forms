@@ -15,17 +15,19 @@ define(function (require) {
 
   WebRTCImageElementView = FileElementView.extend({
     renderControls: function () {
-      var $div, $button;
+      var attrs = this.model.attributes;
+      if (!this.$controls) {
+        this.$controls = $('<div class="ui-input-text"></div>');
+        this.$el.append(this.$controls);
+      }
+      if (!this.$webrtc) {
+        this.$webrtc = $('<a class="webrtc_image ui-icon-camera" data-role="button">Camera</a>');
+        this.$webrtc.attr('name', attrs.name);
+        this.$el.append(this.$controls);
+        this.$webrtc.on('click', WebRTCImageElementView.onButtonClick.bind(this));
+      }
 
-      $button = $('<a class="webrtc_image ui-icon-camera" data-role="button">Camera</a>');
-
-      $div = $('<div class="ui-input-text"></div>');
-      $div.append($button);
-
-      this.$el.append($div);
-
-      $button.on('click', $.proxy(WebRTCImageElementView.onButtonClick, this));
-      $button.button();
+      this.$webrtc.button();
     },
 
     remove: function () {
