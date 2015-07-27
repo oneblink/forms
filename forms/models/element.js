@@ -40,7 +40,6 @@ define(function (require) {
 
       Forms.setAttributesFromClass(this);
 
-      this.initializeView();
 
       if (form) {
         page = attrs.page = form.getPage(attrs.page);
@@ -75,11 +74,19 @@ define(function (require) {
       this.on('invalid change:value', this.updateErrors, this);
 
       this.on('remove', this.close, this);
+
+      this.initializeView();
     },
     validate: function (attrs) {
       var errors = {};
+
       if (attrs === undefined) {
         attrs = this.attributes;
+      }
+
+      if ( attrs.hidden ){
+        //if the element is hidden, validation should be ignored.
+        return undefined;
       }
 
       if (attrs.required && !attrs.value) {

@@ -44,16 +44,13 @@ define(function (require) {
       this.$el.attr('data-element-type', element.attributes.type);
       this.$el.data('model', element);
 
-      this.onChangeClass();
-      this.onChangeHidden();
-      this.model.isValid();
-
       if (this.modelEvents) {
         events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       }
-      element.on('invalid change:value', function(){
-        this.renderErrors();
-      }, this);
+
+      this.onChangeClass();
+      this.onChangeHidden();
+      this.model.isValid();
     },
 
     remove: function () {
@@ -174,7 +171,7 @@ define(function (require) {
       this.$el.attr('class', this.model.attributes['class']);
     },
 
-    onChangeHidden: function () {
+    onChangeHidden: function (model) {
       var hidden = this.model.attributes.hidden;
       if ( model && model.cid !== this.model.cid ){
         return;

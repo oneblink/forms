@@ -61,18 +61,17 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         view.onAddClick().then(function(){
           var conditionalElement = Forms.current.getElement('cond_hidden');
+          Forms.current.getElement('second_required').val('a');
 
           conditionalElement.on('change:hidden', function(){
+            console.log(conditionalElement);
             assert.isDefined(conditionalElement);
-            assert.isUndefined(conditionalElement.validationError);
+            assert.equal(!conditionalElement.validationError, true);
 
             assert.strictEqual(form.getInvalidElements().length, startNumErrors);
 
-            conditionalElement.off('change:hidden');
-
             done();
           });
-          Forms.current.getElement('second_required').val('a');
         });
       });
 
@@ -84,14 +83,13 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           assert.isDefined(conditionalElement);
 
           conditionalElement.on('change:hidden', function(){
-            assert.isUndefined(conditionalElement.validationError);
+            assert.equal(!conditionalElement.validationError, true);
 
             // make sure that the conditional element is included in the
             // list of invalid elements
             Forms.current.getInvalidElements().errors.forEach(function(element){
               assert.notEqual(element.cid, conditionalElement.cid);
             });
-            conditionalElement.off('change:hidden');
             done();
           });
 
