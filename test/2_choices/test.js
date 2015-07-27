@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
+define(['BlinkForms', 'testUtils', 'underscore', 'BIC'], function (Forms, testUtils, _) {
 
   var originalOptions = { a: 'alpha', b: 'beta', g: 'gamma' };
   var newOptions = { d: 'delta', e: 'epsilon', z: 'zeta' };
@@ -492,6 +492,33 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         radio.set('value', "test");
         assert.equal($radEl.find('input[type="text"]').length, 0, "textbox for radios is visible");
 
+      });
+
+      suite('FORMS-206 # choice fields that are required but not-empty still block validation', function () {
+        var form,
+          element,
+          fields = {
+            'multicollapsedrequired': ["a"],
+            'multiexpandedrequired': ["a"],
+            'selectcollapsedrequired': "a",
+            'selectexpandedrequired': "a"
+          };
+
+        suiteSetup(function () {
+          form = Forms.current;
+        });
+
+        _.each(fields, function(v, k) {
+          test(k, function (done) {
+            element = form.getElement(k);
+            assert.equal(element.attributes._view.$el.children('ul').children('li').length, 1);
+            element.set('value', v);
+            assert.equal(element.attributes._view.$el.children('ul').children('li').length, 0);
+            element.set('value', null);
+            assert.equal(element.attributes._view.$el.children('ul').children('li').length, 1);
+            done();
+          });
+        });
       });
 
     }); // END: suite('Form', ...)
