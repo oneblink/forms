@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 /*global assert*/ // chai
 
-define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
+define(['BlinkForms', 'testUtils', 'underscore', 'BIC'], function (Forms, testUtils, _) {
 
   var originalOptions = { a: 'alpha', b: 'beta', g: 'gamma' };
   var newOptions = { d: 'delta', e: 'epsilon', z: 'zeta' };
@@ -291,6 +291,118 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
       });
 
+      ['selectc', 'multic', 'multif', 'multig', 'multiee'].forEach(function (name) {
+
+        test(name + ': model->view', function () {
+          var form = Forms.current,
+            element = form.getElement(name),
+            $el = element.attributes._view.$el;
+
+          if (element.attributes.type === 'multi') {
+            element.val(['b']);
+          } else {
+            element.val('b');
+          }
+          assert.equal($el.find('.ui-select .ui-btn-text').text(), 'beta');
+
+          element.val('');
+          if (element.attributes.type === 'multi') {
+            assert.equal($el.find('.ui-select .ui-btn-text').text(), 'select one or more...');
+          } else {
+            assert.equal($el.find('.ui-select .ui-btn-text').text(), 'select one...');
+          }
+        });
+
+        test(name + ': view->model', function () {
+          var form = Forms.current;
+          var element = form.getElement(name);
+          var $el = element.attributes._view.$el;
+          var $a = $el.children('.ui-select').find('[role=button]');
+          var $popup;
+          var $item;
+
+          $a.trigger('click');
+          $popup = $($a.attr('href'));
+          assert.lengthOf($popup, 1);
+
+          $item = $popup.find('[data-option-index=3]');
+          assert.equal($item.text().trim(), 'gamma');
+
+          $item.find('a').trigger('click');
+          if (element.attributes.type === 'multi') {
+            assert.deepEqual(element.val(), ['g']);
+          } else {
+            assert.equal(element.val(), 'g');
+          }
+        });
+      });
+
+      ['selectf', 'selecth'].forEach(function (name) {
+
+        test(name + ': model->view', function () {
+          var form = Forms.current,
+            element = form.getElement(name),
+            $el = element.attributes._view.$el;
+
+          element.val('b');
+          assert.equal($el.find('select').val(), 'b');
+
+          element.val('');
+          assert($el.find('select').val());
+        });
+
+        test(name + ': view->model', function () {
+          var form = Forms.current,
+            element = form.getElement(name),
+            $el = element.attributes._view.$el;
+
+          $el.find('select').val('g').trigger('change');
+          assert.equal(element.val(), 'g');
+        });
+
+      });
+
+      ['selecte', 'multie'].forEach(function (name) {
+
+        test(name + ': model->view', function () {
+          var form = Forms.current,
+            element = form.getElement(name),
+            $el = element.attributes._view.$el;
+
+          if (element.attributes.type === 'multi') {
+            element.val(['b']);
+            assert.equal($el.find('.ui-checkbox-on').text().trim(), 'beta');
+          } else {
+            element.val('b');
+            assert.equal($el.find('.ui-radio-on').text().trim(), 'beta');
+          }
+
+          if (element.attributes.type === 'multi') {
+            element.val([]);
+            assert.lengthOf($el.find('.ui-checkbox-on'), 0);
+          } else {
+            element.val('');
+            assert.lengthOf($el.find('.ui-radio-on'), 0);
+          }
+        });
+
+        test(name + ': view->model', function () {
+          var form = Forms.current,
+            element = form.getElement(name),
+            $el = element.attributes._view.$el;
+
+
+          if (element.attributes.type === 'multi') {
+            $el.find('.ui-checkbox').eq(2).children('label').trigger('click');
+            assert.deepEqual(element.val(), ['g']);
+          } else {
+            $el.find('.ui-radio').eq(2).children('label').trigger('click');
+            assert.equal(element.val(), 'g');
+          }
+        });
+
+      });
+
       test('elements have original a|b|g options', function () {
         var form = Forms.current;
         choiceElements.forEach(function (name) {
@@ -492,6 +604,33 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         radio.set('value', "test");
         assert.equal($radEl.find('input[type="text"]').length, 0, "textbox for radios is visible");
 
+      });
+
+      suite('FORMS-206 # choice fields that are required but not-empty still block validation', function () {
+        var form,
+          element,
+          fields = {
+            'multicollapsedrequired': ["a"],
+            'multiexpandedrequired': ["a"],
+            'selectcollapsedrequired': "a",
+            'selectexpandedrequired': "a"
+          };
+
+        suiteSetup(function () {
+          form = Forms.current;
+        });
+
+        _.each(fields, function(v, k) {
+          test(k, function (done) {
+            element = form.getElement(k);
+            assert.equal(element.attributes._view.$el.children('ul').children('li').length, 1);
+            element.set('value', v);
+            assert.equal(element.attributes._view.$el.children('ul').children('li').length, 0);
+            element.set('value', null);
+            assert.equal(element.attributes._view.$el.children('ul').children('li').length, 1);
+            done();
+          });
+        });
       });
 
     }); // END: suite('Form', ...)

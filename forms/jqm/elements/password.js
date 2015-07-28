@@ -15,12 +15,7 @@ define(function (require) {
     createElement: function () {
       var name = this.model.get('name');
       var input$ = $('<input type="password" />');
-      input$.attr({
-        name: name,
-        'rv-value': 'm:value',
-        'rv-input': 'm:value',
-        'rv-placeholder': 'm:placeholderText'
-      });
+      input$.attr('name', name);
       return input$;
     }
   });

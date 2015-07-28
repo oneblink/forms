@@ -17,9 +17,10 @@ define(function (require) {
       'change [data-onchange="onChange"]': 'onChange'
     },
 
-    modelEvents: {
+    // extending super's modelEvents
+    modelEvents: _.extend({}, ElementView.prototype.modelEvents, {
       'change:value': 'onValueChange'
-    },
+    }),
 
     render: function () {
       var $input;
@@ -40,8 +41,6 @@ define(function (require) {
 
       this.$el.append($input);
       this.$el.fieldcontain();
-
-      this.bindRivets();
     },
 
     onAttached: function () {

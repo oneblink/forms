@@ -47,7 +47,6 @@ define(function (require) {
 
       $button.find('button').button();
 
-      this.bindRivets();
       this.model.on('change:value', this.renderFigure, this);
     },
 

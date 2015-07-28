@@ -23,7 +23,7 @@ define(function (require) {
       var self = this,
         name = this.model.attributes.name,
         $input = $('<input type="text" />'),
-        $label = '<label rv-text="m:label" class="ui-input-text"></label>',
+        $label = '<label class="ui-input-text"></label>',
         $element = $('<div data-role="fieldcontain"></div>'),
         $div = $('<div class="ui-input-text"></div>'),
         isOtherRendered = !!this.$el.find('div[data-role=fieldcontain]').length;

@@ -28,10 +28,14 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var value = el.val();
           var name = el.get('name');
           var time = el.get('_time');
-          var time$ = el.get('_view').$el.find('input[name$=_time]');
-          var date$ = el.get('_view').$el.find('input[name$=_date]');
           var date = el.get('_date');
           var type = el.get('type');
+          var time$, date$;
+          if (type === 'hidden') {
+            return;
+          }
+          time$ = el.get('_view').$el.find('input[name$=_time]');
+          date$ = el.get('_view').$el.find('input[name$=_date]');
           if (value && !el.get('readonly')) {
             if (type !== 'time') {
               assert.lengthOf(date$, 1, name + ': has DOM date');
@@ -56,9 +60,13 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var time;
           var value = el.val();
           var name = el.get('name');
-          var time$ = el.get('_view').$el.find('input[name$=_time]');
-          var date$ = el.get('_view').$el.find('input[name$=_date]');
           var type = el.get('type');
+          var time$, date$;
+          if (type === 'hidden') {
+            return;
+          }
+          time$ = el.get('_view').$el.find('input[name$=_time]');
+          date$ = el.get('_view').$el.find('input[name$=_date]');
           if (value && !el.get('readonly')) {
             if (type !== 'time') {
               date = "2015-06-10";

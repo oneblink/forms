@@ -72,7 +72,6 @@ module.exports = function (grunt) {
             'picker.time': 'node_modules/pickadate/lib/picker.time',
             'poll-until': 'node_modules/poll-until/poll-until',
             'queue-async': 'node_modules/queue-async/queue',
-            rivets: 'node_modules/rivets/dist/rivets',
             uuid: 'node_modules/node-uuid/uuid',
             // Require.JS plugins
             text: 'node_modules/text/text'

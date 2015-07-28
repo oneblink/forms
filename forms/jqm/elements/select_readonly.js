@@ -17,7 +17,6 @@ define(['forms/jqm/element'], function (ElementView) {
         self.$el.append($label);
       }, 100);
 
-      this.bindRivets();
     }
   });
 

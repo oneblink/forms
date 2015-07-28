@@ -43,7 +43,6 @@ define(function (require) {
       this.$el.append($button);
       this.$el.fieldcontain();
       $button.button();
-      this.bindRivets();
     }
   });
 

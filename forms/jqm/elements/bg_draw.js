@@ -15,18 +15,18 @@ define(function (require) {
 
   BGDrawElementView = FileElementView.extend({
     renderControls: function () {
-      var $button, $div;
-
-      $button = $('<button />');
-      $button.text('Signature');
-
-      $div = $('<div class="ui-input-text"></div>');
-      $div.append($button);
-
-      this.$el.append($div);
-
-      $button.on('click', $.proxy(BGDrawElementView.onButtonClick, this));
-      $button.button();
+      var attrs = this.model.attributes;
+      if (!this.$controls) {
+        this.$controls = $('<div class="ui-input-text"></div>');
+        this.$el.append(this.$controls);
+      }
+      if (!this.$draw) {
+        this.$draw = $('<button>Signature</button>');
+        this.$draw.attr('name', attrs.name);
+        this.$controls.append(this.$draw);
+        this.$draw.on('click', BGDrawElementView.onButtonClick.bind(this));
+      }
+      this.$draw.button();
     },
 
     remove: function () {
