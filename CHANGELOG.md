@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.4.1 - 2015-07-28
+
+
+### Fixed
+
+- FORMS-203: improve Forms input latency with `_.throttle()`
+
+    - also drop Rivets dependency and explicitly bind event
+
+- FORMS-206: required choice fields that and not empty no longer cause
+  validation errors
+
+
 ## v3.4.0 - 2015-07-16
 
 
