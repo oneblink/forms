@@ -18,9 +18,9 @@ define(function (require) {
   var invalidWrapperFn, isSubForm;
 
   function isVisible(elementModel){
-    if ( !elementModel.has('hidden')){
-      return true;
-    }
+    // if ( !elementModel.has('hidden')){
+    //   return true;
+    // }
 
     return !elementModel.get('hidden');
   }
@@ -388,7 +388,6 @@ define(function (require) {
         var subFormErrorList = _.omit(errorList[name], 'errors');
 
         _.each(subFormErrorList, function(errors, formName){
-          var forms = subForms[name].where({name: formName});
           _.each(errors, function(fieldError, formIndex){
             var form = subForms[name].at(formIndex);
             if ( form ){

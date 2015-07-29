@@ -11,9 +11,6 @@ define(function (require) {
   var ElementModel = require('forms/models/element');
   var formsErrors = require('forms/error-helpers');
 
-  // this module
-  var ElementsCollection;
-
   function addErrorText(error){
     error.text = formsErrors.toErrorString(error);
     return error;
@@ -54,7 +51,10 @@ define(function (require) {
     return ret;
   }
 
-  ElementsCollection = Backbone.Collection.extend({
+
+  //this module
+
+  return Backbone.Collection.extend({
     model: ElementModel,
 
     /**
@@ -91,9 +91,17 @@ define(function (require) {
     },
 
     /**
+     * @typedef {Object} BlinkFormsErrorList
+     *
+     * @property {Array} errors - An Array of element Models that have failed validation
+     * @property {Number} length - How many elements were requested when creating this object
+     * @property {Number} Total - How many elements **in total** have errors
+     */
+
+    /**
      * Gets a list of element models that have failed validation
      * @param  {Number} fieldLimit The number of fields to return. Defaults to 0
-     * @return {Object} An object of the form { errors: [field, field, field, ...], total, 19, length: 4}
+     * @return {BlinkFormsErrorList} An object containing the Errors, limited to `fieldLimit` number of errors.
      *
      * @example
      *  //collection.getInvalid(2)
@@ -154,6 +162,4 @@ define(function (require) {
       }, this);
     }
   });
-
-  return ElementsCollection;
 });
