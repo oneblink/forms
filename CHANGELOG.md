@@ -1,6 +1,16 @@
 # Changelog
 
 
+## v3.4.2 - 2015-07-29
+
+
+### Fixed
+
+- FORMS-204: validation errors on subform elements are now displayed
+
+    - this requires BIC-174 to access the desired server validation structure
+
+
 ## v3.4.1 - 2015-07-28
 
 

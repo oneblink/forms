@@ -48,9 +48,8 @@ define(function (require) {
           errors.value.push({code: 'MAXLENGTH', MAX: attrs.characterLimit});
         }
       }
-      if (!_.isEmpty(errors)) {
-        return errors;
-      }
+
+      return _.isEmpty(errors) ? undefined : errors;
     }
   });
 
