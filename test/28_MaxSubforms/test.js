@@ -319,8 +319,14 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           assert.equal(subForms.length, 3);
           assert.equal(subFormElement.getRealLength(), 1);
         });
-      });
 
+        test("MAXSUBFORM error is displayed", function(){
+          var $errorList = $add.closest('[data-element-type="subForm"]').find('.bm-errors__bm-list');
+          assert.equal($errorList.children().length, 1);
+          assert.equal($errorList.children().first().text(), 'no more than 1 form');
+        });
+
+      });
     });
 
   }); // END: suite('1', ...)

@@ -81,25 +81,23 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                   });
     });
 
-    test('2nd level form errors are scrolled scrolled to', function(done){
+    test('2nd level form errors are scrolled to', function(){
       var origScrollTop = $(window).scrollTop();
       var view = Forms.current.getElement('second_level_form').get('_view');
       return view.onAddClick()
                  .then(function(){
-                  var subForms = Forms.current.getSubforms();
-                  var invalid = _.compact(subForms.second_level_form.invoke('getInvalidElements') );
+                  var invalid = Forms.current.getInvalidElements();
                   //make sure we have an error
                   assert.isAbove(invalid.length, 0);
 
                   //get the first invalid element and scroll
-                  invalid[0].errors[0].get('_view').scrollTo().then(function(){
+                  return invalid.errors[0].get('_view').scrollTo().then(function(){
                     assert.notEqual($(window).scrollTop(), origScrollTop);
-                    done();
                   });
                  });
     });
 
-    test('3rd level form errors are scrolled scrolled to correctly', function(done){
+    test('3rd level form errors are scrolled to correctly', function(){
       var origScrollTop = $(window).scrollTop();
       var view = Forms.current.getElement('second_level_form').get('_view');
 
@@ -119,9 +117,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                     invalidThirdLevel = moreSubforms[0].third_level_form.models[0].getInvalidElements();
                     assert.isAbove(invalidThirdLevel.errors.length, 0);
 
-                    invalidThirdLevel.errors[0].get('_view').scrollTo().then(function(){
+                    return invalidThirdLevel.errors[0].get('_view').scrollTo().then(function(){
                       assert.notEqual($(window).scrollTop(), origScrollTop);
-                      done();
                     });
                  });
     });

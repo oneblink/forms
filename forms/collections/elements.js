@@ -11,8 +11,6 @@ define(function (require) {
   var ElementModel = require('forms/models/element');
   var formsErrors = require('forms/error-helpers');
 
-  // this module
-
   function addErrorText(error){
     error.text = formsErrors.toErrorString(error);
     return error;
@@ -53,11 +51,16 @@ define(function (require) {
     return ret;
   }
 
+
+  //this module
+
   return Backbone.Collection.extend({
     model: ElementModel,
 
     /**
      * Gets a list of validationErrors currently set on the models.
+     * @deprecated
+     *
      * @param  {Number} [fieldLimit=undefined] - How many *field errors* to bring back. If
      * none specified, then all fields are returned.
      * @return {object} - { fieldname: [errors] }
@@ -75,6 +78,10 @@ define(function (require) {
       var errors;
       var length;
 
+      /*eslint-disable no-console, no-unused-expressions*/
+      console && console.warn('BlinkForms: elementCollection#getErrors is deprecated and will be removed. Please use elementModel#getInvalidElements instead.');
+      /*eslint-enable no-console, no-unused-expressions*/
+
       errors = this.reduce(addToErrorList, []);
       length = !fieldLimit ? errors.length : Math.min(errors.length, fieldLimit);
 
@@ -84,9 +91,17 @@ define(function (require) {
     },
 
     /**
+     * @typedef {Object} BlinkFormsErrorList
+     *
+     * @property {Array} errors - An Array of element Models that have failed validation
+     * @property {Number} length - How many elements were requested when creating this object
+     * @property {Number} Total - How many elements **in total** have errors
+     */
+
+    /**
      * Gets a list of element models that have failed validation
      * @param  {Number} fieldLimit The number of fields to return. Defaults to 0
-     * @return {Object} An object of the form { errors: [], total, 19, length: 4}
+     * @return {BlinkFormsErrorList} An object containing the Errors, limited to `fieldLimit` number of errors.
      *
      * @example
      *  //collection.getInvalid(2)
@@ -101,7 +116,7 @@ define(function (require) {
       var ret;
       var length;
       var reducer = function(memo, elementModel){
-        if ( elementModel.validationError){
+        if ( elementModel.validationError ){
           memo.push(elementModel);
         }
 
@@ -109,13 +124,14 @@ define(function (require) {
       };
 
       errors = this.reduce(function(memo, elementModel){
+        var subFormErrors;
         if ( elementModel.get('type') === 'subForm' ){
-          memo = _.chain(elementModel.get('forms').invoke('getInvalidElements'))
-                  .compact()
-                  .pluck('errors')
-                  .flatten()
-                  .reduce(reducer, memo)
-                  .value();
+          subFormErrors = _.chain(elementModel.get('forms').invoke('getInvalidElements'))
+                            .compact()
+                            .pluck('errors')
+                            .flatten()
+                            .value();
+          memo = memo.concat(subFormErrors);
         }
 
         return reducer(memo, elementModel);

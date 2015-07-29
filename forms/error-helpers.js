@@ -21,6 +21,48 @@ define(function (require) {
     };
   };
 
+  function makeCustomError(code, val, errorString){
+    var ret = {};
+
+    if ( errorString === undefined){
+      errorString = blinkFormsError.toErrorString(val) || val;
+    }
+
+    ret.code = code;
+    ret[code] = val;
+    ret.text = errorString;
+
+    return ret;
+  }
+
+  function blinkFormsErrorParser(errorObject){
+    if ( _.isString(errorObject) ){
+      return makeCustomError('CUSTOM', errorObject);
+    }
+
+    if ( _.isObject(errorObject) && !_.isArray(errorObject)){
+      //assume its the blink error format
+      if ( errorObject.code ){
+        return errorObject;
+      }
+
+      return _.reduce(errorObject, function(memo, value, key){
+        memo[key] = blinkFormsErrorParser(value);
+
+        return memo;
+      }, {});
+    }
+
+    if ( _.isArray(errorObject) ){
+      return _.reduce(errorObject, function(memo, value){
+        memo.push(blinkFormsErrorParser(value));
+        return memo;
+      }, []);
+    }
+
+    return errorObject;
+  }
+
   blinkFormsError = {
     /**
      * converts a forms error object to an error string
@@ -43,21 +85,9 @@ define(function (require) {
      * @param  {*} val         The value to test
      * @param  {string} [errorString=""] - A human friendly error message
      */
-    toFormsError: function(code, val, errorString){
-      var ret = {};
+    toFormsError: makeCustomError,
 
-      if ( errorString === undefined){
-        errorString = blinkFormsError.toErrorString(val) || val;
-      }
-
-      ret.code = code;
-      ret[code] = val;
-      ret.text = errorString;
-
-      return ret;
-    },
-
-    fromBIC: function(){}
+    fromBMP: blinkFormsErrorParser
   };
 
   return blinkFormsError;

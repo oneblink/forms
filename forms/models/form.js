@@ -17,9 +17,17 @@ define(function (require) {
   var Form;
   var invalidWrapperFn, isSubForm;
 
+  function isVisible(elementModel){
+    // if ( !elementModel.has('hidden')){
+    //   return true;
+    // }
+
+    return !elementModel.get('hidden');
+  }
+
   invalidWrapperFn = function (fn) {
     return function(options){
-      var elementCollection = this.get('elements'),
+      var elementCollection = new Elements(this.get('elements').filter(isVisible)),
           validate = options && options.validate || false,
           limit = options && options.limit || 0;
 
@@ -38,6 +46,7 @@ define(function (require) {
   isSubForm = function (elementModel) {
     return elementModel.get('type') === 'subForm';
   };
+
 
   Form = Backbone.Model.extend({
     defaults: {
@@ -206,6 +215,8 @@ define(function (require) {
     * on each object. *limit:{number}* will return the first <limit> fields
     * @returns {Object} Keys are element names, Values are error arrays.
     *
+    * @deprecated Please use getInvalidElements instead
+    *
     * @example
           Forms.current.getErrors()
           //returns:
@@ -371,6 +382,21 @@ define(function (require) {
     /* eslint-disable no-unused-vars */ //stop eslint compaining about options and errorList not being used.
     setErrors: function(errorList, options){
       var elementsCollection = this.get('elements');
+      var subForms = this.getSubforms();
+
+      _.each(subForms, function(subForm, name){
+        var subFormErrorList = _.omit(errorList[name], 'errors');
+
+        _.each(subFormErrorList, function(errors, formName){
+          _.each(errors, function(fieldError, formIndex){
+            var form = subForms[name].at(formIndex);
+            if ( form ){
+              form.setErrors(fieldError);
+            }
+          });
+        });
+      });
+
       if (!elementsCollection){
         return false;
       }

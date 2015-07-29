@@ -15,12 +15,26 @@ define(function (require) {
 
   var SubFormsCollection;
 
-  //SubFormsCollection = ElementCollection.extend({
+  /**
+   * Holds a collection of form objects that exist inside a SubForm Element.
+   *
+   */
   SubFormsCollection = Backbone.Collection.extend({
     model: SubFormModel,
+
+    /**
+     * invokes 'getSubforms' on each form object and returns the aggregated result.
+     * @return {Array|Object} An Array of subforms. Each index matches the forms index in this collection.
+     */
     getSubforms: function(){
       return this.invoke('getSubforms');
     },
+
+    /**
+     * invokes 'getInvalidElements' on each form in the collection and returns the aggregated result.
+     * @param  {Number} [limit=0] (Optional) - Limit the number of results returned
+     * @return {Array}  A array of invalid elements. Each index matches the forms index in this collection.
+     */
     getInvalidElements: function(limit){
       return this.invoke('getInvalidElements', limit);
     }
@@ -266,6 +280,7 @@ define(function (require) {
         errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
       }
       if (!_.isEmpty(errors)) {
+        this.trigger('update:fieldErrors', errors);
         return errors;
       }
     },
@@ -293,7 +308,6 @@ define(function (require) {
     },
     validate: function (attrs) {
       var forms,
-        err,
         subformErrorCounter = 0,
         errors;
 
@@ -309,8 +323,9 @@ define(function (require) {
       }
 
       forms.models.forEach(function (frm) {
-        err = frm.getErrors({validate: true});
-        if (!_.isEmpty(err)) {
+        var err;
+        err = frm.getInvalidElements({validate: true});
+        if ( err && err.length ){
           subformErrorCounter++;
         }
       });
@@ -322,6 +337,18 @@ define(function (require) {
       }
 
       return _.isEmpty(errors) ? undefined : errors;
+    },
+
+    setExternalErrors: function(elementErrorList, options){
+      //set errors on subforms
+      this.get('forms').invoke('setErrors', elementErrorList, options);
+
+      //set errors on me.
+      if (elementErrorList.errors){
+        ElementModel.prototype.setExternalErrors.call(this, elementErrorList.errors, options);
+      }
+
+      this.trigger('update:fieldErrors');
     }
   });
 });

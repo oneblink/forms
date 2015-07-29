@@ -39,17 +39,18 @@ define(function (require) {
     initialize: function () {
       var element = this.model;
 
+
       this.$el.attr('data-name', element.attributes.name);
       this.$el.attr('data-element-type', element.attributes.type);
       this.$el.data('model', element);
 
-      this.onChangeClass();
-      this.onChangeHidden();
-      this.model.isValid();
-
       if (this.modelEvents) {
         events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       }
+
+      this.onChangeClass();
+      this.onChangeHidden();
+      this.model.isValid();
     },
 
     remove: function () {
@@ -170,8 +171,11 @@ define(function (require) {
       this.$el.attr('class', this.model.attributes['class']);
     },
 
-    onChangeHidden: function () {
+    onChangeHidden: function (model) {
       var hidden = this.model.attributes.hidden;
+      if ( model && model.cid !== this.model.cid ){
+        return;
+      }
       if (hidden) {
         this.hide();
       } else {
@@ -181,11 +185,16 @@ define(function (require) {
 
     hide: function () {
       this.$el.css('display', 'none');
+      //when a field is hidden, we no longer care
+      //about if it is valid or not.
+      this.model.validationError = undefined;
+      this.model.trigger('change:value');
     },
 
     show: function () {
       if (this.$el.css('display') === 'none') {
         this.$el.css('display', '');
+        this.model.trigger('change:value');
       }
     },
 
