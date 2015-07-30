@@ -13,12 +13,14 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
     'datenow',
     'datefromnowplus',
     'datefromdate',
-    'datetimenow'
+    'datetimenow',
+    'date column'
   ], pickatime = [
     'timenow',
     'timenowplus',
     'timenowtime',
-    'datetimenow'
+    'datetimenow',
+    'time column'
   ];
 
   function defineModelToViewTests() {
