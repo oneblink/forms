@@ -57,6 +57,14 @@ define(function (require) {
       delete this.$el;
       delete this.el;
       return result;
+    },
+    onAttached: function() {
+      this.model.get('elements').models.forEach(function (el) {
+        var view = el.get('_view');
+        if (typeof view.onAttached === 'function') {
+            view.onAttached();
+        }
+      });
     }
   });
 
