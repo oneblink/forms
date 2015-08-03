@@ -1,4 +1,5 @@
 {
+  "extends": ["eslint:recommended"],
   "env": {
     "amd": true,
     "browser": true,
@@ -17,7 +18,7 @@
     "valid-jsdoc": 0, /* TODO: 2 */
     /* Best Practices */
     "block-scoped-var": 2,
-    "complexity": [1, 3],
+    "complexity": [1, 5],
     "default-case": 2,
     "guard-for-in": 2,
     "no-div-regex": 2,
@@ -38,6 +39,10 @@
     /* Stylistic Issues */
     "no-mixed-spaces-and-tabs": 2,
     "no-underscore-dangle": 0,
-    "quotes": 0 /* TODO: [1, "single", "avoid-escape"] */
+    "quotes": 0, /* TODO: [1, "single", "avoid-escape"] */
+    /* Semi-Standard */
+    "semi": [2, "always"],
+    "no-extra-semi": 2,
+    "semi-spacing": [2, { "before": false, "after": true }]
   }
 }
