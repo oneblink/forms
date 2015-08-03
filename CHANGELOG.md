@@ -1,6 +1,16 @@
 # Changelog
 
 
+## v3.4.3 - 2015-08-03
+
+
+### Fixed
+
+- FORMS-205: pickadate pickers now work when elements are in sections
+
+    - affects solutions that use sections for column layouts, etc
+
+
 ## v3.4.2 - 2015-07-29
 
 
@@ -18,9 +28,9 @@
 
 - FORMS-203: improve Forms input latency with `_.throttle()`
 
-    - also drop Rivets dependency and explicitly bind event
+    - also drop Rivets dependency and explicitly bind events
 
-- FORMS-206: required choice fields that and not empty no longer cause
+- FORMS-206: required choice fields that are not empty no longer cause
   validation errors
 
 
