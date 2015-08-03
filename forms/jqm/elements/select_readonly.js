@@ -3,11 +3,11 @@ define(['forms/jqm/element'], function (ElementView) {
 
   var SelectReadOnlyElementView = ElementView.extend({
     render: function () {
-      var self = this,
-      attrs = self.model.attributes,
-      options = attrs.options,
-      $label,
-      value;
+      var self = this;
+      var attrs = self.model.attributes;
+      var options = attrs.options;
+      var $label;
+      var value;
 
       this.$el.empty();
       this.renderLabel();

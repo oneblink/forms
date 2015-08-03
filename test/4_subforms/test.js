@@ -17,8 +17,8 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       delete Forms.current;
     });
 
-    setup(function(){
-      return Forms.getDefinition('form1', 'add').then(function(def){
+    setup(function () {
+      return Forms.getDefinition('form1', 'add').then(function (def) {
         Forms.initialize(def, 'add');
         form = Forms.current;
 
@@ -31,7 +31,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       });
     });
 
-    teardown(function(){
+    teardown(function () {
       form = null;
       $content.empty();
       delete Forms.current;
@@ -52,7 +52,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         $content.empty().append(form.$form);
 
         $doc.one('pageinit', function () {
-          form.attributes.preloadPromise.then(function() {
+          form.attributes.preloadPromise.then(function () {
             done();
           });
         });
@@ -84,7 +84,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         var subFormElement = Forms.current.getElement('notes');
 
         assert.equal(subFormElement.get('forms').length, 0, 'no subForms yet');
-        return subFormElement.add().then(function(){
+        return subFormElement.add().then(function () {
           assert.equal(subFormElement.get('forms').length, 1);
         });
       });
@@ -94,7 +94,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         subFormElement = Forms.current.getElement('notes');
         subForms = subFormElement.attributes.forms;
 
-        return subFormElement.add().then(function(){
+        return subFormElement.add().then(function () {
           subForm = subForms.at(0);
           $view = subForm.attributes._view.$el;
           $remove = $view.children('.ui-btn').children('button');
@@ -120,7 +120,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
         assert.equal(subForms.length, 0, 'no subForms yet');
 
-        return subFormElement.add().then(function(){
+        return subFormElement.add().then(function () {
           assert.equal(Forms.current.getElement('reviews').get('forms').length, 1, 'no subForms yet');
         });
       });
@@ -130,7 +130,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         subFormElement = Forms.current.getElement('reviews');
         subForms = subFormElement.attributes.forms;
 
-        return subFormElement.add().then(function(){
+        return subFormElement.add().then(function () {
           subForm = subForms.at(0);
           $view = subForm.attributes._view.$el;
           $remove = $view.children('.ui-btn').children('button');
@@ -151,7 +151,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         assert.equal(subForms.length, 0, 'no subForms yet');
         assert($add.html(), "PLUS", "label for ADD `Comments` subForm not set properly");
 
-        return subFormElement.add().then(function(){
+        return subFormElement.add().then(function () {
           assert.equal(subForms.length, 1, 'no comments subForms yet');
         });
       });
@@ -159,7 +159,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       test('Data has _action set properly', function () {
         var subFormElement = Forms.current.getElement('comments');
 
-        return subFormElement.add().then(function(){
+        return subFormElement.add().then(function () {
           return Forms.current.data().then(function (data) {
             assert.equal(data._action, "add");
             assert.equal(data.comments[0]._action, "add");
@@ -172,8 +172,8 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           subForms = subFormElement.get('forms');
 
         assert.equal(subForms.length, 0, '0 subForm');
-        return subFormElement.add().then(function(){
-          subFormElement.add().then(function(){
+        return subFormElement.add().then(function () {
+          subFormElement.add().then(function () {
             assert.equal(subFormElement.get('forms').length, 2, 'should be 2 subForms');
           });
         });
@@ -189,8 +189,8 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
         assert.equal(subForms.length, 0, '0 subForms');
 
-        return subFormElement.add().then(function(){
-          return subFormElement.add().then(function(){
+        return subFormElement.add().then(function () {
+          return subFormElement.add().then(function () {
             assert.equal(subFormElement.get('forms').length, 2, 'should be 2 subForms');
 
             subForms.at(0).getElement('comment').val('abc');
@@ -209,16 +209,16 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       });
 
       test('remove 1st subForm', function () {
-        var subFormElement = Forms.current.getElement('comments'),
-            subForms = subFormElement.attributes.forms;
+        var subFormElement = Forms.current.getElement('comments');
+        var subForms = subFormElement.attributes.forms;
 
         assert.equal(subForms.length, 0);
 
-        subFormElement.add().then(function(){
+        subFormElement.add().then(function () {
           var subForm = subFormElement.get('forms').at(0);
           assert(subForm.get('_view').$el.children('.ui-btn').children('button').html(), "MINUS", "label for MINUS `comments` subForm not set properly");
 
-          return subFormElement.add().then(function(){
+          return subFormElement.add().then(function () {
 
             assert.equal(subFormElement.get('forms').length, 2, 'should be 2 subForms');
 
@@ -237,7 +237,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
         assert.equal(subForms.length, 0, '0 subForms');
 
-        return subFormElement.add().then(function(){
+        return subFormElement.add().then(function () {
           subForms.at(0).getElement('comment').val('def');
           return subFormElement.data()
             .then(function (d) {
@@ -253,14 +253,14 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       test('remove edit subForm (leaving placeholder)', function () {
         var subFormElement = Forms.current.getElement('comments');
 
-        return subFormElement.add().then(function(){
-          var subForms = subFormElement.attributes.forms,
-              subForm = subForms.at(0),
-              $view = subForm.attributes._view.$el,
-              testData = {
-                _action: "remove",
-                id: 1
-              };
+        return subFormElement.add().then(function () {
+          var subForms = subFormElement.attributes.forms;
+          var subForm = subForms.at(0);
+          var $view = subForm.attributes._view.$el;
+          var testData = {
+            _action: "remove",
+            id: 1
+          };
 
           assert.equal($view.children('section').length, 1);
           assert.equal(subForms.length, 1);
@@ -288,7 +288,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       //     $add = $view.children('.ui-btn').children('button'),
       //     subForms = subFormElement.attributes.forms;
 
-
       //   assert.equal(subForms.length, 1, 'no subForms yet');
       //   assert.equal(subForms.size(), 1);
       //   $add.trigger('click');
@@ -297,13 +296,12 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       //   }, 0);
       // });
 
-
       test('remove subForm (leaving no placeholders)', function () {
         var subFormElement, subForms, subForm, $view;
         subFormElement = Forms.current.getElement('comments');
         subForms = subFormElement.attributes.forms;
 
-        return subFormElement.add().then(function(){
+        return subFormElement.add().then(function () {
           subForm = subForms.at(0);
           $view = subForm.attributes._view.$el;
 
@@ -322,9 +320,9 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
 /////////////////////////////////////////////////////////////////////////////////
 
-    suite('subform buttons', function(){
+    suite('subform buttons', function () {
 
-      test('add button should add a new subform', function(done){
+      test('add button should add a new subform', function (done) {
         var commentsSubForm = Forms.current.getElement('comments');
         var $addButton = commentsSubForm.get('_view').$el.find('.bm-button.bm-add');
         var startingLength = commentsSubForm.get('forms').length;
@@ -332,24 +330,24 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         $addButton.trigger('click');
 
         //since adding a subform is an async process
-        setTimeout(function(){
+        setTimeout(function () {
           assert.isAbove(commentsSubForm.get('forms').length, startingLength);
           done();
         }, 250);
       });
 
-      test('remove button should show a popup, and do nothing on cancel', function(done){
+      test('remove button should show a popup, and do nothing on cancel', function (done) {
         var commentsSubForm = Forms.current.getElement('comments');
 
-        commentsSubForm.add().then(function(){
+        commentsSubForm.add().then(function () {
           var $removeButton = commentsSubForm.get('_view').$el.find('.bm-button.bm-remove');
           var startingLength = commentsSubForm.get('forms').length;
           $removeButton.trigger('click');
           //since adding a subform is an async process
-          setTimeout(function(){
+          setTimeout(function () {
             assert.isAbove($('.bm-popup.bm-confirm').length, 0);
             $('.bm-popup.bm-confirm').find('.bm-cancel').trigger('click');
-            setTimeout(function(){
+            setTimeout(function () {
               assert.equal(commentsSubForm.get('forms').length, startingLength);
               done();
             }, 250);
@@ -357,19 +355,19 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         });
       });
 
-      test('remove button should show a popup, and remove on confirm.', function(done){
+      test('remove button should show a popup, and remove on confirm.', function (done) {
         var commentsSubForm = Forms.current.getElement('comments');
         var startingLength = commentsSubForm.get('forms').length;
 
-        commentsSubForm.add().then(function(){
+        commentsSubForm.add().then(function () {
           var $removeButton = commentsSubForm.get('_view').$el.find('.bm-button.bm-remove');
 
           $removeButton.trigger('click');
           //since adding a subform is an async process
-          setTimeout(function(){
+          setTimeout(function () {
             assert.isAbove($('.bm-popup.bm-confirm').length, 0);
             $('.bm-popup.bm-confirm').find('.bm-confirm').trigger('click');
-            setTimeout(function(){
+            setTimeout(function () {
               assert.equal(commentsSubForm.get('forms').length, startingLength);
               done();
             }, 400);
@@ -378,10 +376,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       });
     });
 
-
-
 ////////////////////////////////////////////////////////////////////////////////
-
 
     suite('after #setRecord(...) with IDs', function () {
 
@@ -406,13 +401,13 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
       test('section[data-record-id]', function () {
         BMP.Forms.current.getElement('comments').get('forms')
-           .forEach(function (model) {
-             var $el = model.get('_view').$el;
-             assert.equal(
-               $el.attr('data-record-id'),
-               '' + model.getElement('id').val()
-             );
-           });
+        .forEach(function (model) {
+          var $el = model.get('_view').$el;
+          assert.equal(
+            $el.attr('data-record-id'),
+            '' + model.getElement('id').val()
+          );
+        });
       });
 
       test('section[data-form]', function () {
@@ -446,7 +441,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               });
             });
           }
-        );
+       );
         done();
       });
     */

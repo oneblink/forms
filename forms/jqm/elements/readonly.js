@@ -26,7 +26,7 @@ define(function (require) {
       if (!this.$output) {
         this.$output = $(document.createElement('label'));
         this.$output.attr({
-          'class': 'ui-input-text'
+          class: 'ui-input-text'
         });
         this.$el.append(this.$output);
       }

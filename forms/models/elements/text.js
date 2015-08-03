@@ -16,9 +16,8 @@ define(function (require) {
       Element.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
-      var Forms = BMP.Forms,
-      View,
-      view;
+      var Forms = BMP.Forms;
+      var View, view;
 
       if (this.attributes.readonly) {
         this.removeView();

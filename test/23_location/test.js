@@ -75,7 +75,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             form.setRecord(record).then(function () {
               form.data().then(function (formdata) {
                 var keys = ['id', 'location1', 'location2', '_action'];
-                _.each(keys, function(k) {
+                _.each(keys, function (k) {
                   assert.ok(formdata[k], k + " does not exist");
                 });
                 done();
@@ -85,7 +85,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               });
             });
           }
-        );
+       );
       });
 
       test('location elements present', function (done) {
@@ -137,7 +137,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           $dialog = $('#bmp-forms-location').find('button');
           $dialog.first().trigger('click');
           value = element.get('value');
-          _.each(keys, function(k) {
+          _.each(keys, function (k) {
             assert(_.has(value, k), k + " does not exist");
           });
           done();

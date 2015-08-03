@@ -1,4 +1,4 @@
-define(function(require){
+define(function (require) {
   'use strict';
 
   // foreign modules
@@ -19,28 +19,28 @@ define(function(require){
 
     className: 'bm-popup bm-confirm',
 
-    render: function(){
+    render: function () {
       this.$el.append(this.template(this.model));
       this.$el.attr('cid', this.model.cid);
 
-      $('[data-role="button"]', this.$el ).button();
+      $('[data-role="button"]', this.$el).button();
       $('[data-onclick="onCancelClick"]', this.$el).on('click', _.debounce(this.onCancelClick.bind(this), 250));
       $('[data-onclick="onContinueClick"]', this.$el).on('click', _.debounce(this.onContinueClick.bind(this), 250));
 
       return this;
     },
 
-    remove: function(){
+    remove: function () {
       $('[data-onclick="onCancelClick"]', this.$el).off('click');
       $('[data-onclick="onContinueClick"]', this.$el).off('click');
       Backbone.View.prototype.remove.apply(this, arguments);
     },
 
-    onContinueClick: function(){
+    onContinueClick: function () {
       this._resolve();
     },
 
-    onCancelClick: function(){
+    onCancelClick: function () {
       this._reject(new Error('cancel'));
     }
 

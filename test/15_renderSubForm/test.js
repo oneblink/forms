@@ -92,7 +92,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             form.setRecord(record).then(function () {
               form.data().then(function (formdata) {
                 var keys = _.keys(record);
-                _.each(keys, function(k) {
+                _.each(keys, function (k) {
                   assert.deepEqual(formdata[k], element[k]);
                   assert.ok(formdata[k], k + " does not exist");
                 });
@@ -103,7 +103,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               });
             });
           }
-        );
+       );
       });
 
       test('form with subform', function (done) {

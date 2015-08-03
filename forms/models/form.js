@@ -17,8 +17,8 @@ define(function (require) {
   var Form;
   var invalidWrapperFn, isSubForm;
 
-  function isVisible(elementModel){
-    // if ( !elementModel.has('hidden')){
+  function isVisible (elementModel) {
+    // if (!elementModel.has('hidden')) {
     //   return true;
     // }
 
@@ -26,16 +26,16 @@ define(function (require) {
   }
 
   invalidWrapperFn = function (fn) {
-    return function(options){
-      var elementCollection = new Elements(this.get('elements').filter(isVisible)),
-          validate = options && options.validate || false,
-          limit = options && options.limit || 0;
+    return function (options) {
+      var elementCollection = new Elements(this.get('elements').filter(isVisible));
+      var validate = options && options.validate || false;
+      var limit = options && options.limit || 0;
 
-      if ( !elementCollection ){
+      if (!elementCollection) {
         return undefined;
       }
 
-      if ( validate ){
+      if (validate) {
         elementCollection.invoke('isValid');
       }
 
@@ -47,24 +47,23 @@ define(function (require) {
     return elementModel.get('type') === 'subForm';
   };
 
-
   Form = Backbone.Model.extend({
     defaults: {
       answerSpace: '',
-      'class': '',
+      class: '',
       isPopulating: false,
       uuid: ''
     },
     initialize: function () {
-      var Forms = BMP.Forms,
-        self = this,
-        Page = Forms._models.Page,
-        Element = Forms._models.Element,
-        Behaviour = Forms._models.Behaviour,
-        pages,
+      var Forms = BMP.Forms;
+      var self = this;
+      var Page = Forms._models.Page;
+      var Element = Forms._models.Element;
+      var Behaviour = Forms._models.Behaviour;
+      var pages,
         elements,
-        behaviours,
-        preloadPromises = [];
+        behaviours;
+      var preloadPromises = [];
 
       Forms.setAttributesFromClass(this, [
         '_actions',
@@ -102,8 +101,8 @@ define(function (require) {
       }
       this.attributes.elements = new Elements(elements);
       //bubble element events up through the form model.
-      this.attributes.elements.on('all', function(){
-        this.trigger.apply( this, arguments );
+      this.attributes.elements.on('all', function () {
+        this.trigger.apply(this, arguments);
       }, this);
 
       this.attributes.preloadPromise = Promise.all(preloadPromises);
@@ -122,7 +121,7 @@ define(function (require) {
 
       this.on('remove', this.close, this);
 
-      setTimeout(function() {
+      setTimeout(function () {
         self.trigger('formLoad', self);
       }, 0);
 
@@ -154,9 +153,9 @@ define(function (require) {
     * @param {Number} index desired Page index.
     */
     getPage: function (index) {
-      var Forms = BMP.Forms,
-        Page = Forms._models.Page,
-        pages = this.get('pages');
+      var Forms = BMP.Forms;
+      var Page = Forms._models.Page;
+      var pages = this.get('pages');
 
       // assume that by now it's okay to create vanilla Pages
       while (pages.length <= index) {
@@ -170,9 +169,9 @@ define(function (require) {
     getElement: function (name) {
       var element = this.attributes.elements.get(name);
 
-      if ( !element && name !== 'id' ){
+      if (!element && name !== 'id') {
         //this is supposed to recursively search sub forms for an element.
-        element = _.head(_.reduce(this.getSubforms(), function(memo, subForm){
+        element = _.head(_.reduce(this.getSubforms(), function (memo, subForm) {
           return memo.concat(_.compact(subForm.invoke('getElement', name)));
         }, []));
       }
@@ -191,14 +190,13 @@ define(function (require) {
      * Returns an object of subforms that are within the form
      * @return {Object} Keys are the names of the subforms, Values are a Sub Form collection
      */
-    getSubforms: function(){
-      return _.reduce( this.get('elements').filter(isSubForm), function(memo, elementModel){
+    getSubforms: function () {
+      return _.reduce(this.get('elements').filter(isSubForm), function (memo, elementModel) {
                 memo = memo || {}; //create in here so we return undefined if we have no subforms.
                 memo[elementModel.id] = elementModel.get('forms');
                 return memo;
               }, undefined);
     },
-
 
     /**
      * Gets a list of invalid elements for the form and its subforms.
@@ -227,15 +225,15 @@ define(function (require) {
           //   total: 12
           //}
     */
-   getErrors: invalidWrapperFn('getErrors'),
+    getErrors: invalidWrapperFn('getErrors'),
 
     /**
     * official Blink API
     */
     getRecord: function () {
-      var me = this,
-        data = {},
-        promises = [];
+      var me = this;
+      var data = {};
+      var promises = [];
 
       return new Promise(function (resolve) {
         if (me.attributes.elements) {
@@ -301,12 +299,12 @@ define(function (require) {
     * official Blink API
     */
     setRecord: function (data) {
-      var self = this,
-        promises = [];
+      var self = this;
+      var promises = [];
 
       return new Promise(function (resolve, reject) {
-        var loopCounter = 0,
-          MAX_LOOP = 5;
+        var loopCounter = 0;
+        var MAX_LOOP = 5;
         if (!_.isObject(data)) {
           reject();
           return;
@@ -315,7 +313,8 @@ define(function (require) {
         self.set('isPopulating', true);
 
         _.each(data, function (value, key) {
-          var formElement = self.getElement(key), result, xml, mime;
+          var formElement = self.getElement(key);
+          var result, xml, mime;
           if (!formElement) {
             return;
           }
@@ -338,7 +337,7 @@ define(function (require) {
               formElement.set('width', data[key + '_width'] || 0);
             }
             if (formElement.attributes.type === 'multi') {
-              if( typeof value === 'string') {
+              if (typeof value === 'string') {
                 value = value.split('\n');
               }
               value = value.map(function (v) {
@@ -363,8 +362,8 @@ define(function (require) {
         });
         Promise.all(promises).then(function () {
           self.set('isPopulating', false);
-          setTimeout(function() {
-            self.trigger("formPopulated", self);
+          setTimeout(function () {
+            self.trigger('formPopulated', self);
           }, 0);
           resolve(data);
         }, function (err) {
@@ -380,27 +379,27 @@ define(function (require) {
      * @param {Object} options   - {merge: true}
      */
     /* eslint-disable no-unused-vars */ //stop eslint compaining about options and errorList not being used.
-    setErrors: function(errorList, options){
+    setErrors: function (errorList, options) {
       var elementsCollection = this.get('elements');
       var subForms = this.getSubforms();
 
-      _.each(subForms, function(subForm, name){
+      _.each(subForms, function (subForm, name) {
         var subFormErrorList = _.omit(errorList[name], 'errors');
 
-        _.each(subFormErrorList, function(errors, formName){
-          _.each(errors, function(fieldError, formIndex){
+        _.each(subFormErrorList, function (errors, formName) {
+          _.each(errors, function (fieldError, formIndex) {
             var form = subForms[name].at(formIndex);
-            if ( form ){
+            if (form) {
               form.setErrors(fieldError);
             }
           });
         });
       });
 
-      if (!elementsCollection){
+      if (!elementsCollection) {
         return false;
       }
-      return elementsCollection.setErrors.apply( elementsCollection, arguments );
+      return elementsCollection.setErrors.apply(elementsCollection, arguments);
     },
 
     /* eslint-enable no-unused-vars */
@@ -434,7 +433,7 @@ define(function (require) {
     */
     addMimetype: function (value, mime) {
       if (value.indexOf('data:') === -1) {
-        return "data:" + mime + ";base64," + value;
+        return 'data:' + mime + ';base64,' + value;
       }
       return value;
     },
@@ -445,13 +444,13 @@ define(function (require) {
       var res = {};
 
       _.each(nodes, function (node) {
-          res = Form.xmlToJsonform(node, {});
-          if (!_.isArray(result[root])) {
-            result[root] = [];
-          }
-          if (!_.isEmpty(res)) {
-            result[root].push(res);
-          }
+        res = Form.xmlToJsonform(node, {});
+        if (!_.isArray(result[root])) {
+          result[root] = [];
+        }
+        if (!_.isEmpty(res)) {
+          result[root].push(res);
+        }
       });
       return result;
     },

@@ -116,7 +116,7 @@ define(function (require) {
         rotateCSS = 'rotate(' + orientation + 'deg)';
         $video.css({
           '-webkit-transform': rotateCSS,
-          'transform': rotateCSS
+          transform: rotateCSS
         });
         if (orientation === 90 || orientation === 270) {
           $video.css('padding', '13% 0');
@@ -151,7 +151,7 @@ define(function (require) {
             $popup.prepend($error);
             $popup.popup('open');
           }
-        );
+       );
       };
 
       stop = function () {
@@ -163,13 +163,13 @@ define(function (require) {
       };
 
       $popup.popup({
-        afteropen: function() {
+        afteropen: function () {
           start();
           $rotate.on('click', rotate);
           $recapture.on('click', recapture);
           $use.on('click', use);
         },
-        afterclose: function() {
+        afterclose: function () {
           $rotate.off();
           $recapture.off();
           $use.off();

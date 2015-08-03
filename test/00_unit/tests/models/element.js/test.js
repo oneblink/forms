@@ -5,20 +5,20 @@
   everything except the file being tested should be mocked or stubbed out.
 */
 define(['models/element'],
-function( ElementModel /* change this to whatever you want */ ){
+function (ElementModel /* change this to whatever you want */) {
   'use strict';
 
-  var noop = function(){};
+  var noop = function () {};
 
-  suite('models/element.js', function(){
+  suite('models/element.js', function () {
 
-    suite("#setExternalErrors()", function(){
+    suite("#setExternalErrors()", function () {
       var model1
         , model2
         , model3
         , model4;
 
-      setup(function(){
+      setup(function () {
         ElementModel.prototype.initialize = noop;
 
         model1 = new ElementModel({ name: 'model1', id: 'model1' });
@@ -32,14 +32,14 @@ function( ElementModel /* change this to whatever you want */ ){
         model4.validationError = { value: [{code: 'EMAIL'}]};
       });
 
-      teardown(function(){
+      teardown(function () {
         model1 = null;
         model2 = null;
         model3 = null;
         model4 = null;
       });
 
-      test('should keep the current errors', function(){
+      test('should keep the current errors', function () {
           model1.setExternalErrors([{code: 'blah1'}], {merge: true});
           assert.equal(model1.validationError.value.length, 2);
           assert.equal(model1.validationError.value[0].code, 'blah1');
@@ -59,33 +59,33 @@ function( ElementModel /* change this to whatever you want */ ){
           assert.equal(model3.validationError.value[1].code, 'blah3');
         });
 
-        test('should not keep the current field errors', function(){
+        test('should not keep the current field errors', function () {
           model1.setExternalErrors([{code: 'blah1'}], {merge: false});
           assert.equal(model1.validationError.value.length, 1);
           assert.equal(model1.validationError.value[0].code, 'blah1');
         });
 
-        test('should default to keeping the current field errors', function(){
+        test('should default to keeping the current field errors', function () {
           model1.setExternalErrors([{code: 'blah1'}]);
           assert.equal(model1.validationError.value.length, 2);
           assert.equal(model1.validationError.value[0].code, 'blah1');
         });
 
-        test('should handle an empty error list when merging', function(){
+        test('should handle an empty error list when merging', function () {
           model3.setExternalErrors([{code: 'blah3'}, {code: 'blah4'}], {merge: true});
           assert.equal(model3.validationError.value.length, 2);
           assert.equal(model3.validationError.value[0].code, 'blah4');
           assert.equal(model3.validationError.value[1].code, 'blah3');
         });
 
-        test('should handle an empty error list when not merging', function(){
+        test('should handle an empty error list when not merging', function () {
           model3.setExternalErrors([{code: 'blah3'}, {code: 'blah4'}], {merge: false});
           assert.equal(model3.validationError.value.length, 2);
           assert.equal(model3.validationError.value[0].code, 'blah4');
           assert.equal(model3.validationError.value[1].code, 'blah3');
         });
 
-        test('should handle an empty error list when not merging and merge is default', function(){
+        test('should handle an empty error list when not merging and merge is default', function () {
           model3.setExternalErrors([{code: 'blah3'}, {code: 'blah4'}]);
           assert.equal(model3.validationError.value.length, 2);
           assert.equal(model3.validationError.value[0].code, 'blah4');

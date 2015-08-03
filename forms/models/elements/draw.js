@@ -6,8 +6,8 @@ define(['forms/models/elements/file'], function (FileElement) {
       FileElement.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
-      var Forms = BMP.Forms,
-        view;
+      var Forms = BMP.Forms;
+      var view;
 
       this.removeView();
       if (this.attributes.readonly) {

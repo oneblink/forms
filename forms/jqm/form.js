@@ -16,11 +16,11 @@ define(function (require) {
     tagName: 'form',
 
     attributes: {
-      'novalidate': 'novalidate'
+      novalidate: 'novalidate'
     },
 
     formElementEvents: {
-      'id': { 'change:value': 'onChangedId' }
+      id: { 'change:value': 'onChangedId' }
     },
 
     remove: function () {
@@ -33,9 +33,9 @@ define(function (require) {
     },
 
     render: function () {
-      var pages = this.model.attributes.pages,
-        $header = $('<header></header>'),
-        $footer = $('<footer></footer>');
+      var pages = this.model.attributes.pages;
+      var $header = $('<header></header>');
+      var $footer = $('<footer></footer>');
 
       this.$el.empty();
       this.$el.attr('data-form', this.model.attributes.name);
@@ -45,8 +45,8 @@ define(function (require) {
         this.$el.append($header);
       }
 
-      if (pages && typeof pages['goto'] === 'function') {
-        pages['goto'](0);
+      if (pages && typeof pages.goto === 'function') {
+        pages.goto(0);
       }
 
       if (this.model.attributes.footer) {
@@ -68,40 +68,40 @@ define(function (require) {
      * when the animation completes successfully or rejected if the
      * animation fails.
      */
-    goToElement: function(elementModel){
-      if ( !elementModel){
+    goToElement: function (elementModel) {
+      if (!elementModel) {
         return Promise.reject(new Error('No field specified'));
       }
 
-      if ( typeof elementModel === 'string'){
+      if (typeof elementModel === 'string') {
         elementModel = this.model.getElement(elementModel);
       }
 
-      if ( !elementModel ){
+      if (!elementModel) {
         return Promise.reject(new Error('Could not find element'));
       }
 
-      return new Promise(function(resolve, reject){
+      return new Promise(function (resolve, reject) {
         var pageIdOfElement;
         var pageCollection;
 
         pageCollection = this.model.get('pages');
 
 //this is pretty hacky but it means not re-writing the form/subform rendering system
-        if (elementModel.get('parentElement')){
+        if (elementModel.get('parentElement')) {
           pageIdOfElement = elementModel.get('parentElement').get('page').index();
         } else {
           pageIdOfElement = elementModel.get('page').index();
         }
 
-        if ( pageCollection.current && pageIdOfElement !== pageCollection.current.index()){
-          pageCollection['goto'](pageIdOfElement);
+        if (pageCollection.current && pageIdOfElement !== pageCollection.current.index()) {
+          pageCollection.goto(pageIdOfElement);
         }
 
         elementModel.get('_view').scrollTo({ duration: 100 }).then(
-          function(){ resolve(elementModel.get('_view')); },
-          function(){ reject(new Error('Scroll Animaiton Failed')); }
-        );
+          function () { resolve(elementModel.get('_view')); },
+          function () { reject(new Error('Scroll Animaiton Failed')); }
+       );
       }.bind(this));
     },
 

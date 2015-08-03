@@ -77,7 +77,7 @@ define([
         $.mobile.page({}, $page);
         $page.trigger('pagecreate');
         $page.show();
-        form.attributes.preloadPromise.then(function() {
+        form.attributes.preloadPromise.then(function () {
           done();
         });
       });
@@ -164,7 +164,7 @@ define([
 
         assert.equal(subForms.length, 0, 'no subForms yet');
         $add.trigger('click');
-        subForms.once('add', function() {
+        subForms.once('add', function () {
           assert.isObject(subFormElement.validate(), "subform validation fails");
           subForms.at(0).getElement('comment').val('def');
           assert.isUndefined(subFormElement.validate(), "subform validation passes");
@@ -364,18 +364,18 @@ define([
 
         assert.equal(subForms.length, 0, 'no subForms yet');
 
-        subFormElement.attributes.preloadPromise.then(function() {
+        subFormElement.attributes.preloadPromise.then(function () {
           assert.isObject(subFormElement.validate(), "subform validation fails");
           errors = ['REQUIRED', 'MINSUBFORM'];
           subformValidationTest(errors, subFormElement, 1);
 
           $add.trigger('click');
-          subForms.once('add', function() {
+          subForms.once('add', function () {
             errors = ['MINSUBFORM', 'SUBFORM'];
             subformValidationTest(errors, subFormElement, 2);
 
             $add.trigger('click');
-            subForms.once('add', function() {
+            subForms.once('add', function () {
               errors = ['SUBFORM'];
               subformValidationTest(errors, subFormElement, 2);
               done();
@@ -384,7 +384,7 @@ define([
         });
       });
 
-      test('validation events are bubbled via Forms.current', function(){
+      test('validation events are bubbled via Forms.current', function () {
         var form = Forms.current,
           element = form.getElement('city'),
           listenerSpy = sinon.spy();

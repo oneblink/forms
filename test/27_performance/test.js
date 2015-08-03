@@ -52,7 +52,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           form = Forms.current;
           assert.equal($.type(form), 'object');
           assert.equal(form.get('name'), 'inspection');
-          form.attributes.preloadPromise.then(function() {
+          form.attributes.preloadPromise.then(function () {
             done();
           });
         }, function () {

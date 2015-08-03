@@ -6,7 +6,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
   suite('31: Conditional logic in sub forms', function () {
     var $page, $content, form;
 
-    setup(function(){
+    setup(function () {
       /*eslint-disable no-unused-expressions*/
       Forms.current && Forms.current.off();
       delete Forms.current;
@@ -30,7 +30,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
     });
 
-    teardown(function(){
+    teardown(function () {
       // Forms.current.off();
       // $content.empty();
       // delete Forms.current;
@@ -40,12 +40,12 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       // form = undefined;
     });
 
-    suite('required fields', function(){
-      test('when visible and not valid, should be counted towards the number of invalid fields', function(){
+    suite('required fields', function () {
+      test('when visible and not valid, should be counted towards the number of invalid fields', function () {
         var view = form.getElement('second_level_field').get('_view');
         var startNumErrors = form.getInvalidElements().length;
 
-        return view.onAddClick().then(function(){
+        return view.onAddClick().then(function () {
           var conditionalElement = Forms.current.getElement('cond_hidden');
 
           assert.isDefined(conditionalElement);
@@ -55,15 +55,15 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
       });
 
-      test('when visible and valid, should not be counted towards the number of invalid fields', function(done){
+      test('when visible and valid, should not be counted towards the number of invalid fields', function (done) {
         var view = form.getElement('second_level_field').get('_view');
         var startNumErrors = form.getInvalidElements.length;
 
-        view.onAddClick().then(function(){
+        view.onAddClick().then(function () {
           var conditionalElement = Forms.current.getElement('cond_hidden');
           Forms.current.getElement('second_required').val('a');
 
-          conditionalElement.on('change:hidden', function(){
+          conditionalElement.on('change:hidden', function () {
             assert.isDefined(conditionalElement);
             assert.equal(!conditionalElement.validationError, true);
 
@@ -74,19 +74,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
       });
 
-      test('when not visible and not valid, should not be counted towards the number of invalid fields', function(done){
+      test('when not visible and not valid, should not be counted towards the number of invalid fields', function (done) {
         var view = form.getElement('second_level_field').get('_view');
 
-        view.onAddClick().then(function(){
+        view.onAddClick().then(function () {
           var conditionalElement = Forms.current.getElement('cond_hidden');
           assert.isDefined(conditionalElement);
 
-          conditionalElement.on('change:hidden', function(){
+          conditionalElement.on('change:hidden', function () {
             assert.equal(!conditionalElement.validationError, true);
 
             // make sure that the conditional element is included in the
             // list of invalid elements
-            Forms.current.getInvalidElements().errors.forEach(function(element){
+            Forms.current.getInvalidElements().errors.forEach(function (element) {
               assert.notEqual(element.cid, conditionalElement.cid);
             });
             done();

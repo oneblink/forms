@@ -7,10 +7,10 @@ define(['forms/models/element'], function (Element) {
       persist: false
     },
     initialize: function () {
-      var self = this,
-        schemaMap = {
-          'messageText': 'html'
-        };
+      var self = this;
+      var schemaMap = {
+        messageText: 'html'
+      };
 
       Object.keys(schemaMap).forEach(function (key) {
         if (schemaMap[key] && self.attributes[key]) {

@@ -24,11 +24,9 @@ define(function (require) {
       }
     },
     initializeView: function () {
-      var Forms = BMP.Forms,
-      view,
-      View,
-      mode,
-      attrs = this.attributes;
+      var Forms = BMP.Forms;
+      var View, view, mode;
+      var attrs = this.attributes;
 
       if (attrs.readonly) {
         this.removeView();
@@ -54,7 +52,7 @@ define(function (require) {
       // and attr.lenghth === 1 && _.contains(attr.value, 'other')
       // and other is not in options
       // then fail
-      if (attrs.required && (_.isEmpty(attrs.value) || attrs.other && (attrs.value.length === 1 && attrs.value[0] === "other") && !_.contains(attrs.options, 'other'))) {
+      if (attrs.required && (_.isEmpty(attrs.value) || attrs.other && (attrs.value.length === 1 && attrs.value[0] === 'other') && !_.contains(attrs.options, 'other'))) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
       }

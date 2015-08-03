@@ -94,7 +94,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           $input,
           picker;
 
-        pages['goto'](2);
+        pages.goto(2);
         page = pages.current;
         assert.equal(page.index(), 2);
 

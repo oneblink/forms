@@ -25,8 +25,8 @@ define(function (require) {
     }),
 
     renderDate: function () {
-      var $input,
-        name = this.model.attributes.name;
+      var $input;
+      var name = this.model.attributes.name;
 
       // TODO: implement pre-HTML5 fallback
       $input = $('<input type="date" />');
@@ -40,8 +40,8 @@ define(function (require) {
     },
 
     renderTime: function () {
-      var $input,
-        name = this.model.attributes.name;
+      var $input;
+      var name = this.model.attributes.name;
 
       // TODO: implement pre-HTML5 fallback
       $input = $('<input type="time" />');

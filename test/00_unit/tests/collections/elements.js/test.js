@@ -5,17 +5,17 @@
   everything except the file being tested should be mocked or stubbed out.
 */
 define(['collections/elements', 'models/element'],
-function( ElementsCollection, ElementModel ){
+function (ElementsCollection, ElementModel) {
   'use strict';
 
-  suite('collections/elements.js', function(){
+  suite('collections/elements.js', function () {
     var elementsCollection
       , model1
       , model2
       , model3
       , model4;
 
-    setup(function(){
+    setup(function () {
       elementsCollection = new ElementsCollection();
       model1 = new ElementModel({ name: 'model1', id: 'model1' });
       model2 = new ElementModel({ name: 'model2', id: 'model2' });
@@ -29,12 +29,12 @@ function( ElementsCollection, ElementModel ){
       model3.validationError = null;
       model4.validationError = { value: [{code: 'EMAIL'}]};
 
-      ElementModel.prototype.hasErrors = function(){
+      ElementModel.prototype.hasErrors = function () {
         return this.validationError && !_.isEmpty(this.validationError);
       };
     });
 
-    teardown(function(){
+    teardown(function () {
       elementsCollection = null;
       model1 = null;
       model2 = null;
@@ -42,23 +42,23 @@ function( ElementsCollection, ElementModel ){
       model4 = null;
     });
 
-    suite('#getErrors()', function(){
-      test('should return 3 error objects', function(){
+    suite('#getErrors()', function () {
+      test('should return 3 error objects', function () {
         assert.equal(_.keys(elementsCollection.getErrors()).length, 3);
       });
 
-      test('should limit the return to the first error', function(){
+      test('should limit the return to the first error', function () {
         assert.equal(_.keys(elementsCollection.getErrors(1)).length, 1);
       });
 
-      test('should handle negative numbers', function(){
+      test('should handle negative numbers', function () {
         assert.equal(_.keys(elementsCollection.getErrors(-10)).length, 0);
       });
     });
 
-    suite('#setExternalErrors()', function(){
+    suite('#setExternalErrors()', function () {
 
-      test('should ignore an invalid model id', function(){
+      test('should ignore an invalid model id', function () {
         var errorList = {
           modelNotExist: [{code: 'blah1'}]
         };

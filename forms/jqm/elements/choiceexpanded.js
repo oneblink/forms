@@ -22,9 +22,9 @@ define(function (require) {
     },
 
     render: function () {
-      var $fieldset,
-        attrs = this.model.attributes,
-        type = attrs.type;
+      var $fieldset;
+      var attrs = this.model.attributes;
+      var type = attrs.type;
 
       this.$el.empty();
 
@@ -55,7 +55,7 @@ define(function (require) {
       this.$el.fieldcontain();
     },
 
-    '_renderOptions': function () {
+    _renderOptions: function () {
       var self = this;
       var $fieldset = this.$el.children('fieldset');
       var attrs = this.model.attributes;
@@ -70,8 +70,8 @@ define(function (require) {
       $controls = $fieldset;
 
       _.forEach(options, function (label, value) {
-        var $label = $('<label>' + label + '</label>'),
-          $input = $('<input type="' + iType + '" />');
+        var $label = $('<label>' + label + '</label>');
+        var $input = $('<input type="' + iType + '" />');
 
         $input.attr({
           name: iName,
@@ -116,17 +116,17 @@ define(function (require) {
     },
 
     onMultiInputClick: function (event) {
-      var view = event.data.view,
-        model = event.data.model;
+      var view = event.data.view;
+      var model = event.data.model;
       model.set('value', view.prepModelValue());
     },
 
     onMultiValueChange: function () {
-      var view = this,
-        model = this.model,
-        $inputs = view.$el.find('input[type=radio],input[type=checkbox]'),
-        value = model.attributes.value,
-        renderOther = false;
+      var view = this;
+      var model = this.model;
+      var $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
+      var value = model.attributes.value;
+      var renderOther = false;
 
       if (!_.isArray(value)) {
         value = [];
@@ -154,7 +154,8 @@ define(function (require) {
     },
 
     onSelectValueChange: function () {
-      var $values, values, view = this;
+      var $values, values;
+      var view = this;
       var $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
 
       if (_.contains(_.keys(this.model.get('options')), this.model.get('value'))) {
@@ -190,7 +191,7 @@ define(function (require) {
       var $inputs;
 
       switch (attr.type) {
-        case "select":
+        case 'select':
           values = this.$el.find('input:checked').val();
           break;
         default: // multi
@@ -198,8 +199,8 @@ define(function (require) {
           values = _.map($inputs, function (input) {
             return $(input).val();
           });
-          if(values.length <= 0) {
-            values = "";
+          if (values.length <= 0) {
+            values = '';
           }
           break;
       }

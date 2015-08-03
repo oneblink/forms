@@ -55,23 +55,23 @@ define(function (require) {
       return false;
     },
     onButtonClick: function (event) {
-      var $div = $(html),
-        options = {
-          dismissible: true,
-          history: false,
-          afterclose: function (e, ui) {
-            if (e && ui) {
-              $div.remove();
-              signaturePad = null;
-            }
+      var $div = $(html);
+      var options = {
+        dismissible: true,
+        history: false,
+        afterclose: function (e, ui) {
+          if (e && ui) {
+            $div.remove();
+            signaturePad = null;
           }
-        },
-        $window = $(window),
-        $form,
-        windowX = $window.innerWidth(),
-        windowY = $window.innerHeight();
+        }
+      };
+      var $window = $(window);
+      var $form;
+      var windowX = $window.innerWidth();
+      var windowY = $window.innerHeight();
 
-      //$div.hide();
+      // $div.hide();
       $div.find('[data-role=header] > h2').text(this.model.get('label'));
       $(document.body).append($div);
       $div.find('canvas').attr({

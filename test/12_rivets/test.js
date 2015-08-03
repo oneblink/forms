@@ -89,7 +89,7 @@ define(['jquery', 'BlinkForms', 'testUtils', 'BIC'], function ($, Forms, testUti
             assert.equal(input$.val(), 123);
           });
 
-//           test('backbone is told to validate', function(){
+//           test('backbone is told to validate', function () {
 //             var spy = sinon.spy(element, 'set');
 //             var input$ = view.$el.find('input, textarea').first();
 

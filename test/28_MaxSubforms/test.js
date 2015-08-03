@@ -70,7 +70,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             form.setRecord(record).then(function () {
               form.data().then(function (formdata) {
                 var keys = ['id', 'Location', 'Name', '_action'];
-                _.each(keys, function(k) {
+                _.each(keys, function (k) {
                   assert.ok(formdata[k], k + " does not exist");
                 });
                 done();
@@ -80,7 +80,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               });
             });
           }
-        );
+       );
       });
 
     }); // END: suite('Form', ...)
@@ -88,7 +88,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
     suite('added functions work correctly', function () {
       var form;
 
-      suiteSetup(function() {
+      suiteSetup(function () {
         form = Forms.current;
       });
 
@@ -137,7 +137,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           .then(function () {
             $add.trigger("click");
             return new Promise(function (resolve) {
-              subForms.once('add', function() { resolve(); });
+              subForms.once('add', function () { resolve(); });
             });
           })
           .then(function () {
@@ -178,7 +178,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       var form;
       var subFormElement, $fieldEl, $add;
 
-      suiteSetup(function() {
+      suiteSetup(function () {
         form = Forms.current;
         subFormElement = form.getElement('Location');
 
@@ -186,20 +186,20 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         $add = $fieldEl.children('.ui-btn').children('button');
       });
 
-      test("'add' button should be enabled", function() {
+      test("'add' button should be enabled", function () {
         assert.equal($add.prop('disabled'), false);
       });
 
-      test("'add' button disabled after adding one form", function(done) {
+      test("'add' button disabled after adding one form", function (done) {
         //adding one more subform makes 3 subforms on view, which is maxSubform limit
         $add.trigger('click');
-        setTimeout(function() {
+        setTimeout(function () {
           assert.equal($add.prop('disabled'), true);
           done();
         }, 0);
       });
 
-      test("'add' button enabled after removing one form", function(done) {
+      test("'add' button enabled after removing one form", function (done) {
         var subForms, subForm, $view, $remove;
 
         subForms = subFormElement.attributes.forms;
@@ -228,7 +228,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       var form;
       var subFormElement, $fieldEl, $add;
 
-      suiteSetup(function() {
+      suiteSetup(function () {
         form = Forms.current.getElement('Location').get('forms').at(1);
         subFormElement = form.getElement("Phone");
 
@@ -236,7 +236,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         $add = $fieldEl.children('.ui-btn').children('button');
       });
 
-      test("'add' button should be disabled because it has 2 subforms (preloaded from getFormRecord)", function() {
+      test("'add' button should be disabled because it has 2 subforms (preloaded from getFormRecord)", function () {
         assert.equal(subFormElement.getRealLength(), 2);
         assert.equal($add.prop('disabled'), true);
       });
@@ -311,7 +311,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           subForms = subFormElement.attributes.forms;
 
           $add.trigger("click");
-          subForms.once('add', function() { done(); });
+          subForms.once('add', function () { done(); });
         });
 
         test("'add' button disabled", function () {
@@ -320,7 +320,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           assert.equal(subFormElement.getRealLength(), 1);
         });
 
-        test("MAXSUBFORM error is displayed", function(){
+        test("MAXSUBFORM error is displayed", function () {
           var $errorList = $add.closest('[data-element-type="subForm"]').find('.bm-errors__bm-list');
           assert.equal($errorList.children().length, 1);
           assert.equal($errorList.children().first().text(), 'no more than 1 form');

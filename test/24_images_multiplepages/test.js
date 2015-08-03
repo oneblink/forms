@@ -3,8 +3,7 @@
 
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
-  function isPhantom()
-  {
+  function isPhantom () {
     return navigator.userAgent.toLowerCase().indexOf('phantom') !== -1;
   }
 
@@ -76,7 +75,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             form.setRecord(record).then(function () {
               form.data().then(function (formdata) {
                 var keys = _.keys(record);
-                _.each(keys, function(k) {
+                _.each(keys, function (k) {
                   assert.ok(formdata[k], k + " does not exist");
                 });
                 done();
@@ -86,7 +85,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               });
             });
           }
-        );
+       );
       });
 
       suite('verifying elements on Page:', function () {
@@ -109,7 +108,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               done();
             });
 
-            pages['goto'](0);
+            pages.goto(0);
 
           });
 
@@ -156,7 +155,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               done();
             });
 
-            pages['goto'](1);
+            pages.goto(1);
           });
 
           _.each(elements, function (v, i) {

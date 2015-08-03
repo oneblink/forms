@@ -15,10 +15,10 @@ define(function (require) {
   var ChoiceCollapsedElementView = ChoiceElementView.extend({
     render: function () {
       var that = this;
-      var $input,
-        attr = this.model.attributes,
-        type = this.model.attributes.type,
-        name = this.model.attributes.name;
+      var $input;
+      var attr = this.model.attributes;
+      var type = this.model.attributes.type;
+      var name = this.model.attributes.name;
 
       this.$el.empty();
       this.renderLabel();
@@ -88,7 +88,7 @@ define(function (require) {
         if ($.inArray(attr.value, _.keys(attr.options)) < 0) {
           if (attr.value === '') {
             select.find('option:not([value])').prop('selected', true);
-          } else if(attr.other) {
+          } else if (attr.other) {
             renderOther = true;
             select.val('other');
           }
@@ -124,11 +124,11 @@ define(function (require) {
     },
 
     fetchValue: function () {
-      var attr = this.model.attributes,
-        value = this.$el.find('select').val();
+      var attr = this.model.attributes;
+      var value = this.$el.find('select').val();
 
-      if (attr.type === "select" && value === "select one..." || _.contains(value, "select one or more...")) {
-        value = "";
+      if (attr.type === 'select' && value === 'select one...' || _.contains(value, 'select one or more...')) {
+        value = '';
       }
       return value;
     },

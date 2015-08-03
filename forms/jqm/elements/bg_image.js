@@ -70,20 +70,19 @@ define(function (require) {
       this.$el.find('button').off('click');
       this.model.off('change:blob', this.renderFigure, this);
       return FileElementView.prototype.remove.call(this);
-
-      }
-    },
+    }
+  },
+  {
     /*
       @function onButtonClick
       @static
       @access public
       @description Opens the devices camera and sets the result as the models image
     */
-    {
     onButtonClick: function (event) {
-      var model = this.model,
-        $button = $(event.target),
-        options = this.model.toCameraOptions() || {};
+      var model = this.model;
+      var $button = $(event.target);
+      var options = this.model.toCameraOptions() || {};
 
       options.sourceType = $button.data('SourceType');
 

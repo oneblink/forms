@@ -25,23 +25,23 @@ define(function (require) {
     modelEvents: DateView.prototype.modelEvents,
 
     renderParent: function () {
-      var $body = $('body'),
-        $pickerHolder;
+      var $body = $('body');
+      var $pickerHolder;
 
-      $pickerHolder = $("<div></div>");
+      $pickerHolder = $('<div></div>');
       $pickerHolder.attr({
-        'class': 'ui-body-c'
+        class: 'ui-body-c'
       });
       $body.append($pickerHolder);
       DatePickadateElement.pickadateParent = $pickerHolder;
     },
 
     renderDate: function () {
-      var $input,
-        attr = this.model.attributes,
-        name = attr.name;
+      var $input;
+      var attr = this.model.attributes;
+      var name = attr.name;
 
-      //pre-HTML5 fallback
+      // pre-HTML5 fallback
       $input = $('<input type="text" />');
       $input.attr({
         name: name + '_date',
@@ -54,9 +54,9 @@ define(function (require) {
     },
 
     renderTime: function () {
-      var $input,
-        attr = this.model.attributes,
-        name = attr.name;
+      var $input;
+      var attr = this.model.attributes;
+      var name = attr.name;
 
       //pre-HTML5 fallback
       $input = $('<input type="text" />');
@@ -71,8 +71,8 @@ define(function (require) {
     },
 
     render: function () {
-      var type = this.model.get('type'),
-        $label;
+      var type = this.model.get('type');
+      var $label;
 
       if (!DatePickadateElement.pickadateParent) {
         this.renderParent();
@@ -89,7 +89,7 @@ define(function (require) {
       if (type === 'datetime') {
         $label = $(document.createElement('label'));
         $label.attr({
-          'class': 'ui-input-text'
+          class: 'ui-input-text'
         });
         this.$el.append($label);
       }
@@ -103,38 +103,38 @@ define(function (require) {
     },
 
     prepareDateSettings: function () {
-      var attr = this.model.attributes,
-        settings = {};
+      var attr = this.model.attributes;
+      var settings = {};
 
-      settings.format = this.mapDateFormats[attr.dateFormat] || "yyyy-mm-dd";
+      settings.format = this.mapDateFormats[attr.dateFormat] || 'yyyy-mm-dd';
 
       if (attr.dateAllowFrom) {
         switch (attr.dateAllowFrom) {
-        case 'now':
-          settings.min = new Date();
-          break;
-        case 'now_plus':
-          settings.min = parseInt(attr.dateAllowFromNowPlus, 10);
-          break;
-        case 'date':
-          settings.min = new Date(attr.dateAllowFromDate);
-          break;
-        default:
+          case 'now':
+            settings.min = new Date();
+            break;
+          case 'now_plus':
+            settings.min = parseInt(attr.dateAllowFromNowPlus, 10);
+            break;
+          case 'date':
+            settings.min = new Date(attr.dateAllowFromDate);
+            break;
+          default:
         }
       }
 
       if (attr.dateAllowTo) {
         switch (attr.dateAllowTo) {
-        case 'now':
-          settings.max = new Date();
-          break;
-        case 'now_plus':
-          settings.max = parseInt(attr.dateAllowToNowPlus, 10);
-          break;
-        case 'date':
-          settings.max = new Date(attr.dateAllowToDate);
-          break;
-        default:
+          case 'now':
+            settings.max = new Date();
+            break;
+          case 'now_plus':
+            settings.max = parseInt(attr.dateAllowToNowPlus, 10);
+            break;
+          case 'date':
+            settings.max = new Date(attr.dateAllowToDate);
+            break;
+          default:
         }
       }
       settings.container = DatePickadateElement.pickadateParent;
@@ -142,13 +142,13 @@ define(function (require) {
     },
 
     prepareTimeSettings: function () {
-      var attr = this.model.attributes,
-        settings = {};
+      var attr = this.model.attributes;
+      var settings = {};
 
-      settings.format = this.mapTimeFormats[attr.timeFormat] || "HH:i";
-      //pickatime slows down things, when interval is small
-      //default interval is 1, and setting it explicit to 1 slows down things
-      //so if minute step is one don't set it and let it pick default
+      settings.format = this.mapTimeFormats[attr.timeFormat] || 'HH:i';
+      // pickatime slows down things, when interval is small
+      // default interval is 1, and setting it explicit to 1 slows down things
+      // so if minute step is one don't set it and let it pick default
       if (attr.minuteStep && parseInt(attr.minuteStep, 10) !== 1) {
         settings.interval = parseInt(attr.minuteStep, 10);
       }
@@ -156,18 +156,18 @@ define(function (require) {
       return settings;
     },
     mapDateFormats: {
-      'yyyy_mm_dd': 'yyyy-mm-dd',
-      'mm_dd_yyyy': 'mm-dd-yyyy',
-      'dd_mm_yyyy2': 'dd/mm/yyyy',
-      'yyyy_mm_dd2': 'yyyy/mm/dd',
-      'mm_dd_yyyy2': 'mm/dd/yyyy',
-      'dd_mm_yyyy': 'dd-mm-yyyy'
+      yyyy_mm_dd: 'yyyy-mm-dd',
+      mm_dd_yyyy: 'mm-dd-yyyy',
+      dd_mm_yyyy2: 'dd/mm/yyyy',
+      yyyy_mm_dd2: 'yyyy/mm/dd',
+      mm_dd_yyyy2: 'mm/dd/yyyy',
+      dd_mm_yyyy: 'dd-mm-yyyy'
     },
     mapTimeFormats: {
       'hh:mm': 'HH:i',
-      'hh_mm_ss': 'HH:i', //HH:MM:SS
-      'h_mm_ss': 'hh:i A',//HH:MM:SS AM/PM %r
-      'h_mm': 'hh:i A' //HH:MM AM/PM
+      hh_mm_ss: 'HH:i', // HH:MM:SS
+      h_mm_ss: 'hh:i A',// HH:MM:SS AM/PM %r
+      h_mm: 'hh:i A' // HH:MM AM/PM
     },
 
     onAttached: function () {
@@ -182,9 +182,9 @@ define(function (require) {
       }
       if (type !== 'date') {
         time$ = this.$el.find('input[name="' + name + '_time"]');
-        //slows down rending if interval is set to small number
-        //so set timeout
-        setTimeout(function() {
+        // slows down rending if interval is set to small number
+        // so set timeout
+        setTimeout(function () {
           time$.pickatime(self.prepareTimeSettings());
         }, 0);
       }

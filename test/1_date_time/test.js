@@ -23,9 +23,9 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
     'time column'
   ];
 
-  function defineModelToViewTests() {
+  function defineModelToViewTests () {
     test('model->value', function (done) {
-      setTimeout(function() {
+      setTimeout(function () {
         Forms.current.get('elements').forEach(function (el) {
           var value = el.val();
           var name = el.get('name');
@@ -54,9 +54,9 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
     });
   }
 
-  function defineViewToModelTests() {
+  function defineViewToModelTests () {
     test('view->model', function (done) {
-      setTimeout(function() {
+      setTimeout(function () {
         Forms.current.get('elements').forEach(function (el) {
           var date;
           var time;
@@ -258,7 +258,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             element,
             $fieldset;
 
-          readonly.forEach(function(fld) {
+          readonly.forEach(function (fld) {
             element = form.getElement(fld);
             $fieldset = element.attributes._view.$el;
             //should not contain any input fields
@@ -272,7 +272,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var form = Forms.current,
             element,
             $fieldset;
-          hidden.forEach(function(fld) {
+          hidden.forEach(function (fld) {
             element = form.getElement(fld);
             $fieldset = element.attributes._view.$el;
             //should have display: none set in stylesheet
@@ -301,7 +301,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             $fieldset,
             $input;
 
-          native.forEach(function(fld) {
+          native.forEach(function (fld) {
             element = form.getElement(fld);
             $fieldset = element.attributes._view.$el;
             //should contain date field

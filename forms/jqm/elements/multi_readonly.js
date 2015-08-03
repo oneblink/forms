@@ -13,12 +13,12 @@ define(function (require) {
 
   var MultiReadOnlyElementView = ElementView.extend({
     render: function () {
-      var self = this,
-      attrs = self.model.attributes,
-      options = attrs.options,
-      $label,
-      display = [],
-      values;
+      var self = this;
+      var attrs = self.model.attributes;
+      var options = attrs.options;
+      var $label;
+      var display = [];
+      var values;
 
       this.$el.empty();
       this.renderLabel();

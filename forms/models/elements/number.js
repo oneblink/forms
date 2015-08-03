@@ -1,3 +1,4 @@
+/* eslint-disable accessor-pairs */ // we're using the "set" keyword for method
 define(function (require) {
   'use strict';
 
@@ -14,19 +15,21 @@ define(function (require) {
 
   var NumberElement = Element.extend({
     initialize: function () {
-      var self = this,
-        attrs = self.attributes,
-        schemaMap = {
-          'maxDecimalPlaces': 'maxDecimals',
-          'minDecimalPlaces': 'minDecimals'
-        }, numerics = [
-          'min',
-          'max',
-          'defaultValue',
-          'step',
-          'maxDecimals',
-          'minDecimals'
-        ], intVal;
+      var self = this;
+      var attrs = self.attributes;
+      var schemaMap = {
+        maxDecimalPlaces: 'maxDecimals',
+        minDecimalPlaces: 'minDecimals'
+      };
+      var numerics = [
+        'min',
+        'max',
+        'defaultValue',
+        'step',
+        'maxDecimals',
+        'minDecimals'
+      ];
+      var intVal;
 
       Object.keys(schemaMap).forEach(function (key) {
         if (schemaMap[key] && attrs[key]) {
@@ -34,7 +37,7 @@ define(function (require) {
         }
       });
 
-      numerics.forEach(function(i) {
+      numerics.forEach(function (i) {
         if (attrs[i] && !_.isNumber(attrs[i])) {
           intVal = Number(attrs[i]);
           if (isNaN(intVal) === false) {
@@ -50,11 +53,11 @@ define(function (require) {
       Element.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
-      var Forms = BMP.Forms,
-        attrs = this.attributes,
-        min = attrs.min,
-        max = attrs.max,
-        view;
+      var Forms = BMP.Forms;
+      var attrs = this.attributes;
+      var min = attrs.min;
+      var max = attrs.max;
+      var view;
 
       this.removeView();
       if (attrs.readonly) {

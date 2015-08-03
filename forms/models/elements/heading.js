@@ -11,10 +11,10 @@ define(['forms/models/element'], function (Element) {
       var self, schemaMap, headingType;
       self = this;
       schemaMap = {
-        'headingText': 'text',
-        'headingPosition': 'position',
-        'headingFontFace': 'fontFace',
-        'headingSmallText': 'smallText'
+        headingText: 'text',
+        headingPosition: 'position',
+        headingFontFace: 'fontFace',
+        headingSmallText: 'smallText'
       };
 
       Object.keys(schemaMap).forEach(function (key) {

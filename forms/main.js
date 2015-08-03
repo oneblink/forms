@@ -100,7 +100,7 @@ define(function (require) {
     if (!model instanceof Backbone.Model || !model.attributes) {
       return; // nothing to do
     }
-    klass = model.attributes['class'];
+    klass = model.attributes.class;
     if (typeof klass !== 'string' || klass.indexOf(';') === -1) {
       return; // nothing to do
     }
@@ -125,7 +125,7 @@ define(function (require) {
       throw new Error('unexpected Form definition structure');
     }
     if (!action || _.isEmpty(action) || ['add', 'edit', 'delete'].indexOf(action) < 0) {
-      action = "add";
+      action = 'add';
     }
 
     form = Forms._models.Form.create(def, action);
@@ -157,7 +157,7 @@ define(function (require) {
   Forms.loadScript = function (src, done) {
     var script = document.createElement('script');
     script.src = src;
-    if (done && typeof done === "function") {
+    if (done && typeof done === 'function') {
       script.onload = done;
       script.onerror = done;
     }

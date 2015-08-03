@@ -77,7 +77,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             form.setRecord(record).then(function () {
               form.data().then(function (formdata) {
                 var keys = ['id', 'location1', 'location2', '_action'];
-                _.each(keys, function(k) {
+                _.each(keys, function (k) {
                   assert.ok(formdata[k], k + " does not exist");
                 });
                 done();
@@ -87,7 +87,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               });
             });
           }
-        );
+       );
       });
 
 
@@ -98,7 +98,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           spy;
 
         window.navigator.map = {
-          confirmLocation: function(onSuccess, onError, options) {
+          confirmLocation: function (onSuccess, onError, options) {
             assert.isFunction(onSuccess);
             assert.isFunction(onError);
             assert.ok(options.latitude);
@@ -106,7 +106,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
             onSuccess(null);
 
-            element.attributes._view.on('confirmLocation', function(loc) {
+            element.attributes._view.on('confirmLocation', function (loc) {
               assert.equal(loc, null);
               element.attributes._view.off('confirmLocation');
               done();
@@ -133,7 +133,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           spy;
 
         window.navigator.map = {
-          confirmLocation: function(onSuccess, onError, options) {
+          confirmLocation: function (onSuccess, onError, options) {
             var sampleLocation = {"latitude": -33.867487, "longitude": 151.20699, "accuracy": 25000};
             assert.isFunction(onSuccess);
             assert.isFunction(onError);
@@ -142,7 +142,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
             onSuccess(sampleLocation);
 
-            setTimeout(function() {
+            setTimeout(function () {
               assert.deepEqual(element.get('value'), sampleLocation);
               done();
             }, 1);
@@ -166,7 +166,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           spy;
 
         window.navigator.map = {
-          confirmLocation: function(onSuccess, onError, options) {
+          confirmLocation: function (onSuccess, onError, options) {
             var spy2 = sinon.spy(window.console, "error");
             assert.isFunction(onSuccess);
             assert.isFunction(onError);
@@ -175,7 +175,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
             assert(!onError("test error"));
 
-            setTimeout(function() {
+            setTimeout(function () {
               assert.equal(spy2.callCount, 1);
               done();
             }, 1);

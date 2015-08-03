@@ -24,9 +24,9 @@ define(function (require) {
     attributes: {},
 
     render: function () {
-      var parentElement = this.model.parentElement,
-        name = parentElement.attributes.minusButtonLabel,
-        $button;
+      var parentElement = this.model.parentElement;
+      var name = parentElement.attributes.minusButtonLabel;
+      var $button;
 
       $button = $('<button data-onclick="onRemoveClick"></button>').attr({
         type: 'button',
@@ -40,7 +40,7 @@ define(function (require) {
       this.$el.attr(
         'data-record-index',
         parentElement.get('forms').indexOf(this.model)
-      );
+     );
 
       this.$el.prepend($button);
       $button.button().addClass('bm-button bm-remove');
@@ -54,15 +54,15 @@ define(function (require) {
      */
     onRemoveClick: function () {
       var confirmPrompt = new ConfirmPopupView({
-        model: new ConfirmModel( confirmOptions )
+        model: new ConfirmModel(confirmOptions)
       });
 
-      var onConfirmation = function(){
+      var onConfirmation = function () {
         confirmPrompt.close();
         this.model.parentElement.remove(this.model);
       }.bind(this);
 
-      var onCancel = function(){
+      var onCancel = function () {
         confirmPrompt.close();
       };
 

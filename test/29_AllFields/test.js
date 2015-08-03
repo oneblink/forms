@@ -74,15 +74,15 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         'sketch_signature'
       ];
 
-      suiteSetup(function(done) {
+      suiteSetup(function (done) {
         form = Forms.current;
-        setTimeout(function() {
+        setTimeout(function () {
           done();
         }, 10);
       });
 
-      withLabelFields.forEach(function(v) {
-        test(v, function() {
+      withLabelFields.forEach(function (v) {
+        test(v, function () {
           var field = form.getElement(v),
             attr = field.attributes,
             $view = attr._view.$el,
@@ -102,16 +102,16 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       var form;
       var noLabelFields = ['subform', '_heading_2'];
 
-      suiteSetup(function(done) {
+      suiteSetup(function (done) {
         form = Forms.current;
-        setTimeout(function() {
-          form.attributes.pages['goto'](1);
+        setTimeout(function () {
+          form.attributes.pages.goto(1);
           done();
         }, 10);
       });
 
-      noLabelFields.forEach(function(v) {
-        test(v, function() {
+      noLabelFields.forEach(function (v) {
+        test(v, function () {
           var field = form.getElement(v),
             attr = field.attributes,
             $view = attr._view.$el,
@@ -135,16 +135,16 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         'checkbox'
       ];
 
-      suiteSetup(function(done) {
+      suiteSetup(function (done) {
         form = Forms.current;
-        setTimeout(function() {
-          form.attributes.pages['goto'](0);
+        setTimeout(function () {
+          form.attributes.pages.goto(0);
           done();
         }, 10);
       });
 
-      noLabelFields.forEach(function(v) {
-        test(v, function() {
+      noLabelFields.forEach(function (v) {
+        test(v, function () {
           var field = form.getElement(v),
             attr = field.attributes,
             $view = attr._view.$el,

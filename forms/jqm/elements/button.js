@@ -19,10 +19,10 @@ define(function (require) {
     },
     render: function () {
       var $button,
-        label,
-        name = this.model.get('name'),
-        attrs = this.model.attributes,
-        self = this;
+        label;
+      var name = this.model.get('name');
+      var attrs = this.model.attributes;
+      var self = this;
 
       label = name;
       if (!_.isEmpty(attrs.label)) {

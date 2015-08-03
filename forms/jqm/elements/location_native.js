@@ -19,9 +19,9 @@ define(function (require) {
       var $figure,
         $figcaption,
         loc,
-        caption,
-        self = this,
-        attr = self.model.attributes;
+        caption;
+      var self = this;
+      var attr = self.model.attributes;
 
       if (typeof attr.value === 'string') {
         try {
@@ -50,8 +50,8 @@ define(function (require) {
     // static properties and methods
     onSuccess: function (location) {
       var self = this;
-      setTimeout(function() {
-        if(location) {
+      setTimeout(function () {
+        if (location) {
           self.model.set('value', location);
         }
         self.trigger('confirmLocation', location);
@@ -62,9 +62,9 @@ define(function (require) {
       return false;
     },
     onButtonClick: function (event) {
-      var self = this,
-        model = this.model,
-        value;
+      var self = this;
+      var model = this.model;
+      var value;
 
       value = model.get('value');
 

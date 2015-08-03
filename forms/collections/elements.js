@@ -11,21 +11,21 @@ define(function (require) {
   var ElementModel = require('forms/models/element');
   var formsErrors = require('forms/error-helpers');
 
-  function addErrorText(error){
+  function addErrorText (error) {
     error.text = formsErrors.toErrorString(error);
     return error;
   }
 
-  function addToErrorList(errorList, elementModel){
+  function addToErrorList (errorList, elementModel) {
     var err;
-    if ( !_.isEmpty(elementModel.validationError)){
+    if (!_.isEmpty(elementModel.validationError)) {
       err = {};
       err[ elementModel.get('name') ] = _.map(elementModel.validationError.value, addErrorText);
       errorList.push(err);
     }
 
-    if ( elementModel.get('forms') ){
-      errorList = elementModel.get('forms').reduce(function(errList, form){
+    if (elementModel.get('forms')) {
+      errorList = elementModel.get('forms').reduce(function (errList, form) {
         return form.get('elements').reduce(addToErrorList, errList);
       }, errorList);
     }
@@ -33,7 +33,7 @@ define(function (require) {
     return errorList;
   }
 
-  function makeLengthObj(length, total){
+  function makeLengthObj (length, total) {
     var ret = {};
     Object.defineProperties(ret, {
         length: {
@@ -51,8 +51,7 @@ define(function (require) {
     return ret;
   }
 
-
-  //this module
+  // this module
 
   return Backbone.Collection.extend({
     model: ElementModel,
@@ -74,7 +73,7 @@ define(function (require) {
      * //       total: 12
      * //    }
      */
-    getErrors: function(fieldLimit){
+    getErrors: function (fieldLimit) {
       var errors;
       var length;
 
@@ -85,7 +84,7 @@ define(function (require) {
       errors = this.reduce(addToErrorList, []);
       length = !fieldLimit ? errors.length : Math.min(errors.length, fieldLimit);
 
-      return _.reduce(_.take(errors, length), function(memo, err){
+      return _.reduce(_.take(errors, length), function (memo, err) {
         return _.extend(memo, err);
       }, makeLengthObj(length, errors.length));
     },
@@ -111,21 +110,21 @@ define(function (require) {
      *  // total: 14
      *  //}
      */
-    getInvalid: function(fieldLimit){
+    getInvalid: function (fieldLimit) {
       var errors;
       var ret;
       var length;
-      var reducer = function(memo, elementModel){
-        if ( elementModel.validationError ){
+      var reducer = function (memo, elementModel) {
+        if (elementModel.validationError) {
           memo.push(elementModel);
         }
 
         return memo;
       };
 
-      errors = this.reduce(function(memo, elementModel){
+      errors = this.reduce(function (memo, elementModel) {
         var subFormErrors;
-        if ( elementModel.get('type') === 'subForm' ){
+        if (elementModel.get('type') === 'subForm') {
           subFormErrors = _.chain(elementModel.get('forms').invoke('getInvalidElements'))
                             .compact()
                             .pluck('errors')
@@ -139,7 +138,7 @@ define(function (require) {
 
       length = !fieldLimit ? errors.length : Math.min(errors.length, fieldLimit);
 
-      if ( !errors.length){
+      if (!errors.length) {
         return undefined;
       }
 
@@ -153,8 +152,8 @@ define(function (require) {
      * @param {object} errorList - An object with key/values of
      * {@link  fieldname/errorArray}
      */
-    setErrors: function(errorList, options){
-      _.each(errorList, function(errors, modelId){
+    setErrors: function (errorList, options) {
+      _.each(errorList, function (errors, modelId) {
         var m = this.get(modelId);
         /*eslint-disable no-unused-expressions */
         m && m.setExternalErrors(errors, options);
