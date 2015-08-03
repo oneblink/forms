@@ -177,11 +177,11 @@ define(function (require) {
       var date$, time$;
       DateView.prototype.onAttached.call(this);
       if (type !== 'time') {
-        date$ = this.$el.find('input[name=' + name + '_date]');
+        date$ = this.$el.find('input[name="' + name + '_date"]');
         date$.pickadate(this.prepareDateSettings());
       }
       if (type !== 'date') {
-        time$ = this.$el.find('input[name=' + name + '_time]');
+        time$ = this.$el.find('input[name="' + name + '_time"]');
         //slows down rending if interval is set to small number
         //so set timeout
         setTimeout(function() {

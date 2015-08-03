@@ -92,12 +92,12 @@ define(function (require) {
 
     onDateMChange: function () {
       var name = this.model.attributes.name;
-      this.$el.find('input[name=' + name + '_date]').val(this.model.get('_date'));
+      this.$el.find('input[name="' + name + '_date"]').val(this.model.get('_date'));
     },
 
     onTimeMChange: function () {
       var name = this.model.attributes.name;
-      this.$el.find('input[name=' + name + '_time]').val(this.model.get('_time'));
+      this.$el.find('input[name="' + name + '_time"]').val(this.model.get('_time'));
     }
 
   });
