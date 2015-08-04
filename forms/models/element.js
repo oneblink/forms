@@ -77,7 +77,9 @@ define(function (require) {
       // backward compatability.
       this.on('invalid change:value', this.updateErrors, this);
 
-      this.on('change:value', this.setDirty, this);
+      this.on('change:value', function () {
+        this.setDirty();
+      }, this);
       this.on('remove', this.close, this);
 
       this.initializeView();
