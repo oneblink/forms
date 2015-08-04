@@ -23,8 +23,26 @@ define(function (require) {
       id: { 'change:value': 'onChangedId' }
     },
 
+    modelEvents: {
+      'change:isDirty': 'onDirtyChange',
+      'change:isPristine': 'onPristineChange'
+    },
+
+    initialize: function () {
+      events.proxyBindEntityEvents(this, this.model, this.modelEvents);
+    },
+
+    onDirtyChange: function (model, isDirty) {
+      return isDirty ? this.$el.addClass(FormView.dirtyClass) : this.$el.removeClass(FormView.dirtyClass);
+    },
+
+    onPristineChange: function (model, isPristine) {
+      return isPristine ? this.$el.addClass(FormView.pristineClass) : this.$el.removeClass(FormView.pristineClass);
+    },
+
     remove: function () {
       events.proxyUnbindFormElementEvents(this, this.model, this.formElementEvents);
+      events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       this.$el.removeData('model');
       this.model.unset('_view');
       this.stopListening(this.model.get('elements'));
@@ -87,7 +105,7 @@ define(function (require) {
 
         pageCollection = this.model.get('pages');
 
-//this is pretty hacky but it means not re-writing the form/subform rendering system
+// this is pretty hacky but it means not re-writing the form/subform rendering system
         if (elementModel.get('parentElement')) {
           pageIdOfElement = elementModel.get('parentElement').get('page').index();
         } else {
@@ -118,6 +136,20 @@ define(function (require) {
       this.$el.attr('data-record-id', this.model.getElement('id').val());
     }
 
+  },
+  // class properties
+  {
+    /**
+     * classname for when a form is dirty. default = 'bm-dirty'
+     * @type {String}
+     */
+    dirtyClass: 'bm-dirty',
+
+    /**
+     * classname for when a form is pristine. default = 'bm-pristine'
+     * @type {String}
+     */
+    pristineClass: 'bm-pristine'
   });
 
   return FormView;

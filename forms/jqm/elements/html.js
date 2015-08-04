@@ -41,7 +41,6 @@ define(function (require) {
       this.onValueChange();
       this.onPlaceholderChange();
 
-      this.model.isValid();
       this.$el.fieldcontain();
       this.renderErrors();
     },
@@ -83,6 +82,9 @@ define(function (require) {
         this.$input.val('');
       } else {
         this.$input.val(value);
+      }
+      if (this.model.get('isPristine')) {
+        return;
       }
       // #isValid() probably should be in the model, but we keep it here to
       // preserve a strict sequence: check THEN render
