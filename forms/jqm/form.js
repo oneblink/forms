@@ -23,10 +23,28 @@ define(function (require) {
       id: { 'change:value': 'onChangedId' }
     },
 
+    modelEvents: {
+      'change:isDirty': 'onDirtyChange',
+      'change:isPristine': 'onPristineChange'
+    },
+
+    initialize: function () {
+      events.proxyBindEntityEvents(this, this.model, this.modelEvents);
+    },
+
+    onDirtyChange: function (model, isDirty) {
+      return isDirty ? this.$el.addClass(FormView.dirtyClass) : this.$el.removeClass(FormView.dirtyClass);
+    },
+
+    onPristineChange: function (model, isPristine) {
+      return isPristine ? this.$el.addClass(FormView.pristineClass) : this.$el.removeClass(FormView.pristineClass);
+    },
+
     remove: function () {
       var pages = this.model.attributes.pages;
 
       events.proxyUnbindFormElementEvents(this, this.model, this.formElementEvents);
+      events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       this.$el.removeData('model');
 
       if (pages && pages.current && pages.current.attributes._view) {
@@ -125,6 +143,20 @@ define(function (require) {
       this.$el.attr('data-record-id', this.model.getElement('id').val());
     }
 
+  },
+  // class properties
+  {
+    /**
+     * classname for when a form is dirty. default = 'bm-dirty'
+     * @type {String}
+     */
+    dirtyClass: 'bm-dirty',
+
+    /**
+     * classname for when a form is pristine. default = 'bm-pristine'
+     * @type {String}
+     */
+    pristineClass: 'bm-pristine'
   });
 
   return FormView;

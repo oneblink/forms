@@ -11,6 +11,7 @@ define(function (require) {
 
   var Elements = require('forms/collections/elements');
   var Pages = require('forms/collections/pages');
+  var modelStates = require('forms/mixins/model-states-mixin');
 
   // this module
 
@@ -18,10 +19,6 @@ define(function (require) {
   var invalidWrapperFn, isSubForm;
 
   function isVisible (elementModel) {
-    // if (!elementModel.has('hidden')) {
-    //   return true;
-    // }
-
     return !elementModel.get('hidden');
   }
 
@@ -52,7 +49,9 @@ define(function (require) {
       answerSpace: '',
       class: '',
       isPopulating: false,
-      uuid: ''
+      uuid: '',
+      isPristine: true,
+      isDirty: false
     },
     initialize: function () {
       var Forms = BMP.Forms;
@@ -105,6 +104,10 @@ define(function (require) {
         this.trigger.apply(this, arguments);
       }, this);
 
+      this.attributes.elements.on('change:value change:blob', function () {
+        this.setDirty();
+      }, this);
+
       this.attributes.preloadPromise = Promise.all(preloadPromises);
 
       behaviours = this.attributes._behaviours;
@@ -126,6 +129,18 @@ define(function (require) {
       }, 0);
 
     },
+
+    /**
+     * When a form is set to a pristine state, set all its child elements to pristine as well.
+     */
+    setPristine: function () {
+      // set all form elements to pristine
+      this.attributes.elements.setPristine();
+
+      return modelStates.setPristine.apply(this, arguments);
+    },
+
+    setDirty: modelStates.setDirty,
 
     close: function () {
       var attrs = this.attributes;

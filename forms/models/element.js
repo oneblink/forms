@@ -13,6 +13,9 @@ define(function (require) {
   var _ = require('underscore');
   var Backbone = require('backbone');
 
+  //local modules
+  var modelStates = require('forms/mixins/model-states-mixin');
+
   // this module
 
   var Element;
@@ -25,7 +28,9 @@ define(function (require) {
       value: '',
       pattern: '',
       hidden: false,
-      persist: true
+      persist: true,
+      isDirty: false,
+      isPristine: true
     },
     idAttribute: 'name',
     initialize: function () {
@@ -72,6 +77,7 @@ define(function (require) {
       // backward compatability.
       this.on('invalid change:value', this.updateErrors, this);
 
+      this.on('change:value', this.setDirty, this);
       this.on('remove', this.close, this);
 
       this.initializeView();
@@ -134,9 +140,15 @@ define(function (require) {
         errors = [errors];
       }
 
+      this.setDirty();
+
       this.validationError = { value: _.uniq(errors.concat(elementErrorList).reverse()) };
       this.trigger('invalid', this, elementErrorList);
     },
+
+    setDirty: modelStates.setDirty,
+
+    setPristine: modelStates.setPristine,
 
     warn: function () {
       var warning = {};
@@ -219,6 +231,7 @@ define(function (require) {
       }
 
       this.set('value', value, {validate: false});
+
       return value;
     }
   }, {
