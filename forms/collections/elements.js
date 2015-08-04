@@ -159,6 +159,14 @@ define(function (require) {
         m && m.setExternalErrors(errors, options);
         /* eslint-enable no-unused-expressions */
       }, this);
+    },
+
+    setPristine: function () {
+      this.invoke('setPristine');
+    },
+
+    setDirty: function () {
+      this.invoke('setDirty');
     }
   });
 });

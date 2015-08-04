@@ -51,7 +51,6 @@ define(function (require) {
 
     initialize: function () {
       var attrs;
-
       ElementModel.prototype.initialize.apply(this, arguments);
       this.attributes.forms = new SubFormsCollection();
 
@@ -122,6 +121,26 @@ define(function (require) {
       });
     },
 
+    /**
+     * Sets the subform element and all its child forms state to dirty
+     */
+    setDirty: function () {
+      //this.attributes.forms.invoke.call( this.attributes.forms, 'setDirty', arguments[0]);
+      this.attributes.forms.invoke('setDirty', arguments[0]);
+
+      return ElementModel.prototype.setDirty.apply(this, arguments);
+    },
+
+    /**
+     * Sets the subform element and all its child forms state to pristine
+     */
+    setPristine: function () {
+      //this.attributes.forms.invoke.call( this.attributes.forms, 'setPristine', arguments[0]);
+      this.attributes.forms.invoke('setPristine', arguments[0]);
+
+      return ElementModel.prototype.setPristine.apply(this, arguments);
+    },
+
     addSubformRecursive: function (max) {
       var self = this;
       var attrs = this.attributes;
@@ -154,10 +173,21 @@ define(function (require) {
             });
             def._action = action;
             form = new SubFormModel(def);
-            self.listenTo(form.get('elements'), 'invalid change:value change:blob', self.validate.bind(self));
+            self.listenTo(form.get('elements'), 'invalid change:value change:blob', function () {
+              self.validate.apply(self, arguments);
+              form.setDirty();
+              self.setDirty();
+              Forms.current.setDirty();
+            });
             form.parentElement = self;
             if (forms) {
               forms.add(form);
+            }
+            form.setDirty();
+            self.setDirty();
+
+            if (Forms.current) {
+              Forms.current.setDirty();
             }
             resolve(form);
           } catch (err) {

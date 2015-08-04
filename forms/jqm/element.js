@@ -11,6 +11,7 @@ define(function (require) {
 
   var events = require('forms/events');
   var formsErrors = require('forms/error-helpers');
+  var FormView = require('forms/jqm/form');
 
   var NotImplementedError = require('typed-errors').NotImplementedError;
 
@@ -33,7 +34,9 @@ define(function (require) {
       // 'change:warning', 'renderWarning',
       'change:class': 'onChangeClass',
       'change:hidden': 'onChangeHidden',
-      'change:label': 'renderLabel'
+      'change:label': 'renderLabel',
+      'change:isDirty': 'onDirtyChange',
+      'change:isPristine': 'onPristineChange'
     },
 
     initialize: function () {
@@ -43,13 +46,27 @@ define(function (require) {
       this.$el.attr('data-element-type', element.attributes.type);
       this.$el.data('model', element);
 
+      if (this.model.get('defaultValue')) {
+        this.$el.val(this.model.get('defaultValue'));
+      }
+
       if (this.modelEvents) {
         events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       }
 
       this.onChangeClass();
+      this.onDirtyChange();
+      this.onPristineChange();
       this.onChangeHidden();
       this.model.isValid();
+    },
+
+    onDirtyChange: function () {
+      return this.model.get('isDirty') ? this.$el.addClass(FormView.dirtyClass) : this.$el.removeClass(FormView.dirtyClass);
+    },
+
+    onPristineChange: function () {
+      return this.model.get('isPristine') ? this.$el.addClass(FormView.pristineClass) : this.$el.removeClass(FormView.pristineClass);
     },
 
     remove: function () {
@@ -168,7 +185,6 @@ define(function (require) {
         this.$el.closest('form').addClass('bm-form-invalid');
       } else {
         this.$el.removeClass('bm-formelement-invalid');
-        this.$el.closest('form').removeClass('bm-form-invalid');
       }
 
     },

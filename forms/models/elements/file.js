@@ -80,6 +80,10 @@ define(function (require) {
         }
       }, this);
 
+      this.on('change:blob', function () {
+        this.setDirty();
+      }, this);
+
     },
 
 /**
