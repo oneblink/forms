@@ -12,10 +12,10 @@
 
   require.config({
     paths: {
-      backbone: 'http://cdnp.blinkm.co/backbonejs/1.1.2/backbone',
+      backbone: 'http://cdnp.blinkm.co/backbonejs/1.2.1/backbone',
       jquery: 'http://cdnp.blinkm.co/jquery/1.11.3/jquery-1.11.3',
       jquerymobile: 'http://cdnp.blinkm.co/jquery.mobile/1.3.2/jquery.mobile-1.3.2',
-      underscore: 'http://cdnp.blinkm.co/lodash/2.4.1/lodash.underscore',
+      underscore: 'http://cdnp.blinkm.co/underscorejs/1.8.3/underscore',
       BlinkForms: '../../build/forms/jqm', // using the unminified makes it far easier to debug in tests
       //BlinkForms: '../../build/forms3jqm.min',
       BIC: '../sample-bic',
