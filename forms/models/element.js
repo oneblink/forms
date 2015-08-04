@@ -13,7 +13,7 @@ define(function (require) {
   var _ = require('underscore');
   var Backbone = require('backbone');
 
-  //local modules
+  // local modules
   var modelStates = require('forms/mixins/model-states-mixin');
 
   // this module
