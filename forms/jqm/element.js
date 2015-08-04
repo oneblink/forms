@@ -11,7 +11,6 @@ define(function (require) {
 
   var events = require('forms/events');
   var formsErrors = require('forms/error-helpers');
-  var FormView = require('forms/jqm/form');
 
   var NotImplementedError = require('typed-errors').NotImplementedError;
 
@@ -22,7 +21,7 @@ define(function (require) {
   // of detection.
   var $body = $('html, body');
 
-  return Backbone.View.extend({
+  var ElementView = Backbone.View.extend({
     tagName: 'div',
 
     attributes: {
@@ -62,11 +61,11 @@ define(function (require) {
     },
 
     onDirtyChange: function () {
-      return this.model.get('isDirty') ? this.$el.addClass(FormView.dirtyClass) : this.$el.removeClass(FormView.dirtyClass);
+      return this.model.get('isDirty') ? this.$el.addClass(ElementView.dirtyClass) : this.$el.removeClass(ElementView.dirtyClass);
     },
 
     onPristineChange: function () {
-      return this.model.get('isPristine') ? this.$el.addClass(FormView.pristineClass) : this.$el.removeClass(FormView.pristineClass);
+      return this.model.get('isPristine') ? this.$el.addClass(ElementView.pristineClass) : this.$el.removeClass(ElementView.pristineClass);
     },
 
     remove: function () {
@@ -233,5 +232,21 @@ define(function (require) {
         scrollTop: this.$el.offset().top
       }, options).promise());
     }
+  },
+  // class proeprties
+  {
+    /**
+     * classname for when a form is dirty. default = 'bm-formelement-dirty'
+     * @type {String}
+     */
+    dirtyClass: 'bm-formelement-dirty',
+
+    /**
+     * classname for when a form is pristine. default = 'bm-formelement-pristine'
+     * @type {String}
+     */
+    pristineClass: 'bm-formelement-pristine'
   });
+
+  return ElementView;
 });

@@ -147,16 +147,16 @@ define(function (require) {
   // class properties
   {
     /**
-     * classname for when a form is dirty. default = 'bm-dirty'
+     * classname for when a form is dirty. default = 'bm-form-dirty'
      * @type {String}
      */
-    dirtyClass: 'bm-dirty',
+    dirtyClass: 'bm-form-dirty',
 
     /**
-     * classname for when a form is pristine. default = 'bm-pristine'
+     * classname for when a form is pristine. default = 'bm-form-pristine'
      * @type {String}
      */
-    pristineClass: 'bm-pristine'
+    pristineClass: 'bm-form-pristine'
   });
 
   return FormView;
