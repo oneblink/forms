@@ -53,7 +53,10 @@ define(function (require) {
     },
 
     remove: function () {
-      this.$label = null;
+      if (this.$label) {
+        this.$label.remove();
+        this.$label = null;
+      }
       this.$el.removeData('model');
       this.model.off(null, null, this);
 
@@ -68,9 +71,13 @@ define(function (require) {
     renderLabel: function () {
       if (!this.$label) {
         this.$label = $('<label class="ui-input-text"></label>');
+      }
+
+      if (!this.$el.find(this.$label).length) {
         this.$el.append(this.$label);
       }
-      this.$label.html(this.model.attributes.label || '');
+
+      this.$label.text(this.model.attributes.label);
     },
 
     renderHint: function () {
@@ -114,7 +121,7 @@ define(function (require) {
       throw new NotImplementedError('Element.render is only an interface');
     },
 
-    //TODO: with the event removed are warnings still used ?
+    // TODO: with the event removed are warnings still used ?
     renderWarning: function () {
       var attrs, warning;
 
@@ -184,8 +191,8 @@ define(function (require) {
 
     hide: function () {
       this.$el.css('display', 'none');
-      //when a field is hidden, we no longer care
-      //about if it is valid or not.
+      // when a field is hidden, we no longer care
+      // about if it is valid or not.
       this.model.validationError = undefined;
       this.model.trigger('change:value');
     },
