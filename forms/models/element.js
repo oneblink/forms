@@ -39,7 +39,6 @@ define(function (require) {
       var page = attrs.page;
       var Forms = BMP.Forms;
       var section = $.trim(attrs.section || '');
-
       // migrate builder rowClass to class
       attrs.class = attrs.class || attrs.rowClass || '';
 
@@ -72,6 +71,10 @@ define(function (require) {
 
       if (attrs.label) {
         this.set('label', attrs.label);
+      }
+
+      if (attrs.hide && parseInt(attrs.hide, 10)) {
+        this.set({hidden: true});
       }
 
       // backward compatability.

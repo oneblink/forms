@@ -174,5 +174,38 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
                     thirdLevelRequiredField.val('hello');
                   });
     });
+
+    suite('hidden subform fields', function () {
+      setup(function () {
+        return Forms.current.getElement('second_level_form').add();
+      });
+
+      test('hidden fields in the name are not shown', function () {
+        var hiddenField = Forms.current.getElement('hidden_field1'),
+            hiddenFieldView = hiddenField.get('_view');
+
+        assert.isTrue(hiddenField.get('hidden'));
+        assert.isFalse(hiddenFieldView.$el.is(':visible'));
+
+      });
+
+      test('hidden fields with underscore in the name are not shown', function () {
+        var hiddenFieldWithUnderscore = Forms.current.getElement('hiddenfield2'),
+            hiddenFieldWithUnderscoreView = hiddenFieldWithUnderscore.get('_view');
+
+        assert.isTrue(hiddenFieldWithUnderscore.get('hidden'));
+        assert.isFalse(hiddenFieldWithUnderscoreView.$el.is(':visible'));
+
+      });
+
+      test('fields with a hide attribute that is falsy are shown', function () {
+        var model = Forms.current.getElement('hiddenfield3'),
+            view = model.get('_view');
+
+        assert.isFalse(model.get('hidden'));
+        assert.isTrue(view.$el.is(':visible'));
+
+      });
+    });
   });
 });
