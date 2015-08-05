@@ -14,6 +14,9 @@ define(function (require) {
 
   var NotImplementedError = require('typed-errors').NotImplementedError;
 
+  // view mixins
+  var toggleClass = require('forms/mixins/view-helper-mixins').toggleClass;
+
   // this module
 
   // IE aniamtes html, everything else does body.
@@ -35,7 +38,8 @@ define(function (require) {
       'change:hidden': 'onChangeHidden',
       'change:label': 'renderLabel',
       'change:isDirty': 'onDirtyChange',
-      'change:isPristine': 'onPristineChange'
+      'change:isPristine': 'onPristineChange',
+      'change:isInvalid': 'onInvalidChange'
     },
 
     initialize: function () {
@@ -60,13 +64,11 @@ define(function (require) {
       this.model.isValid();
     },
 
-    onDirtyChange: function () {
-      return this.model.get('isDirty') ? this.$el.addClass(ElementView.dirtyClass) : this.$el.removeClass(ElementView.dirtyClass);
-    },
+    onDirtyChange: toggleClass('bm-formelement-dirty', 'isDirty'),
 
-    onPristineChange: function () {
-      return this.model.get('isPristine') ? this.$el.addClass(ElementView.pristineClass) : this.$el.removeClass(ElementView.pristineClass);
-    },
+    onPristineChange: toggleClass('bm-formelement-pristine', 'isPristine'),
+
+    onInvalidChange: toggleClass('bm-formelement-invalid', 'isInvalid'),
 
     remove: function () {
       if (this.$label) {
@@ -180,10 +182,9 @@ define(function (require) {
       }
 
       if (this.model.validationError) {
-        this.$el.addClass('bm-formelement-invalid');
-        this.$el.closest('form').addClass('bm-form-invalid');
+        this.$el.addClass(ElementView.invalidClass);
       } else {
-        this.$el.removeClass('bm-formelement-invalid');
+        this.$el.removeClass(ElementView.invalidClass);
       }
 
     },
@@ -232,20 +233,6 @@ define(function (require) {
         scrollTop: this.$el.offset().top
       }, options).promise());
     }
-  },
-  // class proeprties
-  {
-    /**
-     * classname for when a form is dirty. default = 'bm-formelement-dirty'
-     * @type {String}
-     */
-    dirtyClass: 'bm-formelement-dirty',
-
-    /**
-     * classname for when a form is pristine. default = 'bm-formelement-pristine'
-     * @type {String}
-     */
-    pristineClass: 'bm-formelement-pristine'
   });
 
   return ElementView;
