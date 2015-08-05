@@ -10,6 +10,9 @@ define(function (require) {
 
   var events = require('forms/events');
 
+  // view mixins
+  var toggleClass = require('forms/mixins/view-helper-mixins').toggleClass;
+
   // this module
 
   var FormView = Backbone.View.extend({
@@ -25,20 +28,19 @@ define(function (require) {
 
     modelEvents: {
       'change:isDirty': 'onDirtyChange',
-      'change:isPristine': 'onPristineChange'
+      'change:isPristine': 'onPristineChange',
+      'change:isInvalid': 'onInvalidChange'
     },
 
     initialize: function () {
       events.proxyBindEntityEvents(this, this.model, this.modelEvents);
     },
 
-    onDirtyChange: function (model, isDirty) {
-      return isDirty ? this.$el.addClass(FormView.dirtyClass) : this.$el.removeClass(FormView.dirtyClass);
-    },
+    onDirtyChange: toggleClass('bm-form-dirty', 'isDirty'),
 
-    onPristineChange: function (model, isPristine) {
-      return isPristine ? this.$el.addClass(FormView.pristineClass) : this.$el.removeClass(FormView.pristineClass);
-    },
+    onPristineChange: toggleClass('bm-form-pristine', 'isPristine'),
+
+    onInvalidChange: toggleClass('bm-form-invalid', 'isInvalid'),
 
     remove: function () {
       var pages = this.model.attributes.pages;
@@ -143,20 +145,6 @@ define(function (require) {
       this.$el.attr('data-record-id', this.model.getElement('id').val());
     }
 
-  },
-  // class properties
-  {
-    /**
-     * classname for when a form is dirty. default = 'bm-form-dirty'
-     * @type {String}
-     */
-    dirtyClass: 'bm-form-dirty',
-
-    /**
-     * classname for when a form is pristine. default = 'bm-form-pristine'
-     * @type {String}
-     */
-    pristineClass: 'bm-form-pristine'
   });
 
   return FormView;
