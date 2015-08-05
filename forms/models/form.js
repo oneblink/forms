@@ -27,6 +27,7 @@ define(function (require) {
       var elementCollection = new Elements(this.get('elements').filter(isVisible));
       var validate = options && options.validate || false;
       var limit = options && options.limit || 0;
+      var results;
 
       if (!elementCollection) {
         return undefined;
@@ -36,7 +37,12 @@ define(function (require) {
         elementCollection.invoke('isValid');
       }
 
-      return elementCollection[fn](limit);
+      results = elementCollection[fn](limit);
+      if (!results || results.length === 0) {
+        this.set({ 'isInvalid': false });
+      }
+
+      return results;
     };
   };
 
@@ -51,7 +57,8 @@ define(function (require) {
       isPopulating: false,
       uuid: '',
       isPristine: true,
-      isDirty: false
+      isDirty: false,
+      isInvalid: true
     },
     initialize: function () {
       var Forms = BMP.Forms;
@@ -104,8 +111,16 @@ define(function (require) {
         this.trigger.apply(this, arguments);
       }, this);
 
+      // if any child elements change, then we are dirty
       this.attributes.elements.on('change:value change:blob', function () {
         this.setDirty();
+      }, this);
+
+      // if any child elements are invalid, then we are invalid
+      this.attributes.elements.on('invalid', function () {
+        this.set({
+          'isInvalid': true
+        });
       }, this);
 
       this.attributes.preloadPromise = Promise.all(preloadPromises);

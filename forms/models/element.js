@@ -65,7 +65,7 @@ define(function (require) {
         }
       }
 
-      //FORMS-137 # Fields that are set to required are not marked as such in anyway (no *)
+      // FORMS-137 # Fields that are set to required are not marked as such in anyway (no *)
       if (attrs.required && attrs.label && attrs.type !== 'subForm') {
         attrs.label += ' *';
       }
