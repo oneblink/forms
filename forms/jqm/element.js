@@ -77,7 +77,7 @@ define(function (require) {
         this.$el.append(this.$label);
       }
 
-      this.$label.text(this.model.attributes.label);
+      this.$label.text(this.model.attributes.label  || '');
     },
 
     renderHint: function () {
