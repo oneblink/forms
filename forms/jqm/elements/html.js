@@ -75,11 +75,15 @@ define(function (require) {
     },
 
     onValueChange: function () {
-      var value;
+      var value, current;
       if (!this.$input) {
         return;
       }
+      current = this.$input.val();
       value = this.model.attributes.value;
+      if (current === value) {
+        // return; // exit early if nothing actually changed
+      }
       if (!value && value !== 0) {
         this.$input.val('');
       } else {
