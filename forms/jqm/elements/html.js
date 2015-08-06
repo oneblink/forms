@@ -51,7 +51,7 @@ define(function (require) {
       return ElementView.prototype.remove.apply(this, arguments);
     },
 
-    onKeyDown: _.throttle(function (event) {
+    onKeyDown: function (event) {
       var prev = this.model.attributes.value;
       var next = $(event.target).val();
       if (next !== prev) {
@@ -59,7 +59,7 @@ define(function (require) {
         this.model.trigger('change:value');
         this.model.trigger('change', this.model);
       }
-    }, 500),
+    },
 
     onPlaceholderChange: function () {
       var text;
