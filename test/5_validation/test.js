@@ -6,6 +6,21 @@ define([
   'BIC'
 ], function (_, sinon, Forms, testUtils) {
 
+  function subformValidationTest (errors, element, counter) {
+    var validation;
+    var errorCounter = 0;
+
+    validation = element.validate();
+    _.each(validation.value, function (v) {
+      assert.notEqual(errors.indexOf(v.code), -1, '(' + counter + ') contained ' + v.code + ' error');
+      if (errors.indexOf(v.code) !== -1) {
+        errorCounter++;
+      }
+    });
+    assert.equal(errorCounter, validation.value.length, '(' + counter + ') number of total error doesn\'t match validation array');
+    assert.equal(errorCounter, errors.length, '(' + counter + ') number of total error doesn\'t match');
+  }
+
   suite('i18n', function () {
     /* eslint-disable new-cap */
 
@@ -306,20 +321,7 @@ define([
 
       });
 
-      function subformValidationTest (errors, element, counter) {
-        var validation,
-          errorCounter = 0;
-
-        validation = element.validate();
-        _.each(validation.value, function (v) {
-          assert.notEqual(errors.indexOf(v.code), -1, '(' + counter + ') contained ' + v.code + ' error');
-          if (errors.indexOf(v.code) !== -1) {
-            errorCounter++;
-          }
         });
-        assert.equal(errorCounter, validation.value.length, "(" + counter + ") number of total error doesn't match validation array");
-        assert.equal(errorCounter, errors.length, "(" + counter + ") number of total error doesn't match");
-      }
 
       test('subform require, min=1 subform test', function () {
         var subFormElement = Forms.current.getElement('comments');
