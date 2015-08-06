@@ -205,6 +205,7 @@ function (FileModel) {
     });
 
 // ////////////////////////////////////////////////////////////////////////
+
     suite('Camera Tests', function () {
       setup(function () {
         window.BMP = {

@@ -1,6 +1,3 @@
-
-/*global assert:true*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('11: rating', function () {

@@ -70,6 +70,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       // -----------------------------------------------------------------------
       // subform: field: assigned label, plus/minus buttons: no label
       // -----------------------------------------------------------------------
+
       test('check `notes` subform PLUS button label', function () {
         var subFormElement = Forms.current.getElement('notes'),
           $view = subFormElement.attributes._view.$el,
@@ -103,6 +104,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       // -----------------------------------------------------------------------
       // subform: field: no label, plus/minus buttons: no label
       // -----------------------------------------------------------------------
+
       test('check `reviews` subform PLUS button label', function () {
         var subFormElement = Forms.current.getElement('reviews'),
           $view = subFormElement.attributes._view.$el,

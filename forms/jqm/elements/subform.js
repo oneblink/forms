@@ -31,6 +31,7 @@ define(function (require) {
       });
       return ElementView.prototype.remove.call(this);
     },
+
     render: function () {
       var attrs = this.model.attributes;
       var $button;
@@ -51,6 +52,7 @@ define(function (require) {
       this.$el.fieldcontain();
       this.onFormsChange();
     },
+
     onAddClick: function () {
       var self = this;
       var attrs = self.model.attributes;
@@ -62,6 +64,7 @@ define(function (require) {
         }
       });
     },
+
     onFormsChange: function () {
       var attrs,
         view,

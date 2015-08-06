@@ -54,6 +54,7 @@ define(function (require) {
       isPopulating: false,
       uuid: ''
     },
+
     initialize: function () {
       var Forms = BMP.Forms;
       var self = this;
@@ -218,12 +219,12 @@ define(function (require) {
     * @example
           Forms.current.getErrors()
           // returns:
-          //{
+          // {
           //   modelName : [{code: 'MAXDECIMALS', <errorname>: value, text: "pretty error message" }, {code: 'MINDECIMALS', <errorname>: value, text: "pretty error message"}],
           //   modelName2: [{code: 'MAXDECIMALS', <errorname>: value2, text: "pretty error message"}, {code: 'MINDECIMALS', <errorname>: value2, text: "pretty error message"}],
           //   length: 2,
           //   total: 12
-          //}
+          // }
     */
     getErrors: invalidWrapperFn('getErrors'),
 

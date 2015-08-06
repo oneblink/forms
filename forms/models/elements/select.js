@@ -19,6 +19,7 @@ define(function (require) {
 
   return Element.extend({
     defaults: defaults,
+
     initialize: function () {
       var attrs;
       Element.prototype.initialize.apply(this, arguments);
@@ -30,6 +31,7 @@ define(function (require) {
         delete attrs.canSpecifyOther;
       }
     },
+
     initializeView: function () {
       var Forms = BMP.Forms;
       var View, view, mode;
@@ -48,6 +50,7 @@ define(function (require) {
       this.set('_view', view);
       return view;
     },
+
     runValidation: function (attrs) {
       var errors = {};
       if (attrs === undefined) {

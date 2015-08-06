@@ -118,12 +118,12 @@ define([
       });
 
       test('email required test', function () {
-        var form = Forms.current,
-          element = form.getElement('email'),
-          cases = {
-            "REQUIRED": "",
-            "EMAIL": "test@test"
-          };
+        var form = Forms.current;
+        var element = form.getElement('email');
+        var cases = {
+          REQUIRED: '',
+          EMAIL: 'test@test'
+        };
 
         assert.isUndefined(element.validate(), 'no validation errors');
 
@@ -131,11 +131,11 @@ define([
       });
 
       test('URL required test', function () {
-        var form = Forms.current,
-          element = form.getElement('url'),
-          cases = {
-            "REQUIRED": ""
-          };
+        var form = Forms.current;
+        var element = form.getElement('url');
+        var cases = {
+          REQUIRED: ''
+        };
 
         assert.isUndefined(element.validate(), 'no validation errors');
 
@@ -143,11 +143,11 @@ define([
       });
 
       test('telephone required test', function () {
-        var form = Forms.current,
-          element = form.getElement('telephone'),
-          cases = {
-            "REQUIRED": ""
-          };
+        var form = Forms.current;
+        var element = form.getElement('telephone');
+        var cases = {
+          REQUIRED: ''
+        };
 
         assert.isUndefined(element.validate(), 'no validation errors');
 
@@ -155,25 +155,27 @@ define([
       });
 
       test('subform validations test', function (done) {
-        var subFormElement = Forms.current.getElement('comments'),
-          $view = subFormElement.attributes._view.$el,
-          $add = $view.children('.ui-btn').children('button'),
-          subForms = subFormElement.attributes.forms;
+        var subFormElement = Forms.current.getElement('comments');
+        var $view = subFormElement.attributes._view.$el;
+        var $add = $view.children('.ui-btn').children('button');
+        var subForms = subFormElement.attributes.forms;
 
         assert.equal(subForms.length, 0, 'no subForms yet');
         $add.trigger('click');
         subForms.once('add', function () {
           assert.isObject(subFormElement.validate(), "subform validation fails");
           subForms.at(0).getElement('comment').val('def');
-          assert.isUndefined(subFormElement.validate(), "subform validation passes");
+          assert.isUndefined(subFormElement.validate(), 'subform validation passes');
           done();
         });
       });
 
       test('required text', function () {
-        var form = Forms.current,
-          element = form.getElement('city'),
-          requiredError;
+        var form = Forms.current;
+        var element = form.getElement('city');
+        var cases = {
+          REQUIRED: ''
+        };
 
         assert.isUndefined(element.validate(), 'no validation errors');
 
@@ -188,8 +190,11 @@ define([
         element.val('Gosford');
       });
       test('max length test', function () {
-        var form = Forms.current,
-          element = form.getElement('city');
+        var form = Forms.current;
+        var element = form.getElement('city');
+        var cases = {
+          MAXLENGTH: 'GosfordGosfordGosfordGosford'
+        };
 
         element.val('GosfordGosfordGosfordGosford'); // max length fixed is 20
         assert.isObject(element.validate(), 'max length error');
@@ -197,8 +202,11 @@ define([
       });
 
       test('pattern test', function () {
-        var form = Forms.current,
-          element = form.getElement('city');
+        var form = Forms.current;
+        var element = form.getElement('city');
+        var cases = {
+          PATTERN: '12Gosford'
+        };
 
         element.val('12Gosford');
         assert.isObject(element.validate(), 'Pattern error');
@@ -206,13 +214,13 @@ define([
       });
 
       test('Min/Max Value Check', function () {
-        var form = Forms.current,
-          element = form.getElement('number'),
-          cases = {
-            'PATTERN': 35,
-            'MIN': 10,
-            'MAX': 550
-          };
+        var form = Forms.current;
+        var element = form.getElement('number');
+        var cases = {
+          PATTERN: 35,
+          MIN: 10,
+          MAX: 550
+        };
 
         assert.isDefined(element.validate(), 'no validation error');
 
@@ -222,8 +230,11 @@ define([
       });
 
       test('Max Decimal Places Check', function () {
-        var form = Forms.current,
-          element = form.getElement('number');
+        var form = Forms.current;
+        var element = form.getElement('number');
+        var cases = {
+          MAXDECIMALS: 45.5699
+        };
 
         // removed pattern in order to test decimal places
         delete element.attributes.pattern;
@@ -311,10 +322,10 @@ define([
       }
 
       test('subform require, min=1 subform test', function () {
-        var subFormElement = Forms.current.getElement('comments'),
-          subForms = subFormElement.attributes.forms,
-          subForm = subForms.at(0),
-          errors = ['REQUIRED'];
+        var subFormElement = Forms.current.getElement('comments');
+        var subForms = subFormElement.attributes.forms;
+        var subForm = subForms.at(0);
+        var errors = ['REQUIRED'];
 
         assert.equal(subForms.length, 1, 'no subForms yet');
 
@@ -323,11 +334,12 @@ define([
       });
 
       test('maximum number of subforms test', function (done) {
-        var subFormElement = Forms.current.getElement('comments'),
-          $view = subFormElement.attributes._view.$el,
-          $add = $view.children('.ui-btn').children('button'),
-          subForms = subFormElement.attributes.forms,
-          errors;
+        var subFormElement = Forms.current.getElement('comments');
+        var $view = subFormElement.attributes._view.$el;
+        var $add = $view.children('.ui-btn').children('button');
+        var subForms = subFormElement.attributes.forms;
+        var errors;
+
         this.timeout(3000);
         assert.equal(subForms.length, 0, 'no subForms yet');
         $add.trigger('click');
@@ -354,11 +366,11 @@ define([
       });
 
       test('subform require, min=2 subform test', function (done) {
-        var subFormElement = Forms.current.getElement('names'),
-          $view = subFormElement.attributes._view.$el,
-          $add = $view.children('.ui-btn').children('button'),
-          subForms = subFormElement.attributes.forms,
-          errors;
+        var subFormElement = Forms.current.getElement('names');
+        var $view = subFormElement.attributes._view.$el;
+        var $add = $view.children('.ui-btn').children('button');
+        var subForms = subFormElement.attributes.forms;
+        var errors;
 
         assert.equal(subForms.length, 0, 'no subForms yet');
 
@@ -383,9 +395,9 @@ define([
       });
 
       test('validation events are bubbled via Forms.current', function () {
-        var form = Forms.current,
-          element = form.getElement('city'),
-          listenerSpy = sinon.spy();
+        var form = Forms.current;
+        var element = form.getElement('city');
+        var listenerSpy = sinon.spy();
 
         form.on('invalid change:value change:blob', listenerSpy);
         assert.isUndefined(element.validate(), 'no validation errors');
@@ -401,7 +413,7 @@ define([
     }); // END: suite('Form', ...)
 
     elements = ['textBox1', 'number1', 'password1', 'text', 'url', 'email', 'password', 'streetAddress', 'city', 'telephone', 'number', 'currency', 'select', 'multi'];
-    /* 'heading', 'message', 'comments', 'names' */
+    // 'heading', 'message', 'comments', 'names'
 
     elements.forEach(function (name) {
 
@@ -416,8 +428,8 @@ define([
         });
 
         test('label is correct', function () {
-          var label$ = view.$el.find('label').first(),
-            attr = element.attributes;
+          var label$ = view.$el.find('label').first();
+          var attr = element.attributes;
 
           if (attr.required) {
             assert.notEqual(attr.label.indexOf('*'), -1, name + ' is required');

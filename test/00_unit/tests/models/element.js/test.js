@@ -1,5 +1,3 @@
-
-/*global assert:true*/ // chai
 /*
   To ensure correct, isolated, unit test behavior,
   everything except the file being tested should be mocked or stubbed out.

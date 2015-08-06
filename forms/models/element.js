@@ -27,7 +27,9 @@ define(function (require) {
       hidden: false,
       persist: true
     },
+
     idAttribute: 'name',
+
     initialize: function () {
       var attrs = this.attributes;
       var form = attrs.form;
