@@ -5,6 +5,17 @@ define([
   'use strict';
 
   var DateElement = Element.extend({
+    defaults: {
+      page: 0,
+      class: '',
+      defaultValue: '',
+      value: '',
+      _time: '',
+      _date: '',
+      hidden: false,
+      persist: true
+    },
+
     initialize: function () {
       var attr = this.attributes;
       var dateFormat;
@@ -142,7 +153,7 @@ define([
      */
     prepareDateTime: function () {
       var type = this.attributes.type;
-      var value = this.attributes.value;
+      var value = this.attributes.value || '';
       var time;
       var date;
       var parts;
