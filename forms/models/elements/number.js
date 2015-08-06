@@ -112,8 +112,8 @@ define(function (require) {
         return regexp.test(value);
       }
     },
-    validate: function (attrs) {
-      var errors = Element.prototype.validate.apply(this, arguments) || {};
+    runValidation: function (attrs) {
+      var errors = Element.prototype.runValidation.apply(this, arguments) || {};
       if (attrs === undefined) {
         attrs = this.attributes;
       }

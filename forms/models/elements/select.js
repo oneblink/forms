@@ -48,7 +48,7 @@ define(function (require) {
       this.set('_view', view);
       return view;
     },
-    validate: function (attrs) {
+    runValidation: function (attrs) {
       var errors = {};
       if (attrs === undefined) {
         attrs = this.attributes;

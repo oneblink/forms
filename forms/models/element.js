@@ -76,7 +76,8 @@ define(function (require) {
 
       this.initializeView();
     },
-    validate: function (attrs) {
+
+    runValidation: function (attrs) {
       var errors = {};
 
       if (attrs === undefined) {
@@ -102,6 +103,11 @@ define(function (require) {
 
       return _.isEmpty(errors) ? undefined : errors;
     },
+
+    validate: function (attrs) {
+      return this.runValidation.apply(this, arguments);
+    },
+
     /* @deprecated */
     updateErrors: function () {
       this.set('errors', this.validationError, {validate: false, silent: true});
@@ -146,9 +152,11 @@ define(function (require) {
       }
       return _.isEmpty(warning) ? undefined : warning;
     },
+
     updateWarning: function () {
       this.set('warning', this.warn());
     },
+
     removeView: function () {
       var attrs = this.attributes;
       if (attrs._view) {
@@ -156,6 +164,7 @@ define(function (require) {
         delete attrs._view;
       }
     },
+
     close: function () {
       var attrs = this.attributes;
       delete attrs.form;
@@ -163,6 +172,7 @@ define(function (require) {
       delete attrs.section;
       this.off(null, null, this);
     },
+
     /**
      * this will close any existing view first, then establish a new view
      */
@@ -199,6 +209,7 @@ define(function (require) {
       this.set('_view', view);
       return view;
     },
+
     /**
      * official Blink API
      */

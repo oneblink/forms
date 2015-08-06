@@ -108,7 +108,7 @@ define(function (require) {
 /**
 override because super#validate() checks "value", and we need to check "blob"
 */
-    validate: function (attrs) {
+    runValidation: function (attrs) {
       var errors = {};
       attrs = attrs || this.attributes;
       if (attrs.required && !attrs.blob) {

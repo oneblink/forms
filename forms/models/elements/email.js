@@ -30,8 +30,8 @@ define(function (require) {
       this.set('_view', view);
       return view;
     },
-    validate: function (attrs) {
-      var errors = TextElement.prototype.validate.apply(this, arguments) || {};
+    runValidation: function (attrs) {
+      var errors = TextElement.prototype.runValidation.apply(this, arguments) || {};
       // http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
       var regexp = new RegExp('^(([^<>()[\\]\\.,;:\\s@\\"]+(\\.[^<>()[\\]\\.,;:\\s@\\"]+)*)|(\\".+\\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$', 'i');
       if (attrs === undefined) {

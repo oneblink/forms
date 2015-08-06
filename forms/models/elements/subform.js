@@ -352,7 +352,7 @@ define(function (require) {
       return counter;
     },
 
-    validate: function (attrs) {
+    runValidation: function (attrs) {
       var forms;
       var subformErrorCounter = 0;
       var errors;
