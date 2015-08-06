@@ -76,7 +76,6 @@ define(function (require) {
 
       this.on('remove', this.close, this);
 
-      this.initializeView();
     },
 
     runValidation: function (attrs) {
