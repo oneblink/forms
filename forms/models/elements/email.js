@@ -42,9 +42,7 @@ define(function (require) {
         errors.value = errors.value || [];
         errors.value.push({code: 'EMAIL'});
       }
-      if (!_.isEmpty(errors)) {
-        return errors;
-      }
+      return _.isEmpty(errors) ? undefined : errors;
     }
   });
 
