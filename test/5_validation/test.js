@@ -21,6 +21,51 @@ define([
     assert.equal(errorCounter, errors.length, '(' + counter + ') number of total error doesn\'t match');
   }
 
+  function runTests (cases, element) {
+    var key, value;
+    if (!Object.keys(cases).length) {
+      return Promise.resolve();
+    }
+
+    key = Object.keys(cases).shift();
+    value = cases[key];
+    delete cases[key];
+
+    // deal with the first case
+    return testUtils.whenNewValueIsValidated(element, value)
+    .then(function () {
+      var error;
+      assert.isObject(
+        element.validationError,
+        element.attributes.name + ': invalid'
+      );
+      assert.isArray(
+        element.validationError.value,
+        element.attributes.name + ': invalid: ' + value
+      );
+      error = _.find(element.validationError.value, function (e) {
+        return _.isObject(e) && e.code === key;
+      });
+      assert.isObject(
+        error,
+        element.attributes.name + ': invalid: ' + key
+      );
+
+      // handle the remaining cases
+      return runTests(cases, element);
+    });
+  }
+
+  function confirmValidValue (value, element) {
+    return testUtils.whenNewValueIsValidated(element, value)
+    .then(function () {
+      assert.isUndefined(
+        element.validationError,
+        element.attributes.name + ': valid: ' + value
+      );
+    });
+  }
+
   suite('i18n', function () {
     /* eslint-disable new-cap */
 
@@ -38,22 +83,9 @@ define([
   });
 
   suite('5: validation', function () {
-    var $page = $('[data-role=page]'),
-      $content = $page.find('[data-role=content]'),
-      runTests = function (cases, element) {
-        var error;
-
-        _.each(cases, function (v, i) {
-          element.val(v);
-          assert.isObject(element.validate(), 'now has a validation error');
-          assert.isArray(element.validate().value, 'something wrong with value');
-          error = _.find(element.validate().value, function (e) {
-            return _.isObject(e) && e.code === i;
-          });
-
-          assert.isObject(error, 'contained ' + i + ' error');
-        });
-      }, elements;
+    var $page = $('[data-role=page]');
+    var $content = $page.find('[data-role=content]');
+    var elements;
 
     suiteSetup(function () {
       $content.empty();
