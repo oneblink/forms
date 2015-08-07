@@ -23,19 +23,6 @@ define(function (require) {
         }
       });
       return input$;
-    },
-
-    onKeyDown: function (event) {
-      var prev = this.model.attributes.value;
-      var next = $(event.target).val();
-      if ($.isNumeric(next)) {
-        next = parseFloat(next, 10);
-      }
-      if (next !== prev) {
-        this.model.attributes.value = next;
-        this.model.trigger('change:value');
-        this.model.trigger('change', this.model);
-      }
     }
   });
 });

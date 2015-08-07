@@ -10,10 +10,26 @@ define(function (require) {
   // local modules
 
   var Element = require('forms/models/element');
+  var utils = require('forms/lib/utils');
 
   // this module
 
-  var NumberElement = Element.extend({
+  var NumberElement;
+
+  function toValid (value) {
+    if (value === '') {
+      return value;
+    }
+    if ($.isNumeric(value)) {
+      value = parseFloat(value, 10);
+    }
+    if (isNaN(value)) {
+      value = '';
+    }
+    return value;
+  }
+
+  NumberElement = Element.extend({
     initialize: function () {
       var self = this;
       var attrs = self.attributes;
@@ -52,6 +68,7 @@ define(function (require) {
 
       Element.prototype.initialize.apply(this, arguments);
     },
+
     initializeView: function () {
       var Forms = BMP.Forms;
       var attrs = this.attributes;
@@ -70,27 +87,6 @@ define(function (require) {
 
       this.set('_view', view);
       return view;
-    },
-    set: function (key, val, options) {
-      var attrs;
-      if (key === null) {
-        return this;
-      }
-      if (_.isObject(key)) {
-        attrs = key;
-        options = val;
-      } else {
-        attrs = {};
-        attrs[key] = val;
-      }
-      options = options || {};
-
-      // tamper with 'value' if present
-      if (attrs.hasOwnProperty('value') && $.isNumeric(attrs.value)) {
-        // TODO: round to 'step' if present with 'min' and/or 'max'
-        attrs.value = Number(attrs.value);
-      }
-      return Element.prototype.set.call(this, attrs, options);
     },
 
     validators: {
@@ -112,6 +108,7 @@ define(function (require) {
         return regexp.test(value);
       }
     },
+
     runValidation: function (attrs) {
       var errors = Element.prototype.runValidation.apply(this, arguments) || {};
       if (attrs === undefined) {
@@ -139,6 +136,16 @@ define(function (require) {
       }
 
       return _.isEmpty(errors) ? undefined : errors;
+    },
+
+    set: function () {
+      var args = arguments;
+      var value = utils.getValueFromBBSet('value', args);
+      if (value !== undefined) {
+        value = toValid(value);
+        args = utils.updateBBSetArguments('value', value, args);
+      }
+      return Element.prototype.set.apply(this, args);
     }
   });
 

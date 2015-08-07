@@ -15,6 +15,10 @@ define(function (require) {
   var Backbone = require('backbone');
   var queue = require('queue-async');
 
+  // local modules
+
+  var utils = require('forms/lib/utils');
+
   // this module
 
   var q = queue(10);
@@ -23,16 +27,6 @@ define(function (require) {
   var qEmpty = true;
 
   var Element;
-
-  function isSetForProp (prop, args) {
-    if (args[0] === prop) {
-      return true;
-    }
-    if (args[0] && typeof args[0] === 'object') {
-      return prop in args[0];
-    }
-    return false;
-  }
 
   Element = Backbone.Model.extend({
     defaults: {
@@ -257,7 +251,7 @@ define(function (require) {
 
     set: function (prop) {
       var result = Backbone.Model.prototype.set.apply(this, arguments);
-      if (isSetForProp('value', arguments)) {
+      if (utils.isBBSetForProp('value', arguments)) {
         // explicitly trigger validation, even if there is no change in value
         this.validate();
       }
