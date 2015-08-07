@@ -67,6 +67,35 @@ define(function () {
               type: "text",
               label: "Details"
             }
+          },
+          {
+            "default": {
+              "name": "camera",
+              "type": "file",
+              "label": "Camera",
+              "capture": true,
+              "accept": "image/*",
+              "page": 0
+            }
+          },
+          {
+            "default": {
+              "name": "gallary",
+              "type": "file",
+              "label": "Gallary",
+              "accept": "image/*",
+              "page": 0
+            }
+          },
+          {
+            "default": {
+              "name": "fileupload",
+              "type": "file",
+              "label": "fileupload",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "page": 0
+            }
           }
         ]
       }

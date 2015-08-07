@@ -125,6 +125,23 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           }, 1000);
         });
       });
+
+      suite('WebRtc Prints correct Buttons', function () {
+        test('button present', function () {
+          var elements = ['camera', 'Photo', 'Photo1', 'Photo2'],
+            form = BMP.Forms.current,
+            element,
+            view;
+          _.each(elements, function (key) {
+            element = form.getElement(key);
+            setTimeout(function () {
+              view = element.attributes._view.$el;
+              assert(view.find('a[data-role="button"]').hasClass('webrtc_image'));
+            }, 1000);
+          });
+        });
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)
