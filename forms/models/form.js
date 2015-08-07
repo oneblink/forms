@@ -27,16 +27,12 @@ define(function (require) {
 
   invalidWrapperFn = function (fn) {
     return function (options) {
-      var elementCollection = new Elements(this.get('elements').filter(isVisible));
-      var validate = options && options.validate || false;
       var limit = options && options.limit || 0;
+      var oldElements = this.attributes && this.attributes.elements;
+      var elementCollection = new Elements((oldElements || []).filter(isVisible));
 
       if (!elementCollection) {
         return undefined;
-      }
-
-      if (validate) {
-        elementCollection.invoke('isValid');
       }
 
       return elementCollection[fn](limit);
@@ -102,8 +98,18 @@ define(function (require) {
       }
       this.attributes.elements = new Elements(elements);
       // bubble element events up through the form model.
-      this.attributes.elements.on('all', function () {
-        this.trigger.apply(this, arguments);
+      this.attributes.elements.on('all', function (type) {
+        if (type === 'valid' || type === 'invalid') {
+          // to avoid event thrashing, we wait for the validation queue to empty
+          window.BMP.Forms.once('validated', function () {
+            // now we check to see which event to emit
+            this.trigger((this.getInvalidElements() || []).length ? 'invalid' : 'valid');
+          }.bind(this));
+
+        } else {
+          // pass all other events through
+          this.trigger.apply(this, arguments);
+        }
       }, this);
 
       this.attributes.preloadPromise = Promise.all(preloadPromises);
@@ -147,6 +153,9 @@ define(function (require) {
         });
       }
 
+      if (this.attributes.elements && this.attributes.elements.off) {
+        this.attributes.elements.off('all', null, this);
+      }
       this.off('remove', this.close, this);
     },
     /**

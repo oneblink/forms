@@ -354,6 +354,8 @@ define([
 
       test('subform[req,min1,max=3]: empty vs REQUIRED', function () {
         var subFormElement = Forms.current.getElement('comments');
+        this.timeout(3e3);
+
         return subFormElement.setRecords([])
         .then(function () {
           return testUtils.whenValidationStops();
@@ -370,6 +372,8 @@ define([
 
       test('subform[req,min1,max=3]: > MAXSUBFORM', function () {
         var subFormElement = Forms.current.getElement('comments');
+        this.timeout(3e3);
+
         return subFormElement.setRecords([
           { comment: 'abc' },
           { comment: 'def' },
@@ -391,6 +395,8 @@ define([
 
       test('subform[req,min1,max=3]: 3 valid records', function () {
         var subFormElement = Forms.current.getElement('comments');
+        this.timeout(3e3);
+
         return subFormElement.setRecords([
           { comment: 'abc' },
           { comment: 'def' },
@@ -406,6 +412,8 @@ define([
 
       test('subform[min=2]: < MINSUBFORM', function () {
         var subFormElement = Forms.current.getElement('names');
+        this.timeout(3e3);
+
         return subFormElement.setRecords([
           { comment: 'abc' }
         ])
@@ -422,8 +430,17 @@ define([
         });
       });
 
-      test('TODO: test valid subform number containing invalid subrecord');
+      test('subform[req,min1,max=3]: invalid sub-record', function () {
+        var subFormElement = Forms.current.getElement('comments');
+        this.timeout(3e3);
 
+        return subFormElement.setRecords([
+          { comment: '' }
+        ])
+        .then(function () {
+          return testUtils.whenValidationStops();
+        });
+      });
     }); // END: suite('Form', ...)
 
     elements = ['textBox1', 'number1', 'password1', 'text', 'url', 'email', 'password', 'streetAddress', 'city', 'telephone', 'number', 'currency', 'select', 'multi'];

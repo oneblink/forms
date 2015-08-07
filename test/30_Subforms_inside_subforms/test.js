@@ -136,7 +136,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       view.onAddClick()
           .then(function () {
-            Forms.current.on('change:value', function (model, val) {
+            Forms.current.on('valid', function (model, val) {
               assert.equal(model.id, 'second_required');
               assert.equal(val, 123);
               done();
@@ -177,7 +177,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                   .then(function () {
                     var thirdLevelRequiredField = Forms.current.getElement('third_level_req');
 
-                    Forms.current.on('change:value', function (model, value) {
+                    Forms.current.on('valid', function (model, value) {
                       assert.equal(model.id, 'third_level_req');
                       assert.equal(value, 'hello');
                       done();

@@ -152,9 +152,8 @@ define(function (require) {
             _.each(def._elements, function (element) {
               element.parentElement = self;
             });
-            def._action = action;
-            form = new SubFormModel(def);
-            self.listenTo(form.get('elements'), 'invalid change:value change:blob', self.validate.bind(self));
+            form = SubFormModel.create(def, action);
+            form.on('invalid valid', self.validate, self);
             form.parentElement = self;
             if (forms) {
               forms.add(form);
@@ -198,7 +197,7 @@ define(function (require) {
       if (form.get('_action') === 'edit') {
         if (form.attributes._view) {
           form.attributes._view.remove();
-          this.stopListening(form.get('elements'));
+          form.off(null, null, this);
         }
         form.attributes = {
           _action: 'remove',
@@ -323,7 +322,6 @@ define(function (require) {
         errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
       }
       if (!_.isEmpty(errors)) {
-        this.trigger('update:fieldErrors', errors);
         return errors;
       }
     },
@@ -370,7 +368,7 @@ define(function (require) {
 
       forms.models.forEach(function (frm) {
         var err;
-        err = frm.getInvalidElements({validate: true});
+        err = frm.getInvalidElements();
         if (err && err.length) {
           subformErrorCounter++;
         }
@@ -393,8 +391,6 @@ define(function (require) {
       if (elementErrorList.errors) {
         ElementModel.prototype.setExternalErrors.call(this, elementErrorList.errors, options);
       }
-
-      this.trigger('update:fieldErrors');
     }
   });
 });
