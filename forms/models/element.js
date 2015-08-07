@@ -59,7 +59,10 @@ define(function (require) {
         }
       }
 
-      this.set('value', attrs.defaultValue, {silent: true, validate: false});
+      // have to do this _before_ we start setting 'value'
+      this.validate = _.debounce(this.validate, 500);
+
+      this.set('value', attrs.defaultValue, { silent: true });
       if (!attrs.label && attrs.type !== 'message') {
         if (attrs.prefix) {
           attrs.label = attrs.name + ' ' + attrs.prefix;
@@ -77,7 +80,7 @@ define(function (require) {
         this.set('label', attrs.label);
       }
 
-      // backward compatability.
+      // backward compatability
       this.on('invalid valid', this.updateErrors, this);
 
       this.on('remove', this.close, this);
