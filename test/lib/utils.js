@@ -103,6 +103,35 @@ define(['BlinkForms'], function (Forms) {
         });
         element.val(value);
       });
+    },
+
+    confirmValidValue: function (value, element) {
+      return this.whenNewValueIsValidated(element, value)
+      .then(function () {
+        assert.notOk(
+          element.validationError,
+          element.attributes.name + ': valid: ' + value
+        );
+      });
+    },
+
+    confirmInvalidValue: function (value, element) {
+      return this.whenNewValueIsValidated(element, value)
+      .then(function () {
+        assert.isObject(
+          element.validationError,
+          element.attributes.name + ': invalid: ' + value
+        );
+        assert.isArray(
+          element.validationError.value,
+          element.attributes.name + ': invalid: ' + value
+        );
+        assert.isAbove(
+          element.validationError.value.length,
+          0,
+          element.attributes.name + ': invalid: ' + value
+        );
+      });
     }
 
   };

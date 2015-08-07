@@ -53,6 +53,11 @@ define(['BlinkForms', 'testUtils', 'underscore', 'BIC'], function (Forms, testUt
 
       testUtils.defineLabelTest();
 
+      test('initial validation settles within 5sec', function () {
+        this.timeout(5e3);
+        return testUtils.whenValidationStops();
+      });
+
       test('select+other bindings between model and "other" input', function () {
         var form = Forms.current;
         selectWithOther.forEach(function (name) {
@@ -603,28 +608,30 @@ define(['BlinkForms', 'testUtils', 'underscore', 'BIC'], function (Forms, testUt
       });
 
       suite('FORMS-206 # choice fields that are required but not-empty still block validation', function () {
-        var form,
-          element,
-          fields = {
-            'multicollapsedrequired': ["a"],
-            'multiexpandedrequired': ["a"],
-            'selectcollapsedrequired': "a",
-            'selectexpandedrequired': "a"
-          };
+        var form;
+        var fields = [
+          'multicollapsedrequired',
+          'multiexpandedrequired',
+          'selectcollapsedrequired',
+          'selectexpandedrequired'
+        ];
 
         suiteSetup(function () {
           form = Forms.current;
         });
 
-        _.each(fields, function (v, k) {
-          test(k, function (done) {
-            element = form.getElement(k);
-            assert.equal(element.attributes._view.$el.children('ul').children('li').length, 1);
-            element.set('value', v);
-            assert.equal(element.attributes._view.$el.children('ul').children('li').length, 0);
-            element.set('value', null);
-            assert.equal(element.attributes._view.$el.children('ul').children('li').length, 1);
-            done();
+        _.each(fields, function (k) {
+          test(k, function () {
+            var element = form.getElement(k);
+            var empty = element.attributes.type === 'select' ? '' : [];
+            var v = element.attributes.type === 'select' ? 'a' : ['a'];
+            return testUtils.confirmInvalidValue(empty, element)
+            .then(function () {
+              return testUtils.confirmValidValue(v, element);
+            })
+            .then(function () {
+              return testUtils.confirmInvalidValue(empty, element);
+            });
           });
         });
       });
