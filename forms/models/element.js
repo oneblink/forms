@@ -12,8 +12,14 @@ define(function (require) {
   var $ = require('jquery');
   var _ = require('underscore');
   var Backbone = require('backbone');
+  var queue = require('queue-async');
 
   // this module
+
+  var q = queue(10);
+
+  /** @type {Boolean} is the Behaviours queue empty? */
+  var qEmpty = true;
 
   var Element;
 
@@ -112,7 +118,24 @@ define(function (require) {
     },
 
     validate: function (attrs) {
-      return this.runValidation.apply(this, arguments);
+      var args = arguments;
+      if (Object.keys(attrs || this.attributes || {}).indexOf('value') !== -1) {
+        q.defer(function (done) {
+          this.validationError = this.runValidation.apply(this, args);
+          this.trigger(this.hasErrors() ? 'invalid' : 'valid');
+          setTimeout(done, Element.VALIDATE_SLEEP);
+        }.bind(this));
+        if (qEmpty) {
+          qEmpty = false;
+          setTimeout(function () {
+            q.awaitAll(function () {
+              qEmpty = true;
+              BMP.Forms.trigger('validated');
+            });
+          }, 0);
+        }
+      }
+      return this.validationError;
     },
 
     /* @deprecated */
@@ -238,6 +261,9 @@ define(function (require) {
     }
   }, {
     // static properties
+
+    VALIDATE_SLEEP: 10,
+
     /**
      * @param {Object} attrs attributes for this model.
      * @param {Form} form parent to associate with new Element.
