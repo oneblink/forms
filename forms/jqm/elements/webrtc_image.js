@@ -18,11 +18,11 @@ define(function (require) {
       var attrs = this.model.attributes;
       if (!this.$controls) {
         this.$controls = $('<div class="ui-input-text"></div>');
-        this.$el.append(this.$controls);
       }
       if (!this.$webrtc) {
         this.$webrtc = $('<a class="webrtc_image ui-icon-camera" data-role="button">Camera</a>');
         this.$webrtc.attr('name', attrs.name);
+        this.$controls.append(this.$webrtc);
         this.$el.append(this.$controls);
         this.$webrtc.on('click', WebRTCImageElementView.onButtonClick.bind(this));
       }
