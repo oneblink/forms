@@ -13,6 +13,17 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
      */
     suiteSetup(function () {
       $content.empty();
+
+      if (!window.navigator.getUserMedia) {
+        window.navigator.getUserMedia = {};
+      }
+      if (!window.URL) {
+        window.URL = {};
+      }
+      if (!window.URL.createObjectURL) {
+        window.URL.createObjectURL = {};
+      }
+
       delete Forms.current;
     });
 
