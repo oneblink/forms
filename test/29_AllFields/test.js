@@ -45,6 +45,11 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
       testUtils.defineLabelTest();
 
+      test('initial validation settles within 5sec', function () {
+        this.timeout(5e3);
+        return testUtils.whenValidationStops();
+      });
+
     }); // END: suite('Form', ...)
 
     suite('label as empty placeholders for aligning', function () {

@@ -66,6 +66,11 @@ define(['backbone', 'BlinkForms', 'testUtils', 'BIC'], function (Backbone, Forms
 
       testUtils.defineLabelTest();
 
+      test('initial validation settles within 5sec', function () {
+        this.timeout(5e3);
+        return testUtils.whenValidationStops();
+      });
+
       test('location button is enabled', function (done) {
         var form = Forms.current,
           element = form.getElement('location'),
@@ -143,27 +148,24 @@ define(['backbone', 'BlinkForms', 'testUtils', 'BIC'], function (Backbone, Forms
         });
 
         test('#val("") fails validation', function () {
-          var errors;
-          reqEl.val('');
-          errors = reqEl.validate();
-          assert.isObject(errors);
-          assert.isArray(errors.value);
-          assert.lengthOf(errors.value, 1);
-          assert.deepEqual(errors.value[0], { code: 'REQUIRED' });
+          return testUtils.confirmInvalidValue('', reqEl)
+          .then(function () {
+            var errors = reqEl.validationError;
+            assert.lengthOf(errors.value, 1);
+            assert.deepEqual(errors.value[0], { code: 'REQUIRED' });
+          });
+        });
+
+        test('#setBlobFromString("...") passes validation', function (done) {
+          reqEl.once('valid invalid', function () {
+            assert.notOk(reqEl.validationError);
+            done();
+          });
+          reqEl.setBlobFromString('data:image/jpeg;base64,abc123');
         });
 
         test('#val("...") passes validation', function () {
-          var errors;
-          reqEl.setBlobFromString('data:image/jpeg;base64,abc123');
-          errors = reqEl.validate();
-          assert(!errors);
-        });
-
-        test('#setBlobFromString("...") passes validation', function () {
-          var errors;
-          reqEl.val('data:image/jpeg;base64,abc123');
-          errors = reqEl.validate();
-          assert(!errors);
+          return testUtils.confirmValidValue('data:image/jpeg;base64,abc123', reqEl);
         });
 
       });

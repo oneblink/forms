@@ -6,21 +6,6 @@ define([
   'BIC'
 ], function (_, sinon, Forms, testUtils) {
 
-  function subformValidationTest (errors, element, counter) {
-    var validation;
-    var errorCounter = 0;
-
-    validation = element.validate();
-    _.each(validation.value, function (v) {
-      assert.notEqual(errors.indexOf(v.code), -1, '(' + counter + ') contained ' + v.code + ' error');
-      if (errors.indexOf(v.code) !== -1) {
-        errorCounter++;
-      }
-    });
-    assert.equal(errorCounter, validation.value.length, '(' + counter + ') number of total error doesn\'t match validation array');
-    assert.equal(errorCounter, errors.length, '(' + counter + ') number of total error doesn\'t match');
-  }
-
   function runTests (cases, element) {
     var key, value;
     if (!Object.keys(cases).length) {
@@ -53,16 +38,6 @@ define([
 
       // handle the remaining cases
       return runTests(cases, element);
-    });
-  }
-
-  function confirmValidValue (value, element) {
-    return testUtils.whenNewValueIsValidated(element, value)
-    .then(function () {
-      assert.isUndefined(
-        element.validationError,
-        element.attributes.name + ': valid: ' + value
-      );
     });
   }
 
@@ -129,39 +104,44 @@ define([
 
       testUtils.defineLabelTest();
 
+      test('initial validation settles within 5sec', function () {
+        this.timeout(5e3);
+        return testUtils.whenValidationStops();
+      });
+
     }); // END: suite('Form', ...)
 
     suite('Validation', function () {
 
       test('textbox required/char-limit=10 test', function () {
-        var form = Forms.current,
-          element = form.getElement('textBox1'),
-          cases = {
-            "REQUIRED": "",
-            "MAXLENGTH": "abcdefghijk"
-          };
+        var form = Forms.current;
+        var element = form.getElement('textBox1');
+        var cases = {
+          REQUIRED: '',
+          MAXLENGTH: 'abcdefghijk'
+        };
 
-        element.val('test');
-        assert.isUndefined(element.validate(), 'no validation errors');
-
-        runTests(cases, element);
-
+        return testUtils.confirmValidValue('test', element)
+        .then(function () {
+          return runTests(cases, element);
+        });
       });
 
       test('number required/max=100/min=0/max-decimals=3/min-decimals=2 test', function () {
-        var form = Forms.current,
-          element = form.getElement('number1'),
-          cases = {
-            "MIN": "-1",
-            "MAX": "101",
-            "MINDECIMALS": "100.1",
-            "MAXDECIMALS": "100.1111"
-          };
+        var form = Forms.current;
+        var element = form.getElement('number1');
+        var cases = {
+          MIN: '-1',
+          MAX: '101',
+          MINDECIMALS: '100.1',
+          MAXDECIMALS: '100.1111'
+        };
+        this.timeout(Object.keys(cases) * 750);
 
-        element.val('1');
-        assert.isUndefined(element.validate(), 'no validation errors');
-
-        runTests(cases, element);
+        return testUtils.confirmValidValue('1', element)
+        .then(function () {
+          return runTests(cases, element);
+        });
       });
 
       test('email required test', function () {
@@ -172,9 +152,9 @@ define([
           EMAIL: 'test@test'
         };
 
-        assert.isUndefined(element.validate(), 'no validation errors');
+        assert.notOk(element.validationError);
 
-        runTests(cases, element);
+        return runTests(cases, element);
       });
 
       test('URL required test', function () {
@@ -184,9 +164,9 @@ define([
           REQUIRED: ''
         };
 
-        assert.isUndefined(element.validate(), 'no validation errors');
+        assert.notOk(element.validationError);
 
-        runTests(cases, element);
+        return runTests(cases, element);
       });
 
       test('telephone required test', function () {
@@ -196,25 +176,9 @@ define([
           REQUIRED: ''
         };
 
-        assert.isUndefined(element.validate(), 'no validation errors');
+        assert.notOk(element.validationError);
 
-        runTests(cases, element);
-      });
-
-      test('subform validations test', function (done) {
-        var subFormElement = Forms.current.getElement('comments');
-        var $view = subFormElement.attributes._view.$el;
-        var $add = $view.children('.ui-btn').children('button');
-        var subForms = subFormElement.attributes.forms;
-
-        assert.equal(subForms.length, 0, 'no subForms yet');
-        $add.trigger('click');
-        subForms.once('add', function () {
-          assert.isObject(subFormElement.validate(), "subform validation fails");
-          subForms.at(0).getElement('comment').val('def');
-          assert.isUndefined(subFormElement.validate(), 'subform validation passes');
-          done();
-        });
+        return runTests(cases, element);
       });
 
       test('required text', function () {
@@ -224,18 +188,14 @@ define([
           REQUIRED: ''
         };
 
-        assert.isUndefined(element.validate(), 'no validation errors');
+        assert.notOk(element.validationError);
 
-        element.val('');
-        assert.isObject(element.validate(), 'now has a validation error');
-        assert.isArray(element.validate().value, 'something wrong with value');
-
-        requiredError = _.find(element.validate().value, function (error) {
-          return _.isObject(error) && error.code === 'REQUIRED';
+        return runTests(cases, element)
+        .then(function () {
+          return testUtils.confirmValidValue('Gosford', element);
         });
-        assert.isObject(requiredError, 'contained REQUIRED error');
-        element.val('Gosford');
       });
+
       test('max length test', function () {
         var form = Forms.current;
         var element = form.getElement('city');
@@ -243,9 +203,12 @@ define([
           MAXLENGTH: 'GosfordGosfordGosfordGosford'
         };
 
-        element.val('GosfordGosfordGosfordGosford'); // max length fixed is 20
-        assert.isObject(element.validate(), 'max length error');
-        element.val('Gosford');
+        assert.notOk(element.validationError);
+
+        return runTests(cases, element)
+        .then(function () {
+          return testUtils.confirmValidValue('Gosford', element);
+        });
       });
 
       test('pattern test', function () {
@@ -255,25 +218,30 @@ define([
           PATTERN: '12Gosford'
         };
 
-        element.val('12Gosford');
-        assert.isObject(element.validate(), 'Pattern error');
-        element.val('Gosford');
+        assert.notOk(element.validationError);
+
+        return runTests(cases, element)
+        .then(function () {
+          return testUtils.confirmValidValue('Gosford', element);
+        });
       });
 
       test('Min/Max Value Check', function () {
         var form = Forms.current;
         var element = form.getElement('number');
         var cases = {
-          PATTERN: 35,
+          PATTERN: 100, // only matches 2-digit numbers
           MIN: 10,
           MAX: 550
         };
 
-        assert.isDefined(element.validate(), 'no validation error');
+        this.timeout(4 * 750);
 
-        // default value is 35 which doesnot match pattern
-        runTests(cases, element);
-
+        // default value is 350 which does not match pattern
+        return testUtils.confirmValidValue(30, element)
+        .then(function () {
+          return runTests(cases, element);
+        });
       });
 
       test('Max Decimal Places Check', function () {
@@ -286,164 +254,176 @@ define([
         // removed pattern in order to test decimal places
         delete element.attributes.pattern;
 
-        element.val(45.1);
-        assert.isUndefined(element.validate(), 'no decimal place error');
-
-        element.val(45.25);
-        assert.isUndefined(element.validate(), 'has correct decimal places');
-
-        element.val(45.5699);
-        assert.isObject(element.validate(), 'decimal place error');
-        element.val(100);
+        return testUtils.confirmValidValue(45.25, element)
+        .then(function () {
+          return runTests(cases, element);
+        });
       });
 
       test('Min Decimal Places Check', function () {
-        var form = Forms.current,
-          element = form.getElement('currency');
+        var form = Forms.current;
+        var element = form.getElement('currency');
+        var cases = {
+          MAXDECIMALS: 45.32365,
+          MINDECIMALS: 45.1
+        };
 
-        element.val(45.163);
-        assert.isUndefined(element.validate(), 'no min decimal place error');
+        // removed pattern in order to test decimal places
+        delete element.attributes.pattern;
 
-        element.val(45);
-        assert.isUndefined(element.validate(), 'has correct decimal places');
-
-        element.val(45.3);
-        assert.isObject(element.validate(), 'min decimal places error');
-
-        element.val(45.32365);
-        assert.isObject(element.validate(), 'max decimal places error');
+        return testUtils.confirmValidValue(45.25, element)
+        .then(function () {
+          return runTests(cases, element);
+        });
       });
 
       test('Select, required', function () {
-        var form = Forms.current,
-          element = form.getElement('select'),
-          cases;
+        var form = Forms.current;
+        var element = form.getElement('select');
+        var cases;
 
-        element.val('a');
-        assert.isUndefined(element.validate(), 'no validation errors');
+        this.timeout(4 * 750);
 
-        cases = {
-          "REQUIRED": ""
-        };
-        runTests(cases, element);
-
-        cases = {
-          "REQUIRED": "other"
-        };
-        runTests(cases, element);
+        return testUtils.confirmValidValue('a', element)
+        .then(function () {
+          cases = {
+            REQUIRED: ''
+          };
+          return runTests(cases, element);
+        })
+        .then(function () {
+          cases = {
+            REQUIRED: 'other'
+          };
+          return runTests(cases, element);
+        })
+        .then(function () {
+          return testUtils.confirmValidValue('b', element);
+        });
       });
 
       test('Multi select, required', function () {
-        var form = Forms.current,
-          element = form.getElement('multi'),
-          cases;
+        var form = Forms.current;
+        var element = form.getElement('multi');
+        var cases;
 
-        element.val(['a']);
-        assert.isUndefined(element.validate(), 'no validation errors');
+        this.timeout(4 * 750);
 
-        cases = {
-          "REQUIRED": []
-        };
-        runTests(cases, element);
-
-        cases = {
-          "REQUIRED": ["other"]
-        };
-        runTests(cases, element);
-
-      });
-
-        });
-
-      test('subform require, min=1 subform test', function () {
-        var subFormElement = Forms.current.getElement('comments');
-        var subForms = subFormElement.attributes.forms;
-        var subForm = subForms.at(0);
-        var errors = ['REQUIRED'];
-
-        assert.equal(subForms.length, 1, 'no subForms yet');
-
-        subForm.parentElement.remove(subForm);
-        subformValidationTest(errors, subFormElement, 1);
-      });
-
-      test('maximum number of subforms test', function (done) {
-        var subFormElement = Forms.current.getElement('comments');
-        var $view = subFormElement.attributes._view.$el;
-        var $add = $view.children('.ui-btn').children('button');
-        var subForms = subFormElement.attributes.forms;
-        var errors;
-
-        this.timeout(3000);
-        assert.equal(subForms.length, 0, 'no subForms yet');
-        $add.trigger('click');
-        $add.trigger('click');
-        $add.trigger('click');
-        $add.trigger('click');
-        setTimeout(function () {
-          assert.isObject(subFormElement.validate(), "subform validation fails");
-
-          errors = ['MAXSUBFORM', 'SUBFORM'];
-          subformValidationTest(errors, subFormElement, 1);
-
-          subForms.at(0).getElement('comment').val('def');
-          subForms.at(1).getElement('comment').val('def');
-          subformValidationTest(errors, subFormElement, 2);
-
-          subForms.at(2).getElement('comment').val('def');
-          subForms.at(3).getElement('comment').val('def');
-          errors = ['MAXSUBFORM'];
-          subformValidationTest(errors, subFormElement, 3);
-
-          done();
-        }, 1000);
-      });
-
-      test('subform require, min=2 subform test', function (done) {
-        var subFormElement = Forms.current.getElement('names');
-        var $view = subFormElement.attributes._view.$el;
-        var $add = $view.children('.ui-btn').children('button');
-        var subForms = subFormElement.attributes.forms;
-        var errors;
-
-        assert.equal(subForms.length, 0, 'no subForms yet');
-
-        subFormElement.attributes.preloadPromise.then(function () {
-          assert.isObject(subFormElement.validate(), "subform validation fails");
-          errors = ['REQUIRED', 'MINSUBFORM'];
-          subformValidationTest(errors, subFormElement, 1);
-
-          $add.trigger('click');
-          subForms.once('add', function () {
-            errors = ['MINSUBFORM', 'SUBFORM'];
-            subformValidationTest(errors, subFormElement, 2);
-
-            $add.trigger('click');
-            subForms.once('add', function () {
-              errors = ['SUBFORM'];
-              subformValidationTest(errors, subFormElement, 2);
-              done();
-            });
-          });
+        return testUtils.confirmValidValue(['a'], element)
+        .then(function () {
+          cases = {
+            REQUIRED: []
+          };
+          return runTests(cases, element);
+        })
+        .then(function () {
+          cases = {
+            REQUIRED: ['other']
+          };
+          return runTests(cases, element);
+        })
+        .then(function () {
+          return testUtils.confirmValidValue(['b'], element);
         });
       });
 
-      test('validation events are bubbled via Forms.current', function () {
+      test('valid events are bubbled via Forms.current', function (done) {
         var form = Forms.current;
         var element = form.getElement('city');
-        var listenerSpy = sinon.spy();
+        var handler = function () {
+          assert.notOk(element.validationError);
+          done();
+        };
 
-        form.on('invalid change:value change:blob', listenerSpy);
-        assert.isUndefined(element.validate(), 'no validation errors');
-
-        element.val('');
-        assert.isObject(element.validate(), 'now has a validation error');
-        assert.isArray(element.validate().value, 'something wrong with value');
-
-        assert.isAbove(listenerSpy.callCount, 0);
-        listenerSpy.reset();
-
+        form.once('invalid valid', handler);
+        element.val('Paris');
       });
+
+      test('invalid events are bubbled via Forms.current', function (done) {
+        var form = Forms.current;
+        var element = form.getElement('city');
+        var handler = function () {
+          assert.isObject(element.validationError, 'now has a validation error');
+          assert.isArray(element.validationError.value, 'something wrong with value');
+          done();
+        };
+
+        form.once('invalid valid', handler);
+        element.val('');
+      });
+
+      test('subform[req,min1,max=3]: empty vs REQUIRED', function () {
+        var subFormElement = Forms.current.getElement('comments');
+        return subFormElement.setRecords([])
+        .then(function () {
+          return testUtils.whenValidationStops();
+        })
+        .then(function () {
+          assert.isObject(subFormElement.validationError);
+          assert.isArray(subFormElement.validationError.value);
+          assert.lengthOf(subFormElement.validationError.value, 1);
+          assert.ok(subFormElement.validationError.value.every(function (err) {
+            return err.code === 'REQUIRED';
+          }), 'REQUIRED');
+        });
+      });
+
+      test('subform[req,min1,max=3]: > MAXSUBFORM', function () {
+        var subFormElement = Forms.current.getElement('comments');
+        return subFormElement.setRecords([
+          { comment: 'abc' },
+          { comment: 'def' },
+          { comment: 'ghi' },
+          { comment: 'jki' }
+        ])
+        .then(function () {
+          return testUtils.whenValidationStops();
+        })
+        .then(function () {
+          assert.isObject(subFormElement.validationError);
+          assert.isArray(subFormElement.validationError.value);
+          assert.lengthOf(subFormElement.validationError.value, 1);
+          assert.ok(subFormElement.validationError.value.every(function (err) {
+            return err.code === 'MAXSUBFORM';
+          }), 'MAXSUBFORM');
+        });
+      });
+
+      test('subform[req,min1,max=3]: 3 valid records', function () {
+        var subFormElement = Forms.current.getElement('comments');
+        return subFormElement.setRecords([
+          { comment: 'abc' },
+          { comment: 'def' },
+          { comment: 'ghi' }
+        ])
+        .then(function () {
+          return testUtils.whenValidationStops();
+        })
+        .then(function () {
+          assert.notOk(subFormElement.validationError);
+        });
+      });
+
+      test('subform[min=2]: < MINSUBFORM', function () {
+        var subFormElement = Forms.current.getElement('names');
+        return subFormElement.setRecords([
+          { comment: 'abc' }
+        ])
+        .then(function () {
+          return testUtils.whenValidationStops();
+        })
+        .then(function () {
+          assert.isObject(subFormElement.validationError);
+          assert.isArray(subFormElement.validationError.value);
+          assert.lengthOf(subFormElement.validationError.value, 1);
+          assert.ok(subFormElement.validationError.value.every(function (err) {
+            return err.code === 'MINSUBFORM';
+          }), 'MINSUBFORM');
+        });
+      });
+
+      test('TODO: test valid subform number containing invalid subrecord');
+
     }); // END: suite('Form', ...)
 
     elements = ['textBox1', 'number1', 'password1', 'text', 'url', 'email', 'password', 'streetAddress', 'city', 'telephone', 'number', 'currency', 'select', 'multi'];
