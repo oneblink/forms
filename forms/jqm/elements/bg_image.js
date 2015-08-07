@@ -34,7 +34,7 @@ define(function (require) {
       try {
         PictureSourceType = window.PictureSourceType || navigator.camera.PictureSourceType;
       } catch (ignore) {
-        PictureSourceType = PictureSourceType || {};
+        PictureSourceType = {};
       }
 
       if (!this.$controls) {
@@ -55,7 +55,8 @@ define(function (require) {
       if (!this.$gallery) {
         this.$gallery = this.$controls.find('button').last();
         this.$gallery.text('Gallery');
-        this.$gallery.data('SourceType', PictureSourceType.PHOTO_LIBRARY);
+        //http://cordova.apache.org/docs/en/2.5.0/cordova_camera_camera.md.html
+        this.$gallery.data('SourceType', PictureSourceType.PHOTOLIBRARY);
         this.$gallery.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
       }
       this.$gallery.button();
