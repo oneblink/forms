@@ -1,3 +1,4 @@
+/* eslint-disable accessor-pairs */ // we're using the "set" keyword for method
 /**
  * Element Model Module
  *
@@ -22,6 +23,16 @@ define(function (require) {
   var qEmpty = true;
 
   var Element;
+
+  function isSetForProp (prop, args) {
+    if (args[0] === prop) {
+      return true;
+    }
+    if (args[0] && typeof args[0] === 'object') {
+      return prop in args[0];
+    }
+    return false;
+  }
 
   Element = Backbone.Model.extend({
     defaults: {
@@ -244,24 +255,23 @@ define(function (require) {
       return view;
     },
 
+    set: function (prop) {
+      var result = Backbone.Model.prototype.set.apply(this, arguments);
+      if (isSetForProp('value', arguments)) {
+        // explicitly trigger validation, even if there is no change in value
+        this.validate();
+      }
+      return result;
+    },
+
     /**
      * official Blink API
      */
     val: function (value) {
-      var attrs;
-
-      if (value === undefined) {
+      if (!arguments.length) {
         return this.get('value');
       }
-
-      attrs = _.extend({}, this.attributes, {value: value});
-      this.validationError = this.validate(attrs);
-      if (this.validationError) {
-        this.trigger('invalid', this, this.validationError);
-      }
-
-      this.set('value', value, {validate: false});
-      return value;
+      return this.set('value', value);
     }
   }, {
     // static properties

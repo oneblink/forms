@@ -53,9 +53,7 @@ define(function (require) {
       var prev = this.model.attributes.value;
       var next = $(event.target).val();
       if (next !== prev) {
-        this.model.attributes.value = next;
-        this.model.trigger('change:value');
-        this.model.trigger('change', this.model);
+        this.model.set('value', next);
       }
     },
 
