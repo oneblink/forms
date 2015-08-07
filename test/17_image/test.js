@@ -132,12 +132,10 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             form = BMP.Forms.current,
             element,
             view;
-          _.each(elements, function (key) {
+          elements.forEach(function (key) {
             element = form.getElement(key);
-            setTimeout(function () {
-              view = element.attributes._view.$el;
-              assert(view.find('a[data-role="button"]').hasClass('webrtc_image'));
-            }, 1000);
+            view = element.attributes._view.$el;
+            assert.equal(view.find('a[data-role="button"]').hasClass('webrtc_image'), true);
           });
         });
       });
