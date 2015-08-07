@@ -119,8 +119,6 @@ define(function (require) {
           this.$el.find('input[type = text]').val(_.difference(attr.value, _.keys(attr.options)));
         }
       }
-      this.model.isValid();
-      this.renderErrors(this.model);
     },
 
     fetchValue: function () {

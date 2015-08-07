@@ -41,9 +41,7 @@ define(function (require) {
       this.onValueChange();
       this.onPlaceholderChange();
 
-      this.model.isValid();
       this.$el.fieldcontain();
-      this.renderErrors();
     },
 
     remove: function () {
@@ -89,10 +87,6 @@ define(function (require) {
       } else {
         this.$input.val(value);
       }
-      // #isValid() probably should be in the model, but we keep it here to
-      // preserve a strict sequence: check THEN render
-      this.model.isValid();
-      this.renderErrors();
     }
   });
 });

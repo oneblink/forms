@@ -149,8 +149,6 @@ define(function (require) {
       if (_.difference(value, _.keys(model.attributes.options)).length > 0) {
         view.$el.find('input[type = text]').val(_.difference(value, _.keys(model.attributes.options)));
       }
-      this.model.isValid();
-      this.renderErrors(this.model);
     },
 
     onSelectValueChange: function () {
@@ -181,8 +179,6 @@ define(function (require) {
         // Also need to fill the text box back in, in addition to selecting radio
         this.$el.find('input[type = text]').val(this.model.get('value'));
       }
-      this.model.isValid();
-      this.renderErrors(this.model);
     },
 
     fetchValue: function () {

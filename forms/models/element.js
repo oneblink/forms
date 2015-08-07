@@ -78,9 +78,10 @@ define(function (require) {
       }
 
       // backward compatability.
-      this.on('invalid change:value', this.updateErrors, this);
+      this.on('invalid valid', this.updateErrors, this);
 
       this.on('remove', this.close, this);
+    },
 
     isEmpty: function () {
       var value = this.attributes.value;
