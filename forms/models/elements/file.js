@@ -52,7 +52,9 @@ define(function (require) {
       width: 0,
       progress: null,
       uuid: '',
-      xhr: null
+      xhr: null,
+      capture: false,
+      accept: ''
     }),
 
     initialize: function () {
