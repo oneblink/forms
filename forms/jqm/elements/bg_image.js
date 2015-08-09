@@ -33,7 +33,7 @@ define(function (require) {
 
       try {
         PictureSourceType = window.PictureSourceType || navigator.camera.PictureSourceType;
-      } catch (ignore) {
+      } catch (err) {
         PictureSourceType = {};
       }
 
@@ -55,7 +55,7 @@ define(function (require) {
       if (!this.$gallery) {
         this.$gallery = this.$controls.find('button').last();
         this.$gallery.text('Gallery');
-        //http://cordova.apache.org/docs/en/2.5.0/cordova_camera_camera.md.html
+        // http://cordova.apache.org/docs/en/2.5.0/cordova_camera_camera.md.html
         this.$gallery.data('SourceType', PictureSourceType.PHOTOLIBRARY);
         this.$gallery.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
       }
@@ -72,8 +72,7 @@ define(function (require) {
       this.model.off('change:blob', this.renderFigure, this);
       return FileElementView.prototype.remove.call(this);
     }
-  },
-  {
+  }, {
     /*
       @function onButtonClick
       @static

@@ -16,7 +16,7 @@ define(function (require) {
 
   var LocationElementView = ElementView.extend({
     render: function () {
-      //load google maps
+      // load google maps
       BMP.Forms.loadMapScript();
       this.renderButtons();
       this.$el.fieldcontain();
@@ -73,7 +73,7 @@ define(function (require) {
       if (typeof attr.value === 'string') {
         try {
           loc = JSON.parse(attr.value);
-        } catch (e) {
+        } catch (err) {
           loc = null;
         }
       } else {
@@ -122,7 +122,7 @@ define(function (require) {
       if (value) {
         try {
           value = JSON.parse(value);
-        } catch(e) {
+        } catch(err) {
           value = undefined;
         }
         this.model.set('value', value);
@@ -145,7 +145,7 @@ define(function (require) {
       var view = this;
       var i18n = window.i18n['BMP/Forms/elements'];
 
-      //enable location button
+      // enable location button
       view.$el.find('button').first().button('enable');
       view.$el.find('.ui-btn-text').first().text(i18n.LOCATION_BUTTON);
     },
@@ -153,7 +153,7 @@ define(function (require) {
       var view = this;
       var i18n = window.i18n['BMP/Forms/elements'];
 
-      //disable button till location located
+      // disable button till location located
       view.$el.find('button').first().button('disable');
       view.$el.find('.ui-btn-text').first().text(i18n.LOCATING_SHORT);
     },
@@ -188,22 +188,22 @@ define(function (require) {
       if (_.isEmpty(value) || !value.latitude || !value.longitude) {
         model.getGeoLocation().then(function () { // onSuccess
           value = model.get('currentlocation');
-          //set value for first time
+          // set value for first time
           $div.find('input').val(JSON.stringify(value));
           LocationElementView.initializeMap(value, $div);
-          //enable location button
+          // enable location button
           self.constructor.enableLocationButton.bind(self)();
         }, function () { // onError (err)
-          //enable location button
+          // enable location button
           self.constructor.enableLocationButton.bind(self)();
         });
       } else {
         LocationElementView.initializeMap(value, $div);
-        //enable location button
+        // enable location button
         self.constructor.enableLocationButton.bind(self)();
       }
 
-      //finally creating and poping up map
+      // finally creating and poping up map
       $form.trigger('create');
       $div.popup(options);
       $div.popup('open');
@@ -220,7 +220,7 @@ define(function (require) {
         marker,
         position;
 
-      //creating map
+      // creating map
       myLatlng = new google.maps.LatLng(value.latitude, value.longitude);
       mapOptions = {
         zoom: 17,
@@ -233,13 +233,13 @@ define(function (require) {
         $div.find('#map-canvas').text(warning.ERROR_GOOGLE_MAP);
       }
 
-      //creating draggable marker
+      // creating draggable marker
       marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
         draggable: true
       });
-      //adding listener to marker dragend event
+      // adding listener to marker dragend event
       google.maps.event.addListener(marker, 'dragend', function () {
         position = {
           latitude: marker.getPosition().lat(),

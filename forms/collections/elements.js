@@ -36,17 +36,17 @@ define(function (require) {
   function makeLengthObj (length, total) {
     var ret = {};
     Object.defineProperties(ret, {
-        length: {
-          value: length,
-          writable: false,
-          enumerable: false
-        },
-        total: {
-          value: total,
-          writable: false,
-          enumerable: false
-        }
-      });
+      length: {
+        value: length,
+        writable: false,
+        enumerable: false
+      },
+      total: {
+        value: total,
+        writable: false,
+        enumerable: false
+      }
+    });
 
     return ret;
   }
@@ -77,9 +77,9 @@ define(function (require) {
       var errors;
       var length;
 
-      /*eslint-disable no-console, no-unused-expressions*/
+      /* eslint-disable no-console, no-unused-expressions */
       console && console.warn('BlinkForms: elementCollection#getErrors is deprecated and will be removed. Please use elementModel#getInvalidElements instead.');
-      /*eslint-enable no-console, no-unused-expressions*/
+      /* eslint-enable no-console, no-unused-expressions */
 
       errors = this.reduce(addToErrorList, []);
       length = !fieldLimit ? errors.length : Math.min(errors.length, fieldLimit);
@@ -155,9 +155,9 @@ define(function (require) {
     setErrors: function (errorList, options) {
       _.each(errorList, function (errors, modelId) {
         var m = this.get(modelId);
-        /*eslint-disable no-unused-expressions */
+        /* eslint-disable no-unused-expressions */
         m && m.setExternalErrors(errors, options);
-        /*eslint-enable no-unused-expressions */
+        /* eslint-enable no-unused-expressions */
       }, this);
     }
   });
