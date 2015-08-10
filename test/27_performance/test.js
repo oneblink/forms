@@ -39,12 +39,17 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         Forms.getDefinition('inspection', 'add').then(function (def) {
 
           console.time('initialize');
+          console.time('validated');
 
           Forms.initialize(def);
 
           console.timeEnd('initialize');
 
           console.time('behavioursExecuted');
+
+          testUtils.whenValidationStops().then(function () {
+            console.time('validated');
+          });
 
           form = Forms.current;
           assert.equal($.type(form), 'object');

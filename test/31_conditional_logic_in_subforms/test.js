@@ -105,8 +105,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           assert.deepEqual(
             [
               'first_level_req',
-              'cond_hidden',
-              'second_level_field'
+              'cond_hidden'
             ],
             BMP.Forms.current.getInvalidElements().errors.map(function (el) {
               return el.id;

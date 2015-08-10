@@ -105,11 +105,13 @@ define(function (require) {
           // to avoid event thrashing, we wait for the validation queue to empty
           window.BMP.Forms.once('validated', deadline.fn(function () {
             // now we check to see which event to emit
-            this.trigger(
-              (this.getInvalidElements() || []).length ? 'invalid' : 'valid',
-              args[1], // Element model that triggered validation
-              args[2] // result of validation
-            );
+            // args[1]: Element model that triggered validation
+            // args[2]: result of validation
+            if ((this.getInvalidElements() || []).length) {
+              this.trigger('invalid', args[1], args[2]);
+            } else {
+              this.trigger('valid', args[1]);
+            }
           }.bind(this), 500));
 
         } else {
