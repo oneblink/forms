@@ -69,29 +69,33 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       var externalErrors = {
         city: [{code: 'CUSTOM', CUSTOM: 'This is custom text'}]
       };
+      var form = Forms.current;
+      var element = form.getElement('city');
 
-      var form = Forms.current,
-          element = form.getElement('city');
-      element.val('');
-      assert.equal(element.validationError.value.length, 1);
+      return testUtils.confirmInvalidValue('', element)
+      .then(function () {
+        assert.lengthOf(element.validationError.value, 1);
 
-      Forms.current.setErrors(externalErrors);
-      assert.equal(element.validationError.value.length, 2);
+        Forms.current.setErrors(externalErrors);
+        assert.lengthOf(element.validationError.value, 2);
+      });
     });
 
     test('External errors should be at the front of the errors array', function () {
       var externalErrors = {
         city: [{code: 'CUSTOM', CUSTOM: 'This is custom text'}]
       };
+      var form = Forms.current;
+      var element = form.getElement('city');
 
-      var form = Forms.current,
-          element = form.getElement('city');
+      return testUtils.confirmInvalidValue('', element)
+      .then(function () {
+        assert.equal(element.validationError.value[0].code, 'REQUIRED');
 
-      element.val('');
-      assert.equal(element.validationError.value[0].code, 'REQUIRED');
-
-      Forms.current.setErrors(externalErrors);
-      assert.equal(element.validationError.value[0].code, 'CUSTOM');
+        Forms.current.setErrors(externalErrors);
+        assert.equal(element.validationError.value[0].code, 'CUSTOM');
+        assert.equal(element.validationError.value[1].code, 'REQUIRED');
+      });
     });
 
 // // ////////////////////////////////////////////////////////////////////////////////

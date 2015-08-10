@@ -1,9 +1,11 @@
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('31: Conditional logic in sub forms', function () {
     var $page, $content, form;
 
     setup(function () {
+      this.timeout(5e3);
+
       /* eslint-disable no-unused-expressions */
       Forms.current && Forms.current.off();
       delete Forms.current;
@@ -24,6 +26,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $.mobile.page({}, $page);
         $page.trigger('pagecreate');
         $page.show();
+      })
+      .then(function () {
+        return testUtils.whenValidationStops();
       });
     });
 
@@ -36,6 +41,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       // $content = undefined;
       // form = undefined;
     });
+
+    testUtils.defineLabelTest();
 
     suite('required fields', function () {
       test('when visible and not valid, should be counted towards the number of invalid fields', function () {
@@ -52,44 +59,59 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
       });
 
-      test('when visible and valid, should not be counted towards the number of invalid fields', function (done) {
+      test('when not visible and valid, should not be counted towards the number of invalid fields', function () {
         var view = form.getElement('second_level_field').get('_view');
         var startNumErrors = form.getInvalidElements.length;
 
-        view.onAddClick().then(function () {
+        return view.onAddClick()
+        .then(function () {
+          return testUtils.confirmValidValue('a', Forms.current.getElement('second_required'));
+        })
+        .then(function () {
           var conditionalElement = Forms.current.getElement('cond_hidden');
-          Forms.current.getElement('second_required').val('a');
+          assert.isDefined(conditionalElement);
+          assert.ok(conditionalElement.get('hidden'), 'hidden');
+          assert.notOk(conditionalElement.validationError);
 
-          conditionalElement.on('change:hidden', function () {
-            assert.isDefined(conditionalElement);
-            assert.equal(!conditionalElement.validationError, true);
-
-            assert.strictEqual(form.getInvalidElements().length, startNumErrors);
-
-            done();
-          });
+          assert.strictEqual(form.getInvalidElements().length, startNumErrors);
         });
       });
 
-      test('when not visible and not valid, should not be counted towards the number of invalid fields', function (done) {
+      test('when visible and not valid, should be counted towards the number of invalid fields', function () {
         var view = form.getElement('second_level_field').get('_view');
+        var conditionalElement;
 
-        view.onAddClick().then(function () {
-          var conditionalElement = Forms.current.getElement('cond_hidden');
+        this.timeout(3e3);
+
+        return view.onAddClick()
+        .then(function () {
+          return testUtils.confirmValidValue(
+            'b',
+            Forms.current.getElement('second_required')
+          );
+        })
+        .then(function () {
+          conditionalElement = Forms.current.getElement('cond_hidden');
           assert.isDefined(conditionalElement);
+          assert.notOk(conditionalElement.get('hidden'), 'visible');
 
-          conditionalElement.on('change:hidden', function () {
-            assert.equal(!conditionalElement.validationError, true);
-
-            // make sure that the conditional element is included in the
-            // list of invalid elements
-            Forms.current.getInvalidElements().errors.forEach(function (element) {
-              assert.notEqual(element.cid, conditionalElement.cid);
-            });
-            done();
-          });
-
-          Forms.current.getElement('second_required').val('a');
+          return testUtils.confirmInvalidValue('', conditionalElement);
+        })
+        .then(function () {
+          return testUtils.whenValidationStops();
+        })
+        .then(function () {
+          assert.ok(conditionalElement.validationError);
+          assert.deepEqual(
+            [
+              'first_level_req',
+              'cond_hidden',
+              'second_level_field'
+            ],
+            BMP.Forms.current.getInvalidElements().errors.map(function (el) {
+              return el.id;
+            })
+          );
         });
       });
     });

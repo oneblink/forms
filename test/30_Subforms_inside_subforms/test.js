@@ -1,10 +1,17 @@
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('30: Subforms inside Subforms', function () {
     var $page = $('[data-role=page]');
     var $content = $page.find('[data-role=content]');
 
     setup(function () {
+      this.timeout(3e3);
+      if (Forms.current) {
+        Forms.current.off();
+        delete Forms.current;
+      }
+      $content.empty();
+
       return Forms.getDefinition('firstLevel', 'add').then(function (def) {
         Forms.initialize(def);
         $content.append(Forms.current.$form);
@@ -12,13 +19,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         $page.trigger('pagecreate');
         $page.show();
         $(window).scrollTop(0);
+      })
+      .then(function () {
+        return testUtils.whenValidationStops();
       });
-    });
-
-    teardown(function () {
-      Forms.current.off();
-      $content.empty();
-      delete Forms.current;
     });
 
     test('Top Level elements collection returns 1 sub form', function () {
@@ -117,12 +121,33 @@ define(['BlinkForms', 'BIC'], function (Forms) {
                   });
     });
 
-    test('subform invalid events bubble up to Forms.current', function (done) {
+    test('subform change:value events bubble up to Forms.current', function (done) {
       var view = Forms.current.getElement('second_level_form').get('_view');
 
       view.onAddClick()
           .then(function () {
-            Forms.current.on('invalid', function (model, error) {
+            return testUtils.whenValidationStops();
+          })
+          .then(function () {
+            Forms.current.on('change:value', function (model, val) {
+              assert.equal(model.id, 'second_required');
+              assert.equal(val, 123);
+              done();
+            });
+            Forms.current.getElement('second_required').val(123);
+          });
+    });
+
+    test('subform invalid events bubble up to Forms.current', function (done) {
+      var view = Forms.current.getElement('second_level_form').get('_view');
+      this.timeout(3e3);
+
+      view.onAddClick()
+          .then(function () {
+            return testUtils.whenValidationStops();
+          })
+          .then(function () {
+            Forms.current.once('invalid', function (model, error) {
               assert.equal(model.id, 'second_required');
               assert.equal(error.value[0].code, 'REQUIRED');
               done();
@@ -131,14 +156,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           });
     });
 
-    test('subform change:value events bubble up to Forms.current', function (done) {
+    test('subform valid events bubble up to Forms.current', function (done) {
       var view = Forms.current.getElement('second_level_form').get('_view');
+      this.timeout(3e3);
 
+      Forms.current.getElement('first_level_req').val(123);
       view.onAddClick()
           .then(function () {
-            Forms.current.on('valid', function (model, val) {
+            return testUtils.whenValidationStops();
+          })
+          .then(function () {
+            Forms.current.once('valid', function (model, error) {
               assert.equal(model.id, 'second_required');
-              assert.equal(val, 123);
+              assert.notOk(error);
               done();
             });
             Forms.current.getElement('second_required').val(123);
@@ -149,6 +179,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       var view = Forms.current.getElement('second_level_form').get('_view');
 
       return view.onAddClick() // add second level
+                  .then(function () {
+                    return testUtils.whenValidationStops();
+                  })
                   .then(function () {
                     var t = Forms.current.getElement('third_level_form').get('_view');
                     return t.onAddClick(); // add third level
@@ -170,6 +203,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       var view = Forms.current.getElement('second_level_form').get('_view');
 
       return view.onAddClick() // add second level
+                  .then(function () {
+                    return testUtils.whenValidationStops();
+                  })
                   .then(function () {
                     var t = Forms.current.getElement('third_level_form').get('_view');
                     return t.onAddClick(); // add third level
