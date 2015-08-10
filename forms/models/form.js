@@ -6,6 +6,7 @@ define(function (require) {
   var $ = require('jquery');
   var _ = require('underscore');
   var Backbone = require('backbone');
+  var deadline = require('@jokeyrhyme/deadline');
 
   // local modules
 
@@ -99,12 +100,17 @@ define(function (require) {
       this.attributes.elements = new Elements(elements);
       // bubble element events up through the form model.
       this.attributes.elements.on('all', function (type) {
+        var args = arguments;
         if (type === 'valid' || type === 'invalid') {
           // to avoid event thrashing, we wait for the validation queue to empty
-          window.BMP.Forms.once('validated', function () {
+          window.BMP.Forms.once('validated', deadline.fn(function () {
             // now we check to see which event to emit
-            this.trigger((this.getInvalidElements() || []).length ? 'invalid' : 'valid');
-          }.bind(this));
+            this.trigger(
+              (this.getInvalidElements() || []).length ? 'invalid' : 'valid',
+              args[1], // Element model that triggered validation
+              args[2] // result of validation
+            );
+          }.bind(this), 500));
 
         } else {
           // pass all other events through

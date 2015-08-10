@@ -131,7 +131,11 @@ define(function (require) {
       if (Object.keys(attrs || this.attributes || {}).indexOf('value') !== -1) {
         q.defer(function (done) {
           this.validationError = this.runValidation.apply(this, args);
-          this.trigger(this.hasErrors() ? 'invalid' : 'valid');
+          this.trigger(
+            this.hasErrors() ? 'invalid' : 'valid',
+            this,
+            this.validationError
+          );
           setTimeout(done, Element.VALIDATE_SLEEP);
         }.bind(this));
         if (qEmpty) {
