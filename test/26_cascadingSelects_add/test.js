@@ -70,7 +70,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               form.data().then(function (formdata) {
 
                 var keys = ['id', 'country', 'city', 'state', 'form2', 'form3', '_action'];
-                _.each(keys, function(k) {
+                _.each(keys, function (k) {
                   assert.ok(formdata[k], k + " does not exist");
                 });
                 done();
@@ -80,7 +80,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               });
             });
           }
-        );
+       );
       });
 
 
@@ -117,7 +117,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               }
             };
 
-          setTimeout(function(){
+          setTimeout(function () {
             assert.deepEqual(expected.country, country.attributes.options);
             assert.deepEqual(expected.state, state.attributes.options);
             assert.deepEqual(expected.city, city.attributes.options);
@@ -223,7 +223,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
           country.set('value', "India");
 
-          setTimeout(function(){
+          setTimeout(function () {
             assert.deepEqual(expected.country, country.attributes.options);
             assert.deepEqual(expected.state, state.attributes.options);
             assert.deepEqual(expected.city, city.attributes.options);
@@ -250,7 +250,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
           state.set('value', "Rajasthan");
 
-          setTimeout(function(){
+          setTimeout(function () {
             assert.deepEqual(expected.country, country.attributes.options);
             assert.deepEqual(expected.state, state.attributes.options);
             assert.deepEqual(expected.city, city.attributes.options);
@@ -276,7 +276,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           country = subform.getElement('country1');
           expected = {"Australia": "Australia", "India": "India"};
 
-          setTimeout(function(){
+          setTimeout(function () {
             assert.deepEqual(expected, country.attributes.options);
             done();
           }, 500);
@@ -300,7 +300,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
           country.set("value", "India");
 
-          setTimeout(function(){
+          setTimeout(function () {
             assert.deepEqual(expected.state1, state.attributes.options);
             assert.deepEqual(expected.city1, city.attributes.options);
             done();
@@ -317,7 +317,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
           state.set('value', "Gujarat");
 
-          setTimeout(function(){
+          setTimeout(function () {
             assert.deepEqual(expected, city.attributes.options);
             done();
           }, 500);
@@ -342,7 +342,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           country = subform.getElement('field1');
           expected = {"a": "a", "b": "b"};
 
-          setTimeout(function(){
+          setTimeout(function () {
             assert.deepEqual(expected, country.attributes.options);
             done();
           }, 500);
@@ -365,7 +365,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
           country.set("value", "b");
 
-          setTimeout(function(){
+          setTimeout(function () {
             assert.deepEqual(expected.state, state.attributes.options);
             assert.deepEqual(expected.city, city.attributes.options);
             done();
@@ -382,7 +382,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
           state.set('value', "b");
 
-          setTimeout(function(){
+          setTimeout(function () {
             assert.deepEqual(expected, city.attributes.options);
             done();
           }, 500);

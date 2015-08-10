@@ -11,8 +11,8 @@ define(function (require) {
 
   // this module
 
-  var FileElement
-    , cameraDestinationType;
+  var FileElement;
+  var cameraDestinationType;
 
   /*
     We'll set the camera destination type here, but it can still be overridden by setting BMP.BIC.attributes.destinationType, same as the image quality and scale options
@@ -24,8 +24,8 @@ define(function (require) {
   try {
     cameraDestinationType = window.camera.DestinationType || navigator.camera.DestinationType;
   } catch(e) {
-    if (window.console && window.console.warn) {
-      window.console.warn("Camera not available");
+    if (window.console && window.console.info) {
+      window.console.info('Cordova Camera not available');
     }
   }
 
@@ -52,7 +52,9 @@ define(function (require) {
       width: 0,
       progress: null,
       uuid: '',
-      xhr: null
+      xhr: null,
+      capture: false,
+      accept: ''
     }),
 
     initialize: function () {
@@ -86,9 +88,9 @@ define(function (require) {
 
 */
     initializeView: function () {
-      var Forms = BMP.Forms,
-        view,
-        accept = this.get('accept') || '';
+      var Forms = BMP.Forms;
+      var view;
+      var accept = this.get('accept') || '';
 
       this.removeView();
       if (this.get('readonly')) {
@@ -123,12 +125,12 @@ override because super#validate() checks "value", and we need to check "blob"
   @returns {object} An object that conforms to the [Cordova options spec]{@link http://plugins.cordova.io/#/package/org.apache.cordova.camera}
 */
     toCameraOptions: function () {
-      var options = { },
-      cameraOpts,
-      // attrs = {'imageCaptureQuality':40, 'imageCaptureScale': 60, 'cameraOptions': '{"quality":45}'};
-      attrs = BMP.BIC.attributes || {};
+      var options = { };
+      var cameraOpts;
+      // var attrs = {'imageCaptureQuality':40, 'imageCaptureScale': 60, 'cameraOptions': '{"quality":45}'};
+      var attrs = BMP.BIC.attributes || {};
 
-      if ( !_.isUndefined(cameraDestinationType)){
+      if (!_.isUndefined(cameraDestinationType)) {
         options.destinationType = cameraDestinationType;
       }
 

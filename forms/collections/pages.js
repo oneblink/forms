@@ -15,7 +15,7 @@ define(function (require) {
 
   return Backbone.Collection.extend({
     model: Page,
-    'goto': function (index) {
+    goto: function (index) {
       var self, currentform, currentPage;
       self = this;
       if (!_.isNumber(index)) {
@@ -25,8 +25,8 @@ define(function (require) {
 
       // TODO: separate out the View parts, they don't belong here
       this.forEach(function (page, number) {
-        var form = page.attributes.form,
-          view;
+        var form = page.attributes.form;
+        var view;
 
         if (number === index) {
           self.current = page;

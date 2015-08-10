@@ -19,9 +19,9 @@ define(function (require) {
    * @return {String}
    */
   humanizeBytes = function (size) {
-    var units = ['bytes', 'KB', 'MB', 'GB'],
-      unitIndex = 0,
-      divisor = 1;
+    var units = ['bytes', 'KB', 'MB', 'GB'];
+    var unitIndex = 0;
+    var divisor = 1;
 
     while (size > divisor * 1024 && unitIndex < units.length) {
       divisor *= 1024;
@@ -112,9 +112,9 @@ define(function (require) {
     },
 
     onInputChange: function (event) {
-      var self = this,
-        $input = event && $(event.target),
-        fileInput = $input.data('fileInput');
+      var self = this;
+      var $input = event && $(event.target);
+      var fileInput = $input.data('fileInput');
 
       if (fileInput.size()) {
         fileInput.getBlob().then(function (blob) {

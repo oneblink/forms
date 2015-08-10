@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v3.4.4 - 2015-08-10
+
+
+### Changed
+
+- updated to [Backbone.js](http://backbonejs.org/#changelog) 1.2.1 (from 1.1.2)
+
+- updated to [Underscore.js](http://underscorejs.org/#changelog) 1.8.3
+
+    - from [Lo-Dash](https://github.com/lodash/lodash/wiki/Changelog) 2.4.1
+
+
+### Fixed
+
+- FORMS-214: labels within subforms are now no longer lost when turning the page
+
+- FORMS-210: native gallery button now displays the gallery picker, not camera
+
+    - HelpDesk: 1270-WRNM-3321
+
+
 ## v3.4.3 - 2015-08-03
 
 

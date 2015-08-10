@@ -620,7 +620,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'BIC'], function (Forms, testUt
           form = Forms.current;
         });
 
-        _.each(fields, function(v, k) {
+        _.each(fields, function (v, k) {
           test(k, function (done) {
             element = form.getElement(k);
             assert.equal(element.attributes._view.$el.children('ul').children('li').length, 1);
@@ -649,9 +649,9 @@ define(['BlinkForms', 'testUtils', 'underscore', 'BIC'], function (Forms, testUt
         Forms.current.getElement('boolean').val(1);
         Forms.current.getElement('question').val('y');
         setTimeout(function () {
-          Forms.current.get('pages')['goto'](1);
+          Forms.current.get('pages').goto(1);
           setTimeout(function () {
-            Forms.current.get('pages')['goto'](0);
+            Forms.current.get('pages').goto(0);
             done();
           }, 497);
         }, 497);

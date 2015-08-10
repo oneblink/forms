@@ -11,8 +11,8 @@ define(function (require) {
     tagName: 'section',
     initialize: function () {
       var attrs = this.model.attributes;
-      if (attrs['class']) {
-        this.$el.addClass(attrs['class']);
+      if (attrs.class) {
+        this.$el.addClass(attrs.class);
       }
     },
     render: function () {
@@ -58,11 +58,11 @@ define(function (require) {
       delete this.el;
       return result;
     },
-    onAttached: function() {
+    onAttached: function () {
       this.model.get('elements').models.forEach(function (el) {
         var view = el.get('_view');
         if (typeof view.onAttached === 'function') {
-            view.onAttached();
+          view.onAttached();
         }
       });
     }

@@ -16,12 +16,12 @@ define(function (require) {
 
   var LocationElementView = ElementView.extend({
     render: function () {
-      //load google maps
+      // load google maps
       BMP.Forms.loadMapScript();
       this.renderButtons();
       this.$el.fieldcontain();
     },
-    renderButtons: function() {
+    renderButtons: function () {
       var $locateButton, $clearButton, $div, $button;
       var i18n = window.i18n['BMP/Forms/elements'];
       var self = this;
@@ -50,9 +50,9 @@ define(function (require) {
       this.model.on('change:value', this.renderFigure, this);
     },
 
-    setClearButton: function() {
-      var value = this.model.get('value'),
-        $clearButton = this.$el.find('[data-action=clear]');
+    setClearButton: function () {
+      var value = this.model.get('value');
+      var $clearButton = this.$el.find('[data-action=clear]');
       if (value) {
         $clearButton.button('enable');
       } else {
@@ -66,14 +66,14 @@ define(function (require) {
         loc,
         $img,
         caption,
-        staticMap,
-        self = this,
-        attr = self.model.attributes;
+        staticMap;
+      var self = this;
+      var attr = self.model.attributes;
 
       if (typeof attr.value === 'string') {
         try {
           loc = JSON.parse(attr.value);
-        } catch (e) {
+        } catch (err) {
           loc = null;
         }
       } else {
@@ -122,7 +122,7 @@ define(function (require) {
       if (value) {
         try {
           value = JSON.parse(value);
-        } catch(e) {
+        } catch(err) {
           value = undefined;
         }
         this.model.set('value', value);
@@ -142,39 +142,38 @@ define(function (require) {
       return false;
     },
     enableLocationButton: function () {
-      var view = this,
-        i18n = window.i18n['BMP/Forms/elements'];
+      var view = this;
+      var i18n = window.i18n['BMP/Forms/elements'];
 
-      //enable location button
+      // enable location button
       view.$el.find('button').first().button('enable');
       view.$el.find('.ui-btn-text').first().text(i18n.LOCATION_BUTTON);
     },
     disableLocationButton: function () {
-      var view = this,
-        i18n = window.i18n['BMP/Forms/elements'];
+      var view = this;
+      var i18n = window.i18n['BMP/Forms/elements'];
 
-      //disable button till location located
+      // disable button till location located
       view.$el.find('button').first().button('disable');
       view.$el.find('.ui-btn-text').first().text(i18n.LOCATING_SHORT);
     },
     onButtonClick: function (event) {
-      var self = this,
-        model = this.model,
-        $div = $(html),
-        options = {
-          dismissible: true,
-          history: false,
-          afterclose: function (e, ui) {
-            if (e && ui) {
-              $div.remove();
-            }
+      var self = this;
+      var model = this.model;
+      var $div = $(html);
+      var options = {
+        dismissible: true,
+        history: false,
+        afterclose: function (e, ui) {
+          if (e && ui) {
+            $div.remove();
           }
-        },
-        $window = $(window),
-        $form,
-        windowX = $window.innerWidth(),
-        windowY = $window.innerHeight(),
-        value;
+        }
+      };
+      var $window = $(window);
+      var $form, value;
+      var windowX = $window.innerWidth();
+      var windowY = $window.innerHeight();
 
       $(document.body).append($div);
       $div.find('#map-canvas').height(windowY - 100);
@@ -189,22 +188,22 @@ define(function (require) {
       if (_.isEmpty(value) || !value.latitude || !value.longitude) {
         model.getGeoLocation().then(function () { // onSuccess
           value = model.get('currentlocation');
-          //set value for first time
+          // set value for first time
           $div.find('input').val(JSON.stringify(value));
           LocationElementView.initializeMap(value, $div);
-          //enable location button
+          // enable location button
           self.constructor.enableLocationButton.bind(self)();
         }, function () { // onError (err)
-          //enable location button
+          // enable location button
           self.constructor.enableLocationButton.bind(self)();
         });
       } else {
         LocationElementView.initializeMap(value, $div);
-        //enable location button
+        // enable location button
         self.constructor.enableLocationButton.bind(self)();
       }
 
-      //finally creating and poping up map
+      // finally creating and poping up map
       $form.trigger('create');
       $div.popup(options);
       $div.popup('open');
@@ -214,19 +213,19 @@ define(function (require) {
       return false;
     },
     initializeMap: function (value, $div) {
-      var warning = window.i18n['BMP/Forms/warning'],
-        map,
+      var warning = window.i18n['BMP/Forms/warning'];
+      var map,
         myLatlng,
         mapOptions,
         marker,
         position;
 
-      //creating map
+      // creating map
       myLatlng = new google.maps.LatLng(value.latitude, value.longitude);
       mapOptions = {
-          zoom: 17,
-          center: myLatlng,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+        zoom: 17,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       try {
         map = new google.maps.Map($div.find('#map-canvas')[0], mapOptions);
@@ -234,14 +233,14 @@ define(function (require) {
         $div.find('#map-canvas').text(warning.ERROR_GOOGLE_MAP);
       }
 
-      //creating draggable marker
+      // creating draggable marker
       marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
         draggable: true
       });
-      //adding listener to marker dragend event
-      google.maps.event.addListener(marker, 'dragend', function(){
+      // adding listener to marker dragend event
+      google.maps.event.addListener(marker, 'dragend', function () {
         position = {
           latitude: marker.getPosition().lat(),
           longitude: marker.getPosition().lng(),

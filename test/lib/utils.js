@@ -28,17 +28,17 @@ define(['BlinkForms'], function (Forms) {
               assert(
                 view$.find('legend').length > 0,
                 name + ': DOM has label.ui-input-text'
-              );
+             );
             } else {
               assert(
                 view$.children('label.ui-input-text').length > 0,
                 name + ': DOM has label.ui-input-text'
-              );
+             );
             }
             assert.include(
               view$.text(),
               label, name + ': DOM text contains label String'
-            );
+           );
           }
         });
       });

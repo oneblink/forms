@@ -39,9 +39,9 @@ define(function () {
             'reject' in window.Promise &&
             'all' in window.Promise &&
             'race' in window.Promise &&
-            (function() {
+            (function () {
               var resolve;
-              new window.Promise(function(r) { resolve = r; });
+              new window.Promise(function (r) { resolve = r; });
               return typeof resolve === 'function';
             }());
         },

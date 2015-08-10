@@ -45,7 +45,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         $content.append(form.$form);
 
         $doc.one('pageinit', function () {
-          form.attributes.preloadPromise.then(function() {
+          form.attributes.preloadPromise.then(function () {
             done();
           });
         });
@@ -167,7 +167,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var form = Forms.current;
           form.data().then(function (formdata) {
             var keys = _.keys(record);
-            _.each(keys, function(k) {
+            _.each(keys, function (k) {
               assert.ok(formdata[k], k + " does not exist");
             });
             done();
@@ -210,10 +210,10 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             subsubform;
 
           assert.equal(subForms.length, 4);
-          subForms.once('add', function(subform) {
+          subForms.once('add', function (subform) {
             assert.equal(subForms.length, 5);
             subsubform = subForms.at(4);
-            subform.attributes.preloadPromise.then(function() {
+            subform.attributes.preloadPromise.then(function () {
               assert.equal(subsubform.getElement('Phone').attributes.forms.length, 1);
               done();
             });
@@ -250,7 +250,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           }
         });
 
-        test("remove newly added subform (no placeholders)", function() {
+        test("remove newly added subform (no placeholders)", function () {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForms = subFormElement.attributes.forms,
@@ -266,7 +266,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
         });
 
-        test("remove subform with id (with placeholder)", function() {
+        test("remove subform with id (with placeholder)", function () {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForm = subFormElement.get('forms').at(3);
@@ -280,7 +280,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           });
         });
 
-        test("remove sub-subform with id (with placeholder)", function() {
+        test("remove sub-subform with id (with placeholder)", function () {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForms = subFormElement.attributes.forms,
@@ -301,7 +301,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           });
         });
 
-        test("remove preloaded sub-subform (with out placeholder)", function() {
+        test("remove preloaded sub-subform (with out placeholder)", function () {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForms = subFormElement.attributes.forms,

@@ -27,13 +27,13 @@ define(function (require) {
 
   Page = Backbone.Model.extend({
     defaults: {
-      'class': ''
+      class: ''
     },
     initialize: function () {
-      var attrs = this.attributes,
-        Forms = BMP.Forms,
-        form = attrs.form,
-        sections;
+      var attrs = this.attributes;
+      var Forms = BMP.Forms;
+      var form = attrs.form;
+      var sections;
 
       Forms.setAttributesFromClass(this, ['_sections']);
 
@@ -54,8 +54,8 @@ define(function (require) {
         sections = new Sections();
       }
       sections.forEach(function (section) {
-        var sectionAttrs = section.attributes,
-          parent;
+        var sectionAttrs = section.attributes;
+        var parent;
 
         if (sectionAttrs.section) {
           parent = sections.get(sectionAttrs.section);
@@ -72,8 +72,8 @@ define(function (require) {
       this.on('remove', this.close, this);
     },
     initializeView: function () {
-      var Forms = BMP.Forms,
-        view;
+      var Forms = BMP.Forms;
+      var view;
 
       view = new Forms._views.Page({model: this});
       this.set('_view', view);
@@ -108,8 +108,8 @@ define(function (require) {
       }
     },
     getSection: function (name) {
-      var sections = this.attributes.sections,
-        section;
+      var sections = this.attributes.sections;
+      var section;
 
       section = sections.get(name);
       this.add(section);
@@ -124,8 +124,8 @@ define(function (require) {
       view.hide();
     },
     index: function () {
-      var form = this.attributes.form,
-        pages = form.attributes.pages;
+      var form = this.attributes.form;
+      var pages = form.attributes.pages;
 
       return pages.indexOf(this);
     }

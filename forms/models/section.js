@@ -15,8 +15,8 @@ define(function (require) {
 
   Section = Element.extend({
     initialize: function () {
-      var Elements = require('forms/collections/elements'),
-        attrs = this.attributes;
+      var Elements = require('forms/collections/elements');
+      var attrs = this.attributes;
 
       attrs.elements = new Elements();
       this.initializeView();
@@ -24,8 +24,8 @@ define(function (require) {
       this.on('remove', this.close, this);
     },
     initializeView: function () {
-      var Forms = BMP.Forms,
-        view;
+      var Forms = BMP.Forms;
+      var view;
 
       view = new Forms._views.Section({model: this});
       this.set('_view', view);

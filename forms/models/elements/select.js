@@ -31,11 +31,9 @@ define(function (require) {
       }
     },
     initializeView: function () {
-      var Forms = BMP.Forms,
-      view,
-      View,
-      mode,
-      attrs = this.attributes;
+      var Forms = BMP.Forms;
+      var View, view, mode;
+      var attrs = this.attributes;
 
       if (attrs.readonly) {
         this.removeView();

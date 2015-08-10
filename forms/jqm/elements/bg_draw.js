@@ -36,20 +36,20 @@ define(function (require) {
     }
   }, {
     onButtonClick: function (event) {
-      var model = this.model,
-        $button = $(event.target),
-        $window = $(window),
-        offset = $button.offset(),
-        width = $button.width(),
-        defaults = {
-          canvasButtonOriginX: 320,
-          canvasButtonOriginY: 320,
-          canvasWidth: 600,
-          canvasHeight: 300,
-          destinationType: window.BGTouchDraw.DestinationType.DATA_URL,
-          encodingType: window.BGTouchDraw.EncodingType.JPEG
-        },
-        options = this.model.toCameraOptions() || {};
+      var model = this.model;
+      var $button = $(event.target);
+      var $window = $(window);
+      var offset = $button.offset();
+      var width = $button.width();
+      var defaults = {
+        canvasButtonOriginX: 320,
+        canvasButtonOriginY: 320,
+        canvasWidth: 600,
+        canvasHeight: 300,
+        destinationType: window.BGTouchDraw.DestinationType.DATA_URL,
+        encodingType: window.BGTouchDraw.EncodingType.JPEG
+      };
+      var options = this.model.toCameraOptions() || {};
 
       options.canvasButtonOriginX = offset.left + Math.floor(width / 2);
       options.canvasButtonOriginY = offset.top - $window.scrollTop();

@@ -26,7 +26,7 @@ define(function (require) {
      * invokes 'getSubforms' on each form object and returns the aggregated result.
      * @return {Array|Object} An Array of subforms. Each index matches the forms index in this collection.
      */
-    getSubforms: function(){
+    getSubforms: function () {
       return this.invoke('getSubforms');
     },
 
@@ -35,7 +35,7 @@ define(function (require) {
      * @param  {Number} [limit=0] (Optional) - Limit the number of results returned
      * @return {Array}  A array of invalid elements. Each index matches the forms index in this collection.
      */
-    getInvalidElements: function(limit){
+    getInvalidElements: function (limit) {
       return this.invoke('getInvalidElements', limit);
     }
   });
@@ -50,9 +50,9 @@ define(function (require) {
       attrs = this.attributes;
       //currently server sets preload to either "admin_defined" or "no"
       if (isNaN(Number(attrs.preload))) {
-        if (attrs.preload !== "no" && attrs.preloadNum) {
+        if (attrs.preload !== 'no' && attrs.preloadNum) {
           attrs.preload = Number(attrs.preloadNum);
-        } else if (attrs.preload === "no") {
+        } else if (attrs.preload === 'no') {
           delete attrs.preload;
         }
       } else if (!isNaN(Number(attrs.preload))) {
@@ -86,17 +86,17 @@ define(function (require) {
       this.off('invalid change:value change:blob');
 
       //make sure that all form events are bubbled up through this subform
-      this.attributes.forms.on('all', function(){
-        this.trigger.apply( this, arguments );
+      this.attributes.forms.on('all', function () {
+        this.trigger.apply(this, arguments);
       }, this);
     },
-    addSubformRecursive: function(max) {
-      var self = this,
-        attrs = this.attributes;
+    addSubformRecursive: function (max) {
+      var self = this;
+      var attrs = this.attributes;
       return self.add().then(function (form) {
         return form.attributes.preloadPromise;
       }).then(function () {
-        if(attrs.forms.length < max) {
+        if (attrs.forms.length < max) {
           return self.addSubformRecursive(max);
         }
         return Promise.resolve();
@@ -104,19 +104,19 @@ define(function (require) {
     },
     add: function (action) {
       // TODO: there is too much DOM stuff here to be in the model
-      var self = this,
-        attrs = self.attributes,
-        name = attrs.subForm,
-        forms = attrs.forms,
-        Forms = BMP.Forms;
+      var self = this;
+      var attrs = this.attributes;
+      var name = attrs.subForm;
+      var forms = attrs.forms;
+      var Forms = BMP.Forms;
 
-      action = action || "add";
+      action = action || 'add';
       return new Promise(function (resolve, reject) {
         Forms.getDefinition(name, action).then(function (def) {
           var form;
           try {
             //the elements themselves need to know who the parent is.
-            _.each(def._elements, function(element){
+            _.each(def._elements, function (element) {
               element.parentElement = self;
             });
             form = SubFormModel.create(def, action);
@@ -147,8 +147,8 @@ define(function (require) {
      * @param {Number|Model} index or model for the record.
      */
     remove: function (index) {
-      var form,
-        forms = this.attributes.forms;
+      var form;
+      var forms = this.attributes.forms;
 
       // TODO: skip placeholder "delete" records when counting
       if (typeof index === 'number') {
@@ -200,11 +200,11 @@ define(function (require) {
      * @returns {Promise}
      */
     setRecords: function (data) {
-      var me = this,
-        forms = this.attributes.forms,
-        addPromises = [],
-        promises,
-        counter = 0,
+      var me = this;
+      var forms = this.attributes.forms;
+      var addPromises = [];
+      var counter = 0;
+      var promises,
         action;
 
       return new Promise(function (resolve, reject) {
@@ -212,16 +212,16 @@ define(function (require) {
           resolve();
           return;
         }
-        Promise.all([me.attributes.preloadPromise]).then(function() {
+        Promise.all([me.attributes.preloadPromise]).then(function () {
           //remove all preloaded forms
           while (forms.length > 0) {
             me.remove(forms.length - 1);
           }
 
           while (forms.length + addPromises.length < data.length) {
-            action = "add";
+            action = 'add';
             if (data[counter].id) {
-              action = "edit";
+              action = 'edit';
             }
             addPromises.push(me.add(action));
             counter++;
@@ -250,14 +250,14 @@ define(function (require) {
         return this.getRecord();
       }
     },
-    updateFieldErrors: function (){
+    updateFieldErrors: function () {
       this.validationError = this.validateField();
       this.set('errors', this.validationError);
     },
     validateField: function (attrs) {
-      var forms,
-        errors = {},
-        realLength = this.getRealLength();
+      var forms;
+      var errors = {};
+      var realLength = this.getRealLength();
       if (attrs === undefined) {
         attrs = this.attributes;
       }
@@ -284,32 +284,32 @@ define(function (require) {
         return errors;
       }
     },
-    getButtonLabel: function() {
-      var attrs = this.attributes,
-        additionalString = "";
+    getButtonLabel: function () {
+      var attrs = this.attributes;
+      var additionalString = '';
       if (attrs.maxSubforms) {
-        additionalString = " (" + this.getRealLength() + "/" + attrs.maxSubforms + ")";
+        additionalString = ' (' + this.getRealLength() + '/' + attrs.maxSubforms + ')';
       }
       return additionalString;
     },
-    getRealLength: function() {
-      var forms = this.attributes.forms,
-        counter = 0;
+    getRealLength: function () {
+      var forms = this.attributes.forms;
+      var counter = 0;
 
-      if ( !forms ){
+      if (!forms) {
         return counter;
       }
-      forms.models.forEach(function(v) {
-        if (v.get("_action") !== "remove") {
+      forms.models.forEach(function (v) {
+        if (v.get('_action') !== 'remove') {
           counter++;
         }
       });
       return counter;
     },
     validate: function (attrs) {
-      var forms,
-        subformErrorCounter = 0,
-        errors;
+      var forms;
+      var subformErrorCounter = 0;
+      var errors;
 
       if (attrs === undefined) {
         attrs = this.attributes;
@@ -318,14 +318,14 @@ define(function (require) {
       errors = this.validateField(attrs) || {};
 
       forms = attrs.forms;
-      if ( !forms ){
+      if (!forms) {
         return _.isEmpty(errors) ? undefined : errors;
       }
 
       forms.models.forEach(function (frm) {
         var err;
         err = frm.getInvalidElements({validate: true});
-        if ( err && err.length ){
+        if (err && err.length) {
           subformErrorCounter++;
         }
       });
@@ -339,12 +339,12 @@ define(function (require) {
       return _.isEmpty(errors) ? undefined : errors;
     },
 
-    setExternalErrors: function(elementErrorList, options){
+    setExternalErrors: function (elementErrorList, options) {
       //set errors on subforms
       this.get('forms').invoke('setErrors', elementErrorList, options);
 
       //set errors on me.
-      if (elementErrorList.errors){
+      if (elementErrorList.errors) {
         ElementModel.prototype.setExternalErrors.call(this, elementErrorList.errors, options);
       }
 

@@ -33,9 +33,9 @@ define(function (require) {
     },
 
     render: function () {
-      var self = this,
-        attrs = this.model.attributes,
-        name = attrs.name;
+      var self = this;
+      var attrs = this.model.attributes;
+      var name = attrs.name;
 
       this.$el.empty();
       this.renderLabel();
@@ -46,21 +46,21 @@ define(function (require) {
           'data-highlight': true
         });
         this.$el.append(this.$input);
-        this.$el.on("change", function() {
+        this.$el.on('change', function () {
           var val, modelVal;
-          this.$input = $(this).find("input");
+          this.$input = $(this).find('input');
           val = this.$input.val();
-          modelVal = self.model.get("value");
+          modelVal = self.model.get('value');
 
           if (modelVal !== val) {
-            self.model.set("value", this.$input.val());
+            self.model.set('value', this.$input.val());
           }
         });
       }
 
       this.$input.attr({
         name: name,
-        'value': this.model.get('value')
+        value: this.model.get('value')
       });
       ['min', 'max', 'step'].forEach(function (prop) {
         if ($.isNumeric(attrs[prop])) {

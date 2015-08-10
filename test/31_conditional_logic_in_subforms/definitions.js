@@ -1,4 +1,4 @@
-define(function() {
+define(function () {
     return [{
             "default": {
                 "uniqueNameId": "4yf1xf7xt32",

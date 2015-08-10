@@ -13,18 +13,18 @@ define(function (require) {
 
   var blinkFormsError;
 
-  var toString = function(i18n){
-    return function(val){
+  var toString = function (i18n) {
+    return function (val) {
       var fn = _.isFunction(i18n[val.code]) && i18n[val.code];
 
       return fn ? fn(val) : JSON.stringify(val);
     };
   };
 
-  function makeCustomError(code, val, errorString){
+  function makeCustomError (code, val, errorString) {
     var ret = {};
 
-    if ( errorString === undefined){
+    if (errorString === undefined) {
       errorString = blinkFormsError.toErrorString(val) || val;
     }
 
@@ -35,26 +35,26 @@ define(function (require) {
     return ret;
   }
 
-  function blinkFormsErrorParser(errorObject){
-    if ( _.isString(errorObject) ){
+  function blinkFormsErrorParser (errorObject) {
+    if (_.isString(errorObject)) {
       return makeCustomError('CUSTOM', errorObject);
     }
 
-    if ( _.isObject(errorObject) && !_.isArray(errorObject)){
+    if (_.isObject(errorObject) && !_.isArray(errorObject)) {
       //assume its the blink error format
-      if ( errorObject.code ){
+      if (errorObject.code) {
         return errorObject;
       }
 
-      return _.reduce(errorObject, function(memo, value, key){
+      return _.reduce(errorObject, function (memo, value, key) {
         memo[key] = blinkFormsErrorParser(value);
 
         return memo;
       }, {});
     }
 
-    if ( _.isArray(errorObject) ){
-      return _.reduce(errorObject, function(memo, value){
+    if (_.isArray(errorObject)) {
+      return _.reduce(errorObject, function (memo, value) {
         memo.push(blinkFormsErrorParser(value));
         return memo;
       }, []);

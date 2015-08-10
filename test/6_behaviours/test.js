@@ -159,7 +159,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var form = BMP.Forms.current,
             element = form.getElement('email'),
             view = element.attributes._view;
-          setTimeout(function() {
+          setTimeout(function () {
             assert(!view.isHidden());
             done();
           }, 1);
@@ -211,7 +211,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               element = form.getElement('number'),
               view = element.attributes._view;
 
-            setTimeout(function() {
+            setTimeout(function () {
               assert(!view.isHidden());
               done();
             }, 10);
@@ -297,7 +297,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             element = form.getElement('number'),
             view = element.attributes._view;
 
-          setTimeout(function() {
+          setTimeout(function () {
             assert(view.isHidden());
             done();
           }, 1);
@@ -348,7 +348,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           element = form.getElement('number'),
           view = element.attributes._view;
 
-        setTimeout(function() {
+        setTimeout(function () {
           assert(!view.isHidden());
           done();
         }, 1);
@@ -386,7 +386,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             element = form.getElement('email'),
             view = element.attributes._view;
 
-          setTimeout(function() {
+          setTimeout(function () {
             assert(view.isHidden());
             done();
           }, 1);
@@ -396,7 +396,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var form = BMP.Forms.current,
             element = form.getElement('number'),
             view = element.attributes._view;
-          setTimeout(function() {
+          setTimeout(function () {
             assert(view.isHidden());
             done();
           }, 1);
@@ -423,7 +423,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
         form.getElement('number').val(123);
       });
-
 
       test('record data includes set values', function (done) {
         var form = BMP.Forms.current;
@@ -493,7 +492,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var form = BMP.Forms.current,
             element = form.getElement('text2'),
             view = element.attributes._view;
-          setTimeout(function() {
+          setTimeout(function () {
             assert(!view.isHidden());
             done();
           }, 1);
@@ -503,7 +502,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var form = BMP.Forms.current,
             element = form.getElement('text3'),
             view = element.attributes._view;
-          setTimeout(function() {
+          setTimeout(function () {
             assert(view.isHidden());
             done();
           }, 1);
@@ -523,7 +522,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var form = BMP.Forms.current,
             element = form.getElement('text2'),
             view = element.attributes._view;
-          setTimeout(function() {
+          setTimeout(function () {
             assert(!view.isHidden());
             done();
           }, 1);
@@ -533,7 +532,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var form = BMP.Forms.current,
             element = form.getElement('text3'),
             view = element.attributes._view;
-          setTimeout(function() {
+          setTimeout(function () {
             assert(!view.isHidden());
             done();
           }, 1);

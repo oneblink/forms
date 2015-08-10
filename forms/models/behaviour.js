@@ -26,15 +26,15 @@ define(function (require) {
     return this.getElement(name).val();
   };
 
-  Expression.fn.optionsbyxpath = function(xmlNodes) {
+  Expression.fn.optionsbyxpath = function (xmlNodes) {
     var newOptions = {};
-    if(_.isEmpty(xmlNodes)){
+    if (_.isEmpty(xmlNodes)) {
       return newOptions;
     }
-    $.each(xmlNodes, function(index, element) {
-      var $xml = $(element),
-        value = $xml.attr('value'),
-        text = $xml.text();
+    $.each(xmlNodes, function (index, element) {
+      var $xml = $(element);
+      var value = $xml.attr('value');
+      var text = $xml.text();
       if (value) {
         newOptions[value] = text;
       } else {
@@ -50,7 +50,7 @@ define(function (require) {
         nodes,
         result;
       try {
-        if (typeof xml === "string") {
+        if (typeof xml === 'string') {
           xml = $.parseXML(xml);
         }
         result = [];
@@ -69,10 +69,10 @@ define(function (require) {
   };
 
   Expression.fn.injectelemval = function (string) {
-    var field,
-      value,
-      self = this,
-      placeholders = string.match(/\[[\w\/\[\]]+\]/g);
+    var field;
+    var value;
+    var self = this;
+    var placeholders = string.match(/\[[\w\/\[\]]+\]/g);
     if (_.isArray(placeholders)) {
       placeholders.forEach(function (placeholder) {
         placeholder = placeholder.substring(1, placeholder.length - 1);
@@ -124,19 +124,19 @@ define(function (require) {
     },
 
     hookupTriggers: function () {
-      var self = this,
-        attrs = this.attributes,
-        form = attrs.form,
-        elements = attrs.elements,
-        outputTargets,
-        eventFrequencyDict = {
-          'formLoad': 'once',
-          'formPopulated': 'on'
-        },
-        eventDict = {
-          'load': 'formLoad',
-          'populated': 'formPopulated'
-        };
+      var self = this;
+      var attrs = this.attributes;
+      var form = attrs.form;
+      var elements = attrs.elements;
+      var outputTargets;
+      var eventFrequencyDict = {
+        formLoad: 'once',
+        formPopulated: 'on'
+      };
+      var eventDict = {
+        load: 'formLoad',
+        populated: 'formPopulated'
+      };
 
       elements.off(null, this.execute, this);
 
@@ -159,14 +159,14 @@ define(function (require) {
         });
       }
 
-      if (typeof attrs.trigger.formEvents === "object") {
-        //go through each events
-        attrs.trigger.formEvents.forEach(function(i) {
-          //if event exists in event dictionary, use it
+      if (typeof attrs.trigger.formEvents === 'object') {
+        // go through each events
+        attrs.trigger.formEvents.forEach(function (i) {
+          // if event exists in event dictionary, use it
           if (eventDict[i]) {
             form[eventFrequencyDict[eventDict[i]]](eventDict[i], self.execute, self);
           } else {
-            //otherwise assign that listener on event
+            // otherwise assign that listener on event
             form.on(i, self.execute, self);
           }
         });
@@ -202,9 +202,9 @@ define(function (require) {
      * @returns {Promise} resolved with a {Boolean} result
      */
     runCheck: function () {
-      var check, exp,
-        self = this;
-      //if check is not set returns true
+      var check, exp;
+      var self = this;
+      // if check is not set returns true
       if (!this.attributes.check) {
         return Promise.resolve(true);
       }
@@ -212,12 +212,12 @@ define(function (require) {
         check = this.getCheck(this.attributes.check);
         if (check && check.exp) {
           try {
-            //also send context and expressions that needs to be bound to context
+            // also send context and expressions that needs to be bound to context
             exp = new Expression(
               check.exp,
               self.attributes.form,
               Behaviour.BOUND_EXPRESSIONS
-            );
+           );
           } catch (err) {
             window.console.error('Behaviour: ' + self.attributes.name);
             window.console.error(err);
@@ -229,7 +229,7 @@ define(function (require) {
         }
       }
       // TODO: handle checks with functions
-      window.console.warning("unsupported Behaviour-Check (missing Expression");
+      window.console.warning('unsupported Behaviour-Check (missing Expression)');
       return Promise.resolve(false);
     },
 
@@ -263,11 +263,11 @@ define(function (require) {
     },
 
     runAction: function (name, isReversed) {
-      var action = this.getAction(name),
-        form = this.attributes.form,
-        result,
-        self = this,
-        element;
+      var action = this.getAction(name);
+      var form = this.attributes.form;
+      var result;
+      var self = this;
+      var element;
 
       if (isReversed) {
         action = this.getReversedAction(action);
@@ -301,10 +301,10 @@ define(function (require) {
       }
     },
 
-    runExpression: function(form, action, targetElement, propValuesByExp) {
-      var exp,
-        promises = [],
-        keys = [];
+    runExpression: function (form, action, targetElement, propValuesByExp) {
+      var exp;
+      var promises = [];
+      var keys = [];
       //build maps of <properties> and <expression_promise>
       _.forEach(propValuesByExp, function (v, i) {
         //also send context and expressions that needs to be bound to context
@@ -315,11 +315,11 @@ define(function (require) {
 
       Promise.all(promises).then(function (args) {
         //on all success, assign properties to targetElement
-        _.forEach(keys, function(key, i) {
+        _.forEach(keys, function (key, i) {
           targetElement.set(key, args[i]);
         });
       }, function (args) {
-        window.console.error("Behaviour-Action: " + action, args);
+        window.console.error('Behaviour-Action: ' + action, args);
       });
     },
 

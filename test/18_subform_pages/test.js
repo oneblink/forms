@@ -45,7 +45,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         $.mobile.page({}, $page);
         $page.trigger('pagecreate');
         $page.show();
-        form.attributes.preloadPromise.then(function() {
+        form.attributes.preloadPromise.then(function () {
           done();
         });
       });
@@ -67,7 +67,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         this.timeout(3000);
 
         //move to page 1 (page having subform)
-        pages['goto'](1);
+        pages.goto(1);
         subFormElement = Forms.current.getElement('subform01');
 
         //switched to adding subforms using .add()
@@ -77,7 +77,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         addPromises.push(subFormElement.add());
         addPromises.push(subFormElement.add());
 
-        Promise.all(addPromises).then(function() {
+        Promise.all(addPromises).then(function () {
           subForms = subFormElement.attributes.forms;
           //adding data to subform elements
           subForms.at(0).getElement('Rank').val('1');
@@ -110,9 +110,9 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
         subFormElement = Forms.current.getElement('subform01');
         //go to page 2
-        pages['goto'](2);
+        pages.goto(2);
         //go to page 1
-        pages['goto'](1);
+        pages.goto(1);
 
         //check the data of subform element again
         subFormElement.data()
@@ -130,32 +130,32 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           section3,
           newSection;
 
-        pages['goto'](0);
+        pages.goto(0);
         section1 = pages.current.attributes._view.el;
 
-        pages['goto'](1);
+        pages.goto(1);
         section2 = pages.current.attributes._view.el;
 
-        pages['goto'](2);
+        pages.goto(2);
         section3 = pages.current.attributes._view.el;
 
         assert.notEqual(section1, section2, 'page1 and page2 section element is same');
         assert.notEqual(section2, section3, 'page2 and page3 section element is same');
         assert.notEqual(section3, section1, 'page3 and page1 section element is same');
 
-        pages['goto'](0);
+        pages.goto(0);
         newSection = pages.current.attributes._view.el;
         assert.notEqual(section1, newSection, 'page1 section changed');
 
-        pages['goto'](1);
+        pages.goto(1);
         newSection = pages.current.attributes._view.el;
         assert.notEqual(section2, newSection, 'page2 section changed');
 
-        pages['goto'](2);
+        pages.goto(2);
         newSection = pages.current.attributes._view.el;
         assert.notEqual(section3, newSection, 'page3 section changed');
 
-        pages['goto'](1);
+        pages.goto(1);
         newSection = pages.current.attributes._view.el;
         assert.notEqual(section2, newSection, 'page2 section changed');
       });
@@ -176,10 +176,10 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         assert.equal(fieldcontain$.length, enhanced$.length);
       });
 
-      test('Fields in subforms on other pages can be found and scrolled to', function(){
+      test('Fields in subforms on other pages can be found and scrolled to', function () {
         var pages = Forms.current.get('pages');
         var previousPage;
-        pages['goto'](0);
+        pages.goto(0);
         previousPage = pages.current.cid;
         Forms.current.get("_view").goToElement('status');
 

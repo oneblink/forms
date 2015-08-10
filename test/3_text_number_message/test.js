@@ -94,7 +94,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
     }); // END: suite('Form', ...)
 
-
     suite('hidden', function () {
 
       test('hidden field is actually hidden', function (done) {
@@ -110,15 +109,15 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
       });
 
-    test('type=hidden field has no view', function () {
-      var form = BMP.Forms.current,
-        element = form.getElement('id'),
-        view = element.attributes._view;
+      test('type=hidden field has no view', function () {
+        var form = BMP.Forms.current,
+          element = form.getElement('id'),
+          view = element.attributes._view;
 
-      assert(!view);
-      assert.lengthOf($('input[name=id]'), 0);
+        assert(!view);
+        assert.lengthOf($('input[name=id]'), 0);
 
-    });
+      });
 
     }); // END: suite('Form', ...)
 
@@ -147,7 +146,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
       });
 
-      test('FORMS-161 # Have number fields default to empty', function() {
+      test('FORMS-161 # Have number fields default to empty', function () {
         var form = Forms.current,
           element = form.getElement('number3');
 

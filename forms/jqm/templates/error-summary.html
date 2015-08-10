@@ -1,6 +1,6 @@
 <h6 class="bm-errors__bm-title">Form Error Summary</h6>
 <ul class="bm-errors__bm-list ui-grid-a" data-role="listview">
-  <% _.each(invalidElements.errors, function(invalidModel){  %>
+  <% _.each(invalidElements.errors, function (invalidModel) {  %>
   <li class="bm-errors__bm-list-item ui-block-b">
 
     <a href="" data-onclick="goto-field" for="<%= invalidModel.cid %>"><%= invalidModel.id %></a>

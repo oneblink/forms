@@ -14,15 +14,15 @@ define(function (require) {
    * @constructor
    */
   Expression = function (definition, ctx, names) {
-    var self = this,
-      def = JSON.parse(JSON.stringify(definition));
+    var self = this;
+    var def = JSON.parse(JSON.stringify(definition));
 
     self.fn = {};
-    //copy static functions to class function
+    // copy static functions to class function
     Object.keys(Expression.fn).forEach(function (prop) {
       self.fn[prop] = Expression.fn[prop];
     });
-    //if context and names provided, bind ctx with fn[names]
+    // if context and names provided, bind ctx with fn[names]
     if (ctx && names) {
       this.bindContext(ctx, names);
     }
@@ -39,25 +39,25 @@ define(function (require) {
 
     this.operands.forEach(function (op, index) {
       if (_.isObject(op) && _.isString(op.operator)) {
-        //pass down ctx, names for binding
+        // pass down ctx, names for binding
         self.operands[index] = new Expression(op, ctx, names);
       }
     });
   };
 
   Expression.prototype.evaluate = function () {
-    var self = this,
-      args,
-      binaryOp = [
-        '==',
-        '!=',
-        '>',
-        '<',
-        '>=',
-        '<=',
-        'contains',
-        '!contains'
-      ];
+    var self = this;
+    var args;
+    var binaryOp = [
+      '==',
+      '!=',
+      '>',
+      '<',
+      '>=',
+      '<=',
+      'contains',
+      '!contains'
+    ];
 
     args = this.operands.map(function (op) {
       if (_.isString(op) || _.isNumber(op) || _.isBoolean(op) || _.isNull(op)) {
@@ -73,7 +73,7 @@ define(function (require) {
     //FORMS-141 # binary operator will need two arguments,
     // if one provided, set other to empty string
     if (args.length === 1 && binaryOp.indexOf(this.operator) > -1) {
-      args.push("");
+      args.push('');
     }
 
     //return promise
@@ -178,7 +178,6 @@ define(function (require) {
   Expression.fn['!contains'] = function (haystack, needle) {
     return !Expression.fn.contains.call(this, haystack, needle);
   };
-
 
   return Expression;
 });

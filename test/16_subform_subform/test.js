@@ -17,7 +17,7 @@ define(['BlinkForms', 'backbone', 'testUtils', 'BIC'], function (Forms, Backbone
           jqxhr = xhr;
           done();
         }
-      );
+     );
     });
 
     test('status is "success"', function () {
@@ -83,7 +83,7 @@ define(['BlinkForms', 'backbone', 'testUtils', 'BIC'], function (Forms, Backbone
           value = value.substring(
             ('<' + el.nodeName + '>').length,
             value.length - ('</' + el.nodeName + '>').length
-          ); // unwrap the outer XML tag from the new XML string
+         ); // unwrap the outer XML tag from the new XML string
           record[el.nodeName] = value;
         });
       });
@@ -207,7 +207,7 @@ define(['BlinkForms', 'backbone', 'testUtils', 'BIC'], function (Forms, Backbone
             form.setRecord(rec).then(function () {
               form.data().then(function (formdata) {
                 var keys = _.keys(rec);
-                _.each(keys, function(k) {
+                _.each(keys, function (k) {
                   assert.deepEqual(formdata[k], element[k]);
                   assert.ok(formdata[k], k + " does not exist");
                 });
@@ -218,7 +218,7 @@ define(['BlinkForms', 'backbone', 'testUtils', 'BIC'], function (Forms, Backbone
               });
             });
           }
-        );
+       );
       });
 
       suite('after .setRecord()', function () {

@@ -97,7 +97,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           done();
         });
 
-        pages['goto'](1);
+        pages.goto(1);
       });
 
       test('page 1 elements are visible', function () {
@@ -137,7 +137,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           done();
         });
 
-        pages['goto'](2);
+        pages.goto(2);
       });
 
       test('page 2 elements are visible', function () {
@@ -174,8 +174,8 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         assert.equal($input.val(), numberSlider.get('value'));
 
         //switch pages back and forth
-        pages['goto'](1);
-        pages['goto'](2);
+        pages.goto(1);
+        pages.goto(2);
         //ui-slider should be on page
         assert(numberSlider.attributes._view.$el.find('div.ui-slider'));
         //model value should be the same
@@ -211,13 +211,13 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         });
       });
 
-      test('Forms.current.get("_view").goToElement() can goto fields on other pages', function(){
+      test('Forms.current.get("_view").goToElement() can goto fields on other pages', function () {
         var previousPage = BMP.Forms.current.get('pages').current.cid;
         Forms.current.get("_view").goToElement('email');
 
         assert.notEqual(BMP.Forms.current.get('pages').current.cid, previousPage);
         assert.isTrue($('[name="email"]').is(':visible'));
-      } );
+      });
 
     }); // END: suite('Pages', ...)
 

@@ -13,8 +13,8 @@ define(function (require) {
       Element.prototype.initialize.apply(this, arguments);
     },
     initializeView: function () {
-      var Forms = BMP.Forms,
-        view;
+      var Forms = BMP.Forms;
+      var view;
 
       this.removeView();
 

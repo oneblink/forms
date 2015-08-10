@@ -20,20 +20,20 @@ define(function (require) {
     },
 
     renderOtherText: function (render) {
-      var self = this,
-        name = this.model.attributes.name,
-        $input = $('<input type="text" />'),
-        $label = '<label class="ui-input-text"></label>',
-        $element = $('<div data-role="fieldcontain"></div>'),
-        $div = $('<div class="ui-input-text"></div>'),
-        isOtherRendered = !!this.$el.find('div[data-role=fieldcontain]').length;
+      var self = this;
+      var name = this.model.attributes.name;
+      var $input = $('<input type="text" />');
+      var $label = '<label class="ui-input-text"></label>';
+      var $element = $('<div data-role="fieldcontain"></div>');
+      var $div = $('<div class="ui-input-text"></div>');
+      var isOtherRendered = !!this.$el.find('div[data-role=fieldcontain]').length;
 
       $element.addClass('ui-field-contain ui-body ui-br');
       $div.addClass('ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c');
 
       $input.attr({
         name: name + '_other',
-        'class': 'ui-input-text ui-body-c'
+        class: 'ui-input-text ui-body-c'
       });
       if (render && !isOtherRendered) {
         $element.append($label);
@@ -47,7 +47,7 @@ define(function (require) {
         this.$el.children('div[data-role=fieldcontain]').remove();
       }
     },
-    prepModelValue: function() {
+    prepModelValue: function () {
       var $input = this.$el.find('input[type = text]');
       var values = this.fetchValue();
       var allowsOther = this.model.attributes.other || this.model.attributes.canSpecifyOther;
@@ -58,10 +58,10 @@ define(function (require) {
           if (values.indexOf('other') !== -1) {
             values.splice(values.indexOf('other'), 1);
           }
-          values.push($input.val() || "other");
-        } else if (values === "other") {
+          values.push($input.val() || 'other');
+        } else if (values === 'other') {
           // Single select
-          values = $input.val() || "other";
+          values = $input.val() || 'other';
         }
       }
 

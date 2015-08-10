@@ -23,14 +23,14 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
     });
 
-    teardown(function(){
+    teardown(function () {
       // commented out so that the last test can leave a functional DOM in place so we can
       // manually test
       // $content.empty();
       // delete Forms.current;
     });
 
-    test('External errors set show up on form', function(){
+    test('External errors set show up on form', function () {
       var element = Forms.current.getElement('textBox1')
         , externalErrors = {
             textBox1: [{code: 'CUSTOM', CUSTOM: 'This is custom text'}]
@@ -45,7 +45,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       delete Forms.current;
     });
 
-    test('External errors set show up on form when set on an element model', function(){
+    test('External errors set show up on form when set on an element model', function () {
       var element = Forms.current.getElement('textBox1')
         , externalErrors = [{code: 'CUSTOM', CUSTOM: 'This is custom text'}];
 
@@ -59,7 +59,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       delete Forms.current;
     });
 
-    test('External errors override built in errors of the same name', function(){
+    test('External errors override built in errors of the same name', function () {
       var externalErrors = {
         number1: [{code: 'MAX', MAX: 5, text: 'Field Max adjusted from 100 to 5'}]
       };
@@ -72,7 +72,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       delete Forms.current;
     });
 
-    test('External errors should be cleared when field is altered', function(){
+    test('External errors should be cleared when field is altered', function () {
       var element = Forms.current.getElement('textBox1');
 
       element.val('1');
@@ -83,7 +83,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       delete Forms.current;
     });
 
-    test('External errors should merge by default', function(){
+    test('External errors should merge by default', function () {
       var externalErrors = {
         city: [{code: 'CUSTOM', CUSTOM: 'This is custom text'}]
       };
@@ -100,7 +100,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       delete Forms.current;
     });
 
-    test('External errors should be at the front of the errors array', function(){
+    test('External errors should be at the front of the errors array', function () {
       var externalErrors = {
         city: [{code: 'CUSTOM', CUSTOM: 'This is custom text'}]
       };
@@ -120,10 +120,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-    suite('subforms', function(){
+    suite('subforms', function () {
       var externalErrors, subFormElement;
 
-      setup(function(){
+      setup(function () {
 
         externalErrors = {
           'comments': {
@@ -147,15 +147,15 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         // add two 'comment' subforms to the test page
         // mocha will wait for the promise to resolve before doing the tests. sweet!
-        return subFormElement.add().then(function(){ return subFormElement.add(); });
+        return subFormElement.add().then(function () { return subFormElement.add(); });
       });
 
-      teardown(function(){
+      teardown(function () {
         externalErrors = undefined;
         subFormElement = undefined;
       });
 
-      test('We can set a custom error message on a subform *element*', function(){
+      test('We can set a custom error message on a subform *element*', function () {
           var errorMessages;
 
           Forms.current.setErrors(externalErrors);
@@ -168,7 +168,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           delete Forms.current;
       });
 
-      test('We can set a custom error message on an element in a specific subform', function(){
+      test('We can set a custom error message on an element in a specific subform', function () {
         var formElement, customError;
 
         Forms.current.setErrors(externalErrors);

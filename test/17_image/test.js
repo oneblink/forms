@@ -13,6 +13,17 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
      */
     suiteSetup(function () {
       $content.empty();
+
+      if (!window.navigator.getUserMedia) {
+        window.navigator.getUserMedia = {};
+      }
+      if (!window.URL) {
+        window.URL = {};
+      }
+      if (!window.URL.createObjectURL) {
+        window.URL.createObjectURL = {};
+      }
+
       delete Forms.current;
     });
 
@@ -70,7 +81,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             form.setRecord(record).then(function () {
               form.data().then(function (formdata) {
                 var keys = _.keys(record);
-                _.each(keys, function(k) {
+                _.each(keys, function (k) {
                   assert.ok(formdata[k], k + " does not exist");
                 });
                 done();
@@ -80,7 +91,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               });
             });
           }
-        );
+       );
       });
 
       test('img elements present', function () {
@@ -125,6 +136,21 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           }, 1000);
         });
       });
+
+      suite('WebRtc Prints correct Buttons', function () {
+        test('button present', function () {
+          var elements = ['camera', 'Photo', 'Photo1', 'Photo2'],
+            form = BMP.Forms.current,
+            element,
+            view;
+          elements.forEach(function (key) {
+            element = form.getElement(key);
+            view = element.attributes._view.$el;
+            assert.equal(view.find('a[data-role="button"]').hasClass('webrtc_image'), true);
+          });
+        });
+      });
+
     }); // END: suite('Form', ...)
 
   }); // END: suite('1', ...)

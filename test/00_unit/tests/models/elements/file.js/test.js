@@ -5,17 +5,17 @@
   To ensure correct, isolated, unit test behavior, everything except the model file is mocked.
 */
 define(['models/elements/file'],
-function( FileModel ){
+function (FileModel) {
   'use strict';
 
-  var noop = function(){};
+  var noop = function () {};
 
-  suite('models/elements/file.js', function(){
+  suite('models/elements/file.js', function () {
 
     //////////////////////////////////////////////////////////////////////////
 
-    suite('Setup', function(){
-      setup(function(){
+    suite('Setup', function () {
+      setup(function () {
 
         window.BMP = {
           Forms: {
@@ -32,11 +32,11 @@ function( FileModel ){
         };
       });
 
-      teardown(function(){
+      teardown(function () {
         window.BMP = null;
       });
 
-      test('the view "BlobReadOnlyElement" is correctly set', function(){
+      test('the view "BlobReadOnlyElement" is correctly set', function () {
         var mock = sinon.mock(window.BMP.Forms._views)
           , BlobReadOnlyElement = mock.expects('BlobReadOnlyElement')
           , WebRTCimageElementExpectation = mock.expects('WebRTCImageElement')
@@ -60,7 +60,7 @@ function( FileModel ){
         mock.restore();
       });
 
-      test('the view "BGImageElement" is correctly set', function(){
+      test('the view "BGImageElement" is correctly set', function () {
         var mock = sinon.mock(window.BMP.Forms._views)
           , hasCameraStub = sinon.stub(window.BMP.BlinkGap, 'hasCamera')
           , BlobReadOnlyElement = mock.expects('BlobReadOnlyElement')
@@ -90,7 +90,7 @@ function( FileModel ){
         mock.restore();
       });
 
-      test('the view "WebRTCImageElement" is correctly set', function(){
+      test('the view "WebRTCImageElement" is correctly set', function () {
         var mock = sinon.mock(window.BMP.Forms._views)
           , getUserMediaPresentStub
           , BlobReadOnlyElement = mock.expects('BlobReadOnlyElement')
@@ -124,7 +124,7 @@ function( FileModel ){
         mock.restore();
       });
 
-      test('the view "FileElement" is correctly set', function(){
+      test('the view "FileElement" is correctly set', function () {
         var mock = sinon.mock(window.BMP.Forms._views)
           , BlobReadOnlyElement = mock.expects('BlobReadOnlyElement')
           , WebRTCimageElementExpectation = mock.expects('WebRTCImageElement')
@@ -155,8 +155,8 @@ function( FileModel ){
 
     //////////////////////////////////////////////////////////////////////////
 
-    suite('Blob saving', function(){
-      setup(function(){
+    suite('Blob saving', function () {
+      setup(function () {
         window.BMP = {
           Blob: {
             fromDataURI: noop
@@ -164,11 +164,11 @@ function( FileModel ){
         };
       });
 
-      teardown(function(){
+      teardown(function () {
         window.BMP = null;
       });
 
-      test('Blob data is set with correct jpeg header', function(){
+      test('Blob data is set with correct jpeg header', function () {
         var model = new FileModel()
           , fromDataUriStub = sinon.stub(window.BMP.Blob, "fromDataURI")
           , data = 'abc123';
@@ -180,7 +180,7 @@ function( FileModel ){
         assert.equal(model.get('blob'), 'data:image/jpeg;base64,' + data);
       });
 
-      test('jpeg header is not duplicated when setting blob data', function(){
+      test('jpeg header is not duplicated when setting blob data', function () {
         var model = new FileModel()
           , fromDataUriStub = sinon.stub(window.BMP.Blob, 'fromDataURI')
           , data = 'data:image/jpeg;base64,abc123';
@@ -192,7 +192,7 @@ function( FileModel ){
         assert.equal(model.get('blob'), 'data:image/jpeg;base64,abc123');
       });
 
-      test('empty data is not set', function(){
+      test('empty data is not set', function () {
         var model = new FileModel()
           , fromDataUriMock = sinon.mock(window.BMP.Blob)
           , data = null;
@@ -208,8 +208,8 @@ function( FileModel ){
     });
 
 //////////////////////////////////////////////////////////////////////////
-    suite('Camera Tests', function(){
-      setup(function(){
+    suite('Camera Tests', function () {
+      setup(function () {
         window.BMP = {
           BIC: {
             attributes: {
@@ -221,19 +221,19 @@ function( FileModel ){
         };
       });
 
-      teardown(function(){
+      teardown(function () {
         window.BMP = null;
       });
 
-      test('Destination type should be 0', function(){
+      test('Destination type should be 0', function () {
         var model = new FileModel()
           , cameraOptions;
 
         cameraOptions = model.toCameraOptions();
-        assert.strictEqual( cameraOptions.destinationType, 0 );
+        assert.strictEqual(cameraOptions.destinationType, 0);
       });
 
-      test('Quality and image scale values are correct', function(){
+      test('Quality and image scale values are correct', function () {
         var attrs = window.BMP.BIC.attributes
           , model
           , results;
@@ -249,7 +249,7 @@ function( FileModel ){
         assert.strictEqual(results.imageScale, 2);
       });
 
-      test('Quality and image scale values are not set', function(){
+      test('Quality and image scale values are not set', function () {
         var attrs = window.BMP.BIC.attributes
           , model
           , results;
@@ -265,7 +265,7 @@ function( FileModel ){
         assert.isUndefined(results.imageScale);
       });
 
-      test('Camera Options should override BIC options', function(){
+      test('Camera Options should override BIC options', function () {
         var attrs = window.BMP.BIC.attributes
           , model
           , results;

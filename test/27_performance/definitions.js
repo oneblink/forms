@@ -2168,7 +2168,7 @@ define(function () {
             "default": {
               "name": "_message_15",
               "type": "message",
-              "html": "<a id=\"done\" data-role=\"button\" onclick=\"changeFormPage(0);\">Done</a>\r\n<script>\r\n $('.validate input,textarea,select').on(\"keyup click\",function() \r\n        {\r\n            $(this).parent().removeClass('invalidInput');\r\n        });\r\n</script>",
+              "html": "<a id=\"done\" data-role=\"button\" onclick=\"changeFormPage(0);\">Done</a>\r\n<script>\r\n $('.validate input,textarea,select').on(\"keyup click\",function () \r\n        {\r\n            $(this).parent().removeClass('invalidInput');\r\n        });\r\n</script>",
               "page": 4
             },
             "list": [],

@@ -20,7 +20,7 @@ define(function (require) {
   Element = Backbone.Model.extend({
     defaults: {
       page: 0,
-      'class': '',
+      class: '',
       defaultValue: '',
       value: '',
       pattern: '',
@@ -29,17 +29,16 @@ define(function (require) {
     },
     idAttribute: 'name',
     initialize: function () {
-      var attrs = this.attributes,
-        form = attrs.form,
-        page = attrs.page,
-        Forms = BMP.Forms,
-        section = $.trim(attrs.section || '');
+      var attrs = this.attributes;
+      var form = attrs.form;
+      var page = attrs.page;
+      var Forms = BMP.Forms;
+      var section = $.trim(attrs.section || '');
 
       // migrate builder rowClass to class
-      attrs['class'] = attrs['class'] || attrs.rowClass || '';
+      attrs.class = attrs.class || attrs.rowClass || '';
 
       Forms.setAttributesFromClass(this);
-
 
       if (form) {
         page = attrs.page = form.getPage(attrs.page);
@@ -63,7 +62,7 @@ define(function (require) {
 
       //FORMS-137 # Fields that are set to required are not marked as such in anyway (no *)
       if (attrs.required && attrs.label && attrs.type !== 'subForm') {
-        attrs.label += " *";
+        attrs.label += ' *';
       }
 
       if (attrs.label) {
@@ -84,7 +83,7 @@ define(function (require) {
         attrs = this.attributes;
       }
 
-      if ( attrs.hidden ){
+      if (attrs.hidden) {
         //if the element is hidden, validation should be ignored.
         return undefined;
       }
@@ -108,7 +107,7 @@ define(function (require) {
       this.set('errors', this.validationError, {validate: false, silent: true});
     },
 
-    hasErrors: function(){
+    hasErrors: function () {
       return this.validationError && !_.isEmpty(this.validationError);
     },
 
@@ -123,16 +122,16 @@ define(function (require) {
      *
      * @fires model.invalid
      */
-    setExternalErrors: function(elementErrorList, options){
+    setExternalErrors: function (elementErrorList, options) {
       var errors = [];
       options = options || {merge: true};
 
-      if ( options.merge && this.validationError ){
-          errors = this.validationError.value || errors;
+      if (options.merge && this.validationError) {
+        errors = this.validationError.value || errors;
       }
 
-      if (!_.isArray(errors)){
-         errors = [errors];
+      if (!_.isArray(errors)) {
+        errors = [errors];
       }
 
       this.validationError = { value: _.uniq(errors.concat(elementErrorList).reverse()) };
@@ -168,37 +167,36 @@ define(function (require) {
      * this will close any existing view first, then establish a new view
      */
     initializeView: function () {
-      var Forms = BMP.Forms,
-        attrs = this.attributes,
-        View,
-        view;
+      var Forms = BMP.Forms;
+      var View, view;
+      var attrs = this.attributes;
 
       this.removeView();
 
       switch (attrs.type) {
-      case 'subForm':
-        View = Forms._views.SubFormElement;
-        break;
-      case 'heading':
-        View = Forms._views.HeadingElement;
-        break;
-      case 'message':
-        View = Forms._views.MessageElement;
-        break;
-      case 'boolean':
-        View = Forms._views.BooleanElement;
-        break;
-      case 'number':
-        View = Forms._views.NumberElement;
-        break;
-      case 'telephone':
-        View = Forms._views.TelephoneElement;
-        break;
-      case 'button':
-        View = Forms._views.ButtonElement;
-        break;
-      default:
-        View = Forms._views.Element;
+        case 'subForm':
+          View = Forms._views.SubFormElement;
+          break;
+        case 'heading':
+          View = Forms._views.HeadingElement;
+          break;
+        case 'message':
+          View = Forms._views.MessageElement;
+          break;
+        case 'boolean':
+          View = Forms._views.BooleanElement;
+          break;
+        case 'number':
+          View = Forms._views.NumberElement;
+          break;
+        case 'telephone':
+          View = Forms._views.TelephoneElement;
+          break;
+        case 'button':
+          View = Forms._views.ButtonElement;
+          break;
+        default:
+          View = Forms._views.Element;
       }
       view = new View({model: this});
       this.set('_view', view);
@@ -216,7 +214,7 @@ define(function (require) {
 
       attrs = _.extend({}, this.attributes, {value: value});
       this.validationError = this.validate(attrs);
-      if ( this.validationError){
+      if (this.validationError) {
         this.trigger('invalid', this, this.validationError);
       }
 
@@ -231,10 +229,10 @@ define(function (require) {
      * @return {Element} new Element.
      */
     create: function (attrs, form) {
-      var Forms = BMP.Forms,
-        dateTypes = ['date', 'time', 'datetime'],
-        el,
-        TypedElement;
+      var Forms = BMP.Forms;
+      var dateTypes = ['date', 'time', 'datetime'];
+      var el;
+      var TypedElement;
 
       if (!attrs || !_.isObject(attrs)) {
         return new Element();
@@ -244,66 +242,66 @@ define(function (require) {
       }
       // TODO: determine Element type and select sub-Prototype
       switch (attrs.type) {
-      case 'draw':
-        TypedElement = Forms._models.DrawElement;
-        break;
-      case 'file':
-        TypedElement = Forms._models.FileElement;
-        break;
-      case 'location':
-        TypedElement = Forms._models.LocationElement;
-        break;
-      case 'subForm':
-        TypedElement = Forms._models.SubFormElement;
-        break;
-      case 'heading':
-        TypedElement = Forms._models.HeadingElement;
-        break;
-      case 'message':
-        TypedElement = Forms._models.MessageElement;
-        break;
-      case 'boolean':
-        TypedElement = Forms._models.BooleanElement;
-        break;
-      case 'select':
-        TypedElement = Forms._models.SelectElement;
-        break;
-      case 'multi':
-        TypedElement = Forms._models.MultiElement;
-        break;
-      case 'hidden':
-        TypedElement = Forms._models.HiddenElement;
-        break;
-      case 'number':
-        TypedElement = Forms._models.NumberElement;
-        break;
-      case 'telephone':
-        TypedElement = Forms._models.TelephoneElement;
-        break;
-      case 'password':
-        TypedElement = Forms._models.PasswordElement;
-        break;
-      case 'email':
-        TypedElement = Forms._models.EmailElement;
-        break;
-      case 'url':
-        TypedElement = Forms._models.URLElement;
-        break;
-      case 'text':
-        TypedElement = Forms._models.TextElement;
-        break;
-      case 'button':
-        TypedElement = Forms._models.ButtonElement;
-        break;
-      case 'textarea':
-        TypedElement = Forms._models.TextAreaElement;
-        break;
-      default:
-        if (_.indexOf(dateTypes, attrs.type) !== -1) {
-          TypedElement = Forms._models.DateElement;
-        } else {
-          TypedElement = Forms._models.Element;
-        }
+        case 'draw':
+          TypedElement = Forms._models.DrawElement;
+          break;
+        case 'file':
+          TypedElement = Forms._models.FileElement;
+          break;
+        case 'location':
+          TypedElement = Forms._models.LocationElement;
+          break;
+        case 'subForm':
+          TypedElement = Forms._models.SubFormElement;
+          break;
+        case 'heading':
+          TypedElement = Forms._models.HeadingElement;
+          break;
+        case 'message':
+          TypedElement = Forms._models.MessageElement;
+          break;
+        case 'boolean':
+          TypedElement = Forms._models.BooleanElement;
+          break;
+        case 'select':
+          TypedElement = Forms._models.SelectElement;
+          break;
+        case 'multi':
+          TypedElement = Forms._models.MultiElement;
+          break;
+        case 'hidden':
+          TypedElement = Forms._models.HiddenElement;
+          break;
+        case 'number':
+          TypedElement = Forms._models.NumberElement;
+          break;
+        case 'telephone':
+          TypedElement = Forms._models.TelephoneElement;
+          break;
+        case 'password':
+          TypedElement = Forms._models.PasswordElement;
+          break;
+        case 'email':
+          TypedElement = Forms._models.EmailElement;
+          break;
+        case 'url':
+          TypedElement = Forms._models.URLElement;
+          break;
+        case 'text':
+          TypedElement = Forms._models.TextElement;
+          break;
+        case 'button':
+          TypedElement = Forms._models.ButtonElement;
+          break;
+        case 'textarea':
+          TypedElement = Forms._models.TextAreaElement;
+          break;
+        default:
+          if (_.indexOf(dateTypes, attrs.type) !== -1) {
+            TypedElement = Forms._models.DateElement;
+          } else {
+            TypedElement = Forms._models.Element;
+          }
       }
       // TODO: set View = read-only view for m.readOnly
       el = new TypedElement(attrs);

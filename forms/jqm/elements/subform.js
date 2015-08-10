@@ -14,10 +14,10 @@ define(function (require) {
   return ElementView.extend({
     tagName: 'section',
 
-    initialize: function(){
-      this.listenTo(this.model, 'update:fieldErrors', function(){
+    initialize: function () {
+      this.listenTo(this.model, 'update:fieldErrors', function () {
         this.renderErrors.apply(this, arguments);
-      }.bind(this) );
+      }.bind(this));
 
       ElementView.prototype.initialize.apply(this, arguments);
     },
@@ -32,8 +32,8 @@ define(function (require) {
       return ElementView.prototype.remove.call(this);
     },
     render: function () {
-      var attrs = this.model.attributes,
-        $button;
+      var attrs = this.model.attributes;
+      var $button;
 
       $button = $('<button data-onclick="onAddClick" class="bm-button bm-add"></button>').attr({
         type: 'button',
@@ -41,7 +41,7 @@ define(function (require) {
         'data-action': 'add'
       }).text(attrs.plusButtonLabel);
 
-      $button.on('click', function(e){
+      $button.on('click', function (e) {
         this.onAddClick(e);
       }.bind(this));
 
@@ -56,7 +56,7 @@ define(function (require) {
       var attrs = self.model.attributes;
       var $add = self.$el.children('button').add(self.$el.children('.ui-btn').children('button'));
       $add.button('disable');
-      return self.model.add().then(function(){
+      return self.model.add().then(function () {
         if (!attrs.maxSubforms || self.model.getRealLength() < attrs.maxSubforms) {
           $add.button('enable');
         }
@@ -82,7 +82,7 @@ define(function (require) {
       $add.button();
       $add.button('refresh');
 
-      if (!attrs.maxSubforms || realLength < attrs.maxSubforms ) {
+      if (!attrs.maxSubforms || realLength < attrs.maxSubforms) {
         $add.button('enable');
       } else if (realLength >= attrs.maxSubforms) {
         $add.button('disable');

@@ -10,7 +10,5 @@ define(['forms/models/element'], function (Element) {
     removeView: function () {}
   });
 
-
-
   return HiddenElement;
 });

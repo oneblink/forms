@@ -1,5 +1,5 @@
 {
-  "extends": ["eslint:recommended"],
+  "extends": ["eslint:recommended", "standard"],
   "env": {
     "amd": true,
     "browser": true,
@@ -14,12 +14,12 @@
   "rules": {
     /* Possible Errors */
     "no-extra-parens": 2,
-    "dot-notation": [2, { "allowKeywords": false }],
     "valid-jsdoc": 0, /* TODO: 2 */
     /* Best Practices */
     "block-scoped-var": 2,
     "complexity": [1, 5],
     "default-case": 2,
+    "dot-notation": 2,
     "guard-for-in": 2,
     "no-div-regex": 2,
     "no-else-return": 2,
@@ -32,14 +32,10 @@
     "radix": 2,
     "vars-on-top": 2,
     "wrap-iife": 2,
-    /* Variables */
-    "no-catch-shadow": 2,
     /* Node.JS */
     "no-sync": 2,
     /* Stylistic Issues */
-    "no-mixed-spaces-and-tabs": 2,
-    "no-underscore-dangle": 0,
-    "quotes": 0, /* TODO: [1, "single", "avoid-escape"] */
+    "spaced-comment": 1, /* TODO: drop this eventually */
     /* Semi-Standard */
     "semi": [2, "always"],
     "no-extra-semi": 2,

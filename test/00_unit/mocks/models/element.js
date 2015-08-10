@@ -1,6 +1,6 @@
 //mocked up element model.
-define(function(){
-  var noop = function(){};
+define(function () {
+  var noop = function () {};
 
   /**
   @description A model that confirms to the Element Interface but each method is

@@ -1,5 +1,5 @@
-define(function(require){
-	'use strict';
+define(function (require) {
+  'use strict';
 
   var Backbone = require('backbone');
   var _ = require('underscore');
@@ -18,13 +18,13 @@ define(function(require){
       'data-role': 'popup'
     },
 
-    initialize: function(){
+    initialize: function () {
       this._promise = null;
       this.attributes['data-dissmissible'] = _.isUndefined(this.model.dissmissible) ? true : this.model.dissmissible;
     },
 
-    render: function(){
-      throw new NotImplementedError("PopupView is an Interface Class");
+    render: function () {
+      throw new NotImplementedError('PopupView is an Interface Class');
     },
 
     /**
@@ -33,24 +33,24 @@ define(function(require){
      *
      * it is up to the sub classess to call resolve or reject
      */
-    open: function(){
-      if ( this._promise ){
+    open: function () {
+      if (this._promise) {
         return this._promise;
       }
-      this._promise = new Promise(function(resolve, reject){
+      this._promise = new Promise(function (resolve, reject) {
         this._resolve = resolve;
         this._reject = reject;
 
         this.$el = this.render().$el.popup();
 
         this.$el.popup('open');
-        this.$el.one('popupafterclose', function(){
+        this.$el.one('popupafterclose', function () {
           this.remove();
         }.bind(this));
       }.bind(this));
 
-      this._promise['catch'](function(err){
-        if ( err.message !== 'cancel' ){
+      this._promise.catch(function (err) {
+        if (err.message !== 'cancel') {
           window.console.log('popup error:', err);
         }
       });
@@ -58,7 +58,7 @@ define(function(require){
       return this._promise;
     },
 
-    close: function(){
+    close: function () {
       this.$el.popup('close');
       this._resolve = null;
       this._reject = null;

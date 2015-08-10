@@ -188,8 +188,8 @@
 
   /**
    * @param {String} url
-   * @param {Function} onSuccess function({BMP.Blob} blob)
-   * @param {Function} onError function({Error} error)
+   * @param {Function} onSuccess function ({BMP.Blob} blob)
+   * @param {Function} onError function ({Error} error)
    */
   Blob.fromBlobURL = function (url, onSuccess, onError) {
     var xhr,
@@ -212,8 +212,8 @@
 
   /**
    * @param {Blob} blob
-   * @param {Function} onSuccess function({BMP.Blob} blob)
-   * @param {Function} onError function({Error} error)
+   * @param {Function} onSuccess function ({BMP.Blob} blob)
+   * @param {Function} onError function ({Error} error)
    */
   Blob.fromNativeBlob = function (blob, onSuccess, onError) {
     var fr = new window.FileReader();
@@ -296,8 +296,8 @@
 
   /**
    * @param {String} url
-   * @param {Function} onSuccess function({BMP.Blob} blob)
-   * @param {Function} onError function({Error} error)
+   * @param {Function} onSuccess function ({BMP.Blob} blob)
+   * @param {Function} onError function ({Error} error)
    */
   Blob.nativelyFromBlobURL = function (url, onSuccess, onError) {
     var xhr,

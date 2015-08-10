@@ -16,9 +16,9 @@ define(function (require) {
 
   // this module
 
-  //IE aniamtes html, everything else does body.
-  //known issue- in IE, BIC wont animate due to the above and jQuery mobile conflicting with all methods
-  //of detection.
+  // IE aniamtes html, everything else does body.
+  // known issue- in IE, BIC wont animate due to the above and jQuery mobile conflicting with all methods
+  // of detection.
   var $body = $('html, body');
 
   return Backbone.View.extend({
@@ -39,7 +39,6 @@ define(function (require) {
     initialize: function () {
       var element = this.model;
 
-
       this.$el.attr('data-name', element.attributes.name);
       this.$el.attr('data-element-type', element.attributes.type);
       this.$el.data('model', element);
@@ -54,7 +53,10 @@ define(function (require) {
     },
 
     remove: function () {
-      this.$label = null;
+      if (this.$label) {
+        this.$label.remove();
+        this.$label = null;
+      }
       this.$el.removeData('model');
       this.model.off(null, null, this);
 
@@ -69,32 +71,36 @@ define(function (require) {
     renderLabel: function () {
       if (!this.$label) {
         this.$label = $('<label class="ui-input-text"></label>');
+      }
+
+      if (!this.$el.find(this.$label).length) {
         this.$el.append(this.$label);
       }
+
       this.$label.html(this.model.attributes.label || '');
     },
 
     renderHint: function () {
-      var self = this,
-        attrs = self.model.attributes,
-        $hint,
-        $label,
-        blackListHintFields = ['boolean', 'file'],
-        fullWidthHints = ['heading', 'subForm'];
+      var self = this;
+      var attrs = self.model.attributes;
+      var $hint,
+        $label;
+      var blackListHintFields = ['boolean', 'file'];
+      var fullWidthHints = ['heading', 'subForm'];
 
-      //if there is no hint available in attributes
-      //no need to add any element
+      // if there is no hint available in attributes
+      // no need to add any element
       if (!attrs.hint || blackListHintFields.indexOf(attrs.type) !== -1) {
         return;
       }
 
-      //for subform and heading fields,
-      //no label required
+      // for subform and heading fields,
+      // no label required
       if (fullWidthHints.indexOf(attrs.type) === -1) {
         $label = $(document.createElement('label'));
 
         $label.attr({
-          'class': 'ui-input-text'
+          class: 'ui-input-text'
         });
 
         this.$el.append($label);
@@ -103,7 +109,7 @@ define(function (require) {
       $hint = $(document.createElement('span'));
 
       $hint.attr({
-        'class': 'bm-formelement__bm-hint'
+        class: 'bm-formelement__bm-hint'
       });
 
       $hint.text(attrs.hint);
@@ -115,7 +121,7 @@ define(function (require) {
       throw new NotImplementedError('Element.render is only an interface');
     },
 
-    //TODO: with the event removed are warnings still used ?
+    // TODO: with the event removed are warnings still used ?
     renderWarning: function () {
       var attrs, warning;
 
@@ -125,7 +131,7 @@ define(function (require) {
       if (!_.isEmpty(warning)) {
         $(document.createElement('ul'))
           .addClass('bm-warning__bm-list')
-          .append( _.map(warning.value, function(w){
+          .append(_.map(warning.value, function (w) {
             return $(document.createElement('li')).text(formsErrors.toWarningString(w)).addClass('bm-warning__bm-listitem');
           }))
           .appendTo(this.$el);
@@ -141,7 +147,7 @@ define(function (require) {
       if (errors) {
         $(document.createElement('ul'))
           .addClass('bm-errors__bm-list')
-          .append(_.map(errors.value, function(error){
+          .append(_.map(errors.value, function (error) {
             var text;
 
             if (error.code === 'PATTERN') {
@@ -157,7 +163,7 @@ define(function (require) {
           .appendTo(this.$el);
       }
 
-      if ( this.model.validationError ){
+      if (this.model.validationError) {
         this.$el.addClass('bm-formelement-invalid');
         this.$el.closest('form').addClass('bm-form-invalid');
       } else {
@@ -168,12 +174,12 @@ define(function (require) {
     },
 
     onChangeClass: function () {
-      this.$el.attr('class', this.model.attributes['class']);
+      this.$el.attr('class', this.model.attributes.class);
     },
 
     onChangeHidden: function (model) {
       var hidden = this.model.attributes.hidden;
-      if ( model && model.cid !== this.model.cid ){
+      if (model && model.cid !== this.model.cid) {
         return;
       }
       if (hidden) {
@@ -185,8 +191,8 @@ define(function (require) {
 
     hide: function () {
       this.$el.css('display', 'none');
-      //when a field is hidden, we no longer care
-      //about if it is valid or not.
+      // when a field is hidden, we no longer care
+      // about if it is valid or not.
       this.model.validationError = undefined;
       this.model.trigger('change:value');
     },
@@ -206,7 +212,7 @@ define(function (require) {
      * Scrolls an element into view
      * @param  {Object} options Passed to [jQuery.animate](http://api.jquery.com/animate/)
      */
-    scrollTo: function(options){
+    scrollTo: function (options) {
       return Promise.resolve($body.animate({
         scrollTop: this.$el.offset().top
       }, options).promise());
