@@ -24,7 +24,7 @@ define(function (require) {
   // of detection.
   var $body = $('html, body');
 
-  var ElementView = Backbone.View.extend({
+  return Backbone.View.extend({
     tagName: 'div',
 
     attributes: {
@@ -58,7 +58,7 @@ define(function (require) {
       }
 
       this.onChangeClass();
-      this.onDirtyChange();
+
       this.onPristineChange();
       this.onChangeHidden();
       this.model.isValid();
@@ -167,6 +167,7 @@ define(function (require) {
           .addClass('bm-errors__bm-list')
           .append(_.map(errors.value, function (error) {
             var text;
+            var requiredClass = error.code === 'REQUIRED' ? ' bm-errors__bm-required' : '';
 
             if (error.code === 'PATTERN') {
               text = attrs.hint || attrs.toolTip || attrs.title;
@@ -176,16 +177,12 @@ define(function (require) {
               text = formsErrors.toErrorString(error);
             }
 
-            return $(document.createElement('li')).text(text).addClass('bm-errors__bm-listitem');
+            return $(document.createElement('li')).text(text).addClass('bm-errors__bm-listitem' + requiredClass);
           }, this))
           .appendTo(this.$el);
       }
 
-      if (this.model.validationError) {
-        this.$el.addClass(ElementView.invalidClass);
-      } else {
-        this.$el.removeClass(ElementView.invalidClass);
-      }
+      this.onInvalidChange();
 
     },
 
@@ -234,6 +231,4 @@ define(function (require) {
       }, options).promise());
     }
   });
-
-  return ElementView;
 });

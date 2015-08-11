@@ -66,3 +66,10 @@ This class is automatically removed when the form model is checked for errors vi
     });
 
 You can also set the `isInvalid` attribute of the form/element model manually using `model.set({isInvalid: true|false})`, which will add or remove the class.
+
+### Required Fields
+Required field errors have a CSS class of `bm-errors__bm-required`. If you wish to only show required errors after a user has tried edited the field, you can use CSS to hide the error message if the element has not been touched by the user, like so:
+
+    .bm-formelement-pristine .bm-errors__bm-required{
+        display: none;
+    }
