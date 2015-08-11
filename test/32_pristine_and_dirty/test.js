@@ -1,5 +1,5 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
+/* eslint-env mocha */
+/* global assert */ // chai
 
 define(['BlinkForms', 'BIC'], function (Forms) {
 
@@ -27,7 +27,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       'camera',
       'image_library',
       'file_upload',
-  //    '_heading_1', // we have a heading in the list because its th e marker for the second page
       'textbox',
       'location',
       'sketch_signature',
@@ -54,7 +53,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       teardown(function () {
-        Forms.current.off();
         Forms.current.setPristine();
       });
 
@@ -122,16 +120,11 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       teardown(function () {
-        Forms.current.off();
         Forms.current.setPristine();
       });
 
       // generate tests
       elementNames.forEach(function (elementName) {
-        // if (elementName === '_heading_1') {
-        //   //headings are not editable elements and as such cannot be set to dirty!
-        //   return;
-        // }
         test(elementName + ' model isDirty attribute should be set to true when model.val() is used', function () {
 
           var elementModel = Forms.current.getElement(elementName);
@@ -150,8 +143,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
     });
 
-        // 'calculation',,
-        // 'subform'
     suite('elements that use the blob attribute', function () {
       suiteSetup(function () {
         $page = $('[data-role=page]');
@@ -169,7 +160,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
 
       teardown(function () {
-        Forms.current.off();
         Forms.current.setPristine();
       });
 
@@ -198,13 +188,12 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         }).then(function () {
           Forms.current.get('pages').goto(1);
 
-          //add a subform
+          // add a subform
           return Forms.current.getElement('subform').add();
         });
       });
 
       teardown(function () {
-        Forms.current.off();
         Forms.current.setPristine();
       });
 
