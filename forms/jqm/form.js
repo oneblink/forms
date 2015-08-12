@@ -24,8 +24,15 @@ define(function (require) {
     },
 
     remove: function () {
+      var pages = this.model.attributes.pages;
+
       events.proxyUnbindFormElementEvents(this, this.model, this.formElementEvents);
       this.$el.removeData('model');
+
+      if (pages && pages.current && pages.current.attributes._view) {
+        pages.current.attributes._view.remove();
+      }
+
       this.model.unset('_view');
       this.stopListening(this.model.get('elements'));
 
