@@ -1,7 +1,7 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
+/* eslint-env mocha */
+/* global assert */ // chai
 
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('33: Pages with subforms', function () {
     var $page, $content, form;
@@ -74,6 +74,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
       });
 
+      testUtils.defineButtonTest();
+
       suite('change page', function () {
         suiteSetup(function () {
 
@@ -89,6 +91,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
             assert.notStrictEqual(labelText, '');
           });
         });
+
+        testUtils.defineButtonTest();
+
       });
     });
 
