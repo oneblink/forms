@@ -113,9 +113,13 @@ define(function (require) {
       });
       // this.$el.trigger('create');
     },
+
     onAttached: function () {
       this.model.attributes.forms.forEach(function (form) {
-        form.attributes._view.onAttached();
+        var view = form.attributes._view;
+        if (view && view.onAttached) {
+          view.onAttached();
+        }
       });
     }
   });
