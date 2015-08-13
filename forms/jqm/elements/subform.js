@@ -63,15 +63,12 @@ define(function (require) {
       });
     },
     onFormsChange: function () {
-      var Forms,
-        attrs,
-        me,
+      var attrs,
         view,
         $add,
         label,
         realLength;
-      Forms = BMP.Forms;
-      me = this;
+      var me = this;
 
       attrs = me.model.attributes;
       $add = me.$el.children('button').add(me.$el.children('.ui-btn').children('button'));

@@ -1,5 +1,4 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
+/* global assert */ // chai
 
 define(['BlinkForms', 'BIC'], function (Forms) {
   suite('31: subForms', function () {
@@ -8,10 +7,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     var form;
 
-    suiteSetup(function() {
+    suiteSetup(function () {
       $content.empty();
       delete Forms.current;
-      return Forms.getDefinition('form1', 'add').then(function(def){
+      return Forms.getDefinition('form1', 'add').then(function (def) {
         Forms.initialize(def, 'add');
         form = Forms.current;
 
