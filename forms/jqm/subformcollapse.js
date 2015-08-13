@@ -9,6 +9,7 @@ define(function (require) {
   // local modules
 
   var events = require('forms/events');
+  var FormView = require('forms/jqm/form');
   var SubFormView = require('forms/jqm/subform');
   var template = require('text!forms/jqm/templates/subform-collapse.html');
 
@@ -19,7 +20,7 @@ define(function (require) {
       var parentAttrs = this.model.parentElement.attributes;
 
       // explictly skip super and use super-super
-      BMP.Forms._views.Form.prototype.render.call(this);
+      FormView.prototype.render.call(this);
       this.$el.append(template);
       this.$collapsible = this.$el.children('[data-role=collapsible]');
       this.$collapsible.children('h3').children('.bm-subform__bm-title')
@@ -59,7 +60,7 @@ define(function (require) {
       // events.proxyUnbindFormElementEvents(this, this.model, this.formElementEvents);
 
       // using super's remove
-      return BMP.Forms._views.SubForm.prototype.remove.call(this);
+      return SubFormView.prototype.remove.call(this);
     },
 
     renderSummary: function () {
