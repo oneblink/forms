@@ -22,7 +22,7 @@ define(function (require) {
      "NOTE: Photo resolution on newer devices is quite good. Photos selected from the device's gallery are not downscaled to a lower quality, even if a quality parameter is specified. To avoid common memory problems, set Camera.destinationType to FILE_URI rather than DATA_URL."
   */
   try {
-    cameraDestinationType = window.camera.DestinationType || navigator.camera.DestinationType;
+    cameraDestinationType = (window.Camera || navigator.camera).DestinationType;
   } catch(e) {
     if (window.console && window.console.info) {
       window.console.info('Cordova Camera not available');
@@ -130,8 +130,8 @@ override because super#validate() checks "value", and we need to check "blob"
       // var attrs = {'imageCaptureQuality':40, 'imageCaptureScale': 60, 'cameraOptions': '{"quality":45}'};
       var attrs = BMP.BIC.attributes || {};
 
-      if (!_.isUndefined(cameraDestinationType)) {
-        options.destinationType = cameraDestinationType;
+      if (_.isObject(cameraDestinationType)) {
+        options.destinationType = cameraDestinationType.DATA_URL;
       }
 
       if (_.isNumber(+attrs.imageCaptureQuality)) {
