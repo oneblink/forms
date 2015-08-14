@@ -27,12 +27,12 @@ define(function (require) {
       fetchImage = function (loc, $figure) {
         var success,
           error;
-        //if navigator.map or navigator.map.getStaticMap not defined
+        // if navigator.map or navigator.map.getStaticMap not defined
         if (!window.navigator.map || !window.navigator.map.getStaticMap) {
           return;
         }
 
-        //on success, attach image to $figure
+        // on success, attach image to $figure
         success = function (map) {
           var $img = $('<img />');
           $img.attr('src', map);
@@ -43,12 +43,12 @@ define(function (require) {
           $figure.append($img);
         };
 
-        //on error, just log the error
+        // on error, just log the error
         error = function (message) {
           window.console.error('Static-MAP: ' + message);
         };
 
-        //get static map
+        // get static map
         window.navigator.map.getStaticMap(success, error, {
           'pushpins': [[loc.latitude, loc.longitude, 37]],
           'centerPoint': [loc.latitude, loc.longitude],

@@ -269,7 +269,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           var $img;
           assert.equal(spy.callCount, 1);
           assert.equal(spyStatic.callCount, 1);
-          //there will be atleast one image and src would be the content sent by onSuccess
+          // there will be atleast one image and src would be the content sent by onSuccess
           $img = element.get('_view').$el.find('img');
           assert.equal($img.length, 1, "image not found");
           assert.equal(element.get('_view').$el.find('img').attr('src'), sampleImage, "invalid image src");
@@ -319,7 +319,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           assert.equal(spy.callCount, 1);
           assert.equal(spyStatic.callCount, 1);
           assert.equal(spyError.callCount, 1);
-          //there won't be any image, because of error call
+          // there won't be any image, because of error call
           $img = element.get('_view').$el.find('img');
           assert.equal($img.length, 0, "image not found");
           window.console.error.restore();
