@@ -5,11 +5,15 @@ define(function (require) {
 
   var $ = require('jquery');
 
-  // this module
+  // local modules
 
+  var events = require('forms/events');
   var FormView = require('forms/jqm/form');
   var ConfirmPopupView = require('forms/jqm/popups/confirm-popup');
   var ConfirmModel = require('forms/models/popup');
+
+  // this module
+
   var confirmOptions = {
     dissmissible: false,
     header: 'Confirm',
@@ -52,7 +56,7 @@ define(function (require) {
      * @return {Promise} - A Promise that is resolved if the user confirms,
      * or rejected if they cancel.
      */
-    onRemoveClick: function () {
+    onRemoveClick: function (event) {
       var confirmPrompt = new ConfirmPopupView({
         model: new ConfirmModel(confirmOptions)
       });
@@ -65,6 +69,9 @@ define(function (require) {
       var onCancel = function () {
         confirmPrompt.close();
       };
+
+      events.preventDefault(event);
+      events.stopPropagation(event);
 
       return confirmPrompt.open().then(onConfirmation, onCancel);
     }
