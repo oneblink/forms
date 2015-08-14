@@ -235,13 +235,13 @@ define(function () {
                         "subForm": "second_level_form",
                         "_elements": {
                             "second|required": {
-                                "hide": "",
+                                "hide": "0",
                                 "override": "",
                                 "type": "textbox",
                                 "id": "second_required"
                             },
                             "third|level|sub": {
-                                "hide": "",
+                                "hide": "1",
                                 "override": "",
                                 "type": "sub_form",
                                 "id": "third_level_sub"

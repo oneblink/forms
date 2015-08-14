@@ -106,25 +106,46 @@ define(function (require) {
       // TODO: there is too much DOM stuff here to be in the model
       var self = this;
       var attrs = this.attributes;
-      var name = attrs.subForm;
       var forms = attrs.forms;
+      var name = attrs.subForm;
       var Forms = BMP.Forms;
+      var form;
 
       action = action || 'add';
+
       return new Promise(function (resolve, reject) {
+        // make a map of the field name properties so they are easy to match
+        var fieldProperties = _.reduce(self.get('_elements'), function (memo, element) {
+          memo[element.id] = element;
+
+          return memo;
+        }, {});
+
         Forms.getDefinition(name, action).then(function (def) {
-          var form;
+          var elements;
           try {
-            // the elements themselves need to know who the parent is.
-            _.each(def._elements, function (element) {
+            elements = _.reduce(def._elements, function (memo, element) {
+              // check the sub form field for any overridden properties.
+              var overriddenOptions = fieldProperties[element.subForm || element.name];
+
+              // for now just apply the hidden override.
+              // TODO: implement the other subform overrides when their behavior has been defined.
+              element.hidden = overriddenOptions && parseInt(overriddenOptions.hide, 10) === 1;
+
+              // let the element know who its parent is
               element.parentElement = self;
-            });
-            form = SubFormModel.create(def, action);
+
+              memo.push(element);
+              return memo;
+            }, []);
+
+            form = SubFormModel.create(_.extend({}, def, {_elements: elements}), action);
             self.listenTo(form.get('elements'), 'invalid change:value change:blob', self.validate.bind(self));
             form.parentElement = self;
             if (forms) {
               forms.add(form);
             }
+
             resolve(form);
           } catch (err) {
             reject(err);
@@ -135,6 +156,7 @@ define(function (require) {
         });
       });
     },
+
     /**
     * @param {Model} model the SubForm Model to find an index
     * @return {Number} -1 if not found, otherwise the collection's index

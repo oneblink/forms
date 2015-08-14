@@ -94,5 +94,23 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       });
     });
 
+    suite('fields in a subform', function () {
+      setup(function () {
+        return Forms.current.getElement('second_level_field').add();
+      });
+
+      test('that are defined as hidden have the hidden attribute set', function () {
+        assert.isTrue(Forms.current.getElement('third_level_field').get('hidden'));
+      });
+
+      test('that are not defined as hidden have the hidden attribute set', function () {
+        assert.isFalse(Forms.current.getElement('second_required').get('hidden'));
+      });
+
+      test('dont break when referenced by conditional logic', function () {
+
+      });
+    });
+
   });
 });
