@@ -58,7 +58,7 @@ define(function (require) {
       var attr = this.model.attributes;
       var name = attr.name;
 
-      //pre-HTML5 fallback
+      // pre-HTML5 fallback
       $input = $('<input type="text" />');
       $input.attr({
         name: name + '_time',

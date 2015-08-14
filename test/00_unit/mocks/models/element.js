@@ -1,4 +1,4 @@
-//mocked up element model.
+// mocked up element model.
 define(function () {
   var noop = function () {};
 

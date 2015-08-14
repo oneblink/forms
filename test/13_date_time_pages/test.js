@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('9: pages', function () {
@@ -110,7 +107,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           done();
         }, 500);
 
-        //assert.equal($input.hasClass('picker__input'), true);
+        // assert.equal($input.hasClass('picker__input'), true);
       });
 
       test('all [data-role=fieldcontain] enhanced', function () {

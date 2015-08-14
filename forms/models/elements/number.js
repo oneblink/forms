@@ -107,7 +107,7 @@ define(function (require) {
         // return -1 === pos || pos < maxDecimals;
       },
       minDecimals: function (value, minDecimals) {
-        //todo: int validates against min-decimals, regexp needs to be fixed
+        // todo: int validates against min-decimals, regexp needs to be fixed
         var regexp = new RegExp('^(?:(-)?\\d*\\.\\d{' + minDecimals + ',}|\\d+)$');
         return regexp.test(value);
       }

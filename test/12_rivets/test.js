@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['jquery', 'BlinkForms', 'testUtils', 'BIC'], function ($, Forms, testUtils) {
   'use strict';
 

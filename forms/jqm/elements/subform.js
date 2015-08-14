@@ -63,15 +63,12 @@ define(function (require) {
       });
     },
     onFormsChange: function () {
-      var Forms,
-        attrs,
-        me,
+      var attrs,
         view,
         $add,
         label,
         realLength;
-      Forms = BMP.Forms;
-      me = this;
+      var me = this;
 
       attrs = me.model.attributes;
       $add = me.$el.children('button').add(me.$el.children('.ui-btn').children('button'));
@@ -94,13 +91,7 @@ define(function (require) {
         action = form.attributes._action;
 
         if (action !== 'remove') {
-          if (!form.attributes._view) {
-            form.attributes._view = new Forms._views.SubForm({
-              model: form
-            });
-          }
-
-          view = form.attributes._view;
+          view = form.initializeView();
 
           if (!view || !view.$el || !view.$el.children().length) {
             // prevent calling render() over and over as "add" buttons go crazy
@@ -122,9 +113,13 @@ define(function (require) {
       });
       // this.$el.trigger('create');
     },
+
     onAttached: function () {
       this.model.attributes.forms.forEach(function (form) {
-        form.attributes._view.onAttached();
+        var view = form.attributes._view;
+        if (view && view.onAttached) {
+          view.onAttached();
+        }
       });
     }
   });

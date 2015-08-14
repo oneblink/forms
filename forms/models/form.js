@@ -100,7 +100,7 @@ define(function (require) {
         elements = [];
       }
       this.attributes.elements = new Elements(elements);
-      //bubble element events up through the form model.
+      // bubble element events up through the form model.
       this.attributes.elements.on('all', function () {
         this.trigger.apply(this, arguments);
       }, this);
@@ -170,7 +170,7 @@ define(function (require) {
       var element = this.attributes.elements.get(name);
 
       if (!element && name !== 'id') {
-        //this is supposed to recursively search sub forms for an element.
+        // this is supposed to recursively search sub forms for an element.
         element = _.head(_.reduce(this.getSubforms(), function (memo, subForm) {
           return memo.concat(_.compact(subForm.invoke('getElement', name)));
         }, []));
@@ -192,7 +192,7 @@ define(function (require) {
      */
     getSubforms: function () {
       return _.reduce(this.get('elements').filter(isSubForm), function (memo, elementModel) {
-                memo = memo || {}; //create in here so we return undefined if we have no subforms.
+                memo = memo || {}; // create in here so we return undefined if we have no subforms.
                 memo[elementModel.id] = elementModel.get('forms');
                 return memo;
               }, undefined);
@@ -217,7 +217,7 @@ define(function (require) {
     *
     * @example
           Forms.current.getErrors()
-          //returns:
+          // returns:
           //{
           //   modelName : [{code: 'MAXDECIMALS', <errorname>: value, text: "pretty error message" }, {code: 'MINDECIMALS', <errorname>: value, text: "pretty error message"}],
           //   modelName2: [{code: 'MAXDECIMALS', <errorname>: value2, text: "pretty error message"}, {code: 'MINDECIMALS', <errorname>: value2, text: "pretty error message"}],
@@ -268,8 +268,8 @@ define(function (require) {
             if (type === 'location') {
               val = attrs.value;
               if (val) {
-                //NOTE: This is kinda unnecessary as we are assigning object all the time
-                //but leaving it here as safety net
+                // NOTE: This is kinda unnecessary as we are assigning object all the time
+                // but leaving it here as safety net
                 if (typeof val !== 'string') {
                   val = JSON.stringify(val);
                 }
@@ -283,10 +283,10 @@ define(function (require) {
             }
           });
         } else if (me.attributes.id) {
-          //this should be executed when all of following is correct
-          //1. user is editing record
-          //2. user has deleted a subform record
-          //3. me.attributes don't have `elements` element
+          // this should be executed when all of following is correct
+          // 1. user is editing record
+          // 2. user has deleted a subform record
+          // 3. me.attributes don't have `elements` element
           data.id = me.attributes.id;
         }
         data._action = me.attributes._action;
@@ -378,7 +378,7 @@ define(function (require) {
      * @param {Object} errorList - An array of key/value where keys are Element Names and values are the error lists for that element.
      * @param {Object} options   - {merge: true}
      */
-    /* eslint-disable no-unused-vars */ //stop eslint compaining about options and errorList not being used.
+    /* eslint-disable no-unused-vars */ // stop eslint compaining about options and errorList not being used.
     setErrors: function (errorList, options) {
       var elementsCollection = this.get('elements');
       var subForms = this.getSubforms();

@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'backbone', 'testUtils', 'BIC'], function (Forms, Backbone, testUtils) {
   var record$, record, $xml;
 
@@ -238,7 +235,7 @@ define(['BlinkForms', 'backbone', 'testUtils', 'BIC'], function (Forms, Backbone
           form.data().then(function (formdata) {
             assert.isObject(formdata);
             // this is broken now that original input sub-records are XML string
-            //assert.deepEqual(formdata, record, 'form data');
+            // assert.deepEqual(formdata, record, 'form data');
             done();
           });
         });

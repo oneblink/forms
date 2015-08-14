@@ -37,6 +37,7 @@ define(function (require) {
       }).text(label);
 
       $button.on('click', function () {
+        self.model.trigger('change:value');
         self.model.trigger('change', self.model);
       });
 

@@ -41,7 +41,7 @@ define(function (require) {
     }
 
     if (_.isObject(errorObject) && !_.isArray(errorObject)) {
-      //assume its the blink error format
+      // assume its the blink error format
       if (errorObject.code) {
         return errorObject;
       }

@@ -1,4 +1,4 @@
-/*eslint-env mocha*/
+
 /*global assert:true*/ // chai
 
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
@@ -11,7 +11,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       getDrawingFn;
 
     getDrawingFn = function (onSuccess) {//, onError, options) {
-      //options = options || {};
+      // options = options || {};
       if ($.type(onSuccess) === 'function') {
         // TODO: return something better
         onSuccess('data:image/jpeg;base64,1234567890');

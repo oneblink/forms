@@ -41,6 +41,14 @@ define(function (require) {
   });
 
   return ElementModel.extend({
+    defaults: {
+      page: 0,
+      'class': '',
+      hidden: false,
+      persist: true,
+      collapse: 'off'
+    },
+
     initialize: function () {
       var attrs;
 
@@ -48,7 +56,7 @@ define(function (require) {
       this.attributes.forms = new SubFormsCollection();
 
       attrs = this.attributes;
-      //currently server sets preload to either "admin_defined" or "no"
+      // currently server sets preload to either "admin_defined" or "no"
       if (isNaN(Number(attrs.preload))) {
         if (attrs.preload !== 'no' && attrs.preloadNum) {
           attrs.preload = Number(attrs.preloadNum);
@@ -59,7 +67,7 @@ define(function (require) {
         attrs.preload = Number(attrs.preload);
       }
 
-      //plusButtonLabel
+      // plusButtonLabel
       if (_.isEmpty(attrs.plusButtonLabel) && attrs.label) {
         attrs.plusButtonLabel = attrs.label;
       }
@@ -67,7 +75,7 @@ define(function (require) {
       if (_.isEmpty(attrs.plusButtonLabel)) {
         attrs.plusButtonLabel = attrs.name;
       }
-      //minusButtonLabel
+      // minusButtonLabel
       if (_.isEmpty(attrs.minusButtonLabel) && attrs.label) {
         attrs.minusButtonLabel = attrs.label;
       }
@@ -82,14 +90,38 @@ define(function (require) {
         attrs.preloadPromise = Promise.resolve();
       }
 
+      if (attrs.collapse !== 'off') {
+        attrs.summaryPromise = this.getSummaryElements();
+      }
+
       this.attributes.forms.on('add remove invalid change:value change:blob', this.updateFieldErrors, this);
       this.off('invalid change:value change:blob');
 
-      //make sure that all form events are bubbled up through this subform
+      // make sure that all form events are bubbled up through this subform
       this.attributes.forms.on('all', function () {
         this.trigger.apply(this, arguments);
       }, this);
     },
+
+    initializeView: function () {
+      var Forms = BMP.Forms;
+      var View = Forms._views.SubFormElement;
+      var view = new View({model: this});
+      this.set('_view', view);
+      return view;
+    },
+
+    getSummaryElements: function () {
+      var name = this.attributes.subForm;
+      var Forms = BMP.Forms;
+
+      return Forms.getDefinition(name, 'list').then(function (def) {
+        return def._elements.map(function (el) {
+          return el.name;
+        });
+      });
+    },
+
     addSubformRecursive: function (max) {
       var self = this;
       var attrs = this.attributes;
@@ -102,6 +134,7 @@ define(function (require) {
         return Promise.resolve();
       });
     },
+
     add: function (action) {
       // TODO: there is too much DOM stuff here to be in the model
       var self = this;
@@ -115,11 +148,12 @@ define(function (require) {
         Forms.getDefinition(name, action).then(function (def) {
           var form;
           try {
-            //the elements themselves need to know who the parent is.
+            // the elements themselves need to know who the parent is.
             _.each(def._elements, function (element) {
               element.parentElement = self;
             });
-            form = SubFormModel.create(def, action);
+            def._action = action;
+            form = new SubFormModel(def);
             self.listenTo(form.get('elements'), 'invalid change:value change:blob', self.validate.bind(self));
             form.parentElement = self;
             if (forms) {
@@ -135,6 +169,7 @@ define(function (require) {
         });
       });
     },
+
     /**
     * @param {Model} model the SubForm Model to find an index
     * @return {Number} -1 if not found, otherwise the collection's index
@@ -143,6 +178,7 @@ define(function (require) {
       var forms = this.attributes.forms;
       return forms.models.indexOf(model);
     },
+
     /**
      * @param {Number|Model} index or model for the record.
      */
@@ -174,12 +210,15 @@ define(function (require) {
         forms.remove(form);
       }
     },
+
     size: function () {
       return this.attributes.forms.length;
     },
+
     getForm: function (index) {
       return this.attributes.forms.at(index);
     },
+
     getRecord: function () {
       var promises;
 
@@ -195,6 +234,7 @@ define(function (require) {
         });
       });
     },
+
     /**
      * @param {Array} data
      * @returns {Promise}
@@ -213,7 +253,7 @@ define(function (require) {
           return;
         }
         Promise.all([me.attributes.preloadPromise]).then(function () {
-          //remove all preloaded forms
+          // remove all preloaded forms
           while (forms.length > 0) {
             me.remove(forms.length - 1);
           }
@@ -245,15 +285,18 @@ define(function (require) {
         });
       });
     },
+
     data: function () {
       if (!arguments.length) {
         return this.getRecord();
       }
     },
+
     updateFieldErrors: function () {
       this.validationError = this.validateField();
       this.set('errors', this.validationError);
     },
+
     validateField: function (attrs) {
       var forms;
       var errors = {};
@@ -264,7 +307,7 @@ define(function (require) {
 
       forms = attrs.forms;
 
-      //check if there is any subform added
+      // check if there is any subform added
       if (forms && (attrs.required && realLength === 0 || attrs.minSubforms && attrs.minSubforms === 1 && realLength === 0)) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
@@ -284,6 +327,7 @@ define(function (require) {
         return errors;
       }
     },
+
     getButtonLabel: function () {
       var attrs = this.attributes;
       var additionalString = '';
@@ -292,6 +336,7 @@ define(function (require) {
       }
       return additionalString;
     },
+
     getRealLength: function () {
       var forms = this.attributes.forms;
       var counter = 0;
@@ -306,6 +351,7 @@ define(function (require) {
       });
       return counter;
     },
+
     validate: function (attrs) {
       var forms;
       var subformErrorCounter = 0;
@@ -330,7 +376,7 @@ define(function (require) {
         }
       });
 
-      //check if subform fields has any errors
+      // check if subform fields has any errors
       if (subformErrorCounter > 0) {
         errors.value = errors.value || [];
         errors.value.push({code: 'SUBFORM'});
@@ -340,10 +386,10 @@ define(function (require) {
     },
 
     setExternalErrors: function (elementErrorList, options) {
-      //set errors on subforms
+      // set errors on subforms
       this.get('forms').invoke('setErrors', elementErrorList, options);
 
-      //set errors on me.
+      // set errors on me.
       if (elementErrorList.errors) {
         ElementModel.prototype.setExternalErrors.call(this, elementErrorList.errors, options);
       }

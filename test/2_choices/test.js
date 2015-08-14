@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'underscore', 'BIC'], function (Forms, testUtils, _) {
 
   var originalOptions = { a: 'alpha', b: 'beta', g: 'gamma' };
@@ -391,7 +388,6 @@ define(['BlinkForms', 'testUtils', 'underscore', 'BIC'], function (Forms, testUt
             element = form.getElement(name),
             $el = element.attributes._view.$el;
 
-
           if (element.attributes.type === 'multi') {
             $el.find('.ui-checkbox').eq(2).children('label').trigger('click');
             assert.deepEqual(element.val(), ['g']);
@@ -706,7 +702,6 @@ define(['BlinkForms', 'testUtils', 'underscore', 'BIC'], function (Forms, testUt
   }); // END: suite('1', ...)
 
 });
-
 
 /*
 TODO

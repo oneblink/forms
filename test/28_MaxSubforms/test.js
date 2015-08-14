@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('28: MaxSubforms', function () {
@@ -104,7 +101,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         });
 
         test('initial state', function () {
-          //initially there will be 3 subforms
+          // initially there will be 3 subforms
           assert.equal(subFormElement.getRealLength(), 3);
           assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
         });
@@ -124,7 +121,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             return testUtils.wait(300);
           })
           .then(function () {
-            //then there will be 2 subforms + 1 marked removed
+            // then there will be 2 subforms + 1 marked removed
             assert.equal(subFormElement.getRealLength(), 2);
             assert.equal(subForms.length, 3);
             assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
@@ -141,7 +138,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             });
           })
           .then(function () {
-            //then there will be 3 subforms + 1 marked removed
+            // then there will be 3 subforms + 1 marked removed
             assert.equal(subFormElement.getRealLength(), 3);
             assert.equal(subForms.length, 4);
             assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
@@ -164,7 +161,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             return testUtils.wait(300);
           })
           .then(function () {
-            //then there will be 2 subforms + 1 marked removed
+            // then there will be 2 subforms + 1 marked removed
             assert.equal(subFormElement.getRealLength(), 2);
             assert.equal(subForms.length, 3);
             assert.equal($add.text(), attr.plusButtonLabel + subFormElement.getButtonLabel());
@@ -191,7 +188,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       });
 
       test("'add' button disabled after adding one form", function (done) {
-        //adding one more subform makes 3 subforms on view, which is maxSubform limit
+        // adding one more subform makes 3 subforms on view, which is maxSubform limit
         $add.trigger('click');
         setTimeout(function () {
           assert.equal($add.prop('disabled'), true);
@@ -277,7 +274,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
         suiteSetup(function (done) {
           subForms = subFormElement.attributes.forms;
-          //form index 0 will have status removed because its an edit form
+          // form index 0 will have status removed because its an edit form
           subForm = subForms.at(1);
           $view = subForm.attributes._view.$el;
           $remove = $view.children('.ui-btn').children('button');

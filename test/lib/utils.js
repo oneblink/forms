@@ -11,6 +11,12 @@ define(['BlinkForms'], function (Forms) {
 
   return {
 
+    defineButtonTest: function () {
+      test('jQM buttons displayed correctly', function () {
+        assert.lengthOf($('.ui-btn .ui-btn'), 0, 'no buttons within buttons');
+      });
+    },
+
     defineLabelTest: function () {
       test('labels displayed correctly', function () {
         Forms.current.get('elements').forEach(function (el) {

@@ -18,6 +18,7 @@ define(function (require) {
   Forms._views = {
     Form: require('forms/jqm/form'),
     SubForm: require('forms/jqm/subform'),
+    SubFormCollapse: require('forms/jqm/subformcollapse'),
     SubFormElement: require('forms/jqm/elements/subform'),
     Page: require('forms/jqm/page'),
     Section: require('forms/jqm/section'),

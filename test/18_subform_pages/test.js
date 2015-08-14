@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('18: Subforms with pages', function () {
@@ -66,20 +63,20 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
         this.timeout(3000);
 
-        //move to page 1 (page having subform)
+        // move to page 1 (page having subform)
         pages.goto(1);
         subFormElement = Forms.current.getElement('subform01');
 
-        //switched to adding subforms using .add()
-        //instead of clicking on add button
-        //other tests can confirm add click works alright
+        // switched to adding subforms using .add()
+        // instead of clicking on add button
+        // other tests can confirm add click works alright
         addPromises.push(subFormElement.add());
         addPromises.push(subFormElement.add());
         addPromises.push(subFormElement.add());
 
         Promise.all(addPromises).then(function () {
           subForms = subFormElement.attributes.forms;
-          //adding data to subform elements
+          // adding data to subform elements
           subForms.at(0).getElement('Rank').val('1');
           subForms.at(1).getElement('Rank').val('2');
           subForms.at(2).getElement('Rank').val('3');
@@ -88,7 +85,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           assert.equal(subForms.at(1).attributes._view.$el.find('input[name="Rank"]').val(), 2);
           assert.equal(subForms.at(2).attributes._view.$el.find('input[name="Rank"]').val(), 3);
 
-          //check the data of subform element
+          // check the data of subform element
           subFormElement.data()
             .then(function (d) {
               assert.deepEqual(d, testData, 'subFormElement data');
@@ -109,12 +106,12 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           ];
 
         subFormElement = Forms.current.getElement('subform01');
-        //go to page 2
+        // go to page 2
         pages.goto(2);
-        //go to page 1
+        // go to page 1
         pages.goto(1);
 
-        //check the data of subform element again
+        // check the data of subform element again
         subFormElement.data()
           .then(function (d) {
             assert.deepEqual(d, testData, 'subFormElement data');

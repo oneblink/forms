@@ -1,5 +1,5 @@
-/*eslint-env node*/
-/*eslint-disable camelcase*/ // for uglify options
+/* eslint-env node */
+/* eslint-disable camelcase */ // for uglify options
 /**
  * module.exports ... is required for things to work
  * @param {Object} grunt instance of Grunt.

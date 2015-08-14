@@ -1,17 +1,14 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'BIC'], function (Forms) {
 
   suite('31: Conditional logic in sub forms', function () {
     var $page, $content, form;
 
     setup(function () {
-      /*eslint-disable no-unused-expressions*/
+      /* eslint-disable no-unused-expressions */
       Forms.current && Forms.current.off();
       delete Forms.current;
       $content && $content.empty();
-      /*eslint-enable no-unused-expressions*/
+      /* eslint-enable no-unused-expressions */
       $page = undefined;
       $content = undefined;
       form = undefined;
