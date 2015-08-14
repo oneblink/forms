@@ -19,9 +19,44 @@ define(function (require) {
       var $figure,
         $figcaption,
         loc,
-        caption;
+        caption,
+        fetchImage;
       var self = this;
       var attr = self.model.attributes;
+
+      fetchImage = function (loc, $figure) {
+        var success,
+          error;
+        // if navigator.map or navigator.map.getStaticMap not defined
+        if (!window.navigator.map || !window.navigator.map.getStaticMap) {
+          return;
+        }
+
+        // on success, attach image to $figure
+        success = function (map) {
+          var $img = $('<img />');
+          $img.attr('src', map);
+          $img.css({
+            'max-height': '7em',
+            'max-width': '100%'
+          });
+          $figure.append($img);
+        };
+
+        // on error, just log the error
+        error = function (message) {
+          window.console.error('Static-MAP: ' + message);
+        };
+
+        // get static map
+        window.navigator.map.getStaticMap(success, error, {
+          'pushpins': [[loc.latitude, loc.longitude, 37]],
+          'centerPoint': [loc.latitude, loc.longitude],
+          'zoomLevel': 18,
+          'mapSize': [300, 200],
+          'imagerySet': 'AerialWithLabels'
+        });
+      };
 
       if (typeof attr.value === 'string') {
         try {
@@ -44,6 +79,7 @@ define(function (require) {
         caption += '; &plusmn;' + loc.accuracy + 'M';
       }
       $figcaption.html(caption);
+      fetchImage(loc, $figure);
       self.$el.append($figure);
     }
   }, {
