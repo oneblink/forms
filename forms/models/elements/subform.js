@@ -108,6 +108,7 @@ define(function (require) {
       return ElementModel.prototype.setPristine.apply(this, arguments);
     },
 
+    
     addSubformRecursive: function (max) {
       var self = this;
       var attrs = this.attributes;
@@ -147,6 +148,12 @@ define(function (require) {
             form.parentElement = self;
             if (forms) {
               forms.add(form);
+            }
+            form.setDirty();
+            self.setDirty();
+
+            if (Forms.current) {
+              Forms.current.setDirty();
             }
             form.setDirty();
             self.setDirty();
