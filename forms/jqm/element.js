@@ -14,6 +14,9 @@ define(function (require) {
 
   var NotImplementedError = require('typed-errors').NotImplementedError;
 
+  // view mixins
+  var toggleClass = require('forms/mixins/view-helper-mixins').toggleClass;
+
   // this module
 
   // IE aniamtes html, everything else does body.
@@ -33,7 +36,10 @@ define(function (require) {
       // 'change:warning', 'renderWarning',
       'change:class': 'onChangeClass',
       'change:hidden': 'onChangeHidden',
-      'change:label': 'renderLabel'
+      'change:label': 'renderLabel',
+      'change:isDirty': 'onDirtyChange',
+      'change:isPristine': 'onPristineChange',
+      'change:isInvalid': 'onInvalidChange'
     },
 
     initialize: function () {
@@ -43,14 +49,26 @@ define(function (require) {
       this.$el.attr('data-element-type', element.attributes.type);
       this.$el.data('model', element);
 
+      if (this.model.get('defaultValue')) {
+        this.$el.val(this.model.get('defaultValue'));
+      }
+
       if (this.modelEvents) {
         events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       }
 
       this.onChangeClass();
+
+      this.onPristineChange();
       this.onChangeHidden();
       this.model.isValid();
     },
+
+    onDirtyChange: toggleClass('bm-formelement-dirty', 'isDirty'),
+
+    onPristineChange: toggleClass('bm-formelement-pristine', 'isPristine'),
+
+    onInvalidChange: toggleClass('bm-formelement-invalid', 'isInvalid'),
 
     remove: function () {
       if (this.$label) {
@@ -149,6 +167,7 @@ define(function (require) {
           .addClass('bm-errors__bm-list')
           .append(_.map(errors.value, function (error) {
             var text;
+            var requiredClass = error.code === 'REQUIRED' ? ' bm-errors__bm-required' : '';
 
             if (error.code === 'PATTERN') {
               text = attrs.hint || attrs.toolTip || attrs.title;
@@ -158,18 +177,12 @@ define(function (require) {
               text = formsErrors.toErrorString(error);
             }
 
-            return $(document.createElement('li')).text(text).addClass('bm-errors__bm-listitem');
+            return $(document.createElement('li')).text(text).addClass('bm-errors__bm-listitem' + requiredClass);
           }, this))
           .appendTo(this.$el);
       }
 
-      if (this.model.validationError) {
-        this.$el.addClass('bm-formelement-invalid');
-        this.$el.closest('form').addClass('bm-form-invalid');
-      } else {
-        this.$el.removeClass('bm-formelement-invalid');
-        this.$el.closest('form').removeClass('bm-form-invalid');
-      }
+      this.onInvalidChange();
 
     },
 

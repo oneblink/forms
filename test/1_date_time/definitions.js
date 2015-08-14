@@ -91,6 +91,7 @@ define(function () {
           {
             "default": {
               "name": "datefromdate",
+              "required": 1,
               "type": "date",
               "label": "Datefromdate",
               "labelPlacement": "default",

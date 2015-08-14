@@ -10,6 +10,9 @@ define(function (require) {
 
   var events = require('forms/events');
 
+  // view mixins
+  var toggleClass = require('forms/mixins/view-helper-mixins').toggleClass;
+
   // this module
 
   var FormView = Backbone.View.extend({
@@ -23,10 +26,27 @@ define(function (require) {
       id: { 'change:value': 'onChangedId' }
     },
 
+    modelEvents: {
+      'change:isDirty': 'onDirtyChange',
+      'change:isPristine': 'onPristineChange',
+      'change:isInvalid': 'onInvalidChange'
+    },
+
+    initialize: function () {
+      events.proxyBindEntityEvents(this, this.model, this.modelEvents);
+    },
+
+    onDirtyChange: toggleClass('bm-form-dirty', 'isDirty'),
+
+    onPristineChange: toggleClass('bm-form-pristine', 'isPristine'),
+
+    onInvalidChange: toggleClass('bm-form-invalid', 'isInvalid'),
+
     remove: function () {
       var pages = this.model.attributes.pages;
 
       events.proxyUnbindFormElementEvents(this, this.model, this.formElementEvents);
+      events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       this.$el.removeData('model');
 
       if (pages && pages.current && pages.current.attributes._view) {
