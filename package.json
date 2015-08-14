@@ -27,6 +27,7 @@
     "chai": "^3.0",
     "es5-shim": "^4.1",
     "eslint": "^1.0",
+    "eslint-config-semistandard": "^5.0.0",
     "eslint-config-standard": "^4.0.0",
     "eslint-plugin-standard": "^1.2.0",
     "grunt": "~0.4",
