@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v3.5.0 - 2015-08-14
+
+
+### Added
+
+- FORMS-192: you may now configure subforms to collapse "accordion-style"
+
+    - for now, prefix the "row class" setting in the Forms Builder with
+      "collapse: forms;" to opt-in
+
+    - the summary displayed when collapsed uses values from fields that are
+      white-listed for the "list" form action
+
+- FORMS-212: when using our Cordova plugin for maps in a Windows app, the
+  location field now displays a static image, like our other apps
+
+    - see: https://github.com/blinkmobile/cordova-plugin-map
+
+
+### Fixed
+
+- FORMS-208: required fields that are now able to be conditionally hidden
+  without causing the form to fail validation
+
+    - HelpDesk: 1585-QYSM-9411
+
+- FORMS-219: signature panel (and other) buttons no longer render incorrectly
+  within subforms after turning the page
+
+- FORMS-220: native camera / gallery fields function as expected in the Windows
+  app built with Cordova
+
+
 ## v3.4.4 - 2015-08-10
 
 
