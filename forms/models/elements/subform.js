@@ -125,7 +125,6 @@ define(function (require) {
      * Sets the subform element and all its child forms state to dirty
      */
     setDirty: function () {
-      //this.attributes.forms.invoke.call( this.attributes.forms, 'setDirty', arguments[0]);
       this.attributes.forms.invoke('setDirty', arguments[0]);
 
       return ElementModel.prototype.setDirty.apply(this, arguments);
@@ -135,7 +134,6 @@ define(function (require) {
      * Sets the subform element and all its child forms state to pristine
      */
     setPristine: function () {
-      //this.attributes.forms.invoke.call( this.attributes.forms, 'setPristine', arguments[0]);
       this.attributes.forms.invoke('setPristine', arguments[0]);
 
       return ElementModel.prototype.setPristine.apply(this, arguments);
