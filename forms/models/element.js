@@ -87,7 +87,7 @@ define(function (require) {
       }
 
       if (attrs.hidden) {
-        //if the element is hidden, validation should be ignored.
+        // if the element is hidden, validation should be ignored.
         return undefined;
       }
 

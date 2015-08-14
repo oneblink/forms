@@ -68,26 +68,26 @@ define(function (require) {
 
       value = model.get('value');
 
-      //disable button till location located
+      // disable button till location located
       self.constructor.disableLocationButton.bind(self)();
 
       if (_.isEmpty(value) || !value.latitude || !value.longitude) {
         model.getGeoLocation().then(function () { // onSuccess
           value = model.get('currentlocation');
-          //set value for first time
+          // set value for first time
           window.navigator.map.confirmLocation($.proxy(LocationNativeElementView.onSuccess, self), $.proxy(LocationNativeElementView.onFail, self), value);
           self.constructor.enableLocationButton.bind(self)();
         }, function () { // onError (err)
-          //enable location button
+          // enable location button
           self.constructor.enableLocationButton.bind(self)();
         });
       } else {
         window.navigator.map.confirmLocation($.proxy(LocationNativeElementView.onSuccess, self), $.proxy(LocationNativeElementView.onFail, self), value);
-        //enable location button
+        // enable location button
         self.constructor.enableLocationButton.bind(self)();
       }
 
-      //finally creating and poping up map
+      // finally creating and poping up map
       event.preventDefault();
       return false;
     }

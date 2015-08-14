@@ -33,7 +33,7 @@
         config;
 
     if (navigator.userAgent.indexOf('PhantomJS') < 0) {
-        //browser environment
+        // browser environment
         config = {
             baseUrl: '/js',
             paths: {
@@ -45,7 +45,7 @@
         };
         testFile = '../test/00_unit/tests//models/element.js/test';
     } else {
-        //grunt task
+        // grunt task
         config = {
             paths: {
                 /* use the paths here to use a pre existing interface for mocking with sinon or to point to the actual dependency if it cannot be mocked.

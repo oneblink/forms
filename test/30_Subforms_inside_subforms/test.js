@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'BIC'], function (Forms) {
 
   suite('30: Subforms inside Subforms', function () {

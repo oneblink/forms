@@ -1,6 +1,3 @@
-/* eslint-env mocha */
-/* global assert */ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('33: Pages with subforms', function () {

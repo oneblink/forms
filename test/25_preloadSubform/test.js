@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('25: preload subForms and validate _action assignment', function () {
@@ -190,7 +187,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
           for (i = 0; i < record.Address.length; i++) {
             rec = record.Address[i];
-            //default sub-subform length
+            // default sub-subform length
             len = 1;
             if (rec.Phone) {
               len = rec.Phone.length;
@@ -263,7 +260,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             assert.equal(data.Address.length, 4);
           });
 
-
         });
 
         test("remove subform with id (with placeholder)", function () {
@@ -287,7 +283,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             subForm = subForms.at(2);
 
           assert.equal(subForms.length, 4);
-          //sub-subform
+          // sub-subform
           subFormElement = subForm.getElement('Phone');
           subForms = subFormElement.attributes.forms;
 
@@ -307,7 +303,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             subForms = subFormElement.attributes.forms,
             subForm = subForms.at(0);
 
-          //sub-subform
+          // sub-subform
           subFormElement = subForm.getElement('Phone');
           subForms = subFormElement.attributes.forms;
           subForm = subForms.at(0);
@@ -322,7 +318,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         });
 
       });
-
 
     }); // END: suite('Form', ...)
 

@@ -70,13 +70,13 @@ define(function (require) {
       return Promise.reject(new Error('unexpected operand type'));
     });
 
-    //FORMS-141 # binary operator will need two arguments,
+    // FORMS-141 # binary operator will need two arguments,
     // if one provided, set other to empty string
     if (args.length === 1 && binaryOp.indexOf(this.operator) > -1) {
       args.push('');
     }
 
-    //return promise
+    // return promise
     return new Promise(function (resolve, reject) {
       Promise.all(args).then(function (res) {
         resolve(self.fn[self.operator].apply(self, res));
@@ -88,7 +88,7 @@ define(function (require) {
 
   Expression.prototype.bindContext = function (ctx, names) {
     var self = this;
-    //if names not provided, then it will bind ctx with everything
+    // if names not provided, then it will bind ctx with everything
     (names || Object.keys(self.fn)).forEach(function (prop) {
       self.fn[prop] = self.fn[prop].bind(ctx);
     });
@@ -129,14 +129,14 @@ define(function (require) {
     return !Expression.fn.empty.call(this, a);
   };
 
-  /*eslint-disable eqeqeq*/
+  /* eslint-disable eqeqeq */
   Expression.fn['=='] = function (a, b) {
     return a == b;
   };
   Expression.fn['!='] = function (a, b) {
     return a != b;
   };
-  /*eslint-enable eqeqeq*/
+  /* eslint-enable eqeqeq */
 
   Expression.fn['<'] = function (a, b) {
     return a < b;
@@ -160,7 +160,7 @@ define(function (require) {
       if (typeof haystack === 'string') {
         resolve(haystack.indexOf(needle) !== -1);
       }
-      /*eslint-disable eqeqeq*/
+      /* eslint-disable eqeqeq */
       if (_.isArray(haystack)) {
         found = false;
         haystack.forEach(function (item) {
@@ -170,7 +170,7 @@ define(function (require) {
         });
         resolve(found);
       }
-      /*eslint-enable eqeqeq*/
+      /* eslint-enable eqeqeq */
       reject(new Error('contains: unexpected operand type'));
     });
 

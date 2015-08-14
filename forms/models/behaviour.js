@@ -103,14 +103,14 @@ define(function (require) {
         attrs.trigger.formElements = [attrs.trigger.formElements];
       }
 
-      //if formEvents doesn't exist, then set it to empty array
+      // if formEvents doesn't exist, then set it to empty array
       if (!attrs.trigger.formEvents) {
         attrs.trigger.formEvents = [];
       }
 
       attrs.isLegacy = attrs.trigger.formElements.indexOf('*') !== -1;
 
-      //if formElements have (*) then also set formEvents->load
+      // if formElements have (*) then also set formEvents->load
       if (attrs.isLegacy === true && attrs.trigger.formEvents.indexOf('load') === -1) {
         attrs.trigger.formEvents.push('load');
       }
@@ -224,7 +224,7 @@ define(function (require) {
             return Promise.resolve(false);
           }
 
-          //evaluate now returns promise
+          // evaluate now returns promise
           return exp.evaluate();
         }
       }
@@ -283,12 +283,12 @@ define(function (require) {
       if (Array.isArray(action.manipulations)) {
         action.manipulations.forEach(function (m) {
           element = form.getElement(m.target);
-          //don't execute this if element doesn't exist
+          // don't execute this if element doesn't exist
           if (element) {
-            //simply copy static properties
+            // simply copy static properties
             element.set(_.clone(m.properties));
-            //Done: use computed manipulations (expressions)
-            //propValuesByExp: means set properties by evaluating expression
+            // Done: use computed manipulations (expressions)
+            // propValuesByExp: means set properties by evaluating expression
             if (m.propValuesByExp) {
               self.runExpression(form, name, element, m.propValuesByExp);
             }
@@ -305,16 +305,16 @@ define(function (require) {
       var exp;
       var promises = [];
       var keys = [];
-      //build maps of <properties> and <expression_promise>
+      // build maps of <properties> and <expression_promise>
       _.forEach(propValuesByExp, function (v, i) {
-        //also send context and expressions that needs to be bound to context
+        // also send context and expressions that needs to be bound to context
         exp = new Expression(v, form, Behaviour.BOUND_EXPRESSIONS);
         promises.push(exp.evaluate());
         keys.push(i);
       });
 
       Promise.all(promises).then(function (args) {
-        //on all success, assign properties to targetElement
+        // on all success, assign properties to targetElement
         _.forEach(keys, function (key, i) {
           targetElement.set(key, args[i]);
         });
@@ -326,7 +326,7 @@ define(function (require) {
     runJavaScript: function (form, string) {
       var js, result, placeholders, value;
       js = null;
-      //todo: use expression parseElemVal instead of following operation
+      // todo: use expression parseElemVal instead of following operation
       placeholders = string.match(/\[[\w\/\[\]]+\]/g);
       if (_.isArray(placeholders)) {
         placeholders.forEach(function (placeholder) {
@@ -341,9 +341,9 @@ define(function (require) {
         });
       }
       try {
-        /*eslint-disable no-eval*/
+        /* eslint-disable no-eval */
         eval('js = ' + string);
-        /*eslint-enable no-eval*/
+        /* eslint-enable no-eval */
         if (_.isFunction(js)) {
           result = js.call(form);
         } else {
@@ -479,7 +479,7 @@ define(function (require) {
           };
         }
         if (action && typeof action === 'object') {
-          //if autoReverse is undefined then mark it as false
+          // if autoReverse is undefined then mark it as false
           if (typeof action.autoReverse !== 'boolean') {
             action.autoReverse = false;
           }

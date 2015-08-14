@@ -1,12 +1,8 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'BIC'], function (Forms) {
 
   suite('29: External Errors', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
-
 
     setup(function (done) {
       Forms.getDefinition('form1', 'edit').then(function (def) {
@@ -15,7 +11,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           $.mobile.page({}, $page);
           $page.trigger('pagecreate');
           $page.show();
-          Forms.current.set('numErrorsShown', 0); //dont want a limit
+          Forms.current.set('numErrorsShown', 0); // dont want a limit
           done();
         }, function () {
           assert.fail(true, false, 'Setup Failed');
@@ -35,7 +31,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         , externalErrors = {
             textBox1: [{code: 'CUSTOM', CUSTOM: 'This is custom text'}]
           };
-      element.val('1'); //field is marked aas required in the definition
+      element.val('1'); // field is marked aas required in the definition
       Forms.current.setErrors(externalErrors);
 
       assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
@@ -49,7 +45,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       var element = Forms.current.getElement('textBox1')
         , externalErrors = [{code: 'CUSTOM', CUSTOM: 'This is custom text'}];
 
-      element.val('1'); //field is marked aas required in the definition
+      element.val('1'); // field is marked aas required in the definition
       element.setExternalErrors(externalErrors);
 
       assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
@@ -118,7 +114,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       delete Forms.current;
     });
 
-////////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////////
 
     suite('subforms', function () {
       var externalErrors, subFormElement;
@@ -173,11 +169,11 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
         Forms.current.setErrors(externalErrors);
 
-        //make sure the first sub form field of the same name has no custom error
+        // make sure the first sub form field of the same name has no custom error
         formElement = subFormElement.getForm(0).getElement('comment');
         assert.equal(_.where(formElement.validationError.value, {code: 'CUSTOM'}).length, 0);
 
-        //now make sure the correct sub form field has an error
+        // now make sure the correct sub form field has an error
         formElement = subFormElement.getForm(1).getElement('comment');
 
         assert.isDefined(formElement.validationError);

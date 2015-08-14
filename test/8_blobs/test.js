@@ -1,5 +1,3 @@
-/*global assert*/ // chai
-
 define(['backbone', 'BlinkForms', 'testUtils', 'BIC'], function (Backbone, Forms, testUtils) {
 
   var mockXhrUpload = new Backbone.Model();

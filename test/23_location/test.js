@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('23: Location field', function () {
@@ -158,7 +155,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             done();
         }, 0);
       });
-
 
     }); // END: suite('Form', ...)
 

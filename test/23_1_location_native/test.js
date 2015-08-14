@@ -1,4 +1,4 @@
-/*eslint-env mocha*/
+
 /*global assert, sinon*/ // chai
 
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
@@ -90,7 +90,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
        );
       });
 
-
       test('LOCATE button - success callback + no location', function (done) {
         var element = Forms.current.getElement('location2'),
           $view = element.attributes._view.$el,
@@ -124,7 +123,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         assert.equal(spy.callCount, 1);
 
       });
-
 
       test('LOCATE button - success callback + location', function (done) {
         var element = Forms.current.getElement('location2'),
@@ -206,7 +204,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
             done();
         }, 0);
       });
-
 
     }); // END: suite('Form', ...)
 

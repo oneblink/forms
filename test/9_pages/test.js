@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('9: pages', function () {
@@ -158,29 +155,29 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           $input = numberSlider.attributes._view.$el.find('input'),
           pages = form.attributes.pages;
 
-        //ui-slider is rendered
+        // ui-slider is rendered
         assert(numberSlider.attributes._view.$el.find('div.ui-slider'));
 
-        //input value is equal to model
+        // input value is equal to model
         assert.equal($input.val(), numberSlider.get('value'));
 
-        //set model value and should change input value
+        // set model value and should change input value
         numberSlider.set("value", 100);
         assert.equal($input.val(), numberSlider.get('value'));
 
-        //set input value, and trigger change, should change model value
+        // set input value, and trigger change, should change model value
         $input.val(200);
         numberSlider.attributes._view.$el.trigger("change");
         assert.equal($input.val(), numberSlider.get('value'));
 
-        //switch pages back and forth
+        // switch pages back and forth
         pages.goto(1);
         pages.goto(2);
-        //ui-slider should be on page
+        // ui-slider should be on page
         assert(numberSlider.attributes._view.$el.find('div.ui-slider'));
-        //model value should be the same
+        // model value should be the same
         assert.equal(numberSlider.get('value'), 200);
-        //input value should be the same
+        // input value should be the same
         assert.equal($input.val(), numberSlider.get('value'));
 
       });

@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   var nativedate = [
@@ -261,7 +258,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           readonly.forEach(function (fld) {
             element = form.getElement(fld);
             $fieldset = element.attributes._view.$el;
-            //should not contain any input fields
+            // should not contain any input fields
             assert.equal($fieldset.find("input").length, 0);
             assert.equal(element.attributes.picker, "shown");
             assert(element.attributes.readonly);
@@ -275,7 +272,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           hidden.forEach(function (fld) {
             element = form.getElement(fld);
             $fieldset = element.attributes._view.$el;
-            //should have display: none set in stylesheet
+            // should have display: none set in stylesheet
             assert.equal($fieldset.css('display'), 'none');
             assert.equal(element.attributes.picker, "hidden");
             assert(element.attributes.hidden);
@@ -286,10 +283,9 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         defineViewToModelTests();
       });
 
-
       suite('native, date assignment', function () {
         var native = [
-          //'dateTimeNativePickerNone',
+          // 'dateTimeNativePickerNone',
           'dateTimeNativePickerNow',
           'dateTimeNativePickerNowP',
           'dateTimeNativePckerNowPM'
@@ -304,7 +300,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           native.forEach(function (fld) {
             element = form.getElement(fld);
             $fieldset = element.attributes._view.$el;
-            //should contain date field
+            // should contain date field
             $input = $fieldset.find("input[type='date']");
             assert.equal($input.length, 1);
             assert($input.val(), "no value assigned to $input");
