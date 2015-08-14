@@ -8,6 +8,12 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     var $content = $page.find('[data-role=content]');
 
     setup(function () {
+      if (Forms.current) {
+
+        Forms.current.off();
+        $content.empty();
+        delete Forms.current;
+      }
       return Forms.getDefinition('firstLevel', 'add').then(function (def) {
         Forms.initialize(def);
         $content.append(Forms.current.$form);
@@ -19,9 +25,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     });
 
     teardown(function () {
-      Forms.current.off();
-      $content.empty();
-      delete Forms.current;
     });
 
     test('Top Level elements collection returns 1 sub form', function () {
@@ -84,10 +87,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       return view.onAddClick()
                  .then(function () {
                   var invalid = Forms.current.getInvalidElements();
-                  //make sure we have an error
+                  // make sure we have an error
                   assert.isAbove(invalid.length, 0);
 
-                  //get the first invalid element and scroll
+                  // get the first invalid element and scroll
                   return invalid.errors[0].get('_view').scrollTo().then(function () {
                     assert.notEqual($(window).scrollTop(), origScrollTop);
                   });
@@ -98,19 +101,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       var origScrollTop = $(window).scrollTop();
       var view = Forms.current.getElement('second_level_form').get('_view');
 
-      return view.onAddClick() //add second level
+      return view.onAddClick() // add second level
                   .then(function () {
                     var t = Forms.current.getElement('third_level_form').get('_view');
-                    return t.onAddClick(); //add third level
+                    return t.onAddClick(); // add third level
                   })
                   .then(function () {
                     var subForms = Forms.current.getSubforms();
                     var moreSubforms = subForms.second_level_form.getSubforms();
                     var invalidThirdLevel;
-                    //make sure we have an error
+                    // make sure we have an error
                     assert.isAbove(moreSubforms.length, 0);
                     assert.isTrue(moreSubforms[0].hasOwnProperty('third_level_form'));
-                    //get the first invalid element and scroll
+                    // get the first invalid element and scroll
                     invalidThirdLevel = moreSubforms[0].third_level_form.models[0].getInvalidElements();
                     assert.isAbove(invalidThirdLevel.errors.length, 0);
 
@@ -151,10 +154,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     test('3rd level subform invalid events bubble up to Forms.current', function (done) {
       var view = Forms.current.getElement('second_level_form').get('_view');
 
-      return view.onAddClick() //add second level
+      return view.onAddClick() // add second level
                   .then(function () {
                     var t = Forms.current.getElement('third_level_form').get('_view');
-                    return t.onAddClick(); //add third level
+                    return t.onAddClick(); // add third level
                   })
                   .then(function () {
                     var thirdLevelRequiredField = Forms.current.getElement('third_level_req');
@@ -172,10 +175,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     test('3rd level subform invalid events bubble up to Forms.current', function (done) {
       var view = Forms.current.getElement('second_level_form').get('_view');
 
-      return view.onAddClick() //add second level
+      return view.onAddClick() // add second level
                   .then(function () {
                     var t = Forms.current.getElement('third_level_form').get('_view');
-                    return t.onAddClick(); //add third level
+                    return t.onAddClick(); // add third level
                   })
                   .then(function () {
                     var thirdLevelRequiredField = Forms.current.getElement('third_level_req');
@@ -188,6 +191,39 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
                     thirdLevelRequiredField.val('hello');
                   });
+    });
+
+    suite('hidden subform fields', function () {
+      setup(function () {
+        return Forms.current.getElement('second_level_form').add();
+      });
+
+      test('hidden fields in the name are not shown', function () {
+        var hiddenField = Forms.current.getElement('hidden_field1'),
+            hiddenFieldView = hiddenField.get('_view');
+
+        assert.isTrue(hiddenField.get('hidden'));
+        assert.isFalse(hiddenFieldView.$el.is(':visible'));
+
+      });
+
+      test('hidden fields with underscore in the name are not shown', function () {
+        var hiddenFieldWithUnderscore = Forms.current.getElement('hiddenfield2'),
+            hiddenFieldWithUnderscoreView = hiddenFieldWithUnderscore.get('_view');
+
+        assert.isTrue(hiddenFieldWithUnderscore.get('hidden'));
+        assert.isFalse(hiddenFieldWithUnderscoreView.$el.is(':visible'));
+
+      });
+
+      test('fields with a hide attribute that is falsy are shown', function () {
+        var model = Forms.current.getElement('hiddenfield3'),
+            view = model.get('_view');
+
+        assert.isFalse(model.get('hidden'));
+        assert.isTrue(view.$el.is(':visible'));
+
+      });
     });
   });
 });

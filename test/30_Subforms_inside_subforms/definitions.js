@@ -480,6 +480,42 @@ define(function () {
                     "subForm": "third_level_form",
                     "page": 0
                 }
+            }, {
+                "default": {
+                    "name": "hidden_field1",
+                    "type": "text",
+                    "label": "Hidden with underscore",
+                    "labelPlacement": "default",
+                    "labelStyle": "Plain",
+                    "required": "1",
+                    "maxWidthPrefix": "characters",
+                    "page": 0,
+                    "hide": "1"
+                }
+            }, {
+                "default": {
+                    "name": "hiddenfield2",
+                    "type": "text",
+                    "label": "Hidden without underscore",
+                    "labelPlacement": "default",
+                    "labelStyle": "Plain",
+                    "required": "1",
+                    "maxWidthPrefix": "characters",
+                    "page": 0,
+                    "hide": "1"
+                }
+            }, {
+                "default": {
+                    "name": "hiddenfield3",
+                    "type": "text",
+                    "label": "Hide is 0, should be shown",
+                    "labelPlacement": "default",
+                    "labelStyle": "Plain",
+                    "required": "1",
+                    "maxWidthPrefix": "characters",
+                    "page": 0,
+                    "hide": "0"
+                }
             }],
             "_checks": [],
             "_actions": [],
@@ -521,7 +557,7 @@ define(function () {
             "footer": null,
             "hidden": null,
             "action": "add",
-            "_elements": ["second_required", "third_level_form"]
+            "_elements": ["second_required", "third_level_form", "hidden_field1", "hiddenfield2", "hiddenfield3"]
         },
         "edit": {
             "interaction": "",
@@ -531,7 +567,7 @@ define(function () {
             "footer": null,
             "hidden": "1",
             "action": "edit",
-            "_elements": ["second_required", "third_level_form"]
+            "_elements": ["second_required", "third_level_form", "hidden_field1", "hiddenfield2", "hiddenfield3"]
         },
         "view": {
             "interaction": "",
