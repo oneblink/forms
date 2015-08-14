@@ -35,7 +35,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       'user_attribute',
       'get_value'];
 
-
     suite('#setPristine', function () {
       // make sure that the form is in a pristine state for each test.
       suiteSetup(function () {
