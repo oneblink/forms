@@ -108,7 +108,6 @@ define(function (require) {
       return ElementModel.prototype.setPristine.apply(this, arguments);
     },
 
-    
     addSubformRecursive: function (max) {
       var self = this;
       var attrs = this.attributes;

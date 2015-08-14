@@ -219,5 +219,3 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     });
   });
 });
-
-
