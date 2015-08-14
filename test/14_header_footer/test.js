@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('14: Forms Header/Footer', function () {
@@ -61,7 +58,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       });
 
     }); // END: suite('Form', ...)
-
 
   }); // END: suite('1', ...)
 

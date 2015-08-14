@@ -6,18 +6,15 @@
   "globals": {
     "$": false,
     "_": false,
-    "Backbone": false
+    "assert": true,
+    "Backbone": false,
+    "sinon": false
   },
   "rules": {
     "comma-style": 0,
     "indent": 0,
     "no-console": 0,
-    "no-multiple-empty-lines": 1,
-    "no-sync": 0,
     "one-var": 0,
-    "quotes": 0,
-    "standard/array-bracket-even-spacing": 0,
-    "standard/object-curly-even-spacing": 0,
-    "strict": 0
+    "quotes": 0
   }
 }

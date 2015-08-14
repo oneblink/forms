@@ -1,5 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
 define([
   'underscore',
   'sinon',
@@ -9,7 +7,7 @@ define([
 ], function (_, sinon, Forms, testUtils) {
 
   suite('i18n', function () {
-    /*eslint-disable new-cap*/
+    /* eslint-disable new-cap */
 
     test('i18n[BMP/geolocation]', function () {
       assert.isFunction(window.i18n['BMP/geolocation'].PERMISSION_DENIED);
@@ -21,7 +19,7 @@ define([
       assert.isString(window.i18n['BMP/Forms/validation'].REQUIRED());
     });
 
-    /*eslint-enable new-cap*/
+    /* eslint-enable new-cap */
   });
 
   suite('5: validation', function () {
@@ -193,7 +191,7 @@ define([
         var form = Forms.current,
           element = form.getElement('city');
 
-        element.val('GosfordGosfordGosfordGosford');//max length fixed is 20
+        element.val('GosfordGosfordGosfordGosford'); // max length fixed is 20
         assert.isObject(element.validate(), 'max length error');
         element.val('Gosford');
       });
@@ -218,7 +216,7 @@ define([
 
         assert.isDefined(element.validate(), 'no validation error');
 
-        //default value is 35 which doesnot match pattern
+        // default value is 35 which doesnot match pattern
         runTests(cases, element);
 
       });
@@ -227,7 +225,7 @@ define([
         var form = Forms.current,
           element = form.getElement('number');
 
-        //removed pattern in order to test decimal places
+        // removed pattern in order to test decimal places
         delete element.attributes.pattern;
 
         element.val(45.1);
@@ -402,7 +400,8 @@ define([
       });
     }); // END: suite('Form', ...)
 
-    elements = ['textBox1', 'number1', 'password1', 'text', 'url', 'email', 'password', 'streetAddress', 'city', 'telephone', 'number', 'currency', /*'heading', 'message',*/ 'select', 'multi'/*, 'comments', 'names'*/];
+    elements = ['textBox1', 'number1', 'password1', 'text', 'url', 'email', 'password', 'streetAddress', 'city', 'telephone', 'number', 'currency', 'select', 'multi'];
+    /* 'heading', 'message', 'comments', 'names' */
 
     elements.forEach(function (name) {
 

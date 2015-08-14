@@ -103,7 +103,7 @@ define(function (require) {
      * @return {BlinkFormsErrorList} An object containing the Errors, limited to `fieldLimit` number of errors.
      *
      * @example
-     *  //collection.getInvalid(2)
+     *  // collection.getInvalid(2)
      *  // => {
      *  // errors: [textElementModel, requiredElementModel]
      *  // length: 2,

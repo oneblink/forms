@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('18: calculations', function () {
@@ -59,7 +56,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         form.getElement('test1').val("test11");
         form.getElement('test2').val("test22");
       });
-
 
       test('record data includes set values', function (done) {
         var form = BMP.Forms.current,

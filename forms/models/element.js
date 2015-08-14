@@ -60,7 +60,7 @@ define(function (require) {
         }
       }
 
-      //FORMS-137 # Fields that are set to required are not marked as such in anyway (no *)
+      // FORMS-137 # Fields that are set to required are not marked as such in anyway (no *)
       if (attrs.required && attrs.label && attrs.type !== 'subForm') {
         attrs.label += ' *';
       }
@@ -69,7 +69,7 @@ define(function (require) {
         this.set('label', attrs.label);
       }
 
-      //backward compatability.
+      // backward compatability.
       this.on('invalid change:value', this.updateErrors, this);
 
       this.on('remove', this.close, this);
@@ -84,7 +84,7 @@ define(function (require) {
       }
 
       if (attrs.hidden) {
-        //if the element is hidden, validation should be ignored.
+        // if the element is hidden, validation should be ignored.
         return undefined;
       }
 

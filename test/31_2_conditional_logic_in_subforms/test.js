@@ -1,16 +1,13 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'BIC'], function (Forms) {
 
   suite('31.2 confirm that behaviour runs multiple times', function () {
     var $page, $content, i;
     suiteSetup(function () {
-      /*eslint-disable no-unused-expressions*/
+      /* eslint-disable no-unused-expressions */
       Forms.current && Forms.current.off();
       delete Forms.current;
       $content && $content.empty();
-      /*eslint-enable no-unused-expressions*/
+      /* eslint-enable no-unused-expressions */
 
       $page = $('[data-role=page]');
       $content = $page.find('[data-role=content]');

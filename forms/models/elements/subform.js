@@ -48,7 +48,7 @@ define(function (require) {
       this.attributes.forms = new SubFormsCollection();
 
       attrs = this.attributes;
-      //currently server sets preload to either "admin_defined" or "no"
+      // currently server sets preload to either "admin_defined" or "no"
       if (isNaN(Number(attrs.preload))) {
         if (attrs.preload !== 'no' && attrs.preloadNum) {
           attrs.preload = Number(attrs.preloadNum);
@@ -59,7 +59,7 @@ define(function (require) {
         attrs.preload = Number(attrs.preload);
       }
 
-      //plusButtonLabel
+      // plusButtonLabel
       if (_.isEmpty(attrs.plusButtonLabel) && attrs.label) {
         attrs.plusButtonLabel = attrs.label;
       }
@@ -67,7 +67,7 @@ define(function (require) {
       if (_.isEmpty(attrs.plusButtonLabel)) {
         attrs.plusButtonLabel = attrs.name;
       }
-      //minusButtonLabel
+      // minusButtonLabel
       if (_.isEmpty(attrs.minusButtonLabel) && attrs.label) {
         attrs.minusButtonLabel = attrs.label;
       }
@@ -85,7 +85,7 @@ define(function (require) {
       this.attributes.forms.on('add remove invalid change:value change:blob', this.updateFieldErrors, this);
       this.off('invalid change:value change:blob');
 
-      //make sure that all form events are bubbled up through this subform
+      // make sure that all form events are bubbled up through this subform
       this.attributes.forms.on('all', function () {
         this.trigger.apply(this, arguments);
       }, this);
@@ -115,7 +115,7 @@ define(function (require) {
         Forms.getDefinition(name, action).then(function (def) {
           var form;
           try {
-            //the elements themselves need to know who the parent is.
+            // the elements themselves need to know who the parent is.
             _.each(def._elements, function (element) {
               element.parentElement = self;
             });
@@ -213,7 +213,7 @@ define(function (require) {
           return;
         }
         Promise.all([me.attributes.preloadPromise]).then(function () {
-          //remove all preloaded forms
+          // remove all preloaded forms
           while (forms.length > 0) {
             me.remove(forms.length - 1);
           }
@@ -264,7 +264,7 @@ define(function (require) {
 
       forms = attrs.forms;
 
-      //check if there is any subform added
+      // check if there is any subform added
       if (forms && (attrs.required && realLength === 0 || attrs.minSubforms && attrs.minSubforms === 1 && realLength === 0)) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
@@ -330,7 +330,7 @@ define(function (require) {
         }
       });
 
-      //check if subform fields has any errors
+      // check if subform fields has any errors
       if (subformErrorCounter > 0) {
         errors.value = errors.value || [];
         errors.value.push({code: 'SUBFORM'});
@@ -340,10 +340,10 @@ define(function (require) {
     },
 
     setExternalErrors: function (elementErrorList, options) {
-      //set errors on subforms
+      // set errors on subforms
       this.get('forms').invoke('setErrors', elementErrorList, options);
 
-      //set errors on me.
+      // set errors on me.
       if (elementErrorList.errors) {
         ElementModel.prototype.setExternalErrors.call(this, elementErrorList.errors, options);
       }

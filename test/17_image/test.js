@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('17: Blob fields', function () {

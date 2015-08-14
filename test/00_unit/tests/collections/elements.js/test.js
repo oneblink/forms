@@ -1,4 +1,4 @@
-/*eslint-env mocha*/
+
 /*global assert:true*/ // chai
 /*
   To ensure correct, isolated, unit test behavior,
@@ -24,10 +24,10 @@ function (ElementsCollection, ElementModel) {
 
       elementsCollection.add([model1, model2, model3, model4]);
 
-      model1.validationError = { value: [{code: 'EMAIL'}]};
-      model2.validationError = { value: [{code: 'MAX'}, {code: 'REQUIRED'}]};
+      model1.validationError = { value: [{code: 'EMAIL'}] };
+      model2.validationError = { value: [{code: 'MAX'}, {code: 'REQUIRED'}] };
       model3.validationError = null;
-      model4.validationError = { value: [{code: 'EMAIL'}]};
+      model4.validationError = { value: [{code: 'EMAIL'}] };
 
       ElementModel.prototype.hasErrors = function () {
         return this.validationError && !_.isEmpty(this.validationError);

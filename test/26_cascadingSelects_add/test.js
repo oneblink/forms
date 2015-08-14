@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('26: cascading select boxes', function () {
@@ -82,7 +79,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           }
        );
       });
-
 
       suite('after .setRecord() from xml', function () {
 
@@ -390,9 +386,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       }); // END: suite('change form3 values', ...)
     }); // END: suite('Form', ...)
 
-
   }); // END: suite('1', ...)
-
-
 
 });

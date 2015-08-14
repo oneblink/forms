@@ -1,6 +1,3 @@
-/*eslint-env mocha*/
-/*global assert*/ // chai
-
 define(['BlinkForms', 'BIC'], function (Forms) {
 
   suite('30: Subforms inside Subforms', function () {
@@ -84,10 +81,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       return view.onAddClick()
                  .then(function () {
                   var invalid = Forms.current.getInvalidElements();
-                  //make sure we have an error
+                  // make sure we have an error
                   assert.isAbove(invalid.length, 0);
 
-                  //get the first invalid element and scroll
+                  // get the first invalid element and scroll
                   return invalid.errors[0].get('_view').scrollTo().then(function () {
                     assert.notEqual($(window).scrollTop(), origScrollTop);
                   });
@@ -98,19 +95,19 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       var origScrollTop = $(window).scrollTop();
       var view = Forms.current.getElement('second_level_form').get('_view');
 
-      return view.onAddClick() //add second level
+      return view.onAddClick() // add second level
                   .then(function () {
                     var t = Forms.current.getElement('third_level_form').get('_view');
-                    return t.onAddClick(); //add third level
+                    return t.onAddClick(); // add third level
                   })
                   .then(function () {
                     var subForms = Forms.current.getSubforms();
                     var moreSubforms = subForms.second_level_form.getSubforms();
                     var invalidThirdLevel;
-                    //make sure we have an error
+                    // make sure we have an error
                     assert.isAbove(moreSubforms.length, 0);
                     assert.isTrue(moreSubforms[0].hasOwnProperty('third_level_form'));
-                    //get the first invalid element and scroll
+                    // get the first invalid element and scroll
                     invalidThirdLevel = moreSubforms[0].third_level_form.models[0].getInvalidElements();
                     assert.isAbove(invalidThirdLevel.errors.length, 0);
 
@@ -151,10 +148,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     test('3rd level subform invalid events bubble up to Forms.current', function (done) {
       var view = Forms.current.getElement('second_level_form').get('_view');
 
-      return view.onAddClick() //add second level
+      return view.onAddClick() // add second level
                   .then(function () {
                     var t = Forms.current.getElement('third_level_form').get('_view');
-                    return t.onAddClick(); //add third level
+                    return t.onAddClick(); // add third level
                   })
                   .then(function () {
                     var thirdLevelRequiredField = Forms.current.getElement('third_level_req');
@@ -172,10 +169,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     test('3rd level subform invalid events bubble up to Forms.current', function (done) {
       var view = Forms.current.getElement('second_level_form').get('_view');
 
-      return view.onAddClick() //add second level
+      return view.onAddClick() // add second level
                   .then(function () {
                     var t = Forms.current.getElement('third_level_form').get('_view');
-                    return t.onAddClick(); //add third level
+                    return t.onAddClick(); // add third level
                   })
                   .then(function () {
                     var thirdLevelRequiredField = Forms.current.getElement('third_level_req');

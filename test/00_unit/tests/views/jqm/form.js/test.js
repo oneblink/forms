@@ -1,4 +1,4 @@
-/*eslint-env mocha*/
+
 /*global assert:true*/ // chai
 /*global sinon:true*/
 /*global _:true*/
@@ -13,7 +13,7 @@ function (FormView) {
   'use strict';
 
   suite('views/jqm/form.js', function () {
-    var formView; //test subject
+    var formView; // test subject
 
     var elementModelMock;
     var elementsCollectionMock;

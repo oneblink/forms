@@ -94,7 +94,7 @@ define(function (require) {
 
         pageCollection = this.model.get('pages');
 
-//this is pretty hacky but it means not re-writing the form/subform rendering system
+// this is pretty hacky but it means not re-writing the form/subform rendering system
         if (elementModel.get('parentElement')) {
           pageIdOfElement = elementModel.get('parentElement').get('page').index();
         } else {
