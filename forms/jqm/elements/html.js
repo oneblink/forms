@@ -41,9 +41,7 @@ define(function (require) {
       this.onValueChange();
       this.onPlaceholderChange();
 
-      this.model.isValid();
       this.$el.fieldcontain();
-      this.renderErrors();
     },
 
     remove: function () {
@@ -51,15 +49,13 @@ define(function (require) {
       return ElementView.prototype.remove.apply(this, arguments);
     },
 
-    onKeyDown: _.throttle(function (event) {
+    onKeyDown: function (event) {
       var prev = this.model.attributes.value;
       var next = $(event.target).val();
       if (next !== prev) {
-        this.model.attributes.value = next;
-        this.model.trigger('change:value');
-        this.model.trigger('change', this.model);
+        this.model.set('value', next);
       }
-    }, 500),
+    },
 
     onPlaceholderChange: function () {
       var text;
@@ -75,20 +71,20 @@ define(function (require) {
     },
 
     onValueChange: function () {
-      var value;
+      var value, current;
       if (!this.$input) {
         return;
       }
+      current = this.$input.val();
       value = this.model.attributes.value;
+      if (current === value) {
+        // return; // exit early if nothing actually changed
+      }
       if (!value && value !== 0) {
         this.$input.val('');
       } else {
         this.$input.val(value);
       }
-      // #isValid() probably should be in the model, but we keep it here to
-      // preserve a strict sequence: check THEN render
-      this.model.isValid();
-      this.renderErrors();
     }
   });
 });

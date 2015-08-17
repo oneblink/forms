@@ -1,6 +1,10 @@
 define(['forms/models/form'], function (Form) {
   'use strict';
 
+  // foreign modules
+
+  var _ = require('underscore');
+
   // this module
 
   var SubForm = Form.extend({
@@ -31,6 +35,27 @@ define(['forms/models/form'], function (Form) {
       }
       this.unset('_view');
     }
+  }, {
+    // static properties
+
+    /**
+    @param {Object} attrs attributes for this model.
+    @param {String} [action='add'] name of the specific variation to use
+    @returns {SubForm}
+    */
+    create: function (attrs, action) {
+      var form;
+
+      if (!attrs || !_.isObject(attrs)) {
+        return new SubForm();
+      }
+
+      attrs._action = action;
+      form = new SubForm(attrs);
+
+      return form;
+    }
+
   });
 
   return SubForm;

@@ -1,6 +1,3 @@
-
-/*global assert, sinon*/ // chai
-
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('23_1: Location Native field', function () {

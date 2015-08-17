@@ -1,27 +1,30 @@
-Blink Forms Errors
-==================
+# Blink Forms Errors
 
-Element Errors
-============
 
-Form Elements are validated as you type and when the field loses focus. When a error is found, a list of errors is appended to the DOM inside the elements container
-    
-    <form class='bm-form-invalid'>
-        <div data-role="fieldcontain" rv-class="m:class" data-name="third_level_req" data-element-type="text" class="bm-formelement-invalid ui-field-contain ui-body ui-br">
-            <label rv-text="m:label" class="ui-input-text">Third Level Req *</label>
-            <div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c">
-                <input type="text" name="third_level_req" rv-value="m:value" rv-input="m:value" rv-placeholder="m:placeholderText" class="ui-input-text ui-body-c" cid="c155">
-            </div>
-            <ul class="bm-errors__bm-list">
-                <li class="bm-errors__bm-listitem">must not be empty</li>
-            </ul>
+## Element Errors
+
+Form Elements check values as you type and when the field loses focus.
+A list of errors (if any) appears in the DOM inside the element's container:
+
+```html
+<form class='bm-form-invalid'>
+    <div data-role="fieldcontain" rv-class="m:class" data-name="third_level_req" data-element-type="text" class="bm-formelement-invalid ui-field-contain ui-body ui-br">
+        <label rv-text="m:label" class="ui-input-text">Third Level Req *</label>
+        <div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c">
+            <input type="text" name="third_level_req" rv-value="m:value" rv-input="m:value" rv-placeholder="m:placeholderText" class="ui-input-text ui-body-c" cid="c155">
         </div>
-    </form>
+        <ul class="bm-errors__bm-list">
+            <li class="bm-errors__bm-listitem">must not be empty</li>
+        </ul>
+    </div>
+</form>
+```
 
-**Note** Element Models now include the unique cid of the model as an attribute on the HTML. This value can be passed to ````BMP.Forms.current.getElement(cid)```` to find the element, even if it exists in a sub form.
+**Note:** Element Models now include the unique cid of the model as an HTML attribute.
+You may use this value with `BMP.Forms.current.getElement(cid)` to retrieve the element, even if it exists in a sub form.
 
-Styling
--------
+
+## Styling
 
 The following classes will allow you to style the errors:
 
@@ -31,73 +34,90 @@ The following classes will allow you to style the errors:
 - `.bm-errors__bm-listitem` - An error in the list of messages
 
 
-Getting Element errors
---------------------
-For compatibility reasons with past releases, we allow the retreval for error objects. The preferred way of doing this is now outlined in "Getting an array of invalid models" below
+## Getting Element errors
+
+For compatibility reasons with past releases, we allow the retrieval of error objects.
+The preferred way of doing this is now outlined in "Getting an array of invalid models" below
 
 An error is an array of objects that take the form of:
 
-    [
-      {
-        code: 'MAXDECIMALS', 
-        errorname: value, 
-        text: "pretty error message" 
-      }
-    ]
+```js
+[
+  {
+    code: 'MAXDECIMALS',
+    MAXDECIMALS: value,
+    text: "pretty error message"
+  }
+]
+```
 
-- **code** - The Blink defined error code 
-- **errorname** - the actual name of the error
-- **text** - The pretty error text, transformed by an i18n function if one has been specified.
+- **code** - The Blink defined error code
+- **text** - The pretty error text, transformed by an i18n function when specified.
+
+There may be more error information available, depending on the error type.
 
 An error object list takes the following form:
 
-    {
-       modelName : [{code: 'MAXDECIMALS', <errorname>: value, text: "pretty error message" }, {code: 'MINDECIMALS', <errorname>: value, text: "pretty error message"}],
-       modelName2: [{code: 'MAXDECIMALS', <errorname>: value2, text: "pretty error message"}, {code: 'MINDECIMALS', <errorname>: value2, text: "pretty error message"}],
-       length: 2,
-       total: 12
-    }
+```js
+{
+  modelName : [
+    {code: 'MAXDECIMALS', MAXDECIMALS: value, text: "pretty error message" },
+    {code: 'MINDECIMALS', MINDECIMALS: value, text: "pretty error message"}
+  ],
+  modelName2: [
+    {code: 'MAXDECIMALS', MAXDECIMALS: value2, text: "pretty error message"},
+    {code: 'MINDECIMALS', MINDECIMALS: value2, text: "pretty error message"}
+  ],
+  length: 2,
+  total: 12
+}
+```
 
-- **keys** are the Element names
+- **keys** are the Element names, e.g. "modelName", "modelName2"
 - **values** are an array of error codes that conform to the Blink Element error spec.
-- **length** is how many elements are in the object
+- **length** is the number of elements in the object
 - **total** is the total number of errors in the elements collection.
 
 You can retrieve errors in 3 places
-- Directly on the element model via the ````model.validationError```` property
-- On an element collection via the ````elementCollection.getErrors() function````
-- On an entire form via the ````Forms.getErrors() function````
+- Directly on the element model via the `model.validationError` property
+- On an element collection via the `elementCollection.getErrors() function`
+- On an entire form via the `Forms.getErrors() function`
 
 the global counterparts for the above are
-- for a single element ````BMP.Forms.current.getElement('element_name').validationError
-- for the entire current form ````BMP.Forms.current.getErrors()````
-
-##Getting an array of invalid models##
-
-It is important to note that if there is a form element with the same name (for example, a subform appears twice with a missing required element) then the better option is to use ````elementCollection.getInvalid(123)```` or if you dont have access to a collection of elements, ````BMP.Forms.current.getInvalidElements({limit: 123})```` will get all invalid elements for the current form. Both of these functions will also decend through subforms.
-
-Events
-------
-The standard Backbone [Events](http://backbonejs.org/#Events-catalog) are triggered on the element model. They also bubble up to the collection that contains the element, which in turn bubbles through BMP.Forms.current, allowing you to listen to events like ````change:value```` or ````invalid```` on either the element model, the subform model the element model is part of, or the entire form.
+- for a single element `BMP.Forms.current.getElement('element_name').validationError
+- for the entire current form `BMP.Forms.current.getErrors()`
 
 
-Manually Setting Element Errors
------------------------------
+## Getting an array of invalid models
 
-While Forms has its built in error handling, External errors can be set. These errors are the results of either server or custom validation, 
+Importantly, if there is a form element with the same name (for example, a subform appears twice with a missing required element) then the better option is to use `elementCollection.getInvalid(123)` or if you don't have access to a collection of elements, `BMP.Forms.current.getInvalidElements({limit: 123})` will get all invalid elements for the current form.
+Both of these functions will also descend through subforms.
 
-Errors can be set in 3 places:
-- Directly on the element model ````elementModel.setExternalErrors(elementErrorList, options)```` where ````elementErrorList```` is described above in the "Getting Element errors" section
-- On an element collection ````elementCollection.setErrors(errorList, options)````
-- On an entire form ````FormModel.setErrors(errorList, options)
 
-When an error is set an ````'invalid'```` event is trigerred on the Element Model.
+## Events
 
-For all functions, pass {merge: false} as the options to overwrite the current errors.
+Element models emit the standard Backbone [Events](http://backbonejs.org/#Events-catalog).
+They also bubble up to the collection that contains the element, which in turn bubbles through BMP.Forms.current, allowing you to listen to events like `change:value` or `invalid` on either the element model, the subform model the element model is part of, or the entire form.
 
-Error Codes
------------
-The following error codes are built in to forms and are turned in to human friendly text via i18n functions:
+
+## Manually Setting Element Errors
+
+While Forms generates its own validation errors, you may add errors from other sources.
+Typically, these errors will be the result of custom or server-side validation.
+
+There are 3 places you may add extra errors:
+
+- directly on the element model `elementModel.setExternalErrors(elementErrorList, options)`, see "Getting Element errors" (above) about `elementErrorList`
+- on an element collection `elementCollection.setErrors(errorList, options)`
+- on an entire form `formModel.setErrors(errorList, options)`
+
+Using the above methods will cause the Element Model to trigger an `'invalid'` event.
+
+For all functions, pass `{merge: false}` as `options` to overwrite the current errors.
+
+## Error Codes
+
+Forms includes the following errors and their human-friendly translations:
 - "MAX"
 - "MIN"
 - "MAXDECIMALS"
@@ -110,54 +130,93 @@ The following error codes are built in to forms and are turned in to human frien
 - "MINSUBFORM"
 - "SUBFORM"
 
-If your error is not one of the standard blink error codes, you can use 
+If your error is not one of the standard blink error codes, you may use
 - "CUSTOM"
 
 eg to set the error on an individual element:
 
-    var externalErrors = [{code: 'CUSTOM', CUSTOM: 'City must be in New South Wales'}];
+```js
+var externalErrors = [{code: 'CUSTOM', CUSTOM: 'City must be in New South Wales'}];
 
-    var form = Forms.current,
-        element = form.getElement('city');
-    
-    element.setExternalErrors(externalErrors);
+var form = Forms.current,
+    element = form.getElement('city');
+
+element.setExternalErrors(externalErrors);
+```
+
+eg To set a custom error and override a default error to more than one element:
+
+```js
+var externalErrors = {
+  // override a built in MAX function that checked for MAX(100)
+  number1: [{code: 'MAX', MAX: 5, text: 'Element Max adjusted from 100 to 5'}],
+  city: [{code: 'CUSTOM', CUSTOM: 'City must be in New South Wales'}]
+};
+var el = Forms.current.getElement('number1');
+el.val('afdasdasdaf');
+Forms.current.setErrors(externalErrors);
+```
+
+**Note:** changing a value via APIs or end-user interaction will trigger Forms' built-in validation.
+When this occurs, all previous errors disappear, including custom errors.
 
 
-eg To set a custom error and override a default error to multiple elements:
-
-    var externalErrors = {
-      number1: [{code: 'MAX', MAX: 5, text: 'Element Max adjusted from 100 to 5'}],     //override a built in MAX function that checked for MAX(100)
-      city: [{code: 'CUSTOM', CUSTOM: 'City must be in New South Wales'}]
-    };
-    var el = Forms.current.getElement('number1');
-    el.val('afdasdasdaf');
-    Forms.current.setErrors(externalErrors);
-    
-Please note once validation is run on the model (eg when the user types or selects an option), all previous errors will be removed. This includes custom errors.
+## Useful functions
 
 
-Useful functions
-----------------
+### ElementView
 
-````elementView.scrollTo(options)````
-If an element is visible, it will scroll the form to so that the element is at the top of the page. ````options```` is passed on to [jQuery.animate](http://api.jquery.com/animate/)
+#### `#scrollTo(options)`
 
-````BMP.Forms.current.get('_view').goToElement(elementName|elementCID)````
-Will find an element in a form, even if it is in a subform on a different page and trigger the scrollTo function. It Returns a promise that will be resolved with the Element View when the animation completes or rejected if the animation fails.
+This method causes the page to scroll so that the element is at the top of the page.
+Internally, [jQuery.animate](http://api.jquery.com/animate/) uses `options` if specified.
 
-````BMP.Forms.blinkFormsErrorHelper````
-#### toErrorString ####
+**Note:** this method has no effect if Behaviours have conditionally hidden the element.
+
+```js
+var myElementView = window.BMP.Forms.current.getElement('myElement').get('_view');
+myElementView.scrollTo();
+```
+
+### FormView
+
+#### `#goToElement(id)`
+
+- @param {`String`} id - unique name of the element from the builder, or Backbone CID
+- @returns {`Promise`} resolved with the `ElementView`, rejected on animation failure
+
+This method scrolls to an element in a form, even within subforms, even when the
+element is on a different page.
+
+```js
+var parentFormView = window.BMP.Forms.current.get('_view');
+parentFormView.goToElement('myElement');
+```
+
+
+### `BMP.Forms.blinkFormsErrorHelper`
+
+#### `.toErrorString()`
+
 Takes a single object that conforms to the Blink Error Object definition and returns the i18n encoded, human readable string
 
-#### toWarningString ####
-The same as ````toErrorString````, but for warning messages
+#### `.toWarningString()`
 
-#### toBlinkError(code, val, errorstring) ####
-takes a code, value and optional error message string and returns a blink error object. If errorstring is not supplied then ````toErrorString(val)```` will be called, and if that returns nothing then it will default to val.
+The same as `toErrorString`, but for warning messages
 
-eg:
+#### `.toBlinkError(code, value, errorstring)`
 
-    var cityError = BMP.Forms.blinkFormsErrorHelper.toBlinkError('CUSTOM', 'A custom message');
-    var maxNumberError = BMP.Forms.blinkFormsErrorHelper.toBlinkError('MAX', 40, 'Please dont enter more than 40 characters');
+- @param {`String`} code
+- @param {(`String`|`Number`|`Boolean`)} value
+- @param {`String`} [errorstring]
+- @returns {`FormsError`}
 
+If `errorstring` is missing, then its default value will be the result of `.toErrorString(value)`.
+If that returns nothing then it will default to `value`.
 
+e.g:
+
+```js
+var cityError = BMP.Forms.blinkFormsErrorHelper.toBlinkError('CUSTOM', 'A custom message');
+var maxNumberError = BMP.Forms.blinkFormsErrorHelper.toBlinkError('MAX', 40, 'Please dont enter more than 40 characters');
+```

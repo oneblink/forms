@@ -33,9 +33,9 @@ define(function (require) {
       var errors = { value: [] };
       if (!geo.isSupported) {
         errors.value.push('unsupported in this browser');
-        self.set('errors', errors);
         this.validationError = errors;
-        this.trigger('invalid', this);
+        self.set('errors', errors);
+        this.trigger('invalid', this, this.validationError);
         return Promise.reject(new Error(errors.value[0]));
       }
       return geo.getCurrentPosition(options)

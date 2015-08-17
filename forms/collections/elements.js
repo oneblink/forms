@@ -108,7 +108,7 @@ define(function (require) {
      *  // errors: [textElementModel, requiredElementModel]
      *  // length: 2,
      *  // total: 14
-     *  //}
+     *  // }
      */
     getInvalid: function (fieldLimit) {
       var errors;

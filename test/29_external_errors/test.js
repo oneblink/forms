@@ -1,10 +1,12 @@
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('29: External Errors', function () {
     var $page = $('[data-role=page]'),
       $content = $page.find('[data-role=content]');
 
     setup(function (done) {
+      $content.empty();
+      delete Forms.current;
       Forms.getDefinition('form1', 'edit').then(function (def) {
           Forms.initialize(def);
           $content.append(Forms.current.$form);
@@ -19,11 +21,9 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         });
     });
 
-    teardown(function () {
-      // commented out so that the last test can leave a functional DOM in place so we can
-      // manually test
-      // $content.empty();
-      // delete Forms.current;
+    test('initial validation settles within 5sec', function () {
+      this.timeout(5e3);
+      return testUtils.whenValidationStops();
     });
 
     test('External errors set show up on form', function () {
@@ -36,9 +36,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
       assert.equal(element.validationError.value[0].CUSTOM, 'This is custom text');
-
-      $content.empty();
-      delete Forms.current;
     });
 
     test('External errors set show up on form when set on an element model', function () {
@@ -50,9 +47,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
       assert.equal(element.validationError.value[0].CUSTOM, 'This is custom text');
-
-      $content.empty();
-      delete Forms.current;
     });
 
     test('External errors override built in errors of the same name', function () {
@@ -63,58 +57,48 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       element.val('afdasdasdaf');
       Forms.current.setErrors(externalErrors);
       assert.equal(element.validationError.value[0].MAX, 5);
-
-      $content.empty();
-      delete Forms.current;
     });
 
     test('External errors should be cleared when field is altered', function () {
       var element = Forms.current.getElement('textBox1');
 
-      element.val('1');
-
-      assert.isTrue(!element.validationError);
-
-      $content.empty();
-      delete Forms.current;
+      return testUtils.confirmValidValue('1', element);
     });
 
     test('External errors should merge by default', function () {
       var externalErrors = {
         city: [{code: 'CUSTOM', CUSTOM: 'This is custom text'}]
       };
+      var form = Forms.current;
+      var element = form.getElement('city');
 
-      var form = Forms.current,
-          element = form.getElement('city');
-      element.val('');
-      assert.equal(element.validationError.value.length, 1);
+      return testUtils.confirmInvalidValue('', element)
+      .then(function () {
+        assert.lengthOf(element.validationError.value, 1);
 
-      Forms.current.setErrors(externalErrors);
-      assert.equal(element.validationError.value.length, 2);
-
-      $content.empty();
-      delete Forms.current;
+        Forms.current.setErrors(externalErrors);
+        assert.lengthOf(element.validationError.value, 2);
+      });
     });
 
     test('External errors should be at the front of the errors array', function () {
       var externalErrors = {
         city: [{code: 'CUSTOM', CUSTOM: 'This is custom text'}]
       };
+      var form = Forms.current;
+      var element = form.getElement('city');
 
-      var form = Forms.current,
-          element = form.getElement('city');
+      return testUtils.confirmInvalidValue('', element)
+      .then(function () {
+        assert.equal(element.validationError.value[0].code, 'REQUIRED');
 
-      element.val('');
-      assert.equal(element.validationError.value[0].code, 'REQUIRED');
-
-      Forms.current.setErrors(externalErrors);
-      assert.equal(element.validationError.value[0].code, 'CUSTOM');
-
-      $content.empty();
-      delete Forms.current;
+        Forms.current.setErrors(externalErrors);
+        assert.equal(element.validationError.value[0].code, 'CUSTOM');
+        assert.equal(element.validationError.value[1].code, 'REQUIRED');
+      });
     });
 
-// //////////////////////////////////////////////////////////////////////////////////
+// // ////////////////////////////////////////////////////////////////////////////////
 
     suite('subforms', function () {
       var externalErrors, subFormElement;

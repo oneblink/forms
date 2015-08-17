@@ -53,7 +53,12 @@ define(function (require) {
 
     onValueChange: function () {
       var input$ = this.$el.children('select');
-      input$.val(this.model.val());
+      var current = input$.val();
+      var value = this.model.attributes.value;
+      if (current === value) {
+        return; // exit early if nothing actually changed
+      }
+      input$.val(value);
       input$.slider().slider('refresh');
     }
 

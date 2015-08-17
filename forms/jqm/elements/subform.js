@@ -15,22 +15,18 @@ define(function (require) {
     tagName: 'section',
 
     initialize: function () {
-      this.listenTo(this.model, 'update:fieldErrors', function () {
-        this.renderErrors.apply(this, arguments);
-      }.bind(this));
-
       ElementView.prototype.initialize.apply(this, arguments);
     },
 
     remove: function () {
       this.$el.children('.ui-btn').children('button').off('click');
       this.model.attributes.forms.off('change', this.onFormsChange, this);
-      this.stopListening(this.model, 'invalid change:value change:blob');
       this.model.attributes.forms.forEach(function (form) {
         form.get('_view').remove();
       });
       return ElementView.prototype.remove.call(this);
     },
+
     render: function () {
       var attrs = this.model.attributes;
       var $button;
@@ -51,6 +47,7 @@ define(function (require) {
       this.$el.fieldcontain();
       this.onFormsChange();
     },
+
     onAddClick: function () {
       var self = this;
       var attrs = self.model.attributes;
@@ -62,6 +59,7 @@ define(function (require) {
         }
       });
     },
+
     onFormsChange: function () {
       var attrs,
         view,

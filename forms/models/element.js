@@ -1,3 +1,4 @@
+/* eslint-disable accessor-pairs */ // we're using the "set" keyword for method
 /**
  * Element Model Module
  *
@@ -12,8 +13,18 @@ define(function (require) {
   var $ = require('jquery');
   var _ = require('underscore');
   var Backbone = require('backbone');
+  var queue = require('queue-async');
+
+  // local modules
+
+  var utils = require('forms/lib/utils');
 
   // this module
+
+  var q = queue(10);
+
+  /** @type {Boolean} is the Behaviours queue empty? */
+  var qEmpty = true;
 
   var Element;
 
@@ -27,7 +38,9 @@ define(function (require) {
       hidden: false,
       persist: true
     },
+
     idAttribute: 'name',
+
     initialize: function () {
       var attrs = this.attributes;
       var form = attrs.form;
@@ -51,7 +64,10 @@ define(function (require) {
         }
       }
 
-      this.set('value', attrs.defaultValue, {silent: true, validate: false});
+      // have to do this _before_ we start setting 'value'
+      this.validate = _.debounce(this.validate, 500);
+
+      this.set('value', attrs.defaultValue, { silent: true });
       if (!attrs.label && attrs.type !== 'message') {
         if (attrs.prefix) {
           attrs.label = attrs.name + ' ' + attrs.prefix;
@@ -69,14 +85,21 @@ define(function (require) {
         this.set('label', attrs.label);
       }
 
-      // backward compatability.
-      this.on('invalid change:value', this.updateErrors, this);
+      // backward compatability
+      this.on('invalid valid', this.updateErrors, this);
 
       this.on('remove', this.close, this);
-
-      this.initializeView();
     },
-    validate: function (attrs) {
+
+    isEmpty: function () {
+      var value = this.attributes.value;
+      if (Array.isArray(value)) {
+        return !value.length;
+      }
+      return !value && value !== 0;
+    },
+
+    runValidation: function (attrs) {
       var errors = {};
 
       if (attrs === undefined) {
@@ -88,7 +111,7 @@ define(function (require) {
         return undefined;
       }
 
-      if (attrs.required && !attrs.value) {
+      if (attrs.required && this.isEmpty()) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
 
@@ -102,6 +125,32 @@ define(function (require) {
 
       return _.isEmpty(errors) ? undefined : errors;
     },
+
+    validate: function (attrs) {
+      var args = arguments;
+      if (Object.keys(attrs || this.attributes || {}).indexOf('value') !== -1) {
+        q.defer(function (done) {
+          this.validationError = this.runValidation.apply(this, args);
+          this.trigger(
+            this.hasErrors() ? 'invalid' : 'valid',
+            this,
+            this.validationError
+          );
+          setTimeout(done, Element.VALIDATE_SLEEP);
+        }.bind(this));
+        if (qEmpty) {
+          qEmpty = false;
+          setTimeout(function () {
+            q.awaitAll(function () {
+              qEmpty = true;
+              BMP.Forms.trigger('validated');
+            });
+          }, 0);
+        }
+      }
+      return this.validationError;
+    },
+
     /* @deprecated */
     updateErrors: function () {
       this.set('errors', this.validationError, {validate: false, silent: true});
@@ -146,9 +195,11 @@ define(function (require) {
       }
       return _.isEmpty(warning) ? undefined : warning;
     },
+
     updateWarning: function () {
       this.set('warning', this.warn());
     },
+
     removeView: function () {
       var attrs = this.attributes;
       if (attrs._view) {
@@ -156,6 +207,7 @@ define(function (require) {
         delete attrs._view;
       }
     },
+
     close: function () {
       var attrs = this.attributes;
       delete attrs.form;
@@ -163,6 +215,7 @@ define(function (require) {
       delete attrs.section;
       this.off(null, null, this);
     },
+
     /**
      * this will close any existing view first, then establish a new view
      */
@@ -199,27 +252,30 @@ define(function (require) {
       this.set('_view', view);
       return view;
     },
+
+    set: function (prop) {
+      var result = Backbone.Model.prototype.set.apply(this, arguments);
+      if (utils.isBBSetForProp('value', arguments)) {
+        // explicitly trigger validation, even if there is no change in value
+        this.validate();
+      }
+      return result;
+    },
+
     /**
      * official Blink API
      */
     val: function (value) {
-      var attrs;
-
-      if (value === undefined) {
+      if (!arguments.length) {
         return this.get('value');
       }
-
-      attrs = _.extend({}, this.attributes, {value: value});
-      this.validationError = this.validate(attrs);
-      if (this.validationError) {
-        this.trigger('invalid', this, this.validationError);
-      }
-
-      this.set('value', value, {validate: false});
-      return value;
+      return this.set('value', value);
     }
   }, {
     // static properties
+
+    VALIDATE_SLEEP: 10,
+
     /**
      * @param {Object} attrs attributes for this model.
      * @param {Form} form parent to associate with new Element.

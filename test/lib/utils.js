@@ -9,6 +9,13 @@ define(['BlinkForms'], function (Forms) {
       el.get('mode') === 'expanded';
   }
 
+  function assertEmitter (obj) {
+    assert.isObject(obj, 'emitter is an object');
+    assert.isFunction(obj.on, 'emitter has "on" method');
+    assert.isFunction(obj.once, 'emitter has "once" method');
+    assert.isFunction(obj.off, 'emitter has "off" method');
+  }
+
   return {
 
     defineButtonTest: function () {
@@ -53,6 +60,77 @@ define(['BlinkForms'], function (Forms) {
     wait: function (ms) {
       return new Promise(function (resolve) {
         setTimeout(resolve, ms);
+      });
+    },
+
+    /**
+    @param {Object} emitter
+    @param {String} event name
+    */
+    whenEventSettles: function (emitter, event) {
+      assertEmitter(emitter);
+      assert.isString(event);
+      return new Promise(function (resolve) {
+        var last = new Date();
+        var handler = function () {
+          last = new Date();
+        };
+        var checkLast = function () {
+          var now = new Date();
+          if ((now - last) > 1e3) {
+            resolve();
+          } else {
+            setTimeout(checkLast, 100);
+          }
+        }
+        setTimeout(checkLast, 100);
+        emitter.on(event, handler);
+      });
+    },
+
+    whenValidationStops: function () {
+      return this.whenEventSettles(window.BMP.Forms, 'validated');
+    },
+
+    whenNewValueIsValidated: function (element, value) {
+      return new Promise(function (resolve) {
+        if (value === element.attributes.value) {
+          resolve();
+          return;
+        }
+        element.once('valid invalid', function () {
+          resolve();
+        });
+        element.val(value);
+      });
+    },
+
+    confirmValidValue: function (value, element) {
+      return this.whenNewValueIsValidated(element, value)
+      .then(function () {
+        assert.notOk(
+          element.validationError,
+          element.attributes.name + ': valid: ' + value
+        );
+      });
+    },
+
+    confirmInvalidValue: function (value, element) {
+      return this.whenNewValueIsValidated(element, value)
+      .then(function () {
+        assert.isObject(
+          element.validationError,
+          element.attributes.name + ': invalid: ' + value
+        );
+        assert.isArray(
+          element.validationError.value,
+          element.attributes.name + ': invalid: ' + value
+        );
+        assert.isAbove(
+          element.validationError.value.length,
+          0,
+          element.attributes.name + ': invalid: ' + value
+        );
       });
     }
 

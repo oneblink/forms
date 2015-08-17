@@ -127,9 +127,9 @@ define(function () {
               min: 15,
               max: 400,
               step: 5,
-              defaultValue: 35,
+              defaultValue: 350,
               maxDecimals: 2,
-              pattern: '^[0-9]$',
+              pattern: '^[0-9][0-9]$',
               prefix: '$'
 
             }

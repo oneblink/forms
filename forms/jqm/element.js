@@ -29,7 +29,7 @@ define(function (require) {
     },
 
     modelEvents: {
-      'invalid change:value': 'renderErrors',
+      'invalid valid': 'renderErrors',
       // 'change:warning', 'renderWarning',
       'change:class': 'onChangeClass',
       'change:hidden': 'onChangeHidden',
@@ -49,7 +49,6 @@ define(function (require) {
 
       this.onChangeClass();
       this.onChangeHidden();
-      this.model.isValid();
     },
 
     remove: function () {

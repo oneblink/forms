@@ -15,6 +15,7 @@ define(function (require) {
     initialize: function () {
       Element.prototype.initialize.apply(this, arguments);
     },
+
     initializeView: function () {
       var Forms = BMP.Forms;
       var View, view;
@@ -30,8 +31,10 @@ define(function (require) {
       this.set('_view', view);
       return view;
     },
-    validate: function (attrs) {
-      var errors = Element.prototype.validate.apply(this, arguments) || {};
+
+    runValidation: function (attrs) {
+      var errors = Element.prototype.runValidation.apply(this, arguments) || {};
+
       if (attrs === undefined) {
         attrs = this.attributes;
       }

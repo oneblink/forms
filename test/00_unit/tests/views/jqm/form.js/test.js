@@ -1,9 +1,3 @@
-
-/*global assert:true*/ // chai
-/*global sinon:true*/
-/*global _:true*/
-/*global Backbone:true*/
-
 /*
   To ensure correct, isolated, unit test behavior,
   everything except the file being tested should be mocked or stubbed out.

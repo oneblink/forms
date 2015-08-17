@@ -6,6 +6,7 @@ define(function (require) {
   var $ = require('jquery');
   var _ = require('underscore');
   var Backbone = require('backbone');
+  var deadline = require('@jokeyrhyme/deadline');
 
   // local modules
 
@@ -27,16 +28,12 @@ define(function (require) {
 
   invalidWrapperFn = function (fn) {
     return function (options) {
-      var elementCollection = new Elements(this.get('elements').filter(isVisible));
-      var validate = options && options.validate || false;
       var limit = options && options.limit || 0;
+      var oldElements = this.attributes && this.attributes.elements;
+      var elementCollection = new Elements((oldElements || []).filter(isVisible));
 
       if (!elementCollection) {
         return undefined;
-      }
-
-      if (validate) {
-        elementCollection.invoke('isValid');
       }
 
       return elementCollection[fn](limit);
@@ -54,6 +51,7 @@ define(function (require) {
       isPopulating: false,
       uuid: ''
     },
+
     initialize: function () {
       var Forms = BMP.Forms;
       var self = this;
@@ -101,8 +99,25 @@ define(function (require) {
       }
       this.attributes.elements = new Elements(elements);
       // bubble element events up through the form model.
-      this.attributes.elements.on('all', function () {
-        this.trigger.apply(this, arguments);
+      this.attributes.elements.on('all', function (type) {
+        var args = arguments;
+        if (type === 'valid' || type === 'invalid') {
+          // to avoid event thrashing, we wait for the validation queue to empty
+          window.BMP.Forms.once('validated', deadline.fn(function () {
+            // now we check to see which event to emit
+            // args[1]: Element model that triggered validation
+            // args[2]: result of validation
+            if ((this.getInvalidElements() || []).length) {
+              this.trigger('invalid', args[1], args[2]);
+            } else {
+              this.trigger('valid', args[1]);
+            }
+          }.bind(this), 500));
+
+        } else {
+          // pass all other events through
+          this.trigger.apply(this, arguments);
+        }
       }, this);
 
       this.attributes.preloadPromise = Promise.all(preloadPromises);
@@ -146,6 +161,9 @@ define(function (require) {
         });
       }
 
+      if (this.attributes.elements && this.attributes.elements.off) {
+        this.attributes.elements.off('all', null, this);
+      }
       this.off('remove', this.close, this);
     },
     /**
@@ -218,12 +236,12 @@ define(function (require) {
     * @example
           Forms.current.getErrors()
           // returns:
-          //{
+          // {
           //   modelName : [{code: 'MAXDECIMALS', <errorname>: value, text: "pretty error message" }, {code: 'MINDECIMALS', <errorname>: value, text: "pretty error message"}],
           //   modelName2: [{code: 'MAXDECIMALS', <errorname>: value2, text: "pretty error message"}, {code: 'MINDECIMALS', <errorname>: value2, text: "pretty error message"}],
           //   length: 2,
           //   total: 12
-          //}
+          // }
     */
     getErrors: invalidWrapperFn('getErrors'),
 
@@ -414,7 +432,9 @@ define(function (require) {
   }, {
     // static properties
     /**
-    * @param {Object} attrs attributes for this model.
+    @param {Object} attrs attributes for this model.
+    @param {String} [action='add'] name of the specific variation to use
+    @returns {Form}
     */
     create: function (attrs, action) {
       var form;
