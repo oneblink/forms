@@ -432,7 +432,9 @@ define(function (require) {
   }, {
     // static properties
     /**
-    * @param {Object} attrs attributes for this model.
+    @param {Object} attrs attributes for this model.
+    @param {String} [action='add'] name of the specific variation to use
+    @returns {Form}
     */
     create: function (attrs, action) {
       var form;
