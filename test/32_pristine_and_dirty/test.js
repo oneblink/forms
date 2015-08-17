@@ -35,9 +35,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       'user_attribute',
       'get_value'];
 
-
     suite('#setPristine', function () {
-      //make sure that the form is in a pristine state for each test.
+      // make sure that the form is in a pristine state for each test.
       suiteSetup(function () {
         $content.empty();
         return Forms.getDefinition('every_field_type', 'add').then(function (def) {
@@ -64,7 +63,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
           }
         });
 
-        //now make the form aqnd its contents pritine
+        // now make the form and its contents pritine
         Forms.current.setPristine();
 
         assert.isFalse(Forms.current.get('isDirty'));
