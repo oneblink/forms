@@ -13,7 +13,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       var subForms = Forms.current.getSubforms();
       var p, counter = 0;
       assert.isObject(subForms);
-      assert.isDefined(subForms.second_level_form);
+      assert.isDefined(subForms.second_level_test);
       for (p in subForms) {
         if (subForms.hasOwnProperty(p)) {
           counter++;
@@ -24,49 +24,49 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     test('2nd level form returns 1 subform', function () {
-      return Forms.current.getElement('second_level_form').get('_view').onAddClick().then(function () {
+      return Forms.current.getElement('second_level_test').add().then(function () {
         var subForms;
         var subSubForms;
         subForms = Forms.current.getSubforms();
-        assert.equal(subForms.second_level_form.length, 1);
+        assert.equal(subForms.second_level_test.length, 1);
 
-        subSubForms = subForms.second_level_form.invoke('getSubforms')[0];
-        assert.isDefined(subSubForms.third_level_form);
+        subSubForms = subForms.second_level_test.invoke('getSubforms')[0];
+        assert.isDefined(subSubForms.third_level);
       });
     });
 
     test('2nd level form returns 2 subforms', function () {
-      var view = Forms.current.getElement('second_level_form').get('_view');
-      return view.onAddClick()
-                  .then(view.onAddClick.bind(view))
+      var subform = Forms.current.getElement('second_level_test');
+      return subform.add()
+                  .then(subform.add.bind(subform))
                   .then(function () {
                     var subForms;
                     var subSubForms;
                     subForms = Forms.current.getSubforms();
-                    assert.equal(subForms.second_level_form.length, 2);
-                    subSubForms = subForms.second_level_form.models[0].getSubforms();
-                    assert.isDefined(subSubForms.third_level_form);
+                    assert.equal(subForms.second_level_test.length, 2);
+                    subSubForms = subForms.second_level_test.models[0].getSubforms();
+                    assert.isDefined(subSubForms.third_level);
                   });
     });
 
     test('2nd level form returns 2 subforms', function () {
-      var view = Forms.current.getElement('second_level_form').get('_view');
-      return view.onAddClick()
-                  .then(view.onAddClick.bind(view))
+      var subform = Forms.current.getElement('second_level_test');
+      return subform.add()
+                  .then(subform.add.bind(subform))
                   .then(function () {
                     var subForms;
                     var subSubForms;
                     subForms = Forms.current.getSubforms();
-                    assert.equal(subForms.second_level_form.length, 2);
-                    subSubForms = subForms.second_level_form.models[0].getSubforms();
-                    assert.isDefined(subSubForms.third_level_form);
+                    assert.equal(subForms.second_level_test.length, 2);
+                    subSubForms = subForms.second_level_test.models[0].getSubforms();
+                    assert.isDefined(subSubForms.third_level);
                   });
     });
 
     test('2nd level form errors are scrolled to', function () {
       var origScrollTop = $(window).scrollTop();
-      var view = Forms.current.getElement('second_level_form').get('_view');
-      return view.onAddClick()
+      var subform = Forms.current.getElement('second_level_test');
+      return subform.add()
                  .then(function () {
                   var invalid = Forms.current.getInvalidElements();
                   // make sure we have an error
@@ -81,22 +81,21 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
     test('3rd level form errors are scrolled to correctly', function () {
       var origScrollTop = $(window).scrollTop();
-      var view = Forms.current.getElement('second_level_form').get('_view');
+      var subform = Forms.current.getElement('second_level_test');
 
-      return view.onAddClick() // add second level
+      return subform.add() // add second level
                   .then(function () {
-                    var t = Forms.current.getElement('third_level_form').get('_view');
-                    return t.onAddClick(); // add third level
+                    return Forms.current.getElement('third_level').add(); // add third level
                   })
                   .then(function () {
                     var subForms = Forms.current.getSubforms();
-                    var moreSubforms = subForms.second_level_form.getSubforms();
+                    var moreSubforms = subForms.second_level_test.getSubforms();
                     var invalidThirdLevel;
                     // make sure we have an error
                     assert.isAbove(moreSubforms.length, 0);
-                    assert.isTrue(moreSubforms[0].hasOwnProperty('third_level_form'));
+                    assert.isTrue(moreSubforms[0].hasOwnProperty('third_level'));
                     // get the first invalid element and scroll
-                    invalidThirdLevel = moreSubforms[0].third_level_form.models[0].getInvalidElements();
+                    invalidThirdLevel = moreSubforms[0].third_level.models[0].getInvalidElements();
                     assert.isAbove(invalidThirdLevel.errors.length, 0);
 
                     return invalidThirdLevel.errors[0].get('_view').scrollTo().then(function () {
@@ -106,40 +105,39 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     test('subform invalid events bubble up to Forms.current', function (done) {
-      var view = Forms.current.getElement('second_level_form').get('_view');
+      var subform = Forms.current.getElement('second_level_test');
 
-      view.onAddClick()
-          .then(function () {
-            Forms.current.on('invalid', function (model, error) {
-              assert.equal(model.id, 'second_required');
-              assert.equal(error.value[0].code, 'REQUIRED');
-              done();
-            });
-            Forms.current.getElement('second_required').val('');
-          });
+      subform.add()
+              .then(function () {
+                Forms.current.on('invalid', function (model, error) {
+                  assert.equal(model.id, 'second_level_text');
+                  assert.equal(error.value[0].code, 'REQUIRED');
+                  done();
+                });
+                Forms.current.getElement('second_level_text').val('');
+              });
     });
 
     test('subform change:value events bubble up to Forms.current', function (done) {
-      var view = Forms.current.getElement('second_level_form').get('_view');
+      var subform = Forms.current.getElement('second_level_test');
 
-      view.onAddClick()
-          .then(function () {
-            Forms.current.on('change:value', function (model, val) {
-              assert.equal(model.id, 'second_required');
-              assert.equal(val, 123);
-              done();
-            });
-            Forms.current.getElement('second_required').val(123);
-          });
+      subform.add()
+              .then(function () {
+                Forms.current.on('change:value', function (model, val) {
+                  assert.equal(model.id, 'second_level_text');
+                  assert.equal(val, 123);
+                  done();
+                });
+                Forms.current.getElement('second_level_text').val(123);
+              });
     });
 
     test('3rd level subform invalid events bubble up to Forms.current', function (done) {
-      var view = Forms.current.getElement('second_level_form').get('_view');
+      var subform = Forms.current.getElement('second_level_test');
 
-      return view.onAddClick() // add second level
+      return subform.add() // add second level
                   .then(function () {
-                    var t = Forms.current.getElement('third_level_form').get('_view');
-                    return t.onAddClick(); // add third level
+                    return Forms.current.getElement('third_level').add(); // add third level
                   })
                   .then(function () {
                     var thirdLevelRequiredField = Forms.current.getElement('third_level_req');
@@ -155,12 +153,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     test('3rd level subform invalid events bubble up to Forms.current', function (done) {
-      var view = Forms.current.getElement('second_level_form').get('_view');
+      var subform = Forms.current.getElement('second_level_test');
 
-      return view.onAddClick() // add second level
+      return subform.add() // add second level
                   .then(function () {
-                    var t = Forms.current.getElement('third_level_form').get('_view');
-                    return t.onAddClick(); // add third level
+                    return Forms.current.getElement('third_level').add(); // add third level
                   })
                   .then(function () {
                     var thirdLevelRequiredField = Forms.current.getElement('third_level_req');
@@ -177,29 +174,16 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
     suite('hidden subform fields', function () {
       setup(function () {
-        return Forms.current.getElement('second_level_form').add();
-      });
-
-      test('hidden fields in the name are not shown', function () {
-        var hiddenField = Forms.current.getElement('hidden_field1'),
-            hiddenFieldView = hiddenField.get('_view');
-
-        assert.isTrue(hiddenField.get('hidden'));
-        assert.isFalse(hiddenFieldView.$el.is(':visible'));
-
+        return Forms.current.getElement('second_level_test').add();
       });
 
       test('hidden fields with underscore in the name are not shown', function () {
-        var hiddenFieldWithUnderscore = Forms.current.getElement('hiddenfield2'),
-            hiddenFieldWithUnderscoreView = hiddenFieldWithUnderscore.get('_view');
-
-        assert.isTrue(hiddenFieldWithUnderscore.get('hidden'));
-        assert.isFalse(hiddenFieldWithUnderscoreView.$el.is(':visible'));
+        assert.isUndefined(Forms.current.getElement('hidden_when_first'));
 
       });
 
       test('fields with a hide attribute that is falsy are shown', function () {
-        var model = Forms.current.getElement('hiddenfield3'),
+        var model = Forms.current.getElement('hidden_when_text_is_a'),
             view = model.get('_view');
 
         assert.isFalse(model.get('hidden'));

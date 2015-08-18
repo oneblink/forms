@@ -73,10 +73,6 @@ define(function (require) {
         this.set('label', attrs.label);
       }
 
-      if (attrs.hide && parseInt(attrs.hide, 10)) {
-        this.set({hidden: true});
-      }
-
       // backward compatability.
       this.on('invalid change:value', this.updateErrors, this);
 
