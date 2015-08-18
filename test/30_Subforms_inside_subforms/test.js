@@ -1,24 +1,12 @@
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('30: Subforms inside Subforms', function () {
-    var $page = $('[data-role=page]');
-    var $content = $page.find('[data-role=content]');
 
     setup(function () {
-      return Forms.getDefinition('firstLevel', 'add').then(function (def) {
-        Forms.initialize(def);
-        $content.append(Forms.current.$form);
-        $.mobile.page({}, $page);
-        $page.trigger('pagecreate');
-        $page.show();
+      return testUtils.loadForm('firstLevel', 'add')
+      .then(function () {
         $(window).scrollTop(0);
       });
-    });
-
-    teardown(function () {
-      Forms.current.off();
-      $content.empty();
-      delete Forms.current;
     });
 
     test('Top Level elements collection returns 1 sub form', function () {

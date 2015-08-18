@@ -1,40 +1,13 @@
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('31: Conditional logic in sub forms', function () {
-    var $page, $content, form;
+    var form;
 
     setup(function () {
-      /* eslint-disable no-unused-expressions */
-      Forms.current && Forms.current.off();
-      delete Forms.current;
-      $content && $content.empty();
-      /* eslint-enable no-unused-expressions */
-      $page = undefined;
-      $content = undefined;
-      form = undefined;
-
-      $page = $('[data-role=page]');
-      $content = $page.find('[data-role=content]');
-
-      return Forms.getDefinition('firstLevel', 'add').then(function (def) {
-        Forms.initialize(def);
+      return testUtils.loadForm('firstLevel', 'add')
+      .then(function () {
         form = Forms.current;
-
-        $content.append(Forms.current.$form);
-        $.mobile.page({}, $page);
-        $page.trigger('pagecreate');
-        $page.show();
       });
-    });
-
-    teardown(function () {
-      // Forms.current.off();
-      // $content.empty();
-      // delete Forms.current;
-
-      // $page = undefined;
-      // $content = undefined;
-      // form = undefined;
     });
 
     suite('required fields', function () {

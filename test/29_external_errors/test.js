@@ -1,29 +1,12 @@
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
 
   suite('29: External Errors', function () {
-    var $page = $('[data-role=page]'),
-      $content = $page.find('[data-role=content]');
 
-    setup(function (done) {
-      Forms.getDefinition('form1', 'edit').then(function (def) {
-          Forms.initialize(def);
-          $content.append(Forms.current.$form);
-          $.mobile.page({}, $page);
-          $page.trigger('pagecreate');
-          $page.show();
-          Forms.current.set('numErrorsShown', 0); // dont want a limit
-          done();
-        }, function () {
-          assert.fail(true, false, 'Setup Failed');
-          done();
-        });
-    });
-
-    teardown(function () {
-      // commented out so that the last test can leave a functional DOM in place so we can
-      // manually test
-      // $content.empty();
-      // delete Forms.current;
+    setup(function () {
+      return testUtils.loadForm('form1', 'edit')
+      .then(function () {
+        Forms.current.set('numErrorsShown', 0); // dont want a limit
+      });
     });
 
     test('External errors set show up on form', function () {
@@ -36,9 +19,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
       assert.equal(element.validationError.value[0].CUSTOM, 'This is custom text');
-
-      $content.empty();
-      delete Forms.current;
     });
 
     test('External errors set show up on form when set on an element model', function () {
@@ -50,9 +30,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       assert.isAbove(element.get('_view').$el.find('.bm-errors__bm-listitem').text().indexOf('This is custom text'), -1);
       assert.equal(element.validationError.value[0].CUSTOM, 'This is custom text');
-
-      $content.empty();
-      delete Forms.current;
     });
 
     test('External errors override built in errors of the same name', function () {
@@ -63,9 +40,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       element.val('afdasdasdaf');
       Forms.current.setErrors(externalErrors);
       assert.equal(element.validationError.value[0].MAX, 5);
-
-      $content.empty();
-      delete Forms.current;
     });
 
     test('External errors should be cleared when field is altered', function () {
@@ -74,9 +48,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
       element.val('1');
 
       assert.isTrue(!element.validationError);
-
-      $content.empty();
-      delete Forms.current;
     });
 
     test('External errors should merge by default', function () {
@@ -91,9 +62,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       Forms.current.setErrors(externalErrors);
       assert.equal(element.validationError.value.length, 2);
-
-      $content.empty();
-      delete Forms.current;
     });
 
     test('External errors should be at the front of the errors array', function () {
@@ -109,9 +77,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       Forms.current.setErrors(externalErrors);
       assert.equal(element.validationError.value[0].code, 'CUSTOM');
-
-      $content.empty();
-      delete Forms.current;
     });
 
 // //////////////////////////////////////////////////////////////////////////////////
@@ -159,9 +124,6 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
           assert.equal(errorMessages[0].code, 'CUSTOM');
           assert.equal(errorMessages[0].CUSTOM, 'this is a custom subform element error');
-
-          $content.empty();
-          delete Forms.current;
       });
 
       test('We can set a custom error message on an element in a specific subform', function () {

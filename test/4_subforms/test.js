@@ -1,67 +1,19 @@
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
+
   suite('4: subForms', function () {
-    var $doc = $(document),
-      $page = $('[data-role=page]'),
-      $content = $page.find('[data-role=content]');
 
     var form;
 
-    /**
-     * execute once before everything else in this suite
-     */
-    suiteSetup(function () {
-      $content.empty();
-      delete Forms.current;
-    });
-
     setup(function () {
-      return Forms.getDefinition('form1', 'add').then(function (def) {
-        Forms.initialize(def, 'add');
+      return testUtils.loadForm('form1', 'add')
+      .then(function () {
         form = Forms.current;
-
-        $content.append(form.$form);
-        $.mobile.page({}, $page);
-        $page.trigger('pagecreate');
-        $page.show();
-
-        return Forms;
       });
     });
 
     teardown(function () {
       form = null;
-      $content.empty();
-      delete Forms.current;
     });
-
-    suite('Form', function () {
-      test('BlinkForms global is an Object', function () {
-        assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
-      });
-
-      test('initialise with form.json', function () {
-        assert.equal($.type(form), 'object');
-        assert.equal(form.get('name'), 'form1');
-        assert.equal(form.get('label'), 'Form 1');
-      });
-
-      test('render form for jQuery Mobile', function (done) {
-        $content.empty().append(form.$form);
-
-        $doc.one('pageinit', function () {
-          form.attributes.preloadPromise.then(function () {
-            done();
-          });
-        });
-
-        $.mobile.page({}, $page);
-        $page.trigger('pagecreate');
-        $page.show();
-      });
-
-      testUtils.defineLabelTest();
-
-    }); // END: suite('Form', ...)
 
 // ///////////////////////////////////////////////////////////////////////////////
 

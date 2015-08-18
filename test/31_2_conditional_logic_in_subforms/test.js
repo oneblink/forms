@@ -1,28 +1,13 @@
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
+
+  testUtils.defineFormLoadSuite('firstLevel', 'add');
 
   suite('31.2 confirm that behaviour runs multiple times', function () {
-    var $page, $content, i;
-    suiteSetup(function () {
-      /* eslint-disable no-unused-expressions */
-      Forms.current && Forms.current.off();
-      delete Forms.current;
-      $content && $content.empty();
-      /* eslint-enable no-unused-expressions */
-
-      $page = $('[data-role=page]');
-      $content = $page.find('[data-role=content]');
-
-      return Forms.getDefinition('firstLevel', 'add').then(function (def) {
-        Forms.initialize(def);
-
-        $content.append(Forms.current.$form);
-        $.mobile.page({}, $page);
-        $page.trigger('pagecreate');
-        $page.show();
-      });
-    });
 
     suite('second_level_field', function () {
+
+      var i;
+
       suiteSetup(function (done) {
         var form;
         var element;
