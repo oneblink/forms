@@ -1,12 +1,20 @@
-define(['forms/models/element'], function (Element) {
+define(function (require) {
   'use strict';
 
-  var HeadingElement = Element.extend({
-    defaults: {
-      page: 0,
-      persist: false,
-      level: 1
-    },
+  var $ = require('jquery');
+  var _ = require('underscore');
+
+  var ElementModel = require('forms/models/element');
+
+  var defaultAttributes = {
+    page: 0,
+    persist: false,
+    level: 1
+  };
+
+  var HeadingElement = ElementModel.extend({
+    defaults: _.extend(defaultAttributes, ElementModel.prototype.defaults),
+
     initialize: function () {
       var self, schemaMap, headingType;
       self = this;
@@ -32,9 +40,11 @@ define(['forms/models/element'], function (Element) {
           self.attributes.level = headingType + 1;
         }
       }
+      ElementModel.prototype.initialize.apply(this, arguments);
+    },
 
-      Element.prototype.initialize.apply(this, arguments);
-    }
+    setDirty: $.noop,
+    setPristine: $.noop
   });
 
   return HeadingElement;
