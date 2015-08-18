@@ -23,6 +23,10 @@ define(function (require) {
   var Behaviour;
 
   Expression.fn['formelement.value'] = function (name) {
+    var el = this.getElement(name);
+    if (!el) {
+      return undefined;
+    }
     return this.getElement(name).val();
   };
 

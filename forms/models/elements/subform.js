@@ -176,9 +176,9 @@ define(function (require) {
               // check the sub form field for any overridden properties.
               var overriddenOptions = fieldProperties[element.subForm || element.name];
 
-              // for now just apply the hidden override.
-              // TODO: implement the other subform overrides when their behavior has been defined.
-              element.hidden = overriddenOptions && parseInt(overriddenOptions.hide, 10) === 1;
+              if (overriddenOptions && parseInt(overriddenOptions.hide, 10) === 1) {
+                return memo;
+              }
 
               // let the element know who its parent is
               element.parentElement = self;
