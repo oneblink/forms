@@ -12,6 +12,8 @@ define(function (require) {
 
   // this module
 
+  var KEYDOWN_DEBOUNCE = 1000; // ms
+
   return ElementView.extend({
 
     events: {
@@ -26,7 +28,19 @@ define(function (require) {
       'change:value': 'onValueChange'
     }),
 
+    initialize: function () {
+      ElementView.prototype.initialize.apply(this, arguments);
+
+      // create an instance-specific #onKeyDown() that is debounced
+      this.onKeyDown = _.debounce(this.onKeyDown, KEYDOWN_DEBOUNCE);
+    },
+
     render: function () {
+      // Backbone.View automatically calls #delegateEvents()
+      // we call it again here, so that our debounced #onKeyDown is hooked up
+      // otherwise the raw #onKeyDown will be used instead
+      this.delegateEvents();
+
       this.renderLabel();
       if (!this.$input) {
         this.$input = this.createElement();
@@ -50,7 +64,7 @@ define(function (require) {
       return ElementView.prototype.remove.apply(this, arguments);
     },
 
-    onKeyDown: _.throttle(function (event) {
+    onKeyDown: function (event) {
       var prev = this.model.attributes.value;
       var next = $(event.target).val();
       if (next !== prev) {
@@ -58,7 +72,7 @@ define(function (require) {
         this.model.trigger('change:value');
         this.model.trigger('change', this.model);
       }
-    }, 500),
+    },
 
     onPlaceholderChange: function () {
       var text;
