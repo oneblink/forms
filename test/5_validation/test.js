@@ -435,6 +435,10 @@ define([
           assert.equal(label$.text(), 'ABC');
         });
 
+        suiteTeardown(function () {
+          element.set('label', element.attributes.name);
+        });
+
       });
 
     });

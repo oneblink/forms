@@ -128,6 +128,10 @@ define(['jquery', 'BlinkForms', 'testUtils', 'BIC'], function ($, Forms, testUti
             assert.equal(label$.text(), 'ABC');
           });
 
+          suiteTeardown(function () {
+            element.set('label', element.attributes.name);
+          });
+
         });
 
       });
