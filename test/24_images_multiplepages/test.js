@@ -1,4 +1,4 @@
-define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
+define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
   function isPhantom () {
     return navigator.userAgent.toLowerCase().indexOf('phantom') !== -1;

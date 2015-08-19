@@ -1,4 +1,4 @@
-define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
+define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
   suite('30: Subforms inside Subforms', function () {
 

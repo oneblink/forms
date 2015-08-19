@@ -1,4 +1,4 @@
-define(['BlinkForms', 'backbone', 'testUtils', 'BIC'], function (Forms, Backbone, testUtils) {
+define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testUtils) {
   var record$, record, $xml;
 
   suite('getformrecord.xml', function () {

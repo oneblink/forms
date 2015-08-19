@@ -1,4 +1,4 @@
-define(['BlinkForms', 'testUtils', 'underscore', 'BIC'], function (Forms, testUtils, _) {
+define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _) {
 
   var originalOptions = { a: 'alpha', b: 'beta', g: 'gamma' };
   var newOptions = { d: 'delta', e: 'epsilon', z: 'zeta' };

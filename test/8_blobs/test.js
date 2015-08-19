@@ -1,4 +1,4 @@
-define(['backbone', 'BlinkForms', 'testUtils', 'BIC'], function (Backbone, Forms, testUtils) {
+define(['backbone', 'BlinkForms', 'testUtils'], function (Backbone, Forms, testUtils) {
 
   var mockXhrUpload = new Backbone.Model();
   mockXhrUpload.addEventListener = function (type, handler) {

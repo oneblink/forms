@@ -1,4 +1,4 @@
-define(['jquery', 'BlinkForms', 'testUtils', 'BIC'], function ($, Forms, testUtils) {
+define(['jquery', 'BlinkForms', 'testUtils'], function ($, Forms, testUtils) {
   'use strict';
 
   testUtils.defineFormLoadSuite('form1', 'add');

@@ -1,4 +1,5 @@
-define(['BlinkForms'], function (Forms) {
+// need the BIC module to set up `.getDefinition()`, etc
+define(['BlinkForms', 'BIC'], function (Forms) {
 
   var NO_LABELS = ['hidden', 'heading', 'message', 'subForm', 'button'];
   var CHOICES = ['select', 'multi']

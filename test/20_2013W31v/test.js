@@ -1,4 +1,4 @@
-define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
+define(['testUtils'], function (testUtils) {
   'use strict';
 
   testUtils.defineFormLoadSuite('test_form', 'add');

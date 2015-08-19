@@ -2,8 +2,7 @@ define([
   'underscore',
   'sinon',
   'BlinkForms',
-  'testUtils',
-  'BIC'
+  'testUtils'
 ], function (_, sinon, Forms, testUtils) {
 
   suite('i18n', function () {
