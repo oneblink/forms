@@ -27,10 +27,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         Forms.off('behavioursExecuted');
       });
 
-      // NOTE- this test suite is cumulative, and will rely on the first
-      // test adding the subform and catching the error.
       test('the `behavioursExecuted` is still emitted', function (done) {
-
         Forms.on('behavioursExecuted', function () {
             done();
         });
