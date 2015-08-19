@@ -6,11 +6,13 @@ define(function (require) {
   var $ = require('jquery');
   var _ = require('underscore');
   var Backbone = require('backbone');
+  var classNames = require('classnames');
 
   // local modules
 
   var events = require('forms/events');
   var formsErrors = require('forms/error-helpers');
+  var tplList = _.template(require('text!forms/jqm/templates/bm-list.html'));
 
   var NotImplementedError = require('typed-errors').NotImplementedError;
 
@@ -156,34 +158,56 @@ define(function (require) {
       }
     },
 
-    renderErrors: function (model, validaitonErrors) {
-      var attrs = this.model.attributes;
-      var errors = this.model.validationError || validaitonErrors;
+    renderErrors: function (model, validationErrors) {
+      var attrs = (model || this.model).attributes;
+      var errors = (model || this.model).validationError || validationErrors;
+      var list$ = this.$el.children('.bm-errors__bm-list');
+      var new$;
 
-      this.$el.children('.bm-errors__bm-list').remove();
+      if (!errors || !errors.value || !errors.value.length) {
+        this.$el.children('.bm-errors__bm-list').remove();
+        this.onInvalidChange();
+        return;
+      }
 
-      if (errors) {
-        $(document.createElement('ul'))
-          .addClass('bm-errors__bm-list')
-          .append(_.map(errors.value, function (error) {
-            var text;
-            var requiredClass = error.code === 'REQUIRED' ? ' bm-errors__bm-required' : '';
+      if (!list$.length) {
+        list$ = $(document.createElement('ul')).addClass('bm-errors__bm-list');
+      }
 
-            if (error.code === 'PATTERN') {
-              text = attrs.hint || attrs.toolTip || attrs.title;
-            }
+      new$ = $(tplList({
+        items: _.map(errors.value, function (error) {
+          var text;
+          var className = classNames({
+            'bm-errors__bm-listitem': true,
+            'bm-errors__bm-required': error.code === 'REQUIRED'
+          });
 
-            if (!text) {
-              text = formsErrors.toErrorString(error);
-            }
+          if (error.code === 'PATTERN') {
+            text = attrs.hint || attrs.toolTip || attrs.title;
+          }
+          if (!text) {
+            text = formsErrors.toErrorString(error);
+          }
 
-            return $(document.createElement('li')).text(text).addClass('bm-errors__bm-listitem' + requiredClass);
-          }, this))
-          .appendTo(this.$el);
+          return {
+            class: className,
+            text: text
+          };
+        })
+      }));
+
+      if (new$.html() !== list$.html()) {
+        // the DOM needs to be updated
+        list$.html(new$.html());
+      }
+
+      if (!list$.parent().length || !list$.is(':last-child')) {
+        // theoretically, we could avoid this appendTo if list$.parent().length
+        // but without the :last-child test we end up with errors above input
+        list$.appendTo(this.$el);
       }
 
       this.onInvalidChange();
-
     },
 
     onChangeClass: function () {
