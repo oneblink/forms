@@ -81,9 +81,8 @@ define(function (require) {
         this.setDirty();
       }, this);
       this.on('remove', this.close, this);
-
-      this.initializeView();
     },
+
     validate: function (attrs) {
       var errors = {};
 

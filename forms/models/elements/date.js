@@ -5,6 +5,18 @@ define([
   'use strict';
 
   var DateElement = Element.extend({
+
+    defaults: {
+      page: 0,
+      class: '',
+      defaultValue: '',
+      value: '',
+      _time: '',
+      _date: '',
+      hidden: false,
+      persist: true
+    },
+
     initialize: function () {
       var attr = this.attributes;
       var dateFormat;
@@ -113,6 +125,7 @@ define([
       }
       this.set('_view', view);
     },
+
     /**
      * update value to match _date and/or _time
      */
@@ -137,12 +150,13 @@ define([
         this.set('value', date + 'T' + time);
       }
     },
+
     /**
      * update _date and/or _time to match value
      */
     prepareDateTime: function () {
       var type = this.attributes.type;
-      var value = this.attributes.value;
+      var value = this.attributes.value || '';
       var time;
       var date;
       var parts;
