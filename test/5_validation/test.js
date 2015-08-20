@@ -398,7 +398,45 @@ define([
         listenerSpy.reset();
 
       });
-    }); // END: suite('Form', ...)
+    }); // END: suite('Validation', ...)
+
+    suite('onKeyDown vs performance', function () {
+
+      test('HTMLInput views have per-instance #onKeyDown()', function () {
+        Forms.current.attributes.elements
+        .filter(function (el) {
+          return [
+            'email', 'number', 'password', 'telephone', 'text', 'textarea', 'url'
+          ].indexOf(el.attributes.type) !== -1;
+        })
+        .filter(function (el) {
+          return !!el.attributes._view;
+        })
+        .forEach(function (el) {
+          var view = el.attributes._view;
+          assert.isFunction(view.onKeyDown, el.id + ' has #onKeyDown()');
+          assert.notStrictEqual(
+            view.onKeyDown,
+            view.constructor.prototype.onKeyDown,
+            el.id + '\'s #onKeyDown() is not from prototype'
+          );
+        });
+      });
+
+      test('#onKeyDown() is debounced', function (done) {
+        var el = Forms.current.getElement('textBox1');
+        var input$ = el.attributes._view.$el.find('input');
+        var VALUE = 'debounced?';
+        input$.val(VALUE);
+        input$.trigger('change');
+        assert.notEqual(el.val(), VALUE, 'changes do NOT take immediate effect');
+        setTimeout(function () {
+          assert.equal(el.val(), VALUE, 'changes DO eventually take effect');
+          done();
+        }, 1500);
+      });
+
+    });
 
     elements = ['textBox1', 'number1', 'password1', 'text', 'url', 'email', 'password', 'streetAddress', 'city', 'telephone', 'number', 'currency', 'select', 'multi'];
     /* 'heading', 'message', 'comments', 'names' */
