@@ -19,9 +19,9 @@ define(function (require) {
   // view mixins
   var toggleClass = require('forms/mixins/view-helper-mixins').toggleClass;
 
-  var dirtyClassName = 'bm-formelement-dirty';
-  var pristineClassName = 'bm-formelement-pristine';
-  var invalidClassName = 'bm-formelement-invalid';
+  var DIRTY_CLASS = 'bm-formelement-dirty';
+  var PRISTINE_CLASS = 'bm-formelement-pristine';
+  var INVALID_CLASS = 'bm-formelement-invalid';
   // this module
 
   // IE aniamtes html, everything else does body.
@@ -35,9 +35,9 @@ define(function (require) {
     if (attributes.class) {
       classNamesSource[attributes.class] = !!attributes.class;
     }
-    classNamesSource[pristineClassName] = attributes.isPristine;
-    classNamesSource[dirtyClassName] = attributes.isDirty;
-    classNamesSource[invalidClassName] = attributes.isInvalid;
+    classNamesSource[PRISTINE_CLASS] = attributes.isPristine;
+    classNamesSource[DIRTY_CLASS] = attributes.isDirty;
+    classNamesSource[INVALID_CLASS] = attributes.isInvalid;
 
     return classNames('bm-formelement', classNamesSource);
   }
@@ -81,11 +81,11 @@ define(function (require) {
       this.model.isValid();
     },
 
-    onDirtyChange: toggleClass(dirtyClassName, 'isDirty'),
+    onDirtyChange: toggleClass(DIRTY_CLASS, 'isDirty'),
 
-    onPristineChange: toggleClass(pristineClassName, 'isPristine'),
+    onPristineChange: toggleClass(PRISTINE_CLASS, 'isPristine'),
 
-    onInvalidChange: toggleClass(invalidClassName, 'isInvalid'),
+    onInvalidChange: toggleClass(INVALID_CLASS, 'isInvalid'),
 
     remove: function () {
       if (this.$label) {

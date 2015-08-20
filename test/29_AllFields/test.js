@@ -189,7 +189,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         "user_attribute",
         "get_value"].forEach(function (name) {
           test(name + ' has the rowclass property set', function () {
-            assert.strictEqual($('.' + name + '-default-class').length, 1);
+            assert.lengthOf($('.' + name + '-default-class'), 1);
           });
         });
 
@@ -208,7 +208,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         "validation_req",
         "select_box2"].forEach(function (name) {
           test(name + ' has the rowclass property set', function () {
-            assert.strictEqual($('.' + name + '-default-class').length, 1);
+            assert.lengthOf($('.' + name + '-default-class'), 1);
           });
         });
     });
@@ -223,7 +223,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       });
 
       test('are set correctly on form ELEMENTs', function () {
-        assert.equal($('.bm-formelement').length, 29);
+        assert.lengthOf($('.bm-formelement'), 29);
       });
 
       suite('Subform Fields', function () {
@@ -242,7 +242,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         test('child form root element have the bm-form class attribute', function () {
           var subFormModel = Forms.current.getElement('subform');
           return subFormModel.add().then(function () {
-            assert.equal($('section.bm-form', subFormModel.get('_view').$el).length, 1);
+            assert.lengthOf($('section.bm-form', subFormModel.get('_view').$el), 1);
           });
         });
       });

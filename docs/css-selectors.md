@@ -72,9 +72,11 @@ The Form will also be marked as invalid if any of the fields trigger the invalid
 
 This class is automatically removed when the form model is checked for errors via `#getInvalidElements`, but not when fields are made valid. This is due to the possible performance hit of verifying every field on large forms. One possible way of enabling it is to add it to every elements value change event
 
+    ```js
     BMP.Forms.current.on('change:value', function () {
-      BMP.Forms.current.getInvalidElements(); 
+       BMP.Forms.current.getInvalidElements(); 
     });
+    ```
 
 You can also set the `isInvalid` attribute of the form/element model manually using `model.set({isInvalid: true|false})`, which will add or remove the class.
 
