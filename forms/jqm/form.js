@@ -19,7 +19,8 @@ define(function (require) {
     tagName: 'form',
 
     attributes: {
-      novalidate: 'novalidate'
+      novalidate: 'novalidate',
+      'class': 'bm-form'
     },
 
     formElementEvents: {

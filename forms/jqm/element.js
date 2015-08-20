@@ -19,6 +19,9 @@ define(function (require) {
   // view mixins
   var toggleClass = require('forms/mixins/view-helper-mixins').toggleClass;
 
+  var dirtyClassName = 'bm-formelement-dirty';
+  var pristineClassName = 'bm-formelement-pristine';
+  var invalidClassName = 'bm-formelement-invalid';
   // this module
 
   // IE aniamtes html, everything else does body.
@@ -26,51 +29,63 @@ define(function (require) {
   // of detection.
   var $body = $('html, body');
 
+  // turn selected attributes into initial element class names
+  function elementClassFromModelAttributes (attributes) {
+    var classNamesSource = {};
+    if (attributes.class) {
+      classNamesSource[attributes.class] = !!attributes.class;
+    }
+    classNamesSource[pristineClassName] = attributes.isPristine;
+    classNamesSource[dirtyClassName] = attributes.isDirty;
+    classNamesSource[invalidClassName] = attributes.isInvalid;
+
+    return classNames('bm-formelement', classNamesSource);
+  }
+
   return Backbone.View.extend({
     tagName: 'div',
 
-    attributes: {
-      'data-role': 'fieldcontain'
+    attributes: function () {
+      return {
+        'data-name': this.model.get('name'),
+        'data-element-type': this.model.get('type'),
+        'data-role': 'fieldcontain',
+        'class': elementClassFromModelAttributes(this.model.attributes)
+      };
     },
 
     modelEvents: {
       'invalid change:value': 'renderErrors',
-      // 'change:warning', 'renderWarning',
-      'change:class': 'onChangeClass',
       'change:hidden': 'onChangeHidden',
       'change:label': 'renderLabel',
       'change:isDirty': 'onDirtyChange',
       'change:isPristine': 'onPristineChange',
       'change:isInvalid': 'onInvalidChange'
+      // 'change:warning', 'renderWarning',
     },
 
     initialize: function () {
-      var element = this.model;
+      var elementModel = this.model;
 
-      this.$el.attr('data-name', element.attributes.name);
-      this.$el.attr('data-element-type', element.attributes.type);
-      this.$el.data('model', element);
+      this.$el.data('model', elementModel);
 
-      if (this.model.get('defaultValue')) {
-        this.$el.val(this.model.get('defaultValue'));
+      if (elementModel.get('defaultValue')) {
+        this.$el.val(elementModel.get('defaultValue'));
       }
 
       if (this.modelEvents) {
-        events.proxyBindEntityEvents(this, this.model, this.modelEvents);
+        events.proxyBindEntityEvents(this, elementModel, this.modelEvents);
       }
 
-      this.onChangeClass();
-
-      this.onPristineChange();
       this.onChangeHidden();
       this.model.isValid();
     },
 
-    onDirtyChange: toggleClass('bm-formelement-dirty', 'isDirty'),
+    onDirtyChange: toggleClass(dirtyClassName, 'isDirty'),
 
-    onPristineChange: toggleClass('bm-formelement-pristine', 'isPristine'),
+    onPristineChange: toggleClass(pristineClassName, 'isPristine'),
 
-    onInvalidChange: toggleClass('bm-formelement-invalid', 'isInvalid'),
+    onInvalidChange: toggleClass(invalidClassName, 'isInvalid'),
 
     remove: function () {
       if (this.$label) {
@@ -208,10 +223,6 @@ define(function (require) {
       }
 
       this.onInvalidChange();
-    },
-
-    onChangeClass: function () {
-      this.$el.attr('class', this.model.attributes.class);
     },
 
     onChangeHidden: function (model) {
