@@ -24,10 +24,21 @@ define(function (require) {
 
   invalidWrapperFn = function (fn) {
     return function (options) {
-      var elementCollection = new Elements(this.get('elements').filter(isVisible));
-      var validate = options && options.validate || false;
-      var limit = options && options.limit || 0;
+      var elementCollection;
+      var validate;
+      var limit;
       var results;
+      var elements;
+
+      elements = this.get('elements');
+
+      if (!elements) {
+        return undefined;
+      }
+
+      elementCollection = new Elements(elements.filter(isVisible));
+      validate = options && options.validate || false;
+      limit = options && options.limit || 0;
 
       if (!elementCollection) {
         return undefined;

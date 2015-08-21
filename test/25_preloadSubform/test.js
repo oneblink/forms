@@ -317,6 +317,25 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           });
         });
 
+        test("test getErrors", function () {
+          try {
+            Forms.current.getErrors();
+            assert(true);
+          } catch (e) {
+            console.log(e);
+            assert(false, 'throws error');
+          }
+        });
+
+        test("test getInvalidElements", function () {
+          try {
+            Forms.current.getInvalidElements();
+            assert(true);
+          } catch (e) {
+            assert(false, e);
+          }
+        });
+
       });
 
     }); // END: suite('Form', ...)
