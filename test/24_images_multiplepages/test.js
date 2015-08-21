@@ -122,7 +122,7 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
                 if (isPhantom()) {
                   assert.lengthOf(view.children(), 2);
                 } else {
-                  assert.lengthOf(view.children(), 4);
+                  assert.lengthOf(view.children(), 3);
                   assert.lengthOf(view.children('figure').children('img'), 1);
                 }
               } else {
