@@ -6,13 +6,18 @@ define(function (require) {
   var $ = require('jquery');
   var _ = require('underscore');
   var Backbone = require('backbone');
+  var classNames = require('classnames');
 
   // local modules
 
   var events = require('forms/events');
   var formsErrors = require('forms/error-helpers');
+  var tplList = _.template(require('text!forms/jqm/templates/bm-list.html'));
 
   var NotImplementedError = require('typed-errors').NotImplementedError;
+
+  // view mixins
+  var toggleClass = require('forms/mixins/view-helper-mixins').toggleClass;
 
   // this module
 
@@ -33,7 +38,10 @@ define(function (require) {
       // 'change:warning', 'renderWarning',
       'change:class': 'onChangeClass',
       'change:hidden': 'onChangeHidden',
-      'change:label': 'renderLabel'
+      'change:label': 'renderLabel',
+      'change:isDirty': 'onDirtyChange',
+      'change:isPristine': 'onPristineChange',
+      'change:isInvalid': 'onInvalidChange'
     },
 
     initialize: function () {
@@ -43,14 +51,26 @@ define(function (require) {
       this.$el.attr('data-element-type', element.attributes.type);
       this.$el.data('model', element);
 
+      if (this.model.get('defaultValue')) {
+        this.$el.val(this.model.get('defaultValue'));
+      }
+
       if (this.modelEvents) {
         events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       }
 
       this.onChangeClass();
+
+      this.onPristineChange();
       this.onChangeHidden();
       this.model.isValid();
     },
+
+    onDirtyChange: toggleClass('bm-formelement-dirty', 'isDirty'),
+
+    onPristineChange: toggleClass('bm-formelement-pristine', 'isPristine'),
+
+    onInvalidChange: toggleClass('bm-formelement-invalid', 'isInvalid'),
 
     remove: function () {
       if (this.$label) {
@@ -138,39 +158,56 @@ define(function (require) {
       }
     },
 
-    renderErrors: function (model, validaitonErrors) {
-      var attrs = this.model.attributes;
-      var errors = this.model.validationError || validaitonErrors;
+    renderErrors: function (model, validationErrors) {
+      var attrs = (model || this.model).attributes;
+      var errors = (model || this.model).validationError || validationErrors;
+      var list$ = this.$el.children('.bm-errors__bm-list');
+      var new$;
 
-      this.$el.children('.bm-errors__bm-list').remove();
-
-      if (errors) {
-        $(document.createElement('ul'))
-          .addClass('bm-errors__bm-list')
-          .append(_.map(errors.value, function (error) {
-            var text;
-
-            if (error.code === 'PATTERN') {
-              text = attrs.hint || attrs.toolTip || attrs.title;
-            }
-
-            if (!text) {
-              text = formsErrors.toErrorString(error);
-            }
-
-            return $(document.createElement('li')).text(text).addClass('bm-errors__bm-listitem');
-          }, this))
-          .appendTo(this.$el);
+      if (!errors || !errors.value || !errors.value.length) {
+        this.$el.children('.bm-errors__bm-list').remove();
+        this.onInvalidChange();
+        return;
       }
 
-      if (this.model.validationError) {
-        this.$el.addClass('bm-formelement-invalid');
-        this.$el.closest('form').addClass('bm-form-invalid');
-      } else {
-        this.$el.removeClass('bm-formelement-invalid');
-        this.$el.closest('form').removeClass('bm-form-invalid');
+      if (!list$.length) {
+        list$ = $(document.createElement('ul')).addClass('bm-errors__bm-list');
       }
 
+      new$ = $(tplList({
+        items: _.map(errors.value, function (error) {
+          var text;
+          var className = classNames({
+            'bm-errors__bm-listitem': true,
+            'bm-errors__bm-required': error.code === 'REQUIRED'
+          });
+
+          if (error.code === 'PATTERN') {
+            text = attrs.hint || attrs.toolTip || attrs.title;
+          }
+          if (!text) {
+            text = formsErrors.toErrorString(error);
+          }
+
+          return {
+            class: className,
+            text: text
+          };
+        })
+      }));
+
+      if (new$.html() !== list$.html()) {
+        // the DOM needs to be updated
+        list$.html(new$.html());
+      }
+
+      if (!list$.parent().length || !list$.is(':last-child')) {
+        // theoretically, we could avoid this appendTo if list$.parent().length
+        // but without the :last-child test we end up with errors above input
+        list$.appendTo(this.$el);
+      }
+
+      this.onInvalidChange();
     },
 
     onChangeClass: function () {

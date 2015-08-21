@@ -64,9 +64,7 @@ define(function (require) {
         errors.value.push({code: 'REQUIRED'});
       }
 
-      if (!_.isEmpty(errors)) {
-        return errors;
-      }
+      return _.isEmpty(errors) ? undefined : errors;
     }
   });
 });

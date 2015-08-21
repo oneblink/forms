@@ -18,6 +18,7 @@ define(function (require) {
 
   function addToErrorList (errorList, elementModel) {
     var err;
+    var elements;
     if (!_.isEmpty(elementModel.validationError)) {
       err = {};
       err[ elementModel.get('name') ] = _.map(elementModel.validationError.value, addErrorText);
@@ -26,7 +27,11 @@ define(function (require) {
 
     if (elementModel.get('forms')) {
       errorList = elementModel.get('forms').reduce(function (errList, form) {
-        return form.get('elements').reduce(addToErrorList, errList);
+        elements = form.get('elements');
+        if (!elements) {
+          return errList;
+        }
+        return elements.reduce(addToErrorList, errList);
       }, errorList);
     }
 
@@ -159,6 +164,14 @@ define(function (require) {
         m && m.setExternalErrors(errors, options);
         /* eslint-enable no-unused-expressions */
       }, this);
+    },
+
+    setPristine: function () {
+      this.invoke('setPristine');
+    },
+
+    setDirty: function () {
+      this.invoke('setDirty');
     }
   });
 });

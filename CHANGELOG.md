@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v3.6.0 - 2015-08-21
+
+
+### Added
+
+- FORMS-211: Forms and Elements have new pristine and dirty states
+
+    - useful for customising style and behaviour based on user activity
+
+    - see [docs/css-selectors.md](docs/css-selectors.md)
+
+
+### Fixed
+
+- FORMS-221: removing a pre-existing subform from an "edit" form no longer
+  breaks form submission
+
+    - HelpDesk: 3791-RFVN-4389
+
+- FORMS-203: performance and input latency improvements
+
+    - perform validation at least 1 second after the last key-stroke
+
+    - skip rendering of validation results if results are the same
+
+    - avoid unnecessary rendering of Form Element Views during initialisation
+
+    - MacBook Pro 2012 initialises large form in 1750ms (down from 4047ms)
+
+    - Nexus 7 2012 initialises large form in 31668ms (down from 80457ms)
+
+    - HelpDesk: 8120-DFKV-2824
+
+
 ## v3.5.0 - 2015-08-14
 
 

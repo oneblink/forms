@@ -37,7 +37,9 @@ define(function (require) {
     },
 
     onContinueClick: function () {
-      this._resolve();
+      if (_.isFunction(this._resolve)) {
+        this._resolve();
+      }
     },
 
     onCancelClick: function () {
