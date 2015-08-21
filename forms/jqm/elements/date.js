@@ -5,6 +5,7 @@ define(function (require) {
 
   var $ = require('jquery');
   var _ = require('underscore');
+  var moment = require('moment');
 
   // local modules
 
@@ -83,7 +84,13 @@ define(function (require) {
     },
 
     onDateVChange: function (event) {
-      this.model.set('_date', $(event.target).val());
+      var dateFormat = this.model.mapDateFormats[this.model.attributes.dateFormat] || 'YYYY-MM-DD';
+      var value = $(event.target).val();
+
+      if (value) {
+        value = moment($(event.target).val(), dateFormat).format('YYYY-MM-DD');
+      }
+      this.model.set('_date', value);
     },
 
     onTimeVChange: function (event) {
@@ -92,7 +99,31 @@ define(function (require) {
 
     onDateMChange: function () {
       var name = this.model.attributes.name;
-      this.$el.find('input[name="' + name + '_date"]').val(this.model.get('_date'));
+      var value = this.model.get('_date');
+      var input = this.$el.find('input[name="' + name + '_date"]');
+      var picker = input.pickadate('picker');
+      var pickerValue;
+      var dateFormat = this.model.mapDateFormats[this.model.get('dateFormat')] || 'YYYY-MM-DD';
+
+      if (picker) {
+        pickerValue = picker.get('select', 'yyyy-mm-dd');
+      }
+
+      if (value !== pickerValue) {
+        if (picker) {
+          if (!value || value === '0000-00-00') {
+            picker.set('clear');
+          } else {
+            picker.set('select', value, {format: 'yyyy-mm-dd'});
+          }
+        } else {
+          if (this.model.attributes.nativeDatePicker) {
+            input.val(value);
+          } else {
+            input.val(moment(Date.parse(value)).format(dateFormat));
+          }
+        }
+      }
     },
 
     onTimeMChange: function () {

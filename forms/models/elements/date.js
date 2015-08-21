@@ -62,7 +62,7 @@ define([
       if (attr.defaultValue) {
         switch (attr.type) {
           case 'date':
-            dateFormat = this.mapDateFormats[attr.dateFormat] || 'YYYY-MM-DD';
+            dateFormat = 'YYYY-MM-DD';
             if (attr.defaultValue === 'now') {
               dateValue = moment();
             } else if (attr.defaultValue === 'now_plus') {
@@ -86,7 +86,7 @@ define([
             }
             break;
           case 'datetime':
-            dateFormat = this.mapDateFormats[attr.dateFormat] || 'YYYY-MM-DD';
+            dateFormat = 'YYYY-MM-DD';
             timeFormat = this.mapTimeFormats[attr.timeFormat] || 'HH:mm';
             if (attr.defaultValue === 'now') {
               timeValue = dateValue = moment();
