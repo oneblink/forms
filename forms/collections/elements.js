@@ -29,7 +29,7 @@ define(function (require) {
       errorList = elementModel.get('forms').reduce(function (errList, form) {
         elements = form.get('elements');
         if (!elements) {
-          return [];
+          return errList;
         }
         return elements.reduce(addToErrorList, errList);
       }, errorList);
