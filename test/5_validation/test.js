@@ -2,8 +2,7 @@ define([
   'underscore',
   'sinon',
   'BlinkForms',
-  'testUtils',
-  'BIC'
+  'testUtils'
 ], function (_, sinon, Forms, testUtils) {
 
   suite('i18n', function () {
@@ -23,66 +22,23 @@ define([
   });
 
   suite('5: validation', function () {
-    var $page = $('[data-role=page]'),
-      $content = $page.find('[data-role=content]'),
-      runTests = function (cases, element) {
-        var error;
+    var elements;
+    var runTests = function (cases, element) {
+      var error;
 
-        _.each(cases, function (v, i) {
-          element.val(v);
-          assert.isObject(element.validate(), 'now has a validation error');
-          assert.isArray(element.validate().value, 'something wrong with value');
-          error = _.find(element.validate().value, function (e) {
-            return _.isObject(e) && e.code === i;
-          });
-
-          assert.isObject(error, 'contained ' + i + ' error');
+      _.each(cases, function (v, i) {
+        element.val(v);
+        assert.isObject(element.validate(), 'now has a validation error');
+        assert.isArray(element.validate().value, 'something wrong with value');
+        error = _.find(element.validate().value, function (e) {
+          return _.isObject(e) && e.code === i;
         });
-      }, elements;
 
-    suiteSetup(function () {
-      $content.empty();
-      delete Forms.current;
-    });
-
-    suite('Form', function () {
-
-      test('BlinkForms global is an Object', function () {
-        assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
+        assert.isObject(error, 'contained ' + i + ' error');
       });
+    };
 
-      test('initialise with form.json', function (done) {
-        var form;
-
-        Forms.getDefinition('form1', 'add').then(function (def) {
-          Forms.initialize(def);
-          form = Forms.current;
-          assert.equal($.type(form), 'object');
-          assert.equal(form.get('name'), 'form1');
-          assert.equal(form.get('label'), 'Form 1');
-          done();
-        }, function () {
-          assert.fail(true, false, 'getDefinition failed!');
-          done();
-        });
-      });
-
-      test('render form for jQuery Mobile', function (done) {
-        var form = Forms.current;
-
-        $content.append(form.$form);
-
-        $.mobile.page({}, $page);
-        $page.trigger('pagecreate');
-        $page.show();
-        form.attributes.preloadPromise.then(function () {
-          done();
-        });
-      });
-
-      testUtils.defineLabelTest();
-
-    }); // END: suite('Form', ...)
+    testUtils.defineFormLoadSuite('form1', 'add');
 
     suite('Validation', function () {
 
