@@ -48,23 +48,14 @@ define(function (require) {
       this.set('_view', view);
       return view;
     },
-    validate: function (attrs) {
-      var errors = {};
-      if (attrs === undefined) {
-        attrs = this.attributes;
-      }
 
-      // if `other` is true
-      // and required is true
-      // and attr.value === 'other'
-      // and other is not in options
-      // then fail
-      if (attrs.required && (!attrs.value || attrs.other && attrs.value === 'other' && !_.contains(attrs.options, 'other'))) {
-        errors.value = errors.value || [];
-        errors.value.push({code: 'REQUIRED'});
+    isEmpty: function () {
+      var attrs = this.attributes;
+      if (Element.prototype.isEmpty.call(this)) {
+        return true;
       }
-
-      return _.isEmpty(errors) ? undefined : errors;
+      return attrs.other && attrs.value === 'other' && !_.contains(attrs.options, 'other');
     }
+
   });
 });
