@@ -12,6 +12,10 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
   var mod = {
 
+    isPhantom: function () {
+      return navigator.userAgent.toLowerCase().indexOf('phantom') !== -1;
+    },
+
     loadForm: function (name, action) {
       var $page = $('[data-role=page]');
       var $content = $page.find('[data-role=content]');

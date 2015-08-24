@@ -5,7 +5,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
   window.MSApp = {};
 
-  if (navigator.userAgent.toLowerCase().indexOf('phantom') !== -1) {
+  if (testUtils.isPhantom()) {
     return;
   }
 

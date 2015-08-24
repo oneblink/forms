@@ -1,9 +1,5 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
-  function isPhantom () {
-    return navigator.userAgent.toLowerCase().indexOf('phantom') !== -1;
-  }
-
   testUtils.defineFormLoadSuite('TestForm', 'add');
 
   suite('24: Blob fields + multiple pages', function () {
@@ -72,7 +68,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             element = form.getElement(i);
             if (v === 1) {
               view = element.attributes._view.$el;
-              if (isPhantom()) {
+              if (testUtils.isPhantom()) {
                 assert.lengthOf(view.children(), 2);
               } else {
                 assert.lengthOf(view.children(), 3);
@@ -118,7 +114,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             element = form.getElement(i);
             if (v === 1) {
               view = element.attributes._view.$el;
-              if (isPhantom()) {
+              if (testUtils.isPhantom()) {
                 assert.lengthOf(view.children(), 2);
               } else {
                 assert.lengthOf(view.children(), 3);

@@ -1,6 +1,6 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
-  if (navigator.userAgent.toLowerCase().indexOf('phantom') !== -1) {
+  if (testUtils.isPhantom()) {
     return;
   }
 
