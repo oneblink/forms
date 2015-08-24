@@ -30,7 +30,7 @@ define(function (require) {
       /* eslint-enable no-console */
       return undefined;
     }
-    return this.getElement(name).val();
+    return el.val();
   };
 
   Expression.fn.optionsbyxpath = function (xmlNodes) {
