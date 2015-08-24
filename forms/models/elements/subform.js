@@ -256,7 +256,14 @@ define(function (require) {
 
       return new Promise(function (resolve, reject) {
         Promise.all(promises).then(function (values) {
-          resolve(values);
+          values = _.reduce(values, function (memo, value) {
+            if (value._action === 'remove' && (value.id === null || value.id === undefined)) {
+              return memo;
+            }
+            memo.push(value);
+            return memo;
+          }, []);
+          resolve(_.compact(values));
         }, function () {
           reject();
         });

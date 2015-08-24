@@ -161,8 +161,9 @@ define(function (require) {
      */
     setPristine: function () {
       // set all form elements to pristine
-      this.attributes.elements.setPristine();
-
+      if (this.attributes.elements) {
+        this.attributes.elements.setPristine();
+      }
       return modelStates.setPristine.apply(this, arguments);
     },
 
@@ -208,7 +209,12 @@ define(function (require) {
     * official Blink API
     */
     getElement: function (name) {
-      var element = this.attributes.elements.get(name);
+      var element;
+      // removed subforms have thier elements array removed
+      if (!this.attributes.elements) {
+        return undefined;
+      }
+      element = this.attributes.elements.get(name);
 
       if (!element && name !== 'id') {
         // this is supposed to recursively search sub forms for an element.
@@ -232,6 +238,11 @@ define(function (require) {
      * @return {Object} Keys are the names of the subforms, Values are a Sub Form collection
      */
     getSubforms: function () {
+      // removed subforms have thier elements array removed
+      // treat as if the isSubForm filter returns an empty array.
+      if (!this.attributes.elements) {
+        return undefined;
+      }
       return _.reduce(this.get('elements').filter(isSubForm), function (memo, elementModel) {
                 memo = memo || {}; // create in here so we return undefined if we have no subforms.
                 memo[elementModel.id] = elementModel.get('forms');
