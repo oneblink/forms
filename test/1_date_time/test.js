@@ -346,7 +346,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
           'dateTimePckerNowPM'
         ];
 
-        test('check element value assignment reflected in picker, model, view ', function (done) {
+        test('element value assignment reflected in picker, model, view ', function (done) {
           setTimeout(function () {
               pickadate.forEach(function (fld) {
                 var form = Forms.current;
@@ -375,7 +375,11 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
 
                   assert.equal(date$.val(), expected, fld + ': DOM date value');
                   assert.equal(el.get('_date'), date, fld + ': _date value');
-                  assert.equal(el.val().split('T')[0], el.get('_date'), fld + ': element value');
+                  if (type === 'datetime') {
+                    assert.equal(el.val().split('T')[0], el.get('_date'), fld + ': element value');
+                  } else {
+                    assert.equal(el.val(), el.get('_date'), fld + ': element value');
+                  }
                   if (picker) {
                     assert.equal(picker.get('select', 'yyyy-mm-dd'), el.get('_date'), fld + ': picker value');
                   }

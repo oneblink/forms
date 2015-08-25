@@ -19,7 +19,7 @@ define([
 
     initialize: function () {
       var attr = this.attributes;
-      var dateFormat;
+      var dateFormat = 'YYYY-MM-DD';
       var timeFormat;
       var dateValue = null;
       var timeValue = null;
@@ -62,7 +62,6 @@ define([
       if (attr.defaultValue) {
         switch (attr.type) {
           case 'date':
-            dateFormat = 'YYYY-MM-DD';
             if (attr.defaultValue === 'now') {
               dateValue = moment();
             } else if (attr.defaultValue === 'now_plus') {
@@ -86,7 +85,6 @@ define([
             }
             break;
           case 'datetime':
-            dateFormat = 'YYYY-MM-DD';
             timeFormat = this.mapTimeFormats[attr.timeFormat] || 'HH:mm';
             if (attr.defaultValue === 'now') {
               timeValue = dateValue = moment();
@@ -200,6 +198,15 @@ define([
       // type === 'datetime'
       return new Date(this.attributes._date + 'T' + this.attributes._time);
     },
+
+    isInvalidFormat: function (dateFormat, value) {
+      var formats = [dateFormat];
+
+      if (value && value !== '0000-00-00' && !moment(value, [dateFormat], true).isValid()) {
+        throw new Error(this.attributes.name + ' expect value in format ' + dateFormat);
+      }
+    },
+
     mapDateFormats: {
       yyyy_mm_dd: 'YYYY-MM-DD',
       mm_dd_yyyy: 'MM-DD-YYYY',

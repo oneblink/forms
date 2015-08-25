@@ -87,8 +87,14 @@ define(function (require) {
       var dateFormat = this.model.mapDateFormats[this.model.attributes.dateFormat] || 'YYYY-MM-DD';
       var value = $(event.target).val();
 
+      try {
+        this.model.isInvalidFormat(dateFormat, value);
+      } catch (err) {
+        window.console.log(err);
+        return;
+      }
       if (value) {
-        value = moment($(event.target).val(), dateFormat).format('YYYY-MM-DD');
+        value = moment(value, dateFormat).format('YYYY-MM-DD');
       }
       this.model.set('_date', value);
     },
@@ -105,6 +111,13 @@ define(function (require) {
       var pickerValue;
       var dateFormat = this.model.mapDateFormats[this.model.get('dateFormat')] || 'YYYY-MM-DD';
 
+      try {
+        this.model.isInvalidFormat('YYYY-MM-DD', value);
+      } catch (err) {
+        window.console.log(err);
+        return;
+      }
+
       if (picker) {
         pickerValue = picker.get('select', 'yyyy-mm-dd');
       }
@@ -117,10 +130,12 @@ define(function (require) {
             picker.set('select', value, {format: 'yyyy-mm-dd'});
           }
         } else {
-          if (this.model.attributes.nativeDatePicker) {
+          if (this.model.attributes.nativeDatePicker) { //for native picker
             input.val(value);
           } else {
-            input.val(moment(Date.parse(value)).format(dateFormat));
+            if (value) { // for default value when picker not initialised
+              input.val(moment(Date.parse(value)).format(dateFormat));
+            }
           }
         }
       }
