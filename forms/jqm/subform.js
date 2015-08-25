@@ -25,7 +25,9 @@ define(function (require) {
   return FormView.extend({
     tagName: 'section',
 
-    attributes: {},
+    attributes: {
+      'class': 'bm-form'
+    },
 
     render: function () {
       var parentElement = this.model.parentElement;
