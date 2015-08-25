@@ -12,6 +12,7 @@ define(function (require) {
   var Elements = require('forms/collections/elements');
   var Pages = require('forms/collections/pages');
   var modelStates = require('forms/mixins/model-states-mixin');
+  var isValidFormId = require('forms/helpers/is-valid-form-id');
 
   // this module
 
@@ -334,7 +335,7 @@ define(function (require) {
               data[el.attributes.name] = val;
             }
           });
-        } else if (me.attributes.id) {
+        } else if (isValidFormId(me.attributes.id)) {
           // this should be executed when all of following is correct
           // 1. user is editing record
           // 2. user has deleted a subform record

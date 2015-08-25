@@ -102,27 +102,78 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
         });
       });
 
-      test('if it has no id, FormModel.getRecord() does not include it at all', function () {
-        var addressSubform = Forms.current.getElement('Address');
-        var initialLength = addressSubform.get('forms').length;
-        var removedId = addressSubform.getForm(1).id;
+      function validIdTest (valueToTest) {
+        return function () {
+          var addressSubform = Forms.current.getElement('Address');
+          addressSubform.getForm(1).getElement('id').val(valueToTest);
+          addressSubform.remove(1);
 
-        addressSubform.remove(1);
-        // the only way a subform can have no id is if the form hsa no id field
-        // or it is removed by a developer, so lets simulate that here.
-        addressSubform.getForm(1).set('id', null);
-
-        return Forms.current.getRecord().then(function (result) {
-          var returnedList = result.Address;
-          assert.equal(returnedList.length, initialLength - 1);
-          // make sure that the right subform was removed
-          returnedList.forEach(function (subform) {
-            assert.notEqual(subform.id, removedId);
+          return Forms.current.getRecord().then(function (result) {
+            assert.equal(result.Address[1]._action, 'remove');
           });
-        });
-      });
+        };
+      }
+
+      test('and has a string id, FormModel.getRecord() includes it as "removed"', validIdTest('ABCD-0000-EFGH'));
+      test('and it has an id value of 0, FormModel.getRecord() includes it as "removed"', validIdTest(0));
+
+      function removalTest (valueToTest) {
+        return function () {
+          var addressSubform = Forms.current.getElement('Address');
+          var initialLength = addressSubform.get('forms').length;
+          var removedId = addressSubform.getForm(1).id;
+
+          // set id element to empty
+          addressSubform.getForm(1).getElement('id').val(valueToTest);
+          addressSubform.remove(1);
+
+          return Forms.current.getRecord().then(function (result) {
+            var returnedList = result.Address;
+            assert.equal(returnedList.length, initialLength - 1);
+            // make sure that the right subform was removed
+            returnedList.forEach(function (subform) {
+              assert.notEqual(subform.id, removedId);
+            });
+          });
+        };
+      }
+
+      test('and it has an id value of an empty string, FormModel.getRecord() does not include it at all', removalTest(''));
+      test('and it has an id value of null, FormModel.getRecord() does not include it at all', removalTest(null));
+      // NaN?! because typeof NaN === 'number'
+      test('and it has an id value of NaN, FormModel.getRecord() does not include it at all', removalTest(NaN));
+
+      function intentionalRemovalTest (valueToTest) {
+        return function () {
+          var addressSubform = Forms.current.getElement('Address');
+          var initialLength = addressSubform.get('forms').length;
+          var removedId = addressSubform.getForm(1).id;
+
+          addressSubform.remove(1);
+          // the only way a subform can have no id is if the form has no id field value (tested above)
+          // or it is removed by a developer after the subform has been removed ( doubtful they would do that),
+          // so lets simulate that unlikely scenario  here.
+          addressSubform.getForm(1).set('id', valueToTest);
+
+          return Forms.current.getRecord().then(function (result) {
+            var returnedList = result.Address;
+            assert.equal(returnedList.length, initialLength - 1);
+            // make sure that the right subform was removed
+            returnedList.forEach(function (subform) {
+              assert.notEqual(subform.id, removedId);
+            });
+          });
+        };
+      }
+
+      test('and id value is removed by a developer by setting to an empty string, FormModel.getRecord() does not include it at all', intentionalRemovalTest(''));
+      test('and id value is removed by a developer by setting to null, FormModel.getRecord() does not include it at all', intentionalRemovalTest(null));
+      test('and id value is removed by a developer by setting to undefined, FormModel.getRecord() does not include it at all', intentionalRemovalTest(undefined));
+      test('and id value is removed by a developer by setting to NaN, FormModel.getRecord() does not include it at all', intentionalRemovalTest(NaN));
     });
 
+    // the code for sub-sub forms is exactly the same as subforms, so we just need
+    // to confirm the basic removal behavior works
     suite('when a sub subform is removed', function () {
 
       test('FormModel.getRecord() includes it as "removed"', function () {
