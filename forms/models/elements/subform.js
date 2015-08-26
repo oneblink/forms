@@ -11,6 +11,8 @@ define(function (require) {
   var SubFormModel = require('forms/models/subform');
   var ElementModel = require('forms/models/element');
 
+  var isValidFormId = require('forms/helpers/is-valid-form-id');
+
   // this module
 
   var SubFormsCollection;
@@ -256,6 +258,13 @@ define(function (require) {
 
       return new Promise(function (resolve, reject) {
         Promise.all(promises).then(function (values) {
+          values = _.reduce(values, function (memo, value) {
+            if (value._action === 'remove' && !isValidFormId(value.id)) {
+              return memo;
+            }
+            memo.push(value);
+            return memo;
+          }, []);
           resolve(values);
         }, function () {
           reject();

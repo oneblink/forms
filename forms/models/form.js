@@ -12,6 +12,7 @@ define(function (require) {
   var Elements = require('forms/collections/elements');
   var Pages = require('forms/collections/pages');
   var modelStates = require('forms/mixins/model-states-mixin');
+  var isValidFormId = require('forms/helpers/is-valid-form-id');
 
   // this module
 
@@ -161,8 +162,9 @@ define(function (require) {
      */
     setPristine: function () {
       // set all form elements to pristine
-      this.attributes.elements.setPristine();
-
+      if (this.attributes.elements) {
+        this.attributes.elements.setPristine();
+      }
       return modelStates.setPristine.apply(this, arguments);
     },
 
@@ -208,7 +210,12 @@ define(function (require) {
     * official Blink API
     */
     getElement: function (name) {
-      var element = this.attributes.elements.get(name);
+      var element;
+      // removed subforms have thier elements array removed
+      if (!this.attributes.elements) {
+        return undefined;
+      }
+      element = this.attributes.elements.get(name);
 
       if (!element && name !== 'id') {
         // this is supposed to recursively search sub forms for an element.
@@ -232,6 +239,11 @@ define(function (require) {
      * @return {Object} Keys are the names of the subforms, Values are a Sub Form collection
      */
     getSubforms: function () {
+      // removed subforms have thier elements array removed
+      // treat as if the isSubForm filter returns an empty array.
+      if (!this.attributes.elements) {
+        return undefined;
+      }
       return _.reduce(this.get('elements').filter(isSubForm), function (memo, elementModel) {
                 memo = memo || {}; // create in here so we return undefined if we have no subforms.
                 memo[elementModel.id] = elementModel.get('forms');
@@ -323,7 +335,7 @@ define(function (require) {
               data[el.attributes.name] = val;
             }
           });
-        } else if (me.attributes.id) {
+        } else if (isValidFormId(me.attributes.id)) {
           // this should be executed when all of following is correct
           // 1. user is editing record
           // 2. user has deleted a subform record
