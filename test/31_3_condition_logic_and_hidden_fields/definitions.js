@@ -1,4 +1,6 @@
-define(function () {
+define(function(require) {
+    'use strict';
+
     return [{
         "default": {
             "uniqueNameId": "22uehx",
@@ -227,9 +229,93 @@ define(function () {
                     "page": 0
                 }
             }],
-            "_checks": [],
-            "_actions": [],
-            "_behaviours": []
+            "_checks": [{
+                "default": {
+                    "name": "triggerFieldContainsB",
+                    "exp": {
+                        "operator": "contains",
+                        "operands": [{
+                            "operator": "formElement.value",
+                            "operands": ["trigger_field"]
+                        }, "b"]
+                    }
+                }
+            }, {
+                "default": {
+                    "name": "hiddenWhenFirstIsA",
+                    "exp": {
+                        "operator": "==",
+                        "operands": [{
+                            "operator": "formElement.value",
+                            "operands": ["hidden_when_first"]
+                        }, "a"]
+                    }
+                }
+            }],
+            "_actions": [{
+                "default": {
+                    "name": "hideSecondLevelText",
+                    "manipulations": [{
+                        "target": "second_level_text",
+                        "properties": {
+                            "hidden": true,
+                            "persist": false
+                        }
+                    }]
+                }
+            }, {
+                "default": {
+                    "name": "hideHiddenWhenFirst",
+                    "manipulations": [{
+                        "target": "hidden_when_first",
+                        "properties": {
+                            "hidden": true,
+                            "persist": false
+                        }
+                    }]
+                }
+            }, {
+                "default": {
+                    "name": "hideHiddenWhenTextIsA",
+                    "manipulations": [{
+                        "target": "hidden_when_text_is_a",
+                        "properties": {
+                            "hidden": true,
+                            "persist": false
+                        }
+                    }]
+                }
+            }],
+            "_behaviours": [{
+                "default": {
+                    "name": "hideSecondLevelText_triggerFieldContainsB_hideHiddenWhenFirst_triggerFieldContainsB",
+                    "trigger": {
+                        "formElements": ["trigger_field"],
+                        "formEvents": ["load"]
+                    },
+                    "check": "triggerFieldContainsB",
+                    "actions": [{
+                        "action": "hideSecondLevelText",
+                        "autoReverse": true
+                    }, {
+                        "action": "hideHiddenWhenFirst",
+                        "autoReverse": true
+                    }]
+                }
+            }, {
+                "default": {
+                    "name": "hideHiddenWhenTextIsA_hiddenWhenFirstIsA",
+                    "trigger": {
+                        "formElements": ["hidden_when_first"],
+                        "formEvents": ["load"]
+                    },
+                    "check": "hiddenWhenFirstIsA",
+                    "actions": [{
+                        "action": "hideHiddenWhenTextIsA",
+                        "autoReverse": true
+                    }]
+                }
+            }]
         },
         "list": {
             "interaction": "",

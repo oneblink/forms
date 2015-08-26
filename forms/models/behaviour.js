@@ -23,7 +23,14 @@ define(function (require) {
   var Behaviour;
 
   Expression.fn['formelement.value'] = function (name) {
-    return this.getElement(name).val();
+    var el = this.getElement(name);
+    if (!el) {
+      /* eslint-disable no-console */
+      console && console.warn('Conditional Logic uses a hidden Element: ' + name);
+      /* eslint-enable no-console */
+      return undefined;
+    }
+    return el.val();
   };
 
   Expression.fn.optionsbyxpath = function (xmlNodes) {

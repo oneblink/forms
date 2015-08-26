@@ -39,7 +39,6 @@ define(function (require) {
       var page = attrs.page;
       var Forms = BMP.Forms;
       var section = $.trim(attrs.section || '');
-
       // migrate builder rowClass to class
       attrs.class = attrs.class || attrs.rowClass || '';
 
