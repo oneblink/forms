@@ -1,11 +1,6 @@
-/* eslint-env mocha */
-/* global assert */ // chai
-
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
   suite('32 - Pristine and dirty states', function () {
-    var $page = $('[data-role=page]'),
-        $content = $page.find('[data-role=content]');
 
     var elementNames = [
       'text_area',
@@ -38,13 +33,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     suite('#setPristine', function () {
       // make sure that the form is in a pristine state for each test.
       suiteSetup(function () {
-        $content.empty();
-        return Forms.getDefinition('every_field_type', 'add').then(function (def) {
-          Forms.initialize(def);
-          $content.append(Forms.current.$form);
-          $.mobile.page({}, $page);
-          $page.trigger('pagecreate');
-          $page.show();
+        return testUtils.loadForm('every_field_type', 'add')
+        .then(function () {
           $(window).scrollTop(0);
         });
       });
@@ -79,13 +69,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
     suite('Default Value', function () {
       suiteSetup(function () {
-        $content.empty();
-        return Forms.getDefinition('every_field_type', 'add').then(function (def) {
-          Forms.initialize(def);
-          $content.append(Forms.current.$form);
-          $.mobile.page({}, $page);
-          $page.trigger('pagecreate');
-          $page.show();
+        return testUtils.loadForm('every_field_type', 'add')
+        .then(function () {
           $(window).scrollTop(0);
         });
       });
@@ -105,13 +90,8 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     suite('Fields that use the value attribute', function () {
       // make sure that the form is in a pristine state for each test.
       suiteSetup(function () {
-        $content.empty();
-        return Forms.getDefinition('every_field_type', 'add').then(function (def) {
-          Forms.initialize(def);
-          $content.append(Forms.current.$form);
-          $.mobile.page({}, $page);
-          $page.trigger('pagecreate');
-          $page.show();
+        return testUtils.loadForm('every_field_type', 'add')
+        .then(function () {
           $(window).scrollTop(0);
         });
       });
@@ -141,16 +121,11 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     });
 
     suite('elements that use the blob attribute', function () {
+
       suiteSetup(function () {
-        $content.empty();
-        return Forms.getDefinition('every_field_type', 'add').then(function (def) {
-          Forms.initialize(def);
-          $content.append(Forms.current.$form);
-          $.mobile.page({}, $page);
-          $page.trigger('pagecreate');
-          $page.show();
+        return testUtils.loadForm('every_field_type', 'add')
+        .then(function () {
           $(window).scrollTop(0);
-        }).then(function () {
           return Forms.current.get('pages').goto(1);
         });
       });
@@ -170,16 +145,11 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     });
 
     suite('elements in subforms', function () {
+
       suiteSetup(function () {
-        $content.empty();
-        return Forms.getDefinition('every_field_type', 'add').then(function (def) {
-          Forms.initialize(def);
-          $content.append(Forms.current.$form);
-          $.mobile.page({}, $page);
-          $page.trigger('pagecreate');
-          $page.show();
+        return testUtils.loadForm('every_field_type', 'add')
+        .then(function () {
           $(window).scrollTop(0);
-        }).then(function () {
           Forms.current.get('pages').goto(1);
 
           // add a subform
@@ -214,4 +184,3 @@ define(['BlinkForms', 'BIC'], function (Forms) {
     });
   });
 });
-

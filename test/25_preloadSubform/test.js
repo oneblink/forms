@@ -1,4 +1,4 @@
-define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
+define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
   suite('25: preload subForms and validate _action assignment', function () {
     var $doc = $(document),
@@ -315,6 +315,25 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           return form.data().then(function (data) {
             assert.equal(data.Address[0].Phone.length, 0);
           });
+        });
+
+        test("test getErrors", function () {
+          try {
+            Forms.current.getErrors();
+            assert(true);
+          } catch (e) {
+            console.log(e);
+            assert(false, 'throws error');
+          }
+        });
+
+        test("test getInvalidElements", function () {
+          try {
+            Forms.current.getInvalidElements();
+            assert(true);
+          } catch (e) {
+            assert(false, e);
+          }
         });
 
       });

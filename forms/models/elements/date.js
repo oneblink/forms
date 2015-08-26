@@ -200,8 +200,6 @@ define([
     },
 
     isInvalidFormat: function (dateFormat, value) {
-      var formats = [dateFormat];
-
       if (value && value !== '0000-00-00' && !moment(value, [dateFormat], true).isValid()) {
         throw new Error(this.attributes.name + ' expect value in format ' + dateFormat);
       }

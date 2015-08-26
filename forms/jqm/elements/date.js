@@ -130,7 +130,7 @@ define(function (require) {
             picker.set('select', value, {format: 'yyyy-mm-dd'});
           }
         } else {
-          if (this.model.attributes.nativeDatePicker) { //for native picker
+          if (this.model.attributes.nativeDatePicker) { // for native picker
             input.val(value);
           } else {
             if (value) { // for default value when picker not initialised

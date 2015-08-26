@@ -1,16 +1,11 @@
-define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
+define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
   suite('17: Blob fields', function () {
-    var $doc = $(document),
-      $page = $('[data-role=page]'),
-      $content = $page.find('[data-role=content]');
 
     /**
      * execute once before everything else in this suite
      */
     suiteSetup(function () {
-      $content.empty();
-
       if (!window.navigator.getUserMedia) {
         window.navigator.getUserMedia = {};
       }
@@ -20,47 +15,11 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
       if (!window.URL.createObjectURL) {
         window.URL.createObjectURL = {};
       }
-
-      delete Forms.current;
     });
 
+    testUtils.defineFormLoadSuite('TestForm', 'add');
+
     suite('Form', function () {
-
-      test('BlinkForms global is an Object', function () {
-        assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
-      });
-
-      test('initialise with form.json', function (done) {
-        var form;
-
-        Forms.getDefinition('TestForm', 'add').then(function (def) {
-          Forms.initialize(def, 'add');
-          form = Forms.current;
-          assert.equal($.type(form), 'object');
-          assert.equal(form.get('name'), 'TestForm');
-          assert.equal(form.get('label'), 'TestForm');
-          done();
-        }, function () {
-          assert.fail(true, false, 'getDefinition failed!');
-          done();
-        });
-      });
-
-      test('render form for jQuery Mobile', function (done) {
-        var form = Forms.current;
-
-        $content.append(form.$form);
-
-        $doc.one('pageinit', function () {
-          done();
-        });
-
-        $.mobile.page({}, $page);
-        $page.trigger('pagecreate');
-        $page.show();
-      });
-
-      testUtils.defineLabelTest();
 
       test('Render form with data', function (done) {
         var form = Forms.current;
