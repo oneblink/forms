@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v3.7.0 - 2015-08-27
+
+
+### Added
+
+- FORMS-194: BEM CSS classes on (Sub)Forms and Elements
+
+    - this completes the base set of useful CSS classes
+
+    - useful for customising style and behaviour based on user activity
+
+    - see [docs/css-selectors.md](docs/css-selectors.md)
+
+- FORMS-202: SubFormElement overrides on SubForm(s) within
+
+    - this is a feature is available in Forms v2
+
+    - a SubFormElement may "hide" Elements within a reused definition
+
+    - useful when a design would otherwise require clones of similar SubForms
+
+
+### Fixed
+
+- FORMS-223: filter out SubForm "delete" placeholders missing IDs
+
+    - this primarily addresses possible unsafe `DELETE FROM ...` SQL queries resulting from submission of an "add" or "edit" Form after deleting a SubForm
+
+    - partial fix: required fixes to other components coming soon
+
+    - HelpDesk: 1593-QEIK-1411
+
+
 ## v3.6.0 - 2015-08-21
 
 
