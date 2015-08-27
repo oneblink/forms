@@ -1,4 +1,5 @@
-define(['BlinkForms'], function (Forms) {
+// need the BIC module to set up `.getDefinition()`, etc
+define(['BlinkForms', 'BIC'], function (Forms) {
 
   var NO_LABELS = ['hidden', 'heading', 'message', 'subForm', 'button'];
   var CHOICES = ['select', 'multi']
@@ -9,7 +10,61 @@ define(['BlinkForms'], function (Forms) {
       el.get('mode') === 'expanded';
   }
 
-  return {
+  var mod = {
+
+    isPhantom: function () {
+      return navigator.userAgent.toLowerCase().indexOf('phantom') !== -1;
+    },
+
+    loadForm: function (name, action) {
+      var $page = $('[data-role=page]');
+      var $content = $page.find('[data-role=content]');
+
+      $content.empty();
+      if (Forms.current) {
+        // Forms.current.close(); // breaks test/4
+        delete Forms.current;
+      }
+
+      return Forms.getDefinition(name, action)
+      .then(function (def) {
+        Forms.initialize(def, action);
+        form = Forms.current;
+
+        return new Promise(function (resolve) {
+          $(document).one('pageinit', function () {
+            resolve();
+          });
+
+          $content.append(form.$form);
+          $.mobile.page({}, $page);
+          $page.trigger('pagecreate');
+          $page.show();
+        });
+      });
+    },
+
+    defineFormLoadSuite: function (name, action) {
+      suite(name + ': ' + action, function () {
+        var $page = $('[data-role=page]');
+        var $content = $page.find('[data-role=content]');
+
+        test('BlinkForms global is an Object', function () {
+          assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
+        });
+
+        test('initialise with form.json', function () {
+          return mod.loadForm(name, action)
+          .then(function () {
+            var form = Forms.current;
+            assert.equal($.type(form), 'object');
+            assert.equal(form.get('name'), name);
+          });
+        });
+
+        mod.defineLabelTest();
+      });
+    },
 
     defineButtonTest: function () {
       test('jQM buttons displayed correctly', function () {
@@ -57,5 +112,7 @@ define(['BlinkForms'], function (Forms) {
     }
 
   };
+
+  return mod;
 
 });

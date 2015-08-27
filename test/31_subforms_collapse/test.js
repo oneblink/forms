@@ -1,25 +1,10 @@
-/* global assert */ // chai
+define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
-define(['BlinkForms', 'BIC'], function (Forms) {
   suite('31: subForms', function () {
-    var $page = $('[data-role=page]');
-    var $content = $page.find('[data-role=content]');
-
-    var form;
 
     suiteSetup(function () {
-      $content.empty();
-      delete Forms.current;
-      return Forms.getDefinition('form1', 'add').then(function (def) {
-        Forms.initialize(def, 'add');
-        form = Forms.current;
-
-        $content.append(form.$form);
-        $.mobile.page({}, $page);
-        $page.trigger('pagecreate');
-        $page.show();
-
-        return Forms;
+      return testUtils.loadForm('form1', 'add')
+      .then(function () {
       });
     });
 

@@ -7,6 +7,7 @@ define(function (require) {
 
   // local modules
 
+  var Element = require('forms/models/element');
   var SelectElement = require('forms/models/elements/select');
 
   // this module
@@ -23,6 +24,7 @@ define(function (require) {
         delete attrs.canSpecifyOther;
       }
     },
+
     initializeView: function () {
       var Forms = BMP.Forms;
       var View, view, mode;
@@ -41,24 +43,16 @@ define(function (require) {
       this.set('_view', view);
       return view;
     },
-    validate: function (attrs) {
-      var errors = {};
-      if (attrs === undefined) {
-        attrs = this.attributes;
-      }
 
-      // if `other` is true
-      // and required is true
-      // and attr.lenghth === 1 && _.contains(attr.value, 'other')
-      // and other is not in options
-      // then fail
-      if (attrs.required && (_.isEmpty(attrs.value) || attrs.other && (attrs.value.length === 1 && attrs.value[0] === 'other') && !_.contains(attrs.options, 'other'))) {
-        errors.value = errors.value || [];
-        errors.value.push({code: 'REQUIRED'});
+    isEmpty: function () {
+      var attrs = this.attributes;
+      // skip super's and go straight to super-super's isEmpty
+      if (Element.prototype.isEmpty.call(this)) {
+        return true;
       }
-
-      return _.isEmpty(errors) ? undefined : errors;
+      return attrs.other && _.isEqual(attrs.value, ['other']) && !_.contains(attrs.options, 'other');
     }
+
   });
 
   return MultiElement;

@@ -11,6 +11,8 @@ define(function (require) {
   var SubFormModel = require('forms/models/subform');
   var ElementModel = require('forms/models/element');
 
+  var isValidFormId = require('forms/helpers/is-valid-form-id');
+
   // this module
 
   var SubFormsCollection;
@@ -160,17 +162,35 @@ define(function (require) {
       var forms = attrs.forms;
       var Forms = BMP.Forms;
 
+      // make a map of the field name properties so they are easy to match
+      var fieldProperties = _.reduce(self.get('_elements'), function (memo, element) {
+        memo[element.id] = element;
+
+        return memo;
+      }, {});
+
       action = action || 'add';
       return new Promise(function (resolve, reject) {
         Forms.getDefinition(name, action).then(function (def) {
-          var form;
+          var form, elements;
           try {
-            // the elements themselves need to know who the parent is.
-            _.each(def._elements, function (element) {
+            elements = _.reduce(def._elements, function (memo, element) {
+              // check the sub form field for any overridden properties.
+              var overriddenOptions = fieldProperties[element.subForm || element.name];
+
+              if (overriddenOptions && parseInt(overriddenOptions.hide, 10) === 1) {
+                return memo;
+              }
+
+              // let the element know who its parent is
               element.parentElement = self;
-            });
-            def._action = action;
-            form = new SubFormModel(def);
+
+              memo.push(element);
+              return memo;
+            }, []);
+
+            form = new SubFormModel(_.extend({}, def, {_elements: elements, _action: action}));
+
             self.listenTo(form.get('elements'), 'invalid change:value change:blob', function () {
               self.validate.apply(self, arguments);
               form.setDirty();
@@ -187,6 +207,7 @@ define(function (require) {
             if (Forms.current) {
               Forms.current.setDirty();
             }
+
             resolve(form);
           } catch (err) {
             reject(err);
@@ -256,6 +277,13 @@ define(function (require) {
 
       return new Promise(function (resolve, reject) {
         Promise.all(promises).then(function (values) {
+          values = _.reduce(values, function (memo, value) {
+            if (value._action === 'remove' && !isValidFormId(value.id)) {
+              return memo;
+            }
+            memo.push(value);
+            return memo;
+          }, []);
           resolve(values);
         }, function () {
           reject();

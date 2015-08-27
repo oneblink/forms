@@ -1,4 +1,4 @@
-define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
+define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
   suite('25: preload subForms and validate _action assignment', function () {
     var $doc = $(document),

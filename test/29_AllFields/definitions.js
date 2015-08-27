@@ -24,6 +24,7 @@ define(function () {
               "type": "heading",
               "text": "heading",
               "headingSmallText": "Heading",
+              "rowClass": "_heading_1-default-class",
               "position": "left",
               "fontFace": "arial",
               "page": 0
@@ -37,6 +38,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "This is a textbox, character limit 5",
+              "rowClass": "text_box-default-class",
               "maxWidthPrefix": "characters",
               "characterLimit": "5",
               "page": 0
@@ -51,6 +53,7 @@ define(function () {
               "labelStyle": "Plain",
               "hint": "text area",
               "wrap": "hard",
+              "rowClass": "text_area-default-class",
               "page": 0
             }
           },
@@ -62,6 +65,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "password",
+              "rowClass": "password-default-class",
               "maxWidthPrefix": "characters",
               "page": 0
             }
@@ -72,6 +76,7 @@ define(function () {
               "type": "email",
               "label": "Email",
               "labelPlacement": "default",
+              "rowClass": "email-default-class",
               "labelStyle": "Plain",
               "hint": "email",
               "page": 0
@@ -84,6 +89,7 @@ define(function () {
               "label": "URL",
               "labelPlacement": "default",
               "labelStyle": "Plain",
+              "rowClass": "url-default-class",
               "hint": "url",
               "page": 0
             }
@@ -94,6 +100,7 @@ define(function () {
               "type": "telephone",
               "label": "Phone Number",
               "labelPlacement": "default",
+              "rowClass": "phone_number-default-class",
               "labelStyle": "Plain",
               "hint": "phonenumber",
               "page": 0
@@ -107,6 +114,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "number",
+              "rowClass": "number-default-class",
               "page": 0,
               "prefix": '$',
               "suffix": '$'
@@ -120,6 +128,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "currency",
+              "rowClass": "currency-default-class",
               "page": 0,
               "prefix": '$'
             }
@@ -134,6 +143,7 @@ define(function () {
               "hint": "calculation (1+1)",
               "showTextbox": "show",
               "calculationType": "auto",
+              "rowClass": "calculation-default-class",
               "buttonText": "Calculate",
               "persist": true,
               "page": 0
@@ -147,6 +157,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "Radio Buttons, (one, two, three)",
+              "rowClass": "radio_buttons-default-class",
               "options": {
                 "One": "One",
                 "Two": "Two",
@@ -163,6 +174,7 @@ define(function () {
               "label": "Select Box",
               "labelPlacement": "default",
               "labelStyle": "Plain",
+              "rowClass": "select_box-default-class",
               "hint": "select box (One, Two, Three)",
               "options": {
                 "One": "One",
@@ -181,6 +193,7 @@ define(function () {
               "label": "Star Rating",
               "labelPlacement": "default",
               "labelStyle": "Plain",
+              "rowClass": "star_rating-default-class",
               "hint": "Star Rating",
               "mode": "graphical",
               "graphic": {
@@ -201,6 +214,7 @@ define(function () {
               "name": "multi_select",
               "type": "multi",
               "label": "Multi Select",
+              "rowClass": "multi_select-default-class",
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "MultiSelect (One, Two, Three)",
@@ -220,6 +234,7 @@ define(function () {
               "label": "Checkboxes",
               "labelPlacement": "default",
               "labelStyle": "Plain",
+              "rowClass": "checkboxes-default-class",
               "hint": "Checkboxes (One, Two, Three)",
               "options": {
                 "One": "One",
@@ -235,6 +250,7 @@ define(function () {
               "name": "checkbox",
               "type": "boolean",
               "label": "Checkbox",
+              "rowClass": "checkbox-default-class",
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "CheckBox",
@@ -255,6 +271,7 @@ define(function () {
               "labelStyle": "Plain",
               "hint": "date (none)",
               "dateFormat": "dd_mm_yyyy",
+              "rowClass": "date-default-class",
               "page": 0
             },
             "add": {
@@ -280,6 +297,7 @@ define(function () {
               "hint": "time (none)",
               "timeFormat": "hh_mm",
               "minuteStep": "1",
+              "rowClass": "time-default-class",
               "page": 0
             },
             "add": {
@@ -306,6 +324,7 @@ define(function () {
               "dateFormat": "dd_mm_yyyy",
               "timeFormat": "hh_mm",
               "minuteStep": "1",
+              "rowClass": "date_time-default-class",
               "page": 0
             }
           },
@@ -319,6 +338,7 @@ define(function () {
               "hint": "camera",
               "capture": true,
               "accept": "image/*",
+              "rowClass": "camera-default-class",
               "page": 0
             }
           },
@@ -331,6 +351,7 @@ define(function () {
               "labelStyle": "Plain",
               "hint": "image library",
               "accept": "image/*",
+              "rowClass": "image_library-default-class",
               "page": 0
             }
           },
@@ -342,6 +363,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "fileupload",
+              "rowClass": "file_upload-default-class",
               "page": 0
             }
           },
@@ -353,6 +375,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "location",
+              "rowClass": "location-default-class",
               "page": 0
             }
           },
@@ -365,6 +388,7 @@ define(function () {
               "labelStyle": "Plain",
               "hint": "sketch/signature",
               "size": "signature",
+              "rowClass": "sketch_signature-default-class",
               "page": 0
             }
           },
@@ -379,6 +403,7 @@ define(function () {
               "headingType": "2",
               "position": "left",
               "fontFace": "arial",
+              "rowClass": "_heading_3-default-class",
               "page": 0
             }
           },
@@ -390,6 +415,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "value",
+              "rowClass": "value-default-class",
               "page": 0
             }
           },
@@ -400,6 +426,7 @@ define(function () {
               "label": "Logged in User ID",
               "labelPlacement": "default",
               "labelStyle": "Plain",
+              "rowClass": "logged_in_user_id-default-class",
               "hint": "logged_in_user_id",
               "page": 0
             }
@@ -412,6 +439,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "user attribute",
+              "rowClass": "user_attribute-default-class",
               "page": 0
             }
           },
@@ -423,6 +451,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "get value",
+              "rowClass": "get_value-default-class",
               "page": 0
             }
           },
@@ -436,6 +465,7 @@ define(function () {
               "text": "page",
               "headingSmallText": "Page Break",
               "headingPageBreak": "1",
+              "rowClass": "_heading_2-default-class",
               "position": "left",
               "fontFace": "arial",
               "page": 1
@@ -449,6 +479,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "conditional radio, on, off",
+              "rowClass": "conditional_radio-default-class",
               "options": {
                 "On": "On",
                 "Off": "Off"
@@ -468,6 +499,7 @@ define(function () {
               "showTextbox": "show",
               "calculationType": "auto",
               "buttonText": "Calculate",
+              "rowClass": "conditional_calc-default-class",
               "persist": true,
               "page": 1
             }
@@ -491,6 +523,7 @@ define(function () {
               "subformControlPos": "below",
               "subformPerms": "allow_add",
               "preload": "no",
+              "rowClass": "subform-default-class",
               "page": 1
             }
           },
@@ -505,6 +538,7 @@ define(function () {
               "required": "1",
               "hint": "validation textbox",
               "maxWidthPrefix": "characters",
+              "rowClass": "validation_req-default-class",
               "page": 1
             }
           },
@@ -516,6 +550,7 @@ define(function () {
               "labelPlacement": "default",
               "labelStyle": "Plain",
               "hint": "select box (One, Two, Three)",
+              "rowClass": "select_box2-default-class",
               "options": {
                 "One": "One",
                 "Two": "Two",

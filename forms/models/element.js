@@ -39,7 +39,6 @@ define(function (require) {
       var page = attrs.page;
       var Forms = BMP.Forms;
       var section = $.trim(attrs.section || '');
-
       // migrate builder rowClass to class
       attrs.class = attrs.class || attrs.rowClass || '';
 
@@ -83,6 +82,14 @@ define(function (require) {
       this.on('remove', this.close, this);
     },
 
+    isEmpty: function () {
+      var value = this.attributes.value;
+      if (Array.isArray(value)) {
+        return !value.length;
+      }
+      return !value && value !== 0;
+    },
+
     validate: function (attrs) {
       var errors = {};
 
@@ -95,7 +102,7 @@ define(function (require) {
         return undefined;
       }
 
-      if (attrs.required && !attrs.value) {
+      if (attrs.required && this.isEmpty()) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
 
