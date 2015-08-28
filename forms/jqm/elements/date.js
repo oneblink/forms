@@ -7,6 +7,11 @@ define(function (require) {
   var _ = require('underscore');
   var moment = require('moment');
 
+  // variables
+
+  var DEFAULT_FORMAT = 'YYYY-MM-DD';
+  var PICKER_FORMAT = 'yyyy-mm-dd';
+
   // local modules
 
   var ElementView = require('forms/jqm/element');
@@ -84,8 +89,7 @@ define(function (require) {
     },
 
     onDateVChange: function (event) {
-      var defaultFormat = 'YYYY-MM-DD';
-      var dateFormat = this.model.mapDateFormats[this.model.attributes.dateFormat] || defaultFormat;
+      var dateFormat = this.model.mapDateFormats[this.model.attributes.dateFormat] || DEFAULT_FORMAT;
       var value = $(event.target).val();
 
       try {
@@ -95,7 +99,7 @@ define(function (require) {
         return;
       }
       if (value) {
-        value = moment(value, dateFormat).format('YYYY-MM-DD');
+        value = moment(value, dateFormat).format(DEFAULT_FORMAT);
       }
       this.model.set('_date', value);
     },
@@ -110,19 +114,17 @@ define(function (require) {
       var input = this.$el.find('input[name="' + name + '_date"]');
       var picker = input.pickadate('picker');
       var pickerValue;
-      var defaultFormat = 'YYYY-MM-DD';
-      var pickerFormat = 'yyyy-mm-dd';
-      var dateFormat = this.model.mapDateFormats[this.model.get('dateFormat')] || defaultFormat;
+      var dateFormat = this.model.mapDateFormats[this.model.get('dateFormat')] || DEFAULT_FORMAT;
 
       try {
-        this.model.isInvalidFormat(defaultFormat, value);
+        this.model.isInvalidFormat(DEFAULT_FORMAT, value);
       } catch (err) {
         window.console.log(err);
         return;
       }
 
       if (picker) {
-        pickerValue = picker.get('select', pickerFormat);
+        pickerValue = picker.get('select', PICKER_FORMAT);
       }
 
       if (value !== pickerValue) {
@@ -130,7 +132,7 @@ define(function (require) {
           if (!value || value === '0000-00-00') {
             picker.set('clear');
           } else {
-            picker.set('select', value, {format: pickerFormat});
+            picker.set('select', value, {format: PICKER_FORMAT});
           }
         } else {
           if (this.model.attributes.nativeDatePicker) { // for native picker
