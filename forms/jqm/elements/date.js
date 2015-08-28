@@ -84,7 +84,8 @@ define(function (require) {
     },
 
     onDateVChange: function (event) {
-      var dateFormat = this.model.mapDateFormats[this.model.attributes.dateFormat] || 'YYYY-MM-DD';
+      var defaultFormat = 'YYYY-MM-DD';
+      var dateFormat = this.model.mapDateFormats[this.model.attributes.dateFormat] || defaultFormat;
       var value = $(event.target).val();
 
       try {
@@ -109,17 +110,19 @@ define(function (require) {
       var input = this.$el.find('input[name="' + name + '_date"]');
       var picker = input.pickadate('picker');
       var pickerValue;
-      var dateFormat = this.model.mapDateFormats[this.model.get('dateFormat')] || 'YYYY-MM-DD';
+      var defaultFormat = 'YYYY-MM-DD';
+      var pickerFormat = 'yyyy-mm-dd';
+      var dateFormat = this.model.mapDateFormats[this.model.get('dateFormat')] || defaultFormat;
 
       try {
-        this.model.isInvalidFormat('YYYY-MM-DD', value);
+        this.model.isInvalidFormat(defaultFormat, value);
       } catch (err) {
         window.console.log(err);
         return;
       }
 
       if (picker) {
-        pickerValue = picker.get('select', 'yyyy-mm-dd');
+        pickerValue = picker.get('select', pickerFormat);
       }
 
       if (value !== pickerValue) {
@@ -127,7 +130,7 @@ define(function (require) {
           if (!value || value === '0000-00-00') {
             picker.set('clear');
           } else {
-            picker.set('select', value, {format: 'yyyy-mm-dd'});
+            picker.set('select', value, {format: pickerFormat});
           }
         } else {
           if (this.model.attributes.nativeDatePicker) { // for native picker
