@@ -5,6 +5,12 @@ define(function (require) {
 
   var $ = require('jquery');
   var _ = require('underscore');
+  var moment = require('moment');
+
+  // variables
+
+  var DEFAULT_FORMAT = 'YYYY-MM-DD';
+  var PICKER_FORMAT = 'yyyy-mm-dd';
 
   // local modules
 
@@ -83,7 +89,19 @@ define(function (require) {
     },
 
     onDateVChange: function (event) {
-      this.model.set('_date', $(event.target).val());
+      var dateFormat = this.model.mapDateFormats[this.model.attributes.dateFormat] || DEFAULT_FORMAT;
+      var value = $(event.target).val();
+
+      try {
+        this.model.isInvalidFormat(dateFormat, value);
+      } catch (err) {
+        window.console.log(err);
+        return;
+      }
+      if (value) {
+        value = moment(value, dateFormat).format(DEFAULT_FORMAT);
+      }
+      this.model.set('_date', value);
     },
 
     onTimeVChange: function (event) {
@@ -92,7 +110,40 @@ define(function (require) {
 
     onDateMChange: function () {
       var name = this.model.attributes.name;
-      this.$el.find('input[name="' + name + '_date"]').val(this.model.get('_date'));
+      var value = this.model.get('_date');
+      var input = this.$el.find('input[name="' + name + '_date"]');
+      var picker = input.pickadate('picker');
+      var pickerValue;
+      var dateFormat = this.model.mapDateFormats[this.model.get('dateFormat')] || DEFAULT_FORMAT;
+
+      try {
+        this.model.isInvalidFormat(DEFAULT_FORMAT, value);
+      } catch (err) {
+        window.console.log(err);
+        return;
+      }
+
+      if (picker) {
+        pickerValue = picker.get('select', PICKER_FORMAT);
+      }
+
+      if (value !== pickerValue) {
+        if (picker) {
+          if (!value || value === '0000-00-00') {
+            picker.set('clear');
+          } else {
+            picker.set('select', value, {format: PICKER_FORMAT});
+          }
+        } else {
+          if (this.model.attributes.nativeDatePicker) { // for native picker
+            input.val(value);
+          } else {
+            if (value) { // for default value when picker not initialised
+              input.val(moment(Date.parse(value)).format(dateFormat));
+            }
+          }
+        }
+      }
     },
 
     onTimeMChange: function () {
