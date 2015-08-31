@@ -3,6 +3,7 @@
  */
 
 define([
+  'chai',
   'feature!promises',
   'jquery',
   'underscore',
@@ -13,10 +14,13 @@ define([
   'BMP.BlinkGap',
   'feature!es5',
   'jquerymobile'
-], function (Promise, $, _, moment, Forms, defs) {
+], function (chai, Promise, $, _, moment, Forms, defs) {
   'use strict';
 
   var $submitPopup, $footer, $grid, $colB;
+
+  window.chai = chai;
+  window.assert = chai.assert;
 
   window.Promise = window.Promise || Promise;
 

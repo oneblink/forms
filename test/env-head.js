@@ -4,7 +4,6 @@
   window.BMP = {};
 
   window.mocha.ui('tdd');
-  window.assert = window.chai.assert;
 
   document.write('<link rel="stylesheet" href="../../node_modules/pickadate/lib/themes/default.css" />');
   document.write('<link rel="stylesheet" href="../../node_modules/pickadate/lib/themes/default.date.css" />');
@@ -30,6 +29,7 @@
       feature: '../../node_modules/amd-feature/feature',
       'es5-shim': '../../node_modules/es5-shim/es5-shim.min',
       implementations: '../lib/implementations',
+      chai: '../../node_modules/chai/chai',
       sinon: '../../node_modules/sinon/lib/sinon',
       testUtils: '../lib/utils'
     },
