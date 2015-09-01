@@ -25,25 +25,23 @@ Now we do our Git Flow process and our testing:
 
 6. `npm test`, confirm everything passes (if you changed package.json)
 
-7. JIRA: FORMS-153 -> Add to Test Cycle(s), for x.x.x (Ad hoc)
+7. execute [MANUAL-TESTS.md](MANUAL-TESTS.md), fix issues until everything PASSes
 
-8. JIRA: FORMS-153, in Text Executions, click the E next to new Test Cycle
+8. execute the Test Cycle, fix issues until everything PASSes
 
-9. execute the Test Cycle, fix issues until everything PASSes
+9. (from above JIRA guide) update CHANGELOG.md based on Issues Done (and commit)
 
-10. (from above JIRA guide) update CHANGELOG.md based on Issues Done (and commit)
+10. bump version in package.json AND main.js (and commit)
 
-11. bump version in package.json AND main.js (and commit)
-
-12. `git flow release finish vx.x.x`, using "vx.x.x" as the tag's message
+11. `git flow release finish vx.x.x`, using "vx.x.x" as the tag's message
 
 - resolve any merge issues
 
-13. `git checkout develop && git pull && git push`
+12. `git checkout develop && git pull && git push`
 
-14. `git checkout master && git pull && git push && git push --tags`
+13. `git checkout master && git pull && git push && git push --tags`
 
-15. `npm test`, just to trigger a fresh build
+14. `npm test`, just to trigger a fresh build
 
 Now the Git project is up to date and everything.
 
