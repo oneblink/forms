@@ -1,7 +1,7 @@
 
 /*global assert:true*/ // chai
 
-define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
+define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) {
 
   suite('10: blinkgap', function () {
     var getDrawingStub,
@@ -34,7 +34,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         getPicture: $.noop
       };
 
-      getDrawingStub = window.sinon.stub(navigator.bgtouchdraw, 'getDrawing',
+      getDrawingStub = sinon.stub(navigator.bgtouchdraw, 'getDrawing',
         getDrawingFn);
       window.BGTouchDraw = {
         DestinationType: {},
@@ -45,7 +45,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         available: true
       };
 
-      getPictureStub = window.sinon.stub(navigator.camera, 'getPicture',
+      getPictureStub = sinon.stub(navigator.camera, 'getPicture',
         getDrawingFn);
       window.PictureSourceType = {};
     });

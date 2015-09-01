@@ -1,7 +1,7 @@
 
 /*global assert, sinon*/ // chai
 
-define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
+define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) {
 
   window.MSApp = {};
 
@@ -49,7 +49,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         $locate = $view.find('.ui-btn').children('button').first(),
         spy, spyStatic;
 
-      window.navigator.map = {
+      navigator.map = {
         confirmLocation: function (onSuccess, onError, options) {
           assert.isFunction(onSuccess);
           assert.isFunction(onError);
@@ -70,8 +70,8 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         }
       };
 
-      spy = sinon.spy(window.navigator.map, "confirmLocation");
-      spyStatic = sinon.spy(window.navigator.map, "getStaticMap");
+      spy = sinon.spy(navigator.map, "confirmLocation");
+      spyStatic = sinon.spy(navigator.map, "getStaticMap");
 
       element.once('change:value', function () {
         assert.equal(spyStatic.callCount, 0);
@@ -91,7 +91,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         $locate = $view.find('.ui-btn').children('button').first(),
         spy, spyStatic;
 
-      window.navigator.map = {
+      navigator.map = {
         confirmLocation: function (onSuccess, onError, options) {
           var sampleLocation = {"latitude": -33.867487, "longitude": 151.20699, "accuracy": 25000};
           assert.isFunction(onSuccess);
@@ -112,8 +112,8 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         }
       };
 
-      spy = sinon.spy(window.navigator.map, "confirmLocation");
-      spyStatic = sinon.spy(window.navigator.map, "getStaticMap");
+      spy = sinon.spy(navigator.map, "confirmLocation");
+      spyStatic = sinon.spy(navigator.map, "getStaticMap");
 
       element.once('change:value', function () {
         assert.equal(spyStatic.callCount, 1);
@@ -133,7 +133,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         $locate = $view.find('.ui-btn').children('button').first(),
         spy, spyStatic;
 
-      window.navigator.map = {
+      navigator.map = {
         confirmLocation: function (onSuccess, onError, options) {
           var spy2 = sinon.spy(window.console, "error");
           assert.isFunction(onSuccess);
@@ -155,8 +155,8 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         }
       };
 
-      spy = sinon.spy(window.navigator.map, "confirmLocation");
-      spyStatic = sinon.spy(window.navigator.map, "getStaticMap");
+      spy = sinon.spy(navigator.map, "confirmLocation");
+      spyStatic = sinon.spy(navigator.map, "getStaticMap");
 
       element.once('change:value', function () {
         assert.equal(spyStatic.callCount, 0);
@@ -193,7 +193,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       sampleImage = "data:image/jpeg;base64,blah";
 
-      window.navigator.map = {
+      navigator.map = {
         confirmLocation: function (onSuccess, onError, options) {
           var sampleLocation = {
             "latitude": -33.867487,
@@ -215,8 +215,8 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         }
       };
 
-      spy = sinon.spy(window.navigator.map, "confirmLocation");
-      spyStatic = sinon.spy(window.navigator.map, "getStaticMap");
+      spy = sinon.spy(navigator.map, "confirmLocation");
+      spyStatic = sinon.spy(navigator.map, "getStaticMap");
 
       element.once('change:value', function () {
         var $img;
@@ -241,7 +241,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         $locate = $view.find('.ui-btn').children('button').first(),
         spy, spyStatic, spyError;
 
-      window.navigator.map = {
+      navigator.map = {
         confirmLocation: function (onSuccess, onError, options) {
           var sampleLocation = {
             "latitude": -33.861234,
@@ -263,8 +263,8 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         }
       };
 
-      spy = sinon.spy(window.navigator.map, "confirmLocation");
-      spyStatic = sinon.spy(window.navigator.map, "getStaticMap");
+      spy = sinon.spy(navigator.map, "confirmLocation");
+      spyStatic = sinon.spy(navigator.map, "getStaticMap");
       spyError = sinon.spy(window.console, "error");
 
       element.once('change:value', function () {

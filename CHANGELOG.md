@@ -1,6 +1,14 @@
 # Changelog
 
 
+## v3.7.1 - 2015-09-01
+
+
+### Fixed
+
+- FORMS-200: pickadate picker now reflects value of focused date/time element
+
+
 ## v3.7.0 - 2015-08-27
 
 
