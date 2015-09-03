@@ -56,6 +56,7 @@
       BlinkForms: ROOT_PREFIX + 'build/forms3jqm.min', // using the unminified makes it far easier to debug in tests
       // BlinkForms: ROOT_PREFIX + 'build/forms3jqm.min',
       BIC: TEST_PREFIX + 'sample-bic',
+      '@jokeyrhyme/promised-requirejs': ROOT_PREFIX + 'node_modules/@jokeyrhyme/promised-requirejs/dist/index',
       'BMP.Blob': TEST_PREFIX + 'lib/bmp-blobs',
       'BMP.BlinkGap': ROOT_PREFIX + 'node_modules/blinkgap-utils/BMP.BlinkGap',
       signaturepad: 'http://cdnp.blinkm.co/signaturepad/2.3.0/jq.sig.min',

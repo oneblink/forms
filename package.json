@@ -24,6 +24,7 @@
     "queue-async": "1.0.7"
   },
   "devDependencies": {
+    "@jokeyrhyme/promised-requirejs": "^1.0.0",
     "bic-jqm": "blinkmobile/bic-v3#master",
     "bluebird": "^2.9",
     "chai": "^3.0",

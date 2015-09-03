@@ -1,5 +1,7 @@
 // need the BIC module to set up `.getDefinition()`, etc
-define(['BlinkForms', 'BIC'], function (Forms) {
+define([
+  'BlinkForms', '@jokeyrhyme/promised-requirejs', 'BIC'
+], function (Forms, promisedRequire) {
 
   var NO_LABELS = ['hidden', 'heading', 'message', 'subForm', 'button'];
   var CHOICES = ['select', 'multi']
@@ -26,7 +28,11 @@ define(['BlinkForms', 'BIC'], function (Forms) {
         delete Forms.current;
       }
 
-      return Forms.getDefinition(name, action)
+      // explicitly wait for views to be ready, the BIC does this the same way
+      return promisedRequire('forms/jqm')
+      .then(function () {
+        return Forms.getDefinition(name, action)
+      })
       .then(function (def) {
         Forms.initialize(def, action);
         form = Forms.current;
