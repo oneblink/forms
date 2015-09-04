@@ -179,6 +179,10 @@ define(function (require) {
       var list$ = this.$el.children('.bm-errors__bm-list');
       var new$;
 
+      if (!attrs) {
+        return; // not safe to run yet
+      }
+
       if (!errors || !errors.value || !errors.value.length) {
         this.$el.children('.bm-errors__bm-list').remove();
         this.onInvalidChange();
