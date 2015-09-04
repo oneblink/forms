@@ -55,7 +55,7 @@ define(function (require) {
     },
 
     modelEvents: {
-      'invalid change:value': 'renderErrors',
+      'invalid valid': 'renderErrors',
       'change:hidden': 'onChangeHidden',
       'change:label': 'renderLabel',
       'change:isDirty': 'onDirtyChange',

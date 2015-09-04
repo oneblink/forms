@@ -95,8 +95,8 @@ define(function (require) {
         attrs.summaryPromise = this.getSummaryElements();
       }
 
-      this.attributes.forms.on('add remove invalid change:value change:blob', this.updateFieldErrors, this);
-      this.off('invalid change:value change:blob');
+      this.attributes.forms.on('add remove invalid valid', this.updateFieldErrors, this);
+      this.off('invalid valid');
 
       // make sure that all form events are bubbled up through this subform
       this.attributes.forms.on('all', function () {

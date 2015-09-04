@@ -14,7 +14,9 @@ define(function (require) {
   var Backbone = require('backbone');
 
   // local modules
+
   var modelStates = require('forms/mixins/model-states-mixin');
+  var modelValidation = require('forms/mixins/model-validation');
 
   // this module
 
@@ -74,7 +76,7 @@ define(function (require) {
       }
 
       // backward compatability.
-      this.on('invalid change:value', this.updateErrors, this);
+      this.on('invalid valid', this.updateErrors, this);
 
       this.on('change:value', function () {
         this.setDirty();
@@ -89,6 +91,8 @@ define(function (require) {
       }
       return !value && value !== 0;
     },
+
+    isValid: modelValidation.isValid,
 
     validate: function (attrs) {
       var errors = {};
