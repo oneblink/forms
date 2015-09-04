@@ -155,7 +155,6 @@ define(function (require) {
           return outputTargets.indexOf(m.attributes.name) === -1;
         }), { silent: true });
         // we disable the Backbone.Collection#set() events for a >10x speed-up
-
       } else {
         attrs.trigger.formElements.filter(function (name) {
           // only proceed with elements that are not output targets

@@ -154,7 +154,6 @@ define(function (require) {
       setTimeout(function () {
         self.trigger('formLoad', self);
       }, 0);
-
     },
 
     /**
@@ -519,7 +518,6 @@ define(function (require) {
           res = Form.xmlToJson(node, {});
           result[node.nodeName] = res[node.nodeName];
         }
-
       });
       return result;
     }

@@ -1,9 +1,7 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('pageErrors', 'add');
 
   suite('18: Subforms with pages', function () {
-
     test('testing subform paging', function (done) {
       var form = Forms.current,
         pages = form.attributes.pages,
@@ -47,7 +45,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             done();
           });
       });
-
     });
 
     test('Coming back to page with subform', function (done) {
@@ -137,7 +134,5 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       assert.notEqual(pages.current.cid, previousPage);
     });
-
   }); // END: suite('Form', ...)
-
 });

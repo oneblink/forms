@@ -22,5 +22,4 @@ define(['@blinkmobile/geolocation'], function (geolocation) {
     }
 
   };
-
 });

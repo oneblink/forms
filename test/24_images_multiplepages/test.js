@@ -1,9 +1,7 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('TestForm', 'add');
 
   suite('24: Blob fields + multiple pages', function () {
-
     test('Render form with data', function (done) {
       var form = Forms.current;
       $.ajax({
@@ -35,9 +33,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     suite('verifying elements on Page:', function () {
-
       suite('Page 0', function () {
-
         var elements = {
           "Photo": 1,
           "Photo1": 1,
@@ -55,11 +51,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           });
 
           pages.goto(0);
-
         });
 
         _.each(elements, function (v, i) {
-
           test(i + ' should be ' + (v === 1 ? "visible" : "invisible"), function (done) {
             var form = Forms.current,
               element,
@@ -84,7 +78,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
 
       suite('Page 1', function () {
-
         var elements = {
           "Photo": 0,
           "Photo1": 0,
@@ -105,7 +98,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         });
 
         _.each(elements, function (v, i) {
-
           test(i + ' should be ' + (v === 1 ? "visible" : "invisible"), function (done) {
             var form = Forms.current,
               element,
@@ -128,9 +120,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           });
         });
       });
-
     });
-
   }); // END: suite('Form', ...)
-
 });

@@ -1,5 +1,4 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('7: record population', function () {
@@ -59,7 +58,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     suite('comments.setRecords() with 3 subForms', function () {
-
       suiteSetup(function () {
         record = {
           id: 'harry7',
@@ -118,11 +116,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
         assert.equal(comment.val(), 'nice scar');
       });
-
     }); // END: suite('comments.setRecord() with 3...', ...)
 
     suite('comments.setRecords() with 1 subForms', function () {
-
       suiteSetup(function () {
         record = {
           id: 'harry7',
@@ -158,7 +154,5 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         assert.equal(comment.val(), 'nice scar');
       });
     }); // END: suite('comments.setRecord() with 3...', ...)
-
   });
-
 });

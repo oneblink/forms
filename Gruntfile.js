@@ -12,7 +12,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-exec');
-  grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-contrib-connect');
 
@@ -22,10 +21,6 @@ module.exports = function (grunt) {
       build: {
         src: ['build', 'forms/locales/**/i18n.js']
       }
-    },
-
-    eslint: {
-      target: [ './' ]
     },
 
     exec: {
@@ -192,9 +187,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('test', [
-    'eslint',
     'build',
     'mocha'
   ]);
-
 };

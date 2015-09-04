@@ -13,5 +13,4 @@ define(function (require) {
       this.model.on('change:value', this.renderFigure, this);
     }
   });
-
 });

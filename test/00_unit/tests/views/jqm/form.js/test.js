@@ -35,14 +35,12 @@ function (FormView) {
     });
 
     suite('#goToElement()', function () {
-
       test('it should reject becasue fieldName is empty', function () {
         return formView.goToElement().then(function () {
           throw new Error('goToElement should not of been resolved.');
         }, function (err) {
           assert.equal(err.message, 'No field specified');
         });
-
       });
 
       test('it should reject becasue field doesnt exist', function () {
@@ -56,7 +54,6 @@ function (FormView) {
         }, function (err) {
           assert.equal(err.message, 'Could not find element');
         });
-
       });
 
       test('should resolve with the correct model', function () {

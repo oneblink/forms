@@ -1,9 +1,7 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('Test', 'add');
 
   suite('15: subForms render', function () {
-
     test('Edit form with subforms', function (done) {
       var form = Forms.current;
       var element = {
@@ -178,7 +176,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     suite('subform field name different than subform', function () {
-
       test('form with subform', function (done) {
           var result;
           var xml = "<Subform><Address><id>1</id><Detail>what a whiner</Detail></Address><Address><id>2</id><Detail>great day</Detail></Address><Address><id>3</id><Detail>great food</Detail></Address></Subform>";
@@ -302,9 +299,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.deepEqual(record, result);
           done();
       });
-
     });
-
   }); // END: suite('Form', ...)
-
 });

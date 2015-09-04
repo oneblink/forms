@@ -5,7 +5,9 @@
   "repository": "ssh://git@git.blinkm.co:40022/blinkmobile-internal/forms.git",
   "scripts": {
     "build": "grunt build",
-    "test": "grunt test"
+    "lint": "eslint .",
+    "test": "grunt test",
+    "posttest": "npm run lint"
   },
   "dependencies": {
     "@blinkmobile/cast-property-types": "1.0.0",
@@ -40,7 +42,6 @@
     "grunt-contrib-requirejs": "~0.4",
     "grunt-contrib-uglify": "~0.9",
     "grunt-contrib-watch": "~0.6",
-    "grunt-eslint": "^17.0",
     "grunt-exec": "~0.4",
     "grunt-mocha": "~0.4",
     "messageformat": "~0.2.1",

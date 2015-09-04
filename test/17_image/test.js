@@ -1,7 +1,5 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   suite('17: Blob fields', function () {
-
     /**
      * execute once before everything else in this suite
      */
@@ -20,7 +18,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     testUtils.defineFormLoadSuite('TestForm', 'add');
 
     suite('Form', function () {
-
       test('Render form with data', function (done) {
         var form = Forms.current;
         $.ajax({
@@ -81,7 +78,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           parts,
           mime;
         _.each(elements, function (mimetype, key) {
-
           setTimeout(function () {
             element = BMP.Forms.current.getElement(key);
             value = element.val();
@@ -106,9 +102,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           });
         });
       });
-
     }); // END: suite('Form', ...)
-
   }); // END: suite('1', ...)
-
 });

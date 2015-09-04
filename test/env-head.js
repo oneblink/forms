@@ -39,12 +39,10 @@
     window.ROOT_PREFIX + 'node_modules/pickadate/lib/themes/default.date.css',
     window.ROOT_PREFIX + 'node_modules/pickadate/lib/themes/default.time.css'
   ].forEach(function (href) {
-
     if (document.querySelectorAll('link[rel=stylesheet][href="' + href +
     '"]').length !== 1) {
       writeToHead('<link rel="stylesheet" href="' + href + '" />');
     }
-
   });
 
   require.config({

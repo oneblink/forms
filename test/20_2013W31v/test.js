@@ -5,9 +5,6 @@ define(['testUtils'], function (testUtils) {
   // just loading this legacy definition is the entire purpose of this test
 
   suite('20: 2013W31.v', function () {
-
     test('');
-
   }); // END: suite('1', ...)
-
 });

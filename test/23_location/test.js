@@ -1,5 +1,4 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   if (testUtils.isPhantom()) {
     return;
   }
@@ -7,7 +6,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
   testUtils.defineFormLoadSuite('TestForm', 'add');
 
   suite('23: Location field', function () {
-
     test('Render form with data', function (done) {
       var form = Forms.current;
 
@@ -108,7 +106,5 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           done();
       }, 0);
     });
-
   }); // END: suite('Form', ...)
-
 });

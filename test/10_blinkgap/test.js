@@ -2,7 +2,6 @@
 /*global assert:true*/ // chai
 
 define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) {
-
   suite('10: blinkgap', function () {
     var getDrawingStub,
       getPictureStub,
@@ -53,7 +52,6 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
     testUtils.defineFormLoadSuite('form1', 'add');
 
     suite('Drawing', function () {
-
       test('button calls navigator.bgtouchdraw.getDrawing', function () {
         var form = Forms.current,
           element = form.getElement('draw'),
@@ -63,11 +61,9 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         $button.trigger('click');
         assert(getDrawingStub.called);
       });
-
     }); // END: suite('', ...)
 
     suite('Images', function () {
-
       test('button[0] calls navigator.camera.getPicture', function () {
         var form = Forms.current,
           element = form.getElement('image_capture'),
@@ -97,9 +93,6 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         };
         assert.deepEqual(element.toCameraOptions(), result);
       });
-
     }); // END: suite('', ...)
-
   }); // END: suite('1', ...)
-
 });

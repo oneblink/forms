@@ -1,5 +1,4 @@
 define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _) {
-
   var originalOptions = { a: 'alpha', b: 'beta', g: 'gamma' };
   var newOptions = { d: 'delta', e: 'epsilon', z: 'zeta' };
   var choiceElements = [ 'selectc', 'selecte', 'multic', 'multie', 'multif',
@@ -10,7 +9,6 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('2: options', function () {
-
     test('select+other bindings between model and "other" input', function () {
       var form = Forms.current;
       selectWithOther.forEach(function (name) {
@@ -173,11 +171,9 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
       assert.deepEqual(element.val(), ['a', 'b'], 'model.value = ["a", "b"]');
 
       assert.equal($select.data("role"), "none", "data-role is not none");
-
     });
 
     ['boolean', 'question'].forEach(function (name) {
-
       test(name + ': model->view', function (done) {
         var form = Forms.current,
           element = form.getElement(name),
@@ -208,7 +204,6 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
           assert.notEqual($fieldset.find('.ui-btn-active').css('width'), '0px');
         })
         .then(done, done);
-
       });
 
       test(name + ': view->model', function (done) {
@@ -241,13 +236,10 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
           assert.equal($fieldset.find('.ui-btn-active').css('width'), '0px');
         })
         .then(done, done);
-
       });
-
     });
 
     ['selectc', 'multic', 'multif', 'multig', 'multiee'].forEach(function (name) {
-
       test(name + ': model->view', function () {
         var form = Forms.current,
           element = form.getElement(name),
@@ -293,7 +285,6 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
     });
 
     ['selectf', 'selecth'].forEach(function (name) {
-
       test(name + ': model->view', function () {
         var form = Forms.current,
           element = form.getElement(name),
@@ -314,11 +305,9 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         $el.find('select').val('g').trigger('change');
         assert.equal(element.val(), 'g');
       });
-
     });
 
     ['selecte', 'multie'].forEach(function (name) {
-
       test(name + ': model->view', function () {
         var form = Forms.current,
           element = form.getElement(name),
@@ -354,7 +343,6 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
           assert.equal(element.val(), 'g');
         }
       });
-
     });
 
     test('elements have original a|b|g options', function () {
@@ -557,7 +545,6 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
       assert.equal($chkEl.find('input[type="text"]').length, 0, "textbox for checkboxes is visible");
       radio.set('value', "test");
       assert.equal($radEl.find('input[type="text"]').length, 0, "textbox for radios is visible");
-
     });
 
     suite('FORMS-206 # choice fields that are required but not-empty still block validation', function () {
@@ -586,11 +573,9 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         });
       });
     });
-
   }); // END: suite('Form', ...)
 
   suite('change page', function () {
-
     suiteSetup(function (done) {
       choiceElements.forEach(function (name) {
         var el = Forms.current.getElement(name);
@@ -654,9 +639,7 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         assert.equal(select$.length, enhSelect$.length, name + ': <select> enhanced');
       });
     });
-
   });
-
 });
 
 /*

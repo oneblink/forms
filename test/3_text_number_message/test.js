@@ -1,9 +1,7 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('3: text/number/message', function () {
-
     test('no label gives full width output', function () {
       var form = BMP.Forms.current,
         element = form.getElement('message'),
@@ -21,11 +19,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       assert.lengthOf(view.$el.children('label'), 1);
       assert.lengthOf(view.$el.children('div'), 1);
     });
-
   }); // END: suite('Form', ...)
 
   suite('placeholder', function () {
-
     test('placeholderText settings are set in attributes', function () {
       var form, elements;
       form = BMP.Forms.current;
@@ -42,11 +38,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         }
       });
     });
-
   }); // END: suite('Form', ...)
 
   suite('hidden', function () {
-
     test('hidden field is actually hidden', function (done) {
       var form = BMP.Forms.current,
         element = form.getElement('hiddentext'),
@@ -57,7 +51,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         assert.equal(data.hiddentext, "Test", "mismatch hidden field value");
         done();
       });
-
     });
 
     test('type=hidden field has no view', function () {
@@ -67,20 +60,16 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       assert(!view);
       assert.lengthOf($('input[name=id]'), 0);
-
     });
-
   }); // END: suite('Form', ...)
 
   suite('number', function () {
-
     var fields = [
       'number',
       'number2'
     ];
 
     fields.forEach(function (name) {
-
       test(name + ' field', function (done) {
         var form = BMP.Forms.current,
           element = form.getElement(name),
@@ -94,7 +83,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         }
         done();
       });
-
     });
 
     test('FORMS-161 # Have number fields default to empty', function () {
@@ -103,13 +91,10 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       assert(element.attributes.defaultValue === "", "number3: defaultValue is not empty");
       assert(element.get('value') === "", "element value is " + element.get('value'));
-
     });
-
   });
 
   suite('headings', function () {
-
     test('1st heading is an h1', function () {
       var form, element, view;
       form = BMP.Forms.current;
@@ -160,7 +145,5 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       assert.equal(view.$el.find('H3').length, 1);
       assert.equal(view.$el.find('p').length, 1);
     });
-
   });
-
 });

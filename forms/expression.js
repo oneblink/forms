@@ -173,7 +173,6 @@ define(function (require) {
       /* eslint-enable eqeqeq */
       reject(new Error('contains: unexpected operand type'));
     });
-
   };
   Expression.fn['!contains'] = function (haystack, needle) {
     return !Expression.fn.contains.call(this, haystack, needle);

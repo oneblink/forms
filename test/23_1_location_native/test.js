@@ -2,7 +2,6 @@
 /*global assert, sinon*/ // chai
 
 define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) {
-
   window.MSApp = {};
 
   if (testUtils.isPhantom()) {
@@ -12,7 +11,6 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
   testUtils.defineFormLoadSuite('TestForm', 'add');
 
   suite('23_1: Location Native field', function () {
-
     test('Render form with data', function (done) {
       var form = Forms.current;
 
@@ -82,7 +80,6 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
       $locate.trigger('click');
 
       assert.equal(spy.callCount, 1);
-
     });
 
     test('LOCATE button - success callback + location', function (done) {
@@ -124,7 +121,6 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
       $locate.trigger('click');
 
       assert.equal(spy.callCount, 1);
-
     });
 
     test('LOCATE button - error callback', function (done) {
@@ -167,7 +163,6 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
       $locate.trigger('click');
 
       assert.equal(spy.callCount, 1);
-
     });
 
     test('CLEAR button works as expected', function (done) {
@@ -284,7 +279,5 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
 
       $locate.trigger('click');
     });
-
   }); // END: suite('Form', ...)
-
 });

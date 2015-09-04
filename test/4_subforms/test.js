@@ -1,7 +1,5 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   suite('4: subForms', function () {
-
     var form;
 
     setup(function () {
@@ -18,7 +16,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 // ///////////////////////////////////////////////////////////////////////////////
 
     suite('Sub-Forms', function () {
-
       // -----------------------------------------------------------------------
       // subform: field: assigned label, plus/minus buttons: no label
       // -----------------------------------------------------------------------
@@ -168,7 +165,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert(subForm.get('_view').$el.children('.ui-btn').children('button').html(), "MINUS", "label for MINUS `comments` subForm not set properly");
 
           return subFormElement.add().then(function () {
-
             assert.equal(subFormElement.get('forms').length, 2, 'should be 2 subForms');
 
             subForm.parentElement.remove(subForm);
@@ -270,7 +266,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 // ///////////////////////////////////////////////////////////////////////////////
 
     suite('subform buttons', function () {
-
       test('add button should add a new subform', function (done) {
         var commentsSubForm = Forms.current.getElement('comments');
         var $addButton = commentsSubForm.get('_view').$el.find('.bm-button.bm-add');
@@ -328,7 +323,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 // //////////////////////////////////////////////////////////////////////////////
 
     suite('after #setRecord(...) with IDs', function () {
-
       setup(function () {
         return form.setRecord({
           comments: [
@@ -366,11 +360,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.equal($el.attr('data-form'), 'form2');
         });
       });
-
     });
 
     suite('incomplete: Edit Form', function () {
-
       test('initialise with form.json');
 
 /*
@@ -395,7 +387,5 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
     */
     });
-
   }); // END: suite('1', ...)
-
 });

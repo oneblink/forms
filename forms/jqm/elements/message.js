@@ -44,7 +44,6 @@ define(function (require) {
         this.renderHTML();
 
         this.$el.fieldcontain();
-
       } else {
         this.renderHTML();
       }

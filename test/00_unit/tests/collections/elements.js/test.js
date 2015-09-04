@@ -57,7 +57,6 @@ function (ElementsCollection, ElementModel) {
     });
 
     suite('#setExternalErrors()', function () {
-
       test('should ignore an invalid model id', function () {
         var errorList = {
           modelNotExist: [{code: 'blah1'}]
@@ -67,8 +66,6 @@ function (ElementsCollection, ElementModel) {
 
         assert.isUndefined(elementsCollection.get('modelNotExist'));
       });
-
     });
-
   });
 });

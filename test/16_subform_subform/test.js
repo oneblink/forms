@@ -28,7 +28,6 @@ define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testU
     });
 
     suite('parsing as XML', function () {
-
       suiteSetup(function () {
         $xml = $($.parseXML(jqxhr.responseText));
       });
@@ -40,11 +39,9 @@ define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testU
       test('XML has a "Test" element', function () {
         assert.lengthOf($xml.find('Test'), 1);
       });
-
     });
 
     suite('XML record', function () {
-
       suiteSetup(function () {
         record$ = $xml.find('Test').first();
       });
@@ -64,11 +61,9 @@ define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testU
       test('defines "Address" field with 3 sub-records', function () {
         assert.lengthOf(record$.children('Address').children('Address'), 3);
       });
-
     });
 
     suite('XML to Object', function () {
-
       suiteSetup(function () {
         record = {};
         record$.children().each(function (index, el) {
@@ -88,17 +83,13 @@ define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testU
       test('object has correct keys', function () {
         assert.sameMembers(Object.keys(record), ['id', 'Name', 'Address']);
       });
-
     });
-
   });
 
   testUtils.defineFormLoadSuite('Test', 'add');
 
   suite('16: subForms render', function () {
-
     suite('Form', function () {
-
       test('Edit form with subforms', function (done) {
         var form = Forms.current;
         var element = {
@@ -173,7 +164,6 @@ define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testU
       });
 
       suite('after .setRecord()', function () {
-
         var form;
 
         suiteSetup(function (done) {
@@ -250,7 +240,6 @@ define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testU
             assert.lengthOf(view.$el.children('.ui-btn'), 1);
           });
         });
-
       });
 
       suite('removing a subform record with an "id" attribute', function () {
@@ -281,11 +270,7 @@ define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testU
         suiteTeardown(function () {
           Backbone.sync = oldSync;
         });
-
       });
-
     }); // END: suite('Form', ...)
-
   }); // END: suite('1', ...)
-
 });

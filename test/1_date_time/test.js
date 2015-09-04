@@ -1,5 +1,4 @@
 define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (Forms, testUtils, _, moment) {
-
   var nativedate = [
     'date',
     'datetime'
@@ -110,7 +109,6 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('1: date/time', function () {
-
     test('all now and now_plus models have non-empty values', function () {
       Forms.current.get('elements').forEach(function (el) {
         var defaultValue = el.get('defaultValue');
@@ -184,14 +182,12 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
       var elements = subtype === '_date' ? pickadate : pickatime;
 
       elements.forEach(function (fld) {
-
         test('pickerElements outside page: ' + fld, function (done) {
           var form = Forms.current;
 
           this.timeout(3e3);
 
           setTimeout(function () {
-
             var element = form.getElement(fld);
             var $fieldset = element.attributes._view.$el;
             var $input = $fieldset.find('input[name="' + fld + subtype + '"]');
@@ -206,9 +202,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
             done();
           }, 300);
         });
-
       });
-
     });
 
     suite('readonly, hidden', function () {
@@ -346,7 +340,5 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
           }, 1e3);
       });
     });
-
   }); // END: suite('Form', ...)
-
 });

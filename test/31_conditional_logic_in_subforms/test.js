@@ -1,5 +1,4 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   suite('31: Conditional logic in sub forms', function () {
     var form;
 
@@ -21,7 +20,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.isDefined(conditionalElement);
           assert.isDefined(conditionalElement.validationError);
           assert.isAbove(form.getInvalidElements().length, startNumErrors);
-
         });
       });
 
@@ -66,6 +64,5 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         });
       });
     });
-
   });
 });

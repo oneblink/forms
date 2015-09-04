@@ -48,7 +48,6 @@ define(function (require) {
         } else {
           this.renderFigure();
         }
-
       }, this);
     },
 

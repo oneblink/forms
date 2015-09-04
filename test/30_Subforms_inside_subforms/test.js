@@ -1,7 +1,5 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   suite('30: Subforms inside Subforms', function () {
-
     setup(function () {
       return testUtils.loadForm('firstLevel', 'add')
       .then(function () {
@@ -179,7 +177,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       test('hidden fields with underscore in the name are not shown', function () {
         assert.isUndefined(Forms.current.getElement('hidden_when_first'));
-
       });
 
       test('fields with a hide attribute that is falsy are shown', function () {
@@ -188,7 +185,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
         assert.isFalse(model.get('hidden'));
         assert.isTrue(view.$el.is(':visible'));
-
       });
     });
   });

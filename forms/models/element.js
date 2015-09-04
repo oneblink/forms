@@ -105,13 +105,11 @@ define(function (require) {
       if (attrs.required && this.isEmpty()) {
         errors.value = errors.value || [];
         errors.value.push({code: 'REQUIRED'});
-
       }
       if (attrs.pattern && attrs.value &&
           !new RegExp(attrs.pattern).test(attrs.value)) {
         errors.value = errors.value || [];
         errors.value.push({code: 'PATTERN', PATTERN: attrs.pattern});
-
       }
 
       return _.isEmpty(errors) ? undefined : errors;

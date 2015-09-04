@@ -1,9 +1,7 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('9: pages', function () {
-
     test('starts at page 0', function () {
       var form = Forms.current,
         pages = form.attributes.pages,
@@ -133,7 +131,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       assert.equal(numberSlider.get('value'), 200);
       // input value should be the same
       assert.equal($input.val(), numberSlider.get('value'));
-
     });
 
     test('page 0,1 elements are not present', function () {
@@ -169,7 +166,5 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       assert.notEqual(BMP.Forms.current.get('pages').current.cid, previousPage);
       assert.isTrue($('[name="email"]').is(':visible'));
     });
-
   }); // END: suite('Pages', ...)
-
 });

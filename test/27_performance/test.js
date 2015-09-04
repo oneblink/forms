@@ -26,7 +26,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     suite('Form', function () {
-
       test('BlinkForms global is an Object', function () {
         assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
       });
@@ -37,7 +36,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         this.timeout(3e3); // default is 2e3, sometimes just need a bit longer
 
         Forms.getDefinition('inspection', 'add').then(function (def) {
-
           console.time('initialize');
 
           Forms.initialize(def);
@@ -85,9 +83,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
 
       testUtils.defineLabelTest();
-
     }); // END: suite('Form', ...)
-
   }); // END: suite('1', ...)
 
   // suite('responsiveness test', function () {
@@ -107,5 +103,4 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
   //   });
   //
   // });
-
 });
