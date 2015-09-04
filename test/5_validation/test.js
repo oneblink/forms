@@ -333,6 +333,27 @@ define([
         });
       });
 
+      [
+        'date', 'datetime', 'time', 'date_n', 'datetime_n', 'time_n'
+      ].forEach(function (name) {
+        var VALID = {
+          // TODO: finish FORMS-231 and support all ISO8601 formats
+          date: '2015-12-25',
+          datetime: '2015-12-25T12:00:00',
+          time: '12:00:00'
+        };
+
+        test(name + ': required', function () {
+          var element = Forms.current.getElement(name);
+
+          return testUtils.confirmValueIsInvalid(element, '', ['REQUIRED'])
+          .then(function () {
+            var type = element.attributes.type;
+            return testUtils.confirmValueIsValid(element, VALID[type]);
+          });
+        });
+      });
+
       test('validation events are bubbled via Forms.current', function () {
         var form = Forms.current,
           element = form.getElement('city'),

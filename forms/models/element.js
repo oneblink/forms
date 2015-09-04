@@ -1,3 +1,4 @@
+/* eslint-disable accessor-pairs */ // we're using the "set" keyword for method
 /**
  * Element Model Module
  *
@@ -221,24 +222,46 @@ define(function (require) {
       this.set('_view', view);
       return view;
     },
+
+    /**
+    @override
+    */
+    set: function (key, value, options) {
+      var attrs, result;
+      if (!key) {
+        return;
+      }
+
+      if (typeof key === 'object') {
+        // `#set(attributes, options)`
+        attrs = key;
+        options = value;
+      } else {
+        // `#set(key, value, options)`
+        attrs = {};
+        attrs[key] = value;
+      }
+
+      result = Backbone.Model.prototype.set.call(this, attrs, options);
+
+      if ('value' in attrs) {
+        if (!options || !options.hasOwnProperty('value') || options.validate) {
+          this.isValid();
+        }
+      }
+
+      return result;
+    },
+
     /**
      * official Blink API
      */
     val: function (value) {
-      var attrs;
-
       if (value === undefined) {
         return this.get('value');
       }
 
-      attrs = _.extend({}, this.attributes, {value: value});
-      this.validationError = this.validate(attrs);
-      if (this.validationError) {
-        this.trigger('invalid', this, this.validationError);
-      }
-
-      this.set('value', value, {validate: false});
-
+      this.set('value', value);
       return value;
     }
   }, {
