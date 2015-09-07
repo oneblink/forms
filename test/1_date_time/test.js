@@ -340,5 +340,21 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
           }, 1e3);
       });
     });
+
+    suite('time assignment', function () {
+      suiteSetup(function () {
+        Forms.current.get('elements').forEach(function (el) {
+          var type = el.get('type');
+          var value = '13:45';
+          if (type !== 'time') {
+            return;
+          }
+          el.val(value);
+        });
+      });
+
+      defineModelToViewTests();
+      defineViewToModelTests();
+    });
   }); // END: suite('Form', ...)
 });
