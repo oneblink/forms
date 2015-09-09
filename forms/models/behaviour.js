@@ -26,7 +26,9 @@ define(function (require) {
     var el = this.getElement(name);
     if (!el) {
       /* eslint-disable no-console */
-      console && console.warn('Conditional Logic uses a hidden Element: ' + name);
+      if (window.console && window.console.warn) {
+        window.console.warn('Conditional Logic uses a hidden Element: ' + name);
+      }
       /* eslint-enable no-console */
       return undefined;
     }

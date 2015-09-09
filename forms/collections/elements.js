@@ -163,7 +163,7 @@ define(function (require) {
         /* eslint-disable no-unused-expressions */
         m && m.setExternalErrors(errors, options);
         /* eslint-enable no-unused-expressions */
-      }, this);
+      }.bind(this));
     },
 
     setPristine: function () {

@@ -47,8 +47,8 @@ define(function (require) {
         }, function (error) { // onError
           errors.value.push(geo.getErrorMessage(error));
           self.set('errors', errors);
-          this.validationError = errors;
-          this.trigger('invalid', this);
+          self.validationError = errors;
+          self.trigger('invalid', self);
           return Promise.reject(error);
         });
     }

@@ -229,7 +229,7 @@ define(function (require) {
     set: function (key, value, options) {
       var attrs, result;
       if (!key) {
-        return;
+        return undefined;
       }
 
       if (typeof key === 'object') {
