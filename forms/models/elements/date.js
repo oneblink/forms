@@ -128,16 +128,18 @@ define([
      * update value to match _date and/or _time
      */
     prepareValue: function () {
-      var type = this.attributes.type;
+      var attrs = this.attributes;
+      var type = attrs.type;
       var date;
       var time;
+
       if (type === 'date') {
-        this.set('value', this.attributes._date);
+        this.set('value', attrs._date);
       } else if (type === 'time') {
-        this.set('value', this.attributes._time);
+        this.set('value', attrs._time);
       } else { // type === 'datetime'
-        date = this.attributes._date;
-        time = this.attributes._time;
+        date = attrs._date;
+        time = attrs._time;
         // TODO: somehow stop this from firing twice
         if (!date) {
           date = '0000-00-00';
@@ -153,8 +155,9 @@ define([
      * update _date and/or _time to match value
      */
     prepareDateTime: function () {
-      var type = this.attributes.type;
-      var value = this.attributes.value || '';
+      var attrs = this.attributes;
+      var type = attrs.type;
+      var value = attrs.value || '';
       var time;
       var date;
       var parts;
@@ -164,8 +167,8 @@ define([
       } else if (type === 'time') {
         this.set('_time', value);
       } else { // type === 'datetime'
-        time = this.attributes._time;
-        date = this.attributes._date;
+        time = attrs._time;
+        date = attrs._date;
         parts = value.split('T');
         if (parts[0]) {
           this.set('_date', parts[0], {silent: true});
@@ -173,10 +176,10 @@ define([
         if (parts[1]) {
           this.set('_time', parts[1], {silent: true});
         }
-        if (time !== this.attributes._time) {
+        if (time !== attrs._time) {
           this.trigger('change:_time');
         }
-        if (date !== this.attributes._date) {
+        if (date !== attrs._date) {
           this.trigger('change:_date');
         }
       }

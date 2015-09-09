@@ -12,6 +12,7 @@ define(function (require) {
   var Elements = require('forms/collections/elements');
   var Pages = require('forms/collections/pages');
   var modelStates = require('forms/mixins/model-states-mixin');
+  var modelValidation = require('forms/mixins/model-validation');
   var isValidFormId = require('forms/helpers/is-valid-form-id');
 
   // this module
@@ -155,6 +156,8 @@ define(function (require) {
         self.trigger('formLoad', self);
       }, 0);
     },
+
+    isValid: modelValidation.isValid,
 
     /**
      * When a form is set to a pristine state, set all its child elements to pristine as well.

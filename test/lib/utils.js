@@ -115,6 +115,43 @@ define([
       return new Promise(function (resolve) {
         setTimeout(resolve, ms);
       });
+    },
+
+    /**
+    @param {FormElementModel} element
+    @param {*} value
+    @returns {Promise}
+    */
+    confirmValueIsValid: function (element, value) {
+      var name = element.attributes.name;
+      element.val(value);
+      assert.notOk(element.validate(), name + ': no validation errors');
+      return mod.wait(600)
+      .then(function () {
+        var ul$ = element.attributes._view.$el.children('.bm-errors__bm-list');
+        assert.lengthOf(ul$, 0, name + ': view displays no errors');
+      });
+      return Promise.resolve();
+    },
+
+    /**
+    @param {FormElementModel} element
+    @param {*} value
+    @returns {Promise}
+    */
+    confirmValueIsInvalid: function (element, value, errors) {
+      var errors;
+      element.val(value);
+      errors = element.validate();
+      assert.ok(errors, element.attributes.name + ': has errors');
+      assert.ok(element.validationError, '.validationError set');
+      assert.isArray(errors.value);
+      return mod.wait(600)
+      .then(function () {
+        var ul$ = element.attributes._view.$el.children('.bm-errors__bm-list');
+        assert.lengthOf(ul$, 1, name + ': view displays errors');
+      });
+      return Promise.resolve();
     }
 
   };

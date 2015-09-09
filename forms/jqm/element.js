@@ -55,7 +55,7 @@ define(function (require) {
     },
 
     modelEvents: {
-      'invalid change:value': 'renderErrors',
+      'invalid valid': 'renderErrors',
       'change:hidden': 'onChangeHidden',
       'change:label': 'renderLabel',
       'change:isDirty': 'onDirtyChange',
@@ -178,6 +178,10 @@ define(function (require) {
       var errors = (model || this.model).validationError || validationErrors;
       var list$ = this.$el.children('.bm-errors__bm-list');
       var new$;
+
+      if (!attrs) {
+        return; // not safe to run yet
+      }
 
       if (!errors || !errors.value || !errors.value.length) {
         this.$el.children('.bm-errors__bm-list').remove();
