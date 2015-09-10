@@ -85,6 +85,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         $dialog = $('#bmp-forms-location').find('button');
         $dialog.first().trigger('click');
         value = element.get('value');
+        console.log('value = ', value);
         _.each(keys, function (k) {
           assert(_.has(value, k), k + " does not exist");
         });
@@ -105,6 +106,25 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.notOk(value, "value still exists");
           done();
       }, 0);
+    });
+
+    test('Required validation works as expected', function (done) {
+      var element = Forms.current.getElement('location4'),
+        $view = element.attributes._view.$el,
+        $add = $view.find('.ui-btn').children('button');
+
+      this.timeout(10e3);
+
+      element.set({required: true});
+      assert.notOk(element.isValid());
+      $add.trigger('click');
+
+      setTimeout(function () {
+        var $dialog = $('#bmp-forms-location').find('button');
+        $dialog.first().trigger('click');
+        assert.ok(element.isValid());
+        done();
+      }, 5000);
     });
   }); // END: suite('Form', ...)
 });

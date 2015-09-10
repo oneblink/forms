@@ -133,6 +133,9 @@ define(function (require) {
     },
     onClear: function (event) {
       this.model.unset('value');
+      // unsetting the attribute completely bypasses any events being fired
+      // so manually fire them.
+      this.trigger(this.model.isValid() ? 'valid' : 'invalid');
       event.preventDefault();
       return false;
     },

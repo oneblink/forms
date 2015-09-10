@@ -9,9 +9,6 @@ define(function (require) {
   // this module
 
   var LocationElement = Element.extend({
-    initialize: function () {
-      Element.prototype.initialize.apply(this, arguments);
-    },
     initializeView: function () {
       var Forms = BMP.Forms;
       var view;
@@ -46,7 +43,6 @@ define(function (require) {
           self.set('currentlocation', position.coords);
         }, function (error) { // onError
           errors.value.push(geo.getErrorMessage(error));
-          self.set('errors', errors);
           this.validationError = errors;
           this.trigger('invalid', this);
           return Promise.reject(error);
