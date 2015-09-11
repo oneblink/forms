@@ -1,7 +1,5 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   suite('32 - Pristine and dirty states', function () {
-
     var elementNames = [
       'text_area',
       'password',
@@ -103,7 +101,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       // generate tests
       elementNames.forEach(function (elementName) {
         test(elementName + ' model isDirty attribute should be set to true when model.val() is used', function () {
-
           var elementModel = Forms.current.getElement(elementName);
           assert.isFalse(elementModel.get('isDirty'));
           elementModel.val('abc');
@@ -121,7 +118,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     suite('elements that use the blob attribute', function () {
-
       suiteSetup(function () {
         return testUtils.loadForm('every_field_type', 'add')
         .then(function () {
@@ -145,7 +141,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     suite('elements in subforms', function () {
-
       suiteSetup(function () {
         return testUtils.loadForm('every_field_type', 'add')
         .then(function () {

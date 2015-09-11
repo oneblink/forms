@@ -1,9 +1,7 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('test_form', 'add');
 
   suite('29: AllFields', function () {
-
     suite('label as empty placeholders for aligning', function () {
       var form;
       var withLabelFields = [
@@ -144,12 +142,12 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         "value",
         "logged_in_user_id",
         "user_attribute",
-        "get_value"].forEach(function (name) {
-          test(name + ' has the rowclass property set', function () {
-            assert.lengthOf($('.' + name + '-default-class'), 1);
-          });
+        "get_value"
+      ].forEach(function (name) {
+        test(name + ' has the rowclass property set', function () {
+          assert.lengthOf($('.' + name + '-default-class'), 1);
         });
-
+      });
     });
 
     suite('rowclass model property is added to the element class ', function () {
@@ -205,5 +203,4 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
     });
   }); // END: suite('1', ...)
-
 });

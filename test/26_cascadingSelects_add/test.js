@@ -1,5 +1,4 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   if (testUtils.isPhantom()) {
     return;
   }
@@ -7,7 +6,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('26: cascading select boxes', function () {
-
     test('Render form with data', function (done) {
       var form = Forms.current;
       $.ajax({
@@ -23,7 +21,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           });
           form.setRecord(record).then(function () {
             form.data().then(function (formdata) {
-
               var keys = ['id', 'country', 'city', 'state', 'form2', 'form3', '_action'];
               _.each(keys, function (k) {
                 assert.ok(formdata[k], k + " does not exist");
@@ -39,7 +36,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     suite('after .setRecord() from xml', function () {
-
       var form;
 
       suiteSetup(function (done) {
@@ -144,11 +140,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           done();
         }, 500);
       });
-
     }); // END: suite('after .setRecord() from xml', ...)
 
     suite('change parent values', function () {
-
       var form;
 
       suiteSetup(function (done) {
@@ -214,7 +208,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     }); // END: suite('change parent values', ...)
 
     suite('change form2 values', function () {
-
       var form, subform;
 
       suiteSetup(function (done) {
@@ -276,11 +269,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           done();
         }, 500);
       });
-
     }); // END: suite('change form2 values', ...)
 
     suite('change form3 values', function () {
-
       var form, subform;
 
       suiteSetup(function (done) {
@@ -341,9 +332,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           done();
         }, 500);
       });
-
     }); // END: suite('change form3 values', ...)
-
   }); // END: suite('1', ...)
-
 });

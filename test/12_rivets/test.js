@@ -4,15 +4,12 @@ define(['jquery', 'BlinkForms', 'testUtils'], function ($, Forms, testUtils) {
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('12: rivets / data-binding', function () {
-
     suite('DOM Bindings', function () {
-
       var elements;
 
       elements = ['url', 'email', 'password', 'streetAddress', 'city', 'telephone', 'number', 'currency'];
 
       elements.forEach(function (name) {
-
         suite('"' + name + '" element value', function () {
           var element, view;
 
@@ -46,15 +43,12 @@ define(['jquery', 'BlinkForms', 'testUtils'], function ($, Forms, testUtils) {
 //             assert.equal(spy.args[0][2].validate, true);
 //             spy.reset();
 //           });
-
         });
-
       });
 
       elements = ['url', 'email', 'password', 'streetAddress', 'city', 'telephone', 'number', 'currency', 'calculation'];
 
       elements.forEach(function (name) {
-
         suite('"' + name + '" element label', function () {
           var element, view;
 
@@ -82,15 +76,12 @@ define(['jquery', 'BlinkForms', 'testUtils'], function ($, Forms, testUtils) {
           suiteTeardown(function () {
             element.set('label', element.attributes.name);
           });
-
         });
-
       });
 
       elements = ['message', 'calculation'];
 
       elements.forEach(function (name) {
-
         suite('"' + name + '" element html', function () {
           var element, view, html$, dom$;
 
@@ -117,7 +108,6 @@ define(['jquery', 'BlinkForms', 'testUtils'], function ($, Forms, testUtils) {
               assert.equal(source.tagName, child.tagName);
               assert.equal(source.textContent, child.textContent);
             });
-
           });
 
           test('html is bound', function () {
@@ -138,13 +128,9 @@ define(['jquery', 'BlinkForms', 'testUtils'], function ($, Forms, testUtils) {
               assert.equal(source.tagName, child.tagName);
               assert.equal(source.textContent, child.textContent);
             });
-
           });
-
         });
-
       });
-
     }); // END: suite('Form', ...)
 
     suite('Message and Headings', function () {
@@ -156,7 +142,5 @@ define(['jquery', 'BlinkForms', 'testUtils'], function ($, Forms, testUtils) {
         assert.equal($('[data-name="_heading_1"]').find('p').html(), "<span>Small text to support heading</span>");
       });
     });
-
   }); // END: suite('12', ...)
-
 });

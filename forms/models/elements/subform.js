@@ -95,8 +95,7 @@ define(function (require) {
         attrs.summaryPromise = this.getSummaryElements();
       }
 
-      this.attributes.forms.on('add remove invalid change:value change:blob', this.updateFieldErrors, this);
-      this.off('invalid change:value change:blob');
+      this.attributes.forms.on('add remove', this.updateFieldErrors, this);
 
       // make sure that all form events are bubbled up through this subform
       this.attributes.forms.on('all', function () {
@@ -349,8 +348,11 @@ define(function (require) {
     },
 
     updateFieldErrors: function () {
-      this.validationError = this.validateField();
-      this.set('errors', this.validationError);
+      // making this is asynchronous is necessary
+      setTimeout(function () {
+        this.isValid();
+        this.set('errors', this.validationError);
+      }.bind(this), 0);
     },
 
     validateField: function (attrs) {

@@ -1,5 +1,4 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   suite('33: Pages with subforms', function () {
     var form;
 
@@ -34,7 +33,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       'get_value-comment'];
 
     suite('changing pages shouldnt remove labels', function () {
-
       suiteSetup(function () {
         return testUtils.loadForm('form1', 'add')
         .then(function () {
@@ -58,7 +56,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       suite('change page', function () {
         suiteSetup(function () {
-
           gotoPage(0);
           gotoPage(1);
         });
@@ -73,11 +70,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         });
 
         testUtils.defineButtonTest();
-
       });
-
     });
-
   });
-
 });

@@ -1,5 +1,4 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   suite('25: preload subForms and validate _action assignment', function () {
     var $doc = $(document),
       $page = $('[data-role=page]'),
@@ -15,7 +14,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     suite('Form', function () {
-
       test('BlinkForms global is an Object', function () {
         assert($.isPlainObject(Forms), 'BlinkForms is a JavaScript object');
       });
@@ -55,7 +53,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       testUtils.defineLabelTest();
 
       suite('Preload subforms', function () {
-
         test('Parent form loaded subform correctly', function () {
           var form = Forms.current,
             element = form.getElement('Address'),
@@ -66,7 +63,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.equal(subForms.length, 2);
           assert.equal(subForms.at(0).attributes._action, "add");
           assert.equal(subForms.at(1).attributes._action, "add");
-
         });
 
         test('sub-sub form loaded correctly', function () {
@@ -84,12 +80,10 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             assert.equal(subformElement.attributes.forms.length, 1);
             assert.equal(subform.attributes._action, "add");
           }
-
         });
       });
 
       suite('Subforms record holds more number of values then preload limit', function () {
-
         var record = {
           id: '37',
           Name: 'Harry Potter',
@@ -259,7 +253,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           return form.data().then(function (data) {
             assert.equal(data.Address.length, 4);
           });
-
         });
 
         test("remove subform with id (with placeholder)", function () {
@@ -335,11 +328,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             assert(false, e);
           }
         });
-
       });
-
     }); // END: suite('Form', ...)
-
   }); // END: suite('1', ...)
-
 });

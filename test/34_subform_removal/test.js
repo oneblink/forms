@@ -1,5 +1,4 @@
 define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
-
   suite('34: Removing a subform ', function () {
     var $page, $content;
 
@@ -92,7 +91,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
     testUtils.defineLabelTest();
 
     suite('when a subform is removed', function () {
-
       test('FormModel.getRecord() includes it as "removed"', function () {
         var addressSubform = Forms.current.getElement('Address');
         addressSubform.remove(1);
@@ -175,7 +173,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
     // the code for sub-sub forms is exactly the same as subforms, so we just need
     // to confirm the basic removal behavior works
     suite('when a sub subform is removed', function () {
-
       test('FormModel.getRecord() includes it as "removed"', function () {
         var northAddressSubform = Forms.current.getSubforms().Address.at(2);
         var phoneSubformElement = northAddressSubform.getElement('Phone');
@@ -204,7 +201,6 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           });
         });
       });
-
     });
   });
 });

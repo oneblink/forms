@@ -8,12 +8,10 @@ function (FileModel) {
   var noop = function () {};
 
   suite('models/elements/file.js', function () {
-
     // ////////////////////////////////////////////////////////////////////////
 
     suite('Setup', function () {
       setup(function () {
-
         window.BMP = {
           Forms: {
             _views: {
@@ -147,7 +145,6 @@ function (FileModel) {
 
         mock.restore();
       });
-
     });
 
     // ////////////////////////////////////////////////////////////////////////
@@ -282,8 +279,6 @@ function (FileModel) {
         assert.strictEqual(results.imageScale, 200);
         assert.strictEqual(results.destinationType, 300);
       });
-
     });
   });
-
 });

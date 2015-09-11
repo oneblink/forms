@@ -1,11 +1,8 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('18: calculations', function () {
-
     suite('Behaviours: v2 Calculations', function () {
-
       suiteSetup(function () {
         var form = BMP.Forms.current;
 
@@ -38,11 +35,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.equal(data.calc, "test11test22");
           done();
         });
-
       });
-
     }); // END: suite('Behaviours: unset middle Element value', ...)
-
   }); // END: suite('1', ...)
-
 });

@@ -1,7 +1,5 @@
 define(['BlinkForms', 'BIC'], function () {
-
   suite('17: main', function () {
-
     test('BMP is defined', function () {
       assert.isDefined(window.BMP);
     });
@@ -41,7 +39,5 @@ define(['BlinkForms', 'BIC'], function () {
     test('BMP.Forms.proxyUnbindFormElementEvents is a function', function () {
       assert.isFunction(window.BMP.Forms.proxyUnbindFormElementEvents);
     });
-
   });
-
 });

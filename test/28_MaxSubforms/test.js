@@ -1,5 +1,4 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   if (testUtils.isPhantom()) {
     return;
   }
@@ -7,9 +6,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
   testUtils.defineFormLoadSuite('form1', 'edit');
 
   suite('28: MaxSubforms', function () {
-
     suite('Form', function () {
-
       test('Render form with data', function (done) {
         var form = Forms.current;
 
@@ -39,7 +36,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           }
        );
       });
-
     }); // END: suite('Form', ...)
 
     suite('added functions work correctly', function () {
@@ -178,7 +174,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           done();
         });
       });
-
     });
 
     suite('add/remove buttons behave correctly (child subform) (maxSubform = 1)', function () {
@@ -226,7 +221,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.equal(subForms.length, 2);
           assert.equal(subFormElement.getRealLength(), 1);
         });
-
       });
 
       suite('after removing one more form', function () {
@@ -258,7 +252,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.equal(subForms.length, 2);
           assert.equal(subFormElement.getRealLength(), 0);
         });
-
       });
 
       suite('after adding one form', function () {
@@ -277,15 +270,33 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.equal(subFormElement.getRealLength(), 1);
         });
 
+        test("no error is displayed", function () {
+          var $errorList = $add.closest('[data-element-type="subForm"]').find('.bm-errors__bm-list');
+          assert.equal($errorList.children().length, 0);
+        });
+      });
+
+      suite('after adding 2 forms', function () {
+        var subForms;
+
+        suiteSetup(function () {
+          subForms = subFormElement.attributes.forms;
+
+          return subFormElement.add();
+        });
+
+        test("'add' button disabled", function () {
+          assert.equal($add.prop('disabled'), true);
+          assert.equal(subForms.length, 4);
+          assert.equal(subFormElement.getRealLength(), 2);
+        });
+
         test("MAXSUBFORM error is displayed", function () {
           var $errorList = $add.closest('[data-element-type="subForm"]').find('.bm-errors__bm-list');
           assert.equal($errorList.children().length, 1);
           assert.equal($errorList.children().first().text(), 'no more than 1 form');
         });
-
       });
     });
-
   }); // END: suite('1', ...)
-
 });

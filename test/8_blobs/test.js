@@ -1,5 +1,4 @@
 define(['backbone', 'BlinkForms', 'testUtils'], function (Backbone, Forms, testUtils) {
-
   var mockXhrUpload = new Backbone.Model();
   mockXhrUpload.addEventListener = function (type, handler) {
     this.on(type, handler);
@@ -21,7 +20,6 @@ define(['backbone', 'BlinkForms', 'testUtils'], function (Backbone, Forms, testU
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('8: blobs', function () {
-
     test('location button is enabled', function (done) {
       var form = Forms.current,
         element = form.getElement('location'),
@@ -121,7 +119,6 @@ define(['backbone', 'BlinkForms', 'testUtils'], function (Backbone, Forms, testU
         errors = reqEl.validate();
         assert(!errors);
       });
-
     });
 
     suite('#setBlobFromString()', function () {
@@ -147,9 +144,6 @@ define(['backbone', 'BlinkForms', 'testUtils'], function (Backbone, Forms, testU
       teardown(function () {
         Forms.current.set('isPopulating', true);
       });
-
     });
-
   }); // END: suite('Form', ...)
-
 });

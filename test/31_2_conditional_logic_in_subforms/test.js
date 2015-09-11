@@ -1,11 +1,8 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('firstLevel', 'add');
 
   suite('31.2 confirm that behaviour runs multiple times', function () {
-
     suite('second_level_field', function () {
-
       var i;
 
       suiteSetup(function (done) {
@@ -63,5 +60,4 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       }
     });
   });
-
 });

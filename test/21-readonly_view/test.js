@@ -1,9 +1,7 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('TestForm', 'add');
 
   suite('21: Readonly View', function () {
-
     test('Render form with data', function (done) {
       var form = Forms.current;
       $.ajax({
@@ -51,7 +49,5 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         });
       done();
     });
-
   }); // END: suite('Form', ...)
-
 });

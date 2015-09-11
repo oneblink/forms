@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.7.2 - 2015-09-11
+
+
+### Fixed
+
+- FORMS-229: validation of REQUIRED date/time/datetime values
+
+    - new "valid" event triggered when validation passes (joins "invalid" event)
+
+    - `#val(...)` and `#set('value', ...)` now behave the same way
+
+
 ## v3.7.1 - 2015-09-01
 
 

@@ -88,5 +88,4 @@ define(function () {
     proxyUnbindFormElementEvents: proxyUnbindFormElementEvents
 
   };
-
 });

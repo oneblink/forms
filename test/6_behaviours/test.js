@@ -1,11 +1,8 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('6: automated behaviours', function () {
-
     suite('Message', function () {
-
       test('defaults to persist=false (no storage)', function (done) {
         var form = BMP.Forms.current,
           element = form.getElement('message');
@@ -37,11 +34,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
         element.set('persist', false);
       });
-
     }); // END: suite('Form', ...)
 
     suite('Behaviours: set one Element value at a time', function () {
-
       suiteSetup(function () {
         var form = BMP.Forms.current,
           element = form.getElement('text');
@@ -92,7 +87,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
 
       suite('after Text=abc', function () {
-
         suiteSetup(function () {
           var form = BMP.Forms.current,
             element = form.getElement('text');
@@ -135,7 +129,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         });
 
         suite('after Email=abc@abc.com', function () {
-
           suiteSetup(function () {
             var form = BMP.Forms.current,
               element = form.getElement('email');
@@ -169,15 +162,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
               done();
             }, 10);
           });
-
         }); // END: after Email=abc@abc.com
-
       }); // END: after Text=abc
-
     }); // END: suite('Behaviours: one Element value at a time', ...)
 
     suite('Behaviours: unset middle Element value', function () {
-
       suiteSetup(function () {
         var form = BMP.Forms.current;
 
@@ -221,7 +210,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
 
       suite('after unset Email value', function () {
-
         suiteSetup(function () {
           var form = BMP.Forms.current,
             element = form.getElement('email');
@@ -265,13 +253,10 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             done();
           });
         });
-
       }); // END: after unset Email
-
     }); // END: suite('Behaviours: unset middle Element value', ...)
 
     suite('Behaviours: unset top Element value', function () {
-
       suiteSetup(function () {
         var form = BMP.Forms.current;
 
@@ -318,7 +303,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
 
       suite('after unset Text value', function () {
-
         suiteSetup(function () {
           var form = BMP.Forms.current,
             element = form.getElement('text');
@@ -364,13 +348,10 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             done();
           });
         });
-
       }); // END: after unset Text
-
     }); // END: suite('Behaviours: unset middle Element value', ...)
 
     suite('Behaviours: v2 Calculations', function () {
-
       suiteSetup(function () {
         var form = BMP.Forms.current;
 
@@ -387,7 +368,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
 
       suite('after unset Number value', function () {
-
         suiteSetup(function () {
           var form = BMP.Forms.current;
 
@@ -404,15 +384,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             });
           }, 200);
         });
-
       }); // END: after unset Text
-
     }); // END: suite('Behaviours: unset middle Element value', ...)
 
     suite('Behaviours: Conditional Logic (FORMS-141)', function () {
-
       suite('text1 = ""', function () {
-
         test('text2 should be hidden', function (done) {
           var form = BMP.Forms.current,
             element = form.getElement('text2'),
@@ -430,11 +406,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert(!view.isHidden());
           done();
         });
-
       }); // END: text1 = ""
 
       suite('text1 = "aaa"', function () {
-
         suiteSetup(function () {
           var form = BMP.Forms.current;
 
@@ -460,11 +434,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             done();
           }, 1);
         });
-
       }); // END: text1 = "aaa"
 
       suite('text1 = "abc"', function () {
-
         suiteSetup(function () {
           var form = BMP.Forms.current;
 
@@ -490,11 +462,8 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             done();
           }, 1);
         });
-
       }); // END: text1 = "abc"
-
     }); // END: suite('Behaviours: Conditional Logic (FORMS-141)', ...)
-
   }); // END: suite('1', ...)
 
   suite('Behaviour.normalizeActions()', function () {
@@ -530,5 +499,4 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       assert.isTrue(action.autoReverse);
     });
   });
-
 });

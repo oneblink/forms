@@ -1,9 +1,7 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('13: date/time, pages', function () {
-
     test('starts at page 0', function () {
       var form = Forms.current,
         pages = form.attributes.pages,
@@ -69,7 +67,5 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       var enhanced$ = $('[data-role=fieldcontain].ui-field-contain');
       assert.equal(fieldcontain$.length, enhanced$.length);
     });
-
   }); // END: suite('Pages', ...)
-
 });

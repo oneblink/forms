@@ -1,7 +1,5 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   suite('31: subForms', function () {
-
     suiteSetup(function () {
       return testUtils.loadForm('form1', 'add')
       .then(function () {
@@ -19,7 +17,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     });
 
     suite('after #setRecord()', function () {
-
       suiteSetup(function () {
         return Forms.current.setRecord({
           comments: [
@@ -73,9 +70,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.lengthOf(el.get('_view').$el.find('.ui-collapsible'), 0);
         });
       });
-
     });
-
   }); // END: suite('1', ...)
-
 });

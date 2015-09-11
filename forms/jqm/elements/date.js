@@ -27,7 +27,7 @@ define(function (require) {
     // extending super's modelEvents
     modelEvents: _.extend({}, ElementView.prototype.modelEvents, {
       'change:_date': 'onDateMChange',
-      'change:_time': 'onDateMChange'
+      'change:_time': 'onTimeMChange'
     }),
 
     renderDate: function () {

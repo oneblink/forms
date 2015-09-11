@@ -16,7 +16,6 @@ define(['forms/jqm/element'], function (ElementView) {
         $label = '<label class="ui-input-text">' + value + '</label>';
         self.$el.append($label);
       }, 100);
-
     }
   });
 

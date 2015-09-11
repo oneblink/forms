@@ -1,7 +1,5 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
-
   suite('29: External Errors', function () {
-
     setup(function () {
       return testUtils.loadForm('form1', 'edit')
       .then(function () {
@@ -85,7 +83,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       var externalErrors, subFormElement;
 
       setup(function () {
-
         externalErrors = {
           'comments': {
               'form2': {

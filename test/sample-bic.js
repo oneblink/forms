@@ -125,5 +125,4 @@ define([
   });
 
   BMP.FileInput.initialize();
-
 });

@@ -4,7 +4,6 @@ define([
   'BlinkForms',
   'testUtils'
 ], function (_, sinon, Forms, testUtils) {
-
   suite('i18n', function () {
     /* eslint-disable new-cap */
 
@@ -41,7 +40,6 @@ define([
     testUtils.defineFormLoadSuite('form1', 'add');
 
     suite('Validation', function () {
-
       test('textbox required/char-limit=10 test', function () {
         var form = Forms.current,
           element = form.getElement('textBox1'),
@@ -54,7 +52,6 @@ define([
         assert.isUndefined(element.validate(), 'no validation errors');
 
         runTests(cases, element);
-
       });
 
       test('number required/max=100/min=0/max-decimals=3/min-decimals=2 test', function () {
@@ -174,7 +171,6 @@ define([
 
         // default value is 35 which doesnot match pattern
         runTests(cases, element);
-
       });
 
       test('Max Decimal Places Check', function () {
@@ -248,7 +244,6 @@ define([
           "REQUIRED": ["other"]
         };
         runTests(cases, element);
-
       });
 
       function subformValidationTest (errors, element, counter) {
@@ -338,6 +333,27 @@ define([
         });
       });
 
+      [
+        'date', 'datetime', 'time', 'date_n', 'datetime_n', 'time_n'
+      ].forEach(function (name) {
+        var VALID = {
+          // TODO: finish FORMS-231 and support all ISO8601 formats
+          date: '2015-12-25',
+          datetime: '2015-12-25T12:00:00',
+          time: '12:00:00'
+        };
+
+        test(name + ': required', function () {
+          var element = Forms.current.getElement(name);
+
+          return testUtils.confirmValueIsInvalid(element, '', ['REQUIRED'])
+          .then(function () {
+            var type = element.attributes.type;
+            return testUtils.confirmValueIsValid(element, VALID[type]);
+          });
+        });
+      });
+
       test('validation events are bubbled via Forms.current', function () {
         var form = Forms.current,
           element = form.getElement('city'),
@@ -352,12 +368,10 @@ define([
 
         assert.isAbove(listenerSpy.callCount, 0);
         listenerSpy.reset();
-
       });
     }); // END: suite('Validation', ...)
 
     suite('onKeyDown vs performance', function () {
-
       test('HTMLInput views have per-instance #onKeyDown()', function () {
         Forms.current.attributes.elements
         .filter(function (el) {
@@ -391,14 +405,12 @@ define([
           done();
         }, 1500);
       });
-
     });
 
     elements = ['textBox1', 'number1', 'password1', 'text', 'url', 'email', 'password', 'streetAddress', 'city', 'telephone', 'number', 'currency', 'select', 'multi'];
     /* 'heading', 'message', 'comments', 'names' */
 
     elements.forEach(function (name) {
-
       suite('"' + name + '" element label', function () {
         var element, view;
 
@@ -432,11 +444,7 @@ define([
         suiteTeardown(function () {
           element.set('label', element.attributes.name);
         });
-
       });
-
     });
-
   }); // END: suite('1', ...)
-
 });

@@ -155,7 +155,6 @@ define(function (require) {
           return outputTargets.indexOf(m.attributes.name) === -1;
         }), { silent: true });
         // we disable the Backbone.Collection#set() events for a >10x speed-up
-
       } else {
         attrs.trigger.formElements.filter(function (name) {
           // only proceed with elements that are not output targets
@@ -186,13 +185,13 @@ define(function (require) {
       var me = this;
       q.defer(function (done) {
         return me.runCheck()
-        .then(function (result) {
-          me.runActions(result);
-          setTimeout(done, Behaviour.EXECUTE_SLEEP);
-        }, function (err) {
-          window.console.error('Behaviour-Check: ', err);
-          setTimeout(done, Behaviour.EXECUTE_SLEEP);
-        });
+          .then(function (result) {
+            me.runActions(result);
+            setTimeout(done, Behaviour.EXECUTE_SLEEP);
+          }, function (err) {
+            window.console.error('Behaviour-Check: ', err);
+            setTimeout(done, Behaviour.EXECUTE_SLEEP);
+          });
       });
       if (qEmpty) {
         qEmpty = false;

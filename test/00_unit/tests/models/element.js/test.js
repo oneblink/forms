@@ -11,7 +11,6 @@ function (ElementModel /* change this to whatever you want */) {
   var noop = function () {};
 
   suite('models/element.js', function () {
-
     suite("#setExternalErrors()", function () {
       var model1
         , model2

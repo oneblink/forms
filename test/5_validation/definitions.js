@@ -269,6 +269,60 @@ define(function () {
                 g: 'gamma'
               }
             }
+          },
+          {
+            default: {
+              name: 'date',
+              label: 'date',
+              type: 'date',
+              native: false,
+              required: true
+            }
+          },
+          {
+            default: {
+              name: 'datetime',
+              label: 'datetime',
+              type: 'datetime',
+              native: false,
+              required: true
+            }
+          },
+          {
+            default: {
+              name: 'time',
+              label: 'time',
+              type: 'time',
+              native: false,
+              required: true
+            }
+          },
+          {
+            default: {
+              name: 'date_n',
+              label: 'date_n',
+              type: 'date',
+              nativeDatePicker: '1',
+              required: true
+            }
+          },
+          {
+            default: {
+              name: 'datetime_n',
+              label: 'datetime_n',
+              type: 'datetime',
+              nativeTimePicker: '1',
+              required: true
+            }
+          },
+          {
+            default: {
+              name: 'time_n',
+              label: 'time_n',
+              type: 'time',
+              nativeDatetimePicker: '1',
+              required: true
+            }
           }
         ],
         _sections: [
