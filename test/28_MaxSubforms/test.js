@@ -270,6 +270,27 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.equal(subFormElement.getRealLength(), 1);
         });
 
+        test("no error is displayed", function () {
+          var $errorList = $add.closest('[data-element-type="subForm"]').find('.bm-errors__bm-list');
+          assert.equal($errorList.children().length, 0);
+        });
+      });
+
+      suite('after adding 2 forms', function () {
+        var subForms;
+
+        suiteSetup(function () {
+          subForms = subFormElement.attributes.forms;
+
+          return subFormElement.add();
+        });
+
+        test("'add' button disabled", function () {
+          assert.equal($add.prop('disabled'), true);
+          assert.equal(subForms.length, 4);
+          assert.equal(subFormElement.getRealLength(), 2);
+        });
+
         test("MAXSUBFORM error is displayed", function () {
           var $errorList = $add.closest('[data-element-type="subForm"]').find('.bm-errors__bm-list');
           assert.equal($errorList.children().length, 1);

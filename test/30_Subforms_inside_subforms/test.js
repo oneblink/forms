@@ -107,7 +107,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       subform.add()
               .then(function () {
-                Forms.current.on('invalid', function (model, error) {
+                Forms.current.once('invalid', function (model, error) {
                   assert.equal(model.id, 'second_level_text');
                   assert.equal(error.value[0].code, 'REQUIRED');
                   done();
@@ -140,7 +140,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
                   .then(function () {
                     var thirdLevelRequiredField = Forms.current.getElement('third_level_req');
 
-                    Forms.current.on('invalid', function (model, error) {
+                    Forms.current.once('invalid', function (model, error) {
                       assert.equal(model.id, 'third_level_req');
                       assert.equal(error.value[0].code, 'REQUIRED');
                       done();
