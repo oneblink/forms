@@ -12,6 +12,10 @@
 
     - `#val(...)` and `#set('value', ...)` now behave the same way
 
+- FORMS-235: validation of REQUIRED location values
+
+    - HelpDesk: 7176-UFVB-5424
+
 
 ## v3.7.1 - 2015-09-01
 
