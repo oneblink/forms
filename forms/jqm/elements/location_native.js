@@ -24,7 +24,7 @@ define(function (require) {
       var self = this;
       var attr = self.model.attributes;
 
-      fetchImage = function (loc, $figure) {
+      fetchImage = function () {
         var success,
           error;
         // if navigator.map or navigator.map.getStaticMap not defined
@@ -79,7 +79,7 @@ define(function (require) {
         caption += '; &plusmn;' + loc.accuracy + 'M';
       }
       $figcaption.html(caption);
-      fetchImage(loc, $figure);
+      fetchImage();
       self.$el.append($figure);
     }
   }, {

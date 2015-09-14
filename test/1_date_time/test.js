@@ -280,7 +280,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
     });
 
     suite('picker value assignment', function () {
-      var pickadate = [
+      var pickadates = [
         'datenonative',
         'datetimenonative',
         'datenow',
@@ -299,7 +299,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
 
       test('element value assignment reflected in picker, model, view ', function (done) {
         setTimeout(function () {
-            pickadate.forEach(function (fld) {
+            pickadates.forEach(function (fld) {
               var form = Forms.current;
               var el = form.getElement(fld);
               var type = el.get('type');

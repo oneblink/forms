@@ -122,7 +122,7 @@ define(function (require) {
       if (value) {
         try {
           value = JSON.parse(value);
-        } catch(err) {
+        } catch (err) {
           value = undefined;
         }
         this.model.set('value', value);

@@ -23,7 +23,7 @@ define(function (require) {
   */
   try {
     cameraDestinationType = (window.Camera || navigator.camera).DestinationType;
-  } catch(e) {
+  } catch (e) {
     if (window.console && window.console.info) {
       window.console.info('Cordova Camera not available');
     }

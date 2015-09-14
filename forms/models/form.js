@@ -403,7 +403,7 @@ define(function (require) {
               while (typeof value === 'string' && loopCounter < MAX_LOOP) {
                 try {
                   value = JSON.parse(value);
-                } catch(e) {
+                } catch (e) {
                   value = undefined;
                 }
                 loopCounter++;
