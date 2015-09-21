@@ -58,11 +58,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             element = form.getElement('Address'),
             subForms = element.attributes.forms;
 
-          assert.equal(form.attributes._action, "edit");
+          assert.equal(form.attributes._action, 'edit');
 
           assert.equal(subForms.length, 2);
-          assert.equal(subForms.at(0).attributes._action, "add");
-          assert.equal(subForms.at(1).attributes._action, "add");
+          assert.equal(subForms.at(0).attributes._action, 'add');
+          assert.equal(subForms.at(1).attributes._action, 'add');
         });
 
         test('sub-sub form loaded correctly', function () {
@@ -78,7 +78,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             subform = subForms.at(i);
             subformElement = subform.getElement('Phone');
             assert.equal(subformElement.attributes.forms.length, 1);
-            assert.equal(subform.attributes._action, "add");
+            assert.equal(subform.attributes._action, 'add');
           }
         });
       });
@@ -159,11 +159,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           form.data().then(function (formdata) {
             var keys = _.keys(record);
             _.each(keys, function (k) {
-              assert.ok(formdata[k], k + " does not exist");
+              assert.ok(formdata[k], k + ' does not exist');
             });
             done();
           }, function () {
-            assert(false, "failed to set record");
+            assert(false, 'failed to set record');
             done();
           });
         });
@@ -224,24 +224,24 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             subform = subForms.at(i);
             subformElement = subform.getElement('id');
             if (subformElement.get('value')) {
-              assert.equal(subform.attributes._action, "edit");
+              assert.equal(subform.attributes._action, 'edit');
             } else {
-              assert.equal(subform.attributes._action, "add");
+              assert.equal(subform.attributes._action, 'add');
             }
 
             subformElement = subform.getElement('Phone');
             for (j = 0; j < subformElement.attributes.forms.length; j++) {
               subsubformElement = subformElement.attributes.forms.at(j);
               if (subsubformElement.getElement('id').get('value')) {
-                assert.equal(subsubformElement.attributes._action, "edit");
+                assert.equal(subsubformElement.attributes._action, 'edit');
               } else {
-                assert.equal(subsubformElement.attributes._action, "add");
+                assert.equal(subsubformElement.attributes._action, 'add');
               }
             }
           }
         });
 
-        test("remove newly added subform (no placeholders)", function () {
+        test('remove newly added subform (no placeholders)', function () {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForms = subFormElement.attributes.forms,
@@ -255,7 +255,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           });
         });
 
-        test("remove subform with id (with placeholder)", function () {
+        test('remove subform with id (with placeholder)', function () {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForm = subFormElement.get('forms').at(3);
@@ -264,12 +264,12 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           subForm.parentElement.remove(subForm);
           return form.data().then(function (data) {
             assert.equal(data.Address.length, 4);
-            assert.equal(data.Address[3]._action, "remove");
+            assert.equal(data.Address[3]._action, 'remove');
             assert.equal(data.Address[3].id, 4);
           });
         });
 
-        test("remove sub-subform with id (with placeholder)", function () {
+        test('remove sub-subform with id (with placeholder)', function () {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForms = subFormElement.attributes.forms,
@@ -285,12 +285,12 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.equal(subForms.length, 3);
           return form.data().then(function (data) {
             assert.equal(data.Address[2].Phone.length, 3);
-            assert.equal(data.Address[2].Phone[0]._action, "remove");
+            assert.equal(data.Address[2].Phone[0]._action, 'remove');
             assert.equal(data.Address[2].Phone[0].id, 3);
           });
         });
 
-        test("remove preloaded sub-subform (with out placeholder)", function () {
+        test('remove preloaded sub-subform (with out placeholder)', function () {
           var form = Forms.current,
             subFormElement = form.getElement('Address'),
             subForms = subFormElement.attributes.forms,
@@ -310,7 +310,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           });
         });
 
-        test("test getErrors", function () {
+        test('test getErrors', function () {
           try {
             Forms.current.getErrors();
             assert(true);
@@ -320,7 +320,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           }
         });
 
-        test("test getInvalidElements", function () {
+        test('test getInvalidElements', function () {
           try {
             Forms.current.getInvalidElements();
             assert(true);

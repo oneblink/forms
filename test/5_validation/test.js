@@ -44,8 +44,8 @@ define([
         var form = Forms.current,
           element = form.getElement('textBox1'),
           cases = {
-            "REQUIRED": "",
-            "MAXLENGTH": "abcdefghijk"
+            'REQUIRED': '',
+            'MAXLENGTH': 'abcdefghijk'
           };
 
         element.val('test');
@@ -58,10 +58,10 @@ define([
         var form = Forms.current,
           element = form.getElement('number1'),
           cases = {
-            "MIN": "-1",
-            "MAX": "101",
-            "MINDECIMALS": "100.1",
-            "MAXDECIMALS": "100.1111"
+            'MIN': '-1',
+            'MAX': '101',
+            'MINDECIMALS': '100.1',
+            'MAXDECIMALS': '100.1111'
           };
 
         element.val('1');
@@ -74,8 +74,8 @@ define([
         var form = Forms.current,
           element = form.getElement('email'),
           cases = {
-            "REQUIRED": "",
-            "EMAIL": "test@test"
+            'REQUIRED': '',
+            'EMAIL': 'test@test'
           };
 
         assert.isUndefined(element.validate(), 'no validation errors');
@@ -87,7 +87,7 @@ define([
         var form = Forms.current,
           element = form.getElement('url'),
           cases = {
-            "REQUIRED": ""
+            'REQUIRED': ''
           };
 
         assert.isUndefined(element.validate(), 'no validation errors');
@@ -99,7 +99,7 @@ define([
         var form = Forms.current,
           element = form.getElement('telephone'),
           cases = {
-            "REQUIRED": ""
+            'REQUIRED': ''
           };
 
         assert.isUndefined(element.validate(), 'no validation errors');
@@ -116,9 +116,9 @@ define([
         assert.equal(subForms.length, 0, 'no subForms yet');
         $add.trigger('click');
         subForms.once('add', function () {
-          assert.isObject(subFormElement.validate(), "subform validation fails");
+          assert.isObject(subFormElement.validate(), 'subform validation fails');
           subForms.at(0).getElement('comment').val('def');
-          assert.isUndefined(subFormElement.validate(), "subform validation passes");
+          assert.isUndefined(subFormElement.validate(), 'subform validation passes');
           done();
         });
       });
@@ -217,12 +217,12 @@ define([
         assert.isUndefined(element.validate(), 'no validation errors');
 
         cases = {
-          "REQUIRED": ""
+          'REQUIRED': ''
         };
         runTests(cases, element);
 
         cases = {
-          "REQUIRED": "other"
+          'REQUIRED': 'other'
         };
         runTests(cases, element);
       });
@@ -236,12 +236,12 @@ define([
         assert.isUndefined(element.validate(), 'no validation errors');
 
         cases = {
-          "REQUIRED": []
+          'REQUIRED': []
         };
         runTests(cases, element);
 
         cases = {
-          "REQUIRED": ["other"]
+          'REQUIRED': ['other']
         };
         runTests(cases, element);
       });
@@ -257,8 +257,8 @@ define([
             errorCounter++;
           }
         });
-        assert.equal(errorCounter, validation.value.length, "(" + counter + ") number of total error doesn't match validation array");
-        assert.equal(errorCounter, errors.length, "(" + counter + ") number of total error doesn't match");
+        assert.equal(errorCounter, validation.value.length, '(' + counter + ") number of total error doesn't match validation array");
+        assert.equal(errorCounter, errors.length, '(' + counter + ") number of total error doesn't match");
       }
 
       test('subform require, min=1 subform test', function () {
@@ -286,7 +286,7 @@ define([
         $add.trigger('click');
         $add.trigger('click');
         setTimeout(function () {
-          assert.isObject(subFormElement.validate(), "subform validation fails");
+          assert.isObject(subFormElement.validate(), 'subform validation fails');
 
           errors = ['MAXSUBFORM', 'SUBFORM'];
           subformValidationTest(errors, subFormElement, 1);
@@ -314,7 +314,7 @@ define([
         assert.equal(subForms.length, 0, 'no subForms yet');
 
         subFormElement.attributes.preloadPromise.then(function () {
-          assert.isObject(subFormElement.validate(), "subform validation fails");
+          assert.isObject(subFormElement.validate(), 'subform validation fails');
           errors = ['REQUIRED', 'MINSUBFORM'];
           subformValidationTest(errors, subFormElement, 1);
 

@@ -48,7 +48,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       assert(view.$el.attr('style'), 'display: none; ', 'field is not hidden');
       form.data().then(function (data) {
-        assert.equal(data.hiddentext, "Test", "mismatch hidden field value");
+        assert.equal(data.hiddentext, 'Test', 'mismatch hidden field value');
         done();
       });
     });
@@ -77,9 +77,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           attr = element.attributes;
 
         if (attr.useSlider && attr.min && attr.max) {
-          assert.equal('range', view.find('input').attr('type'), name + " is not range field");
+          assert.equal('range', view.find('input').attr('type'), name + ' is not range field');
         } else {
-          assert.equal('number', view.find('input').attr('type'), name + " is not number field");
+          assert.equal('number', view.find('input').attr('type'), name + ' is not number field');
         }
         done();
       });
@@ -89,8 +89,8 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       var form = Forms.current,
         element = form.getElement('number3');
 
-      assert(element.attributes.defaultValue === "", "number3: defaultValue is not empty");
-      assert(element.get('value') === "", "element value is " + element.get('value'));
+      assert(element.attributes.defaultValue === '', 'number3: defaultValue is not empty');
+      assert(element.get('value') === '', 'element value is ' + element.get('value'));
     });
   });
 

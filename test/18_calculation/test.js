@@ -6,8 +6,8 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       suiteSetup(function () {
         var form = BMP.Forms.current;
 
-        form.getElement('test1').val("test11");
-        form.getElement('test2').val("test22");
+        form.getElement('test1').val('test11');
+        form.getElement('test2').val('test22');
       });
 
       test('record data includes set values', function (done) {
@@ -19,7 +19,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         $calc.trigger('click');
         setTimeout(function () {
           form.data().then(function (data) {
-            assert.equal(data.calc, "test11test22");
+            assert.equal(data.calc, 'test11test22');
             done();
           });
         }, 200);
@@ -28,11 +28,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       test('changing field value does not run behaviour', function (done) {
         var form = BMP.Forms.current;
 
-        form.getElement('test1').val("test12");
-        form.getElement('test2').val("test12");
+        form.getElement('test1').val('test12');
+        form.getElement('test2').val('test12');
 
         form.data().then(function (data) {
-          assert.equal(data.calc, "test11test22");
+          assert.equal(data.calc, 'test11test22');
           done();
         });
       });

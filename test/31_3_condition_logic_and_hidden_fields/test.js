@@ -29,7 +29,7 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       test('the `behavioursExecuted` is still emitted', function (done) {
         Forms.on('behavioursExecuted', function () {
-            done();
+          done();
         });
         // you will see a console error because as per feedback, the error is
         // left in to notify the forms developer that the behaivors and subform

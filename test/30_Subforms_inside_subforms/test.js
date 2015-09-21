@@ -66,15 +66,15 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       var subform = Forms.current.getElement('second_level_test');
       return subform.add()
                  .then(function () {
-                  var invalid = Forms.current.getInvalidElements();
+                   var invalid = Forms.current.getInvalidElements();
                   // make sure we have an error
-                  assert.isAbove(invalid.length, 0);
+                   assert.isAbove(invalid.length, 0);
 
                   // get the first invalid element and scroll
-                  return invalid.errors[0].get('_view').scrollTo().then(function () {
-                    assert.notEqual($(window).scrollTop(), origScrollTop);
-                  });
-                });
+                   return invalid.errors[0].get('_view').scrollTo().then(function () {
+                     assert.notEqual($(window).scrollTop(), origScrollTop);
+                   });
+                 });
     });
 
     test('3rd level form errors are scrolled to correctly', function () {
@@ -181,7 +181,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       test('fields with a hide attribute that is falsy are shown', function () {
         var model = Forms.current.getElement('hidden_when_text_is_a'),
-            view = model.get('_view');
+          view = model.get('_view');
 
         assert.isFalse(model.get('hidden'));
         assert.isTrue(view.$el.is(':visible'));
