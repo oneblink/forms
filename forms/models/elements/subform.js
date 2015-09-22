@@ -43,12 +43,10 @@ define(function (require) {
   });
 
   return ElementModel.extend({
-    defaults: {
-      page: 0,
-      'class': '',
-      hidden: false,
-      persist: true,
-      collapse: 'off'
+    defaults: function () {
+      return _.assign({}, ElementModel.prototype.defaults.call(this), {
+        collapse: 'off'
+      });
     },
 
     initialize: function () {

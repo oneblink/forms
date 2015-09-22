@@ -1,11 +1,17 @@
-define(['forms/models/element'], function (Element) {
+define(function (require) {
   'use strict';
 
-  var MessageElement = Element.extend({
-    defaults: {
-      page: 0,
-      persist: false
+  var _ = require('underscore');
+
+  var ElementModel = require('forms/models/element');
+
+  return ElementModel.extend({
+    defaults: function () {
+      return _.assign({}, ElementModel.prototype.defaults.call(this), {
+        persist: false
+      });
     },
+
     initialize: function () {
       var self = this;
       var schemaMap = {
@@ -18,8 +24,9 @@ define(['forms/models/element'], function (Element) {
         }
       });
 
-      Element.prototype.initialize.apply(this, arguments);
+      ElementModel.prototype.initialize.apply(this, arguments);
     },
+
     /**
      * official Blink API
      */
@@ -31,6 +38,4 @@ define(['forms/models/element'], function (Element) {
       return value;
     }
   });
-
-  return MessageElement;
 });

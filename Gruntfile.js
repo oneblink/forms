@@ -33,6 +33,7 @@ module.exports = function (grunt) {
       compile: {
         options: {
           baseUrl: '.',
+          fileExclusionRegExp: /(^\.)|build|css|docs|eslint|grunt|lodash|parts|phantomjs|test|(\.json$)|(\.md$)|(\.txt$)/,
           dir: 'build',
           skipDirOptimize: false,
 //          optimize: 'uglify2',

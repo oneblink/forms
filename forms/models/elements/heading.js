@@ -6,14 +6,13 @@ define(function (require) {
 
   var ElementModel = require('forms/models/element');
 
-  var defaultAttributes = {
-    page: 0,
-    persist: false,
-    level: 1
-  };
-
   var HeadingElement = ElementModel.extend({
-    defaults: _.extend(defaultAttributes, ElementModel.prototype.defaults),
+    defaults: function () {
+      return _.assign({}, ElementModel.prototype.defaults.call(this), {
+        persist: false,
+        level: 1
+      });
+    },
 
     initialize: function () {
       var self, schemaMap, headingType;

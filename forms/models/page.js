@@ -26,9 +26,12 @@ define(function (require) {
   });
 
   Page = Backbone.Model.extend({
-    defaults: {
-      class: ''
+    defaults: function () {
+      return {
+        class: ''
+      };
     },
+
     initialize: function () {
       var attrs = this.attributes;
       var Forms = BMP.Forms;

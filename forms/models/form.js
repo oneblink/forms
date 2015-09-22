@@ -64,15 +64,18 @@ define(function (require) {
   };
 
   Form = Backbone.Model.extend({
-    defaults: {
-      answerSpace: '',
-      class: '',
-      isPopulating: false,
-      uuid: '',
-      isPristine: true,
-      isDirty: false,
-      isInvalid: true
+    defaults: function () {
+      return {
+        answerSpace: '',
+        class: '',
+        uuid: '',
+        isPopulating: false,
+        isPristine: true,
+        isDirty: false,
+        isInvalid: true
+      };
     },
+
     initialize: function () {
       var Forms = BMP.Forms;
       var self = this;
