@@ -130,7 +130,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       var previousPage;
       pages.goto(0);
       previousPage = pages.current.cid;
-      Forms.current.get("_view").goToElement('status');
+      Forms.current.get('_view').goToElement('status');
 
       assert.notEqual(pages.current.cid, previousPage);
     });

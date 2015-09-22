@@ -12,9 +12,7 @@
   },
   "rules": {
     "comma-style": 0,
-    "indent": 0,
     "no-console": 0,
-    "one-var": 0,
-    "quotes": 0
+    "one-var": 0
   }
 }

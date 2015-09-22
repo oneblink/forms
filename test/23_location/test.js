@@ -10,9 +10,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       var form = Forms.current;
 
       $.ajax({
-        type: "GET",
-        url: "getformrecord.xml",
-        dataType: "xml"}).then(
+        type: 'GET',
+        url: 'getformrecord.xml',
+        dataType: 'xml'}).then(
         function (data) {
           var record = {}, node, nodes;
           nodes = data.evaluate('//' + form.attributes.name, data);
@@ -24,11 +24,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             form.data().then(function (formdata) {
               var keys = ['id', 'location1', 'location2', '_action'];
               _.each(keys, function (k) {
-                assert.ok(formdata[k], k + " does not exist");
+                assert.ok(formdata[k], k + ' does not exist');
               });
               done();
             }, function () {
-              assert(false, "failed to set record");
+              assert(false, 'failed to set record');
               done();
             });
           });
@@ -52,19 +52,19 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     test('location data is correct', function (done) {
       var form = Forms.current,
         elements = {
-          id: "1",
-          _action: "add",
+          id: '1',
+          _action: 'add',
           location1: '{"latitude":-33.867487,"longitude":151.20699,"altitude":null,"accuracy":25000,"altitudeAccuracy":null,"heading":null,"speed":null}',
           location2: '{"latitude":-33.867487,"longitude":151.20699,"altitude":null,"accuracy":25000,"altitudeAccuracy":null,"heading":null,"speed":null}'
         };
 
       form.data().then(function (formdata) {
         setTimeout(function () {
-          assert.deepEqual(formdata, elements, "form data");
+          assert.deepEqual(formdata, elements, 'form data');
           done();
         }, 0);
       }, function () {
-        assert(false, "failed to set record");
+        assert(false, 'failed to set record');
         done();
       });
     });
@@ -86,7 +86,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         $dialog.first().trigger('click');
         value = element.get('value');
         _.each(keys, function (k) {
-          assert(_.has(value, k), k + " does not exist");
+          assert(_.has(value, k), k + ' does not exist');
         });
         done();
       }, 7000);
@@ -101,9 +101,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       $clear.trigger('click');
 
       setTimeout(function () {
-          value = element.get('value');
-          assert.notOk(value, "value still exists");
-          done();
+        value = element.get('value');
+        assert.notOk(value, 'value still exists');
+        done();
       }, 0);
     });
   }); // END: suite('Form', ...)

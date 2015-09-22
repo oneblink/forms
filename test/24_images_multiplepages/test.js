@@ -5,9 +5,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     test('Render form with data', function (done) {
       var form = Forms.current;
       $.ajax({
-        type: "GET",
-        url: "getformrecord.xml",
-        dataType: "xml"}).then(
+        type: 'GET',
+        url: 'getformrecord.xml',
+        dataType: 'xml'}).then(
         function (data) {
           var record = {}, node, nodes;
 
@@ -20,11 +20,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             form.data().then(function (formdata) {
               var keys = _.keys(record);
               _.each(keys, function (k) {
-                assert.ok(formdata[k], k + " does not exist");
+                assert.ok(formdata[k], k + ' does not exist');
               });
               done();
             }, function () {
-              assert(false, "failed to set record");
+              assert(false, 'failed to set record');
               done();
             });
           });
@@ -35,11 +35,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     suite('verifying elements on Page:', function () {
       suite('Page 0', function () {
         var elements = {
-          "Photo": 1,
-          "Photo1": 1,
-          "Photo2": 0,
-          "location": 0,
-          "draw": 0
+          'Photo': 1,
+          'Photo1': 1,
+          'Photo2': 0,
+          'location': 0,
+          'draw': 0
         };
 
         suiteSetup(function (done) {
@@ -54,7 +54,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         });
 
         _.each(elements, function (v, i) {
-          test(i + ' should be ' + (v === 1 ? "visible" : "invisible"), function (done) {
+          test(i + ' should be ' + (v === 1 ? 'visible' : 'invisible'), function (done) {
             var form = Forms.current,
               element,
               view;
@@ -79,11 +79,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       suite('Page 1', function () {
         var elements = {
-          "Photo": 0,
-          "Photo1": 0,
-          "Photo2": 1,
-          "location": 1,
-          "draw": 1
+          'Photo': 0,
+          'Photo1': 0,
+          'Photo2': 1,
+          'location': 1,
+          'draw': 1
         };
 
         suiteSetup(function (done) {
@@ -98,7 +98,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         });
 
         _.each(elements, function (v, i) {
-          test(i + ' should be ' + (v === 1 ? "visible" : "invisible"), function (done) {
+          test(i + ' should be ' + (v === 1 ? 'visible' : 'invisible'), function (done) {
             var form = Forms.current,
               element,
               view;

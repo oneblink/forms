@@ -165,7 +165,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         assert.isDefined(subFormElement);
 
         Forms.current.setPristine();
-        subFormElement.val("123");
+        subFormElement.val('123');
 
         assert.isTrue(Forms.current.get('isDirty'));
       });

@@ -247,10 +247,10 @@ define(function (require) {
         return undefined;
       }
       return _.reduce(this.get('elements').filter(isSubForm), function (memo, elementModel) {
-                memo = memo || {}; // create in here so we return undefined if we have no subforms.
-                memo[elementModel.id] = elementModel.get('forms');
-                return memo;
-              }, undefined);
+        memo = memo || {}; // create in here so we return undefined if we have no subforms.
+        memo[elementModel.id] = elementModel.get('forms');
+        return memo;
+      }, undefined);
     },
 
     /**

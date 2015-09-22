@@ -23,7 +23,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         var subFormElement = Forms.current.getElement('notes'),
           $view = subFormElement.attributes._view.$el,
           $add = $view.children('.ui-btn').children('button');
-        assert($add.html(), "Notes", "label for PLUS `Notes` subForm not set properly");
+        assert($add.html(), 'Notes', 'label for PLUS `Notes` subForm not set properly');
       });
 
       test('add 1st `notes` subForm', function () {
@@ -45,7 +45,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           $view = subForm.attributes._view.$el;
           $remove = $view.children('.ui-btn').children('button');
 
-          assert($remove.html(), "Notes", "label for MINUS `Notes` subForm not set properly");
+          assert($remove.html(), 'Notes', 'label for MINUS `Notes` subForm not set properly');
         });
       });
 
@@ -57,7 +57,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           $view = subFormElement.attributes._view.$el,
           $add = $view.children('.ui-btn').children('button');
 
-        assert($add.html(), "reviews", "label for PLUS `reviews` subForm not set properly");
+        assert($add.html(), 'reviews', 'label for PLUS `reviews` subForm not set properly');
       });
 
       test('add 1st `reviews` subForm', function () {
@@ -81,7 +81,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           $view = subForm.attributes._view.$el;
           $remove = $view.children('.ui-btn').children('button');
 
-          assert($remove.html(), "reviews", "label for MINUS `reviews` subForm not set properly");
+          assert($remove.html(), 'reviews', 'label for MINUS `reviews` subForm not set properly');
         });
       });
 
@@ -95,7 +95,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           subForms = subFormElement.attributes.forms;
 
         assert.equal(subForms.length, 0, 'no subForms yet');
-        assert($add.html(), "PLUS", "label for ADD `Comments` subForm not set properly");
+        assert($add.html(), 'PLUS', 'label for ADD `Comments` subForm not set properly');
 
         return subFormElement.add().then(function () {
           assert.equal(subForms.length, 1, 'no comments subForms yet');
@@ -107,8 +107,8 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
         return subFormElement.add().then(function () {
           return Forms.current.data().then(function (data) {
-            assert.equal(data._action, "add");
-            assert.equal(data.comments[0]._action, "add");
+            assert.equal(data._action, 'add');
+            assert.equal(data.comments[0]._action, 'add');
           });
         });
       });
@@ -162,7 +162,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
         subFormElement.add().then(function () {
           var subForm = subFormElement.get('forms').at(0);
-          assert(subForm.get('_view').$el.children('.ui-btn').children('button').html(), "MINUS", "label for MINUS `comments` subForm not set properly");
+          assert(subForm.get('_view').$el.children('.ui-btn').children('button').html(), 'MINUS', 'label for MINUS `comments` subForm not set properly');
 
           return subFormElement.add().then(function () {
             assert.equal(subFormElement.get('forms').length, 2, 'should be 2 subForms');
@@ -203,7 +203,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           var subForm = subForms.at(0);
           var $view = subForm.attributes._view.$el;
           var testData = {
-            _action: "remove",
+            _action: 'remove',
             id: 1
           };
 
@@ -219,7 +219,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           subForms = subFormElement.attributes.forms;
           subForm = subForms.at(0);
 
-          assert.deepEqual(subForm.attributes, testData, "attributes set correctly");
+          assert.deepEqual(subForm.attributes, testData, 'attributes set correctly');
           assert.equal(subForms.length, 1);
           assert.equal(subForms.size(), 1);
         });

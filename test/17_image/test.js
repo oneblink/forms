@@ -21,9 +21,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       test('Render form with data', function (done) {
         var form = Forms.current;
         $.ajax({
-          type: "GET",
-          url: "getformrecord.xml",
-          dataType: "xml"}).then(
+          type: 'GET',
+          url: 'getformrecord.xml',
+          dataType: 'xml'}).then(
           function (data) {
             var record = {}, node, nodes;
             nodes = data.evaluate('//' + form.attributes.name, data);
@@ -35,11 +35,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
               form.data().then(function (formdata) {
                 var keys = _.keys(record);
                 _.each(keys, function (k) {
-                  assert.ok(formdata[k], k + " does not exist");
+                  assert.ok(formdata[k], k + ' does not exist');
                 });
                 done();
               }, function () {
-                assert(false, "failed to set record");
+                assert(false, 'failed to set record');
                 done();
               });
             });

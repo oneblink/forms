@@ -11,9 +11,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         var form = Forms.current;
 
         $.ajax({
-          type: "GET",
-          url: "getformrecord.xml",
-          dataType: "xml"}).then(
+          type: 'GET',
+          url: 'getformrecord.xml',
+          dataType: 'xml'}).then(
           function (data) {
             var record = {}, node, nodes;
             nodes = data.evaluate('//' + form.attributes.name, data);
@@ -25,11 +25,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
               form.data().then(function (formdata) {
                 var keys = ['id', 'Location', 'Name', '_action'];
                 _.each(keys, function (k) {
-                  assert.ok(formdata[k], k + " does not exist");
+                  assert.ok(formdata[k], k + ' does not exist');
                 });
                 done();
               }, function () {
-                assert(false, "failed to set record");
+                assert(false, 'failed to set record');
                 done();
               });
             });
@@ -45,7 +45,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         form = Forms.current;
       });
 
-      suite("getRealLength, getButtonLabel", function () {
+      suite('getRealLength, getButtonLabel', function () {
         var subFormElement, $fieldEl, $add, subForms, subForm, $view, $remove, attr;
 
         suiteSetup(function () {
@@ -88,7 +88,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         test('click add button', function (done) {
           Promise.resolve()
           .then(function () {
-            $add.trigger("click");
+            $add.trigger('click');
             return new Promise(function (resolve) {
               subForms.once('add', function () { resolve(); });
             });
@@ -182,7 +182,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       suiteSetup(function () {
         form = Forms.current.getElement('Location').get('forms').at(1);
-        subFormElement = form.getElement("Phone");
+        subFormElement = form.getElement('Phone');
 
         $fieldEl = subFormElement.attributes._view.$el;
         $add = $fieldEl.children('.ui-btn').children('button');
@@ -260,7 +260,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         suiteSetup(function (done) {
           subForms = subFormElement.attributes.forms;
 
-          $add.trigger("click");
+          $add.trigger('click');
           subForms.once('add', function () { done(); });
         });
 
@@ -270,7 +270,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.equal(subFormElement.getRealLength(), 1);
         });
 
-        test("no error is displayed", function () {
+        test('no error is displayed', function () {
           var $errorList = $add.closest('[data-element-type="subForm"]').find('.bm-errors__bm-list');
           assert.equal($errorList.children().length, 0);
         });
@@ -291,7 +291,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.equal(subFormElement.getRealLength(), 2);
         });
 
-        test("MAXSUBFORM error is displayed", function () {
+        test('MAXSUBFORM error is displayed', function () {
           var $errorList = $add.closest('[data-element-type="subForm"]').find('.bm-errors__bm-list');
           assert.equal($errorList.children().length, 1);
           assert.equal($errorList.children().first().text(), 'no more than 1 form');
