@@ -110,7 +110,7 @@ define(function (require) {
       delete parsed[prop];
     });
 
-    defaults = model.constructor.prototype.defaults || {};
+    defaults = _.result(model, 'defaults', {});
     model.set(Forms.castPropertyValues(parsed, defaults));
   };
 

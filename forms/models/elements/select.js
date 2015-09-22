@@ -7,22 +7,22 @@ define(function (require) {
 
   // local modules
 
-  var Element = require('forms/models/element');
+  var ElementModel = require('forms/models/element');
 
   // this module
-
-  var defaults = _.clone(Element.prototype.defaults);
-  defaults.mode = 'collapsed';
-  defaults.layout = 'vertical';
-  defaults.other = false;
-  defaults.nativeMenu = false;
-
-  return Element.extend({
-    defaults: defaults,
+  return ElementModel.extend({
+    defaults: function () {
+      return _.assign(ElementModel.prototype.defaults.call(this), {
+        mode: 'collapsed',
+        layout: 'vertical',
+        other: false,
+        nativeMenu: false
+      });
+    },
 
     initialize: function () {
       var attrs;
-      Element.prototype.initialize.apply(this, arguments);
+      ElementModel.prototype.initialize.apply(this, arguments);
 
       attrs = this.attributes;
       attrs.nativeMenu = attrs.type === 'select' && attrs.mode === 'collapsed';
@@ -53,7 +53,7 @@ define(function (require) {
 
     isEmpty: function () {
       var attrs = this.attributes;
-      if (Element.prototype.isEmpty.call(this)) {
+      if (ElementModel.prototype.isEmpty.call(this)) {
         return true;
       }
       return attrs.other && attrs.value === 'other' && !_.contains(attrs.options, 'other');

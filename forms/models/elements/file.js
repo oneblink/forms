@@ -7,7 +7,7 @@ define(function (require) {
 
   // local modules
 
-  var Element = require('forms/models/element');
+  var ElementModel = require('forms/models/element');
 
   // this module
 
@@ -46,19 +46,21 @@ define(function (require) {
   @property {boolean} readonly          - if true, BlobReadOnlyElement View will be used.
   @property {boolean} capture           - if true, and the device supports "getUserMedia", "WebRTCImageElement" View will be used.
 */
-  FileElement = Element.extend({
-    defaults: _.extend({}, Element.prototype.defaults, {
-      height: 0,
-      width: 0,
-      progress: null,
-      uuid: '',
-      xhr: null,
-      capture: false,
-      accept: ''
-    }),
+  FileElement = ElementModel.extend({
+    defaults: function () {
+      return _.assign(ElementModel.prototype.defaults.call(this), {
+        height: 0,
+        width: 0,
+        progress: null,
+        uuid: '',
+        xhr: null,
+        capture: false,
+        accept: ''
+      });
+    },
 
     initialize: function () {
-      Element.prototype.initialize.apply(this, arguments);
+      ElementModel.prototype.initialize.apply(this, arguments);
 
 /**
   @event FileElement#change
