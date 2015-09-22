@@ -44,7 +44,7 @@ define(function (require) {
 
   return ElementModel.extend({
     defaults: function () {
-      return _.assign({}, ElementModel.prototype.defaults.call(this), {
+      return _.assign(ElementModel.prototype.defaults.call(this), {
         collapse: 'off'
       });
     },

@@ -48,7 +48,7 @@ define(function (require) {
 */
   FileElement = ElementModel.extend({
     defaults: function () {
-      return _.assign({}, ElementModel.prototype.defaults.call(this), {
+      return _.assign(ElementModel.prototype.defaults.call(this), {
         height: 0,
         width: 0,
         progress: null,

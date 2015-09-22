@@ -8,7 +8,7 @@ define(function (require) {
 
   var HeadingElement = ElementModel.extend({
     defaults: function () {
-      return _.assign({}, ElementModel.prototype.defaults.call(this), {
+      return _.assign(ElementModel.prototype.defaults.call(this), {
         persist: false,
         level: 1
       });

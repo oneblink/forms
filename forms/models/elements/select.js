@@ -12,7 +12,7 @@ define(function (require) {
   // this module
   return ElementModel.extend({
     defaults: function () {
-      return _.assign({}, ElementModel.prototype.defaults.call(this), {
+      return _.assign(ElementModel.prototype.defaults.call(this), {
         mode: 'collapsed',
         layout: 'vertical',
         other: false,

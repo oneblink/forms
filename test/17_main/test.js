@@ -1,4 +1,4 @@
-define(['BlinkForms', 'BIC'], function () {
+define(['BlinkForms', 'BIC'], function (Forms) {
   suite('17: main', function () {
     test('BMP is defined', function () {
       assert.isDefined(window.BMP);
@@ -38,6 +38,20 @@ define(['BlinkForms', 'BIC'], function () {
 
     test('BMP.Forms.proxyUnbindFormElementEvents is a function', function () {
       assert.isFunction(window.BMP.Forms.proxyUnbindFormElementEvents);
+    });
+
+    suite('Model defaults', function () {
+      function defaultsIsAFunctionTest (model, name) {
+        return test(name + '.defaults is a function', function () {
+          if ('defaults' in model.prototype) {
+            assert.isFunction(model.prototype.defaults);
+          }
+        });
+      }
+
+      suite('if #defaults exists it is a function or undefined', function () {
+        _.each(Forms._models, defaultsIsAFunctionTest);
+      });
     });
   });
 });
