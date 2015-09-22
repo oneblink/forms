@@ -19,11 +19,13 @@ define(function (require) {
 
   return Element.extend({
     defaults: defaults,
+
     initialize: function () {
       var attrs;
       Element.prototype.initialize.apply(this, arguments);
 
       attrs = this.attributes;
+      attrs.nativeMenu = attrs.type === 'select' && attrs.mode === 'collapsed';
 
       if (attrs.canSpecifyOther) {
         attrs.other = attrs.canSpecifyOther;

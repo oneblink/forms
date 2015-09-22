@@ -23,7 +23,7 @@ define(function (require) {
       this.$el.empty();
       this.renderLabel();
 
-      $input = $('<select></select>');
+      this.$input = $input = $('<select></select>');
 
       if (type === 'select') {
         $input.attr({
@@ -39,12 +39,7 @@ define(function (require) {
         });
       }
 
-      if (attr.nativeMenu) {
-        $input.attr({'data-role': 'none'});
-      }
-
       this.$el.append($input);
-
       this.renderOptions();
       this.$el.fieldcontain();
 
@@ -58,7 +53,7 @@ define(function (require) {
       var $otherOption;
       var attrs = this.model.attributes;
       var type = attrs.type;
-      var $input = this.$el.find('select');
+      var $input = this.$input;
 
       $input.empty();
 
@@ -82,7 +77,7 @@ define(function (require) {
     onValueChange: function () {
       var renderOther = false;
       var attr = this.model.attributes;
-      var select = this.$el.find('select');
+      var select = this.$input;
 
       if (attr.type === 'select') {
         if ($.inArray(attr.value, _.keys(attr.options)) < 0) {
@@ -125,7 +120,7 @@ define(function (require) {
 
     fetchValue: function () {
       var attr = this.model.attributes;
-      var value = this.$el.find('select').val();
+      var value = this.$input.val();
 
       if (attr.type === 'select' && value === 'select one...' || _.contains(value, 'select one or more...')) {
         value = '';
@@ -134,12 +129,7 @@ define(function (require) {
     },
 
     onAttached: function () {
-      var attrs = this.model.attributes;
-      var select$ = this.$el.find('select');
-      var isEnhancementNeeded = !attrs.nativeMenu || attrs.type === 'multi';
-      if (isEnhancementNeeded && !this.$el.children('.ui-select').length) {
-        select$.selectmenu();
-      }
+      this.$input.selectmenu();
     }
   });
 
