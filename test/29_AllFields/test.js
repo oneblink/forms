@@ -42,10 +42,10 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
           $elem = $view.children();
 
-          assert.equal($elem.last()[0].tagName, "SPAN");
+          assert.equal($elem.last()[0].tagName, 'SPAN');
           assert($($elem.last()[0]).hasClass('bm-formelement__bm-hint'));
           assert.equal($($elem[$elem.length - 2])[0].tagName, 'LABEL');
-          assert.equal($($elem[$elem.length - 2]).text(), "");
+          assert.equal($($elem[$elem.length - 2]).text(), '');
         });
       });
     });
@@ -71,7 +71,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
           $elem = $view.children();
 
-          assert.equal($elem.last()[0].tagName, "SPAN");
+          assert.equal($elem.last()[0].tagName, 'SPAN');
           assert($($elem.last()[0]).hasClass('bm-formelement__bm-hint'));
           assert.notEqual($($elem[$elem.length - 2])[0].tagName, 'LABEL');
         });
@@ -114,35 +114,35 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         Forms.current.attributes.pages.goto(0);
       });
 
-      [ "_heading_1",
-        "text_box",
-        "text_area",
-        "password",
-        "email",
-        "url",
-        "phone_number",
-        "number",
-        "currency",
-        "calculation",
-        "radio_buttons",
-        "select_box",
-        "star_rating",
-        "multi_select",
-        "checkboxes",
-        "checkbox",
-        "date",
-        "time",
-        "date_time",
-        "camera",
-        "image_library",
-        "file_upload",
-        "location",
-        "sketch_signature",
-        "_heading_3",
-        "value",
-        "logged_in_user_id",
-        "user_attribute",
-        "get_value"
+      [ '_heading_1',
+        'text_box',
+        'text_area',
+        'password',
+        'email',
+        'url',
+        'phone_number',
+        'number',
+        'currency',
+        'calculation',
+        'radio_buttons',
+        'select_box',
+        'star_rating',
+        'multi_select',
+        'checkboxes',
+        'checkbox',
+        'date',
+        'time',
+        'date_time',
+        'camera',
+        'image_library',
+        'file_upload',
+        'location',
+        'sketch_signature',
+        '_heading_3',
+        'value',
+        'logged_in_user_id',
+        'user_attribute',
+        'get_value'
       ].forEach(function (name) {
         test(name + ' has the rowclass property set', function () {
           assert.lengthOf($('.' + name + '-default-class'), 1);
@@ -156,12 +156,12 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         setTimeout(done, 100);
       });
 
-      [ "_heading_2",
-        "conditional_radio",
-        "conditional_calc",
-        "subform",
-        "validation_req",
-        "select_box2"].forEach(function (name) {
+      [ '_heading_2',
+        'conditional_radio',
+        'conditional_calc',
+        'subform',
+        'validation_req',
+        'select_box2'].forEach(function (name) {
           test(name + ' has the rowclass property set', function () {
             assert.lengthOf($('.' + name + '-default-class'), 1);
           });

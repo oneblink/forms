@@ -30,11 +30,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
           hidden.once('change:hidden', function () {
             view = hidden.get('_view');
-            assert.equal(view.$el.css('display'), "none");
+            assert.equal(view.$el.css('display'), 'none');
             done();
           });
 
-          $input.val("a");
+          $input.val('a');
           $input.trigger('change');
         });
 
@@ -48,11 +48,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
           hidden.once('change', function () {
             view = hidden.get('_view');
-            assert.equal(view.$el.css('display'), "block");
+            assert.equal(view.$el.css('display'), 'block');
             done();
           });
 
-          $input.val("");
+          $input.val('');
           $input.trigger('change');
         });
       });

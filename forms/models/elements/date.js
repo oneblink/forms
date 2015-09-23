@@ -1,20 +1,18 @@
-define([
-  'forms/models/element',
-  'moment'
-], function (Element, moment) {
+define(function (require) {
   'use strict';
 
-  var DateElement = Element.extend({
+  var _ = require('underscore');
 
-    defaults: {
-      page: 0,
-      class: '',
-      defaultValue: '',
-      value: '',
-      _time: '',
-      _date: '',
-      hidden: false,
-      persist: true
+  var ElementModel = require('forms/models/element');
+  var moment = require('moment');
+
+  return ElementModel.extend({
+
+    defaults: function () {
+      return _.assign(ElementModel.prototype.defaults.call(this), {
+        _time: '',
+        _date: ''
+      });
     },
 
     initialize: function () {
@@ -56,7 +54,7 @@ define([
         }
       }
 
-      Element.prototype.initialize.call(this);
+      ElementModel.prototype.initialize.call(this);
       this.on('change:_date change:_time', this.prepareValue);
       this.on('change:value', this.prepareDateTime);
       if (attr.defaultValue) {
@@ -223,6 +221,4 @@ define([
       h_mm: 'hh:mm A' // HH:MM AM/PM
     }
   });
-
-  return DateElement;
 });

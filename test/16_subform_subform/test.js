@@ -6,9 +6,9 @@ define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testU
 
     suiteSetup(function (done) {
       $.ajax({
-        type: "GET",
-        url: "getformrecord.xml",
-        dataType: "xml"}).then(
+        type: 'GET',
+        url: 'getformrecord.xml',
+        dataType: 'xml'}).then(
         function (res, stat, xhr) {
           status = stat;
           jqxhr = xhr;
@@ -97,48 +97,48 @@ define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testU
           Name: 'Dasy',
           Address: [
             {
-              "id": "51",
-              "Detail": "Great work",
-              "_action": "edit",
-              "Exp": [
+              'id': '51',
+              'Detail': 'Great work',
+              '_action': 'edit',
+              'Exp': [
                 {
-                  "id": "1",
-                  "Rank": "45",
-                  "_action": "edit"
+                  'id': '1',
+                  'Rank': '45',
+                  '_action': 'edit'
                 }
               ]
             },
             {
-              "id": "52",
-              "Detail": "Bad news",
-              "_action": "edit",
-              "Exp": [
+              'id': '52',
+              'Detail': 'Bad news',
+              '_action': 'edit',
+              'Exp': [
                 {
-                  "id": "2",
-                  "Rank": "89",
-                  "_action": "edit"
+                  'id': '2',
+                  'Rank': '89',
+                  '_action': 'edit'
                 },
                 {
-                  "id": "3",
-                  "Rank": "88",
-                  "_action": "edit"
+                  'id': '3',
+                  'Rank': '88',
+                  '_action': 'edit'
                 }
               ]
             },
             {
-              "id": "53",
-              "Detail": "Quite Day",
-              "_action": "edit",
-              "Exp": [
+              'id': '53',
+              'Detail': 'Quite Day',
+              '_action': 'edit',
+              'Exp': [
 
               ]
             }
           ]
         };
         $.ajax({
-          type: "GET",
-          url: "getformrecord.xml",
-          dataType: "xml"}).then(
+          type: 'GET',
+          url: 'getformrecord.xml',
+          dataType: 'xml'}).then(
           function (data) {
             var rec = {}, node, nodes;
             nodes = data.evaluate('//' + form.attributes.name, data);
@@ -151,11 +151,11 @@ define(['BlinkForms', 'backbone', 'testUtils'], function (Forms, Backbone, testU
                 var keys = _.keys(rec);
                 _.each(keys, function (k) {
                   assert.deepEqual(formdata[k], element[k]);
-                  assert.ok(formdata[k], k + " does not exist");
+                  assert.ok(formdata[k], k + ' does not exist');
                 });
                 done();
               }, function () {
-                assert(false, "failed to set record");
+                assert(false, 'failed to set record');
                 done();
               });
             });

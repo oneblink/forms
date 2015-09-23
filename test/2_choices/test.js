@@ -48,12 +48,6 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         assert.notOk(element.val(), name + ': model value is falsey');
         // assert.lengthOf($selected, 0, name + ': nothing checked');
         assert.lengthOf($other, 0, name + ': other box absent');
-
-        if (element.get('nativeMenu')) {
-          assert.equal($view.find('select').data("role"), "none", name + ': data-role is not none');
-        } else {
-          assert.notEqual($view.find('select').data("role"), "none", name + ': data-role is not none');
-        }
       });
     });
 
@@ -146,20 +140,12 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         assert.notOk(element.val(), name + ': model value is falsey');
         assert.lengthOf($checked, 0, name + ': nothing checked');
         assert.lengthOf($other, 0, name + ': other box absent');
-
-        if (element.get('nativeMenu')) {
-          assert.equal($view.find('select').data("role"), "none", name + ': data-role is not none');
-        } else {
-          assert.notEqual($view.find('select').data("role"), "none", name + ': data-role is not none');
-        }
       });
     });
 
     test('Multi-F native collapsed', function () {
       var form = Forms.current,
-        element = form.getElement('multif'),
-        $fieldset = element.attributes._view.$el,
-        $select = $fieldset.find('select');
+        element = form.getElement('multif');
 
       element.val([]);
       assert.deepEqual(element.val(), [], 'model.value is []');
@@ -169,8 +155,6 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
 
       element.val(['a', 'b']);
       assert.deepEqual(element.val(), ['a', 'b'], 'model.value = ["a", "b"]');
-
-      assert.equal($select.data("role"), "none", "data-role is not none");
     });
 
     ['boolean', 'question'].forEach(function (name) {
@@ -239,7 +223,7 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
       });
     });
 
-    ['selectc', 'multic', 'multif', 'multig', 'multiee'].forEach(function (name) {
+    ['multic', 'multif', 'multig', 'multiee'].forEach(function (name) {
       test(name + ': model->view', function () {
         var form = Forms.current,
           element = form.getElement(name),
@@ -284,7 +268,7 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
       });
     });
 
-    ['selectf', 'selecth'].forEach(function (name) {
+    ['selectc', 'selectf', 'selecth'].forEach(function (name) {
       test(name + ': model->view', function () {
         var form = Forms.current,
           element = form.getElement(name),
@@ -402,12 +386,6 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         assert.notOk(element.val(), name + ': model value is falsey');
         // assert.lengthOf($selected, 0, name + ': nothing checked');
         assert.lengthOf($other, 0, name + ': other box absent');
-
-        if (element.get('nativeMenu')) {
-          assert.equal($view.find('select').data("role"), "none", name + ': data-role is not none');
-        } else {
-          assert.notEqual($view.find('select').data("role"), "none", name + ': data-role is not none');
-        }
       });
     });
 
@@ -500,12 +478,6 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         assert.notOk(element.val(), name + ': model value is falsey');
         assert.lengthOf($checked, 0, name + ': nothing checked');
         assert.lengthOf($other, 0, name + ': other box absent');
-
-        if (element.get('nativeMenu')) {
-          assert.equal($view.find('select').data("role"), "none", name + ': data-role is not none');
-        } else {
-          assert.notEqual($view.find('select').data("role"), "none", name + ': data-role is not none');
-        }
       });
     });
 
@@ -541,20 +513,20 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         radio = form.getElement('Radios'),
         $radEl = radio.attributes._view.$el;
 
-      checkbox.set('value', ["test"]);
-      assert.equal($chkEl.find('input[type="text"]').length, 0, "textbox for checkboxes is visible");
-      radio.set('value', "test");
-      assert.equal($radEl.find('input[type="text"]').length, 0, "textbox for radios is visible");
+      checkbox.set('value', ['test']);
+      assert.equal($chkEl.find('input[type="text"]').length, 0, 'textbox for checkboxes is visible');
+      radio.set('value', 'test');
+      assert.equal($radEl.find('input[type="text"]').length, 0, 'textbox for radios is visible');
     });
 
     suite('FORMS-206 # choice fields that are required but not-empty still block validation', function () {
       var form,
         element,
         fields = {
-          'multicollapsedrequired': ["a"],
-          'multiexpandedrequired': ["a"],
-          'selectcollapsedrequired': "a",
-          'selectexpandedrequired': "a"
+          'multicollapsedrequired': ['a'],
+          'multiexpandedrequired': ['a'],
+          'selectcollapsedrequired': 'a',
+          'selectexpandedrequired': 'a'
         };
 
       suiteSetup(function () {
