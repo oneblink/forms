@@ -124,7 +124,6 @@ define(function (require) {
         attrs.trigger.formEvents.push('load');
       }
 
-      // legacy calculations only expect to monitor value changes (performance)
       attrs.event = 'change:value change:html';
 
       this.hookupTriggers();
