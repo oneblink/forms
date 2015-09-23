@@ -125,7 +125,7 @@ define(function (require) {
       }
 
       // legacy calculations only expect to monitor value changes (performance)
-      attrs.event = attrs.isLegacy ? 'change:value change:html' : 'change';
+      attrs.event = 'change:value change:html';
 
       this.hookupTriggers();
 
