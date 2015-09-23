@@ -4,6 +4,7 @@ define(function (require) {
   // foreign modules
 
   var $ = require('jquery');
+  var _ = require('underscore');
 
   // local modules
 
@@ -11,9 +12,7 @@ define(function (require) {
 
   // this module
 
-  var WebRTCImageElementView;
-
-  WebRTCImageElementView = FileElementView.extend({
+  return FileElementView.extend({
     renderControls: function () {
       var attrs = this.model.attributes;
       if (!this.$controls) {
@@ -24,7 +23,7 @@ define(function (require) {
         this.$webrtc.attr('name', attrs.name);
         this.$controls.append(this.$webrtc);
         this.$el.append(this.$controls);
-        this.$webrtc.on('click', WebRTCImageElementView.onButtonClick.bind(this));
+        this.$webrtc.on('click', this.onButtonClick.bind(this));
       }
 
       this.$webrtc.button();
@@ -32,8 +31,8 @@ define(function (require) {
 
     remove: function () {
       return FileElementView.prototype.remove.call(this);
-    }
-  }, {
+    },
+
     onButtonClick: function () {
       var that = this;
       var $popup = $('<div data-role="popup"><h1>Tap to snap</h1></div>');
@@ -155,11 +154,9 @@ define(function (require) {
       };
 
       stop = function () {
-        if (stream.stop) {
-          stream.stop();
+        if (stream) {
+          _.invoke(stream.getTracks(), 'stop');
         }
-        $popup.remove();
-        $popup = $tracks = $video = $image = $error = $buttons = $rotate = $cancel = $recapture = $use = $canvas = null;
       };
 
       $popup.popup({
@@ -173,6 +170,10 @@ define(function (require) {
           $rotate.off();
           $recapture.off();
           $use.off();
+          [$popup, $tracks, $video, $image, $error, $buttons, $rotate, $cancel, $recapture, $use, $canvas].forEach(function($el){
+            $el.remove();
+            $el = null;
+          });
           stop();
         }
       });
@@ -195,9 +196,11 @@ define(function (require) {
 
           if (cameraCounter > 1) {
             $popup.prepend($tracks);
-            $tracks.on('change', function () {
+            $tracks.on('change', function (e) {
               stop();
               start($tracks.val());
+
+              return false;
             });
           }
 
@@ -210,6 +213,4 @@ define(function (require) {
       }
     }
   });
-
-  return WebRTCImageElementView;
 });
