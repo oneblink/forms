@@ -14,8 +14,10 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         var form = BMP.Forms.current,
           element = form.getElement('calc_button'),
           $view = element.attributes._view.$el,
-          $calc = $view.children('.ui-btn').children('button');
+          $calc = $view.children('.ui-btn').children('button'),
+          calcElement = form.getElement('calc');
 
+        assert.equal(calcElement.val(), undefined);
         $calc.trigger('click');
         setTimeout(function () {
           form.data().then(function (data) {
