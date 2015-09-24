@@ -135,7 +135,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.7.2';
+  Forms.version = '3.8.0';
   Forms.supports = {};
 
   Forms.supports.blob = (function () {
@@ -155,7 +155,12 @@ define(function (require) {
   Forms.loading.googleMap = false;
 
   Forms.loadScript = function (src, done) {
-    var script = document.createElement('script');
+    var script;
+    script = document.querySelectorAll('script[src="' + src + '"]');
+    if (script.length) {
+      return;
+    }
+    script = document.createElement('script');
     script.src = src;
     if (done && typeof done === 'function') {
       script.onload = done;
