@@ -3,8 +3,6 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
   suite('31.2 confirm that behaviour runs multiple times', function () {
     suite('second_level_field', function () {
-      var i;
-
       suiteSetup(function (done) {
         var form;
         var element;
@@ -21,7 +19,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         $add.trigger('click');
       });
 
-      for (i = 1; i <= 4; i++) {
+      _.times(4, function () {
         test('`second_required` to non-empty, should hide `cond_hidden`', function (done) {
           var form = Forms.current.getElement('second_level_field').get('forms').at(0);
           var element = form.getElement('second_required');
@@ -32,11 +30,11 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
           hidden.once('change:hidden', function () {
             view = hidden.get('_view');
-            assert.equal(view.$el.css('display'), "none");
+            assert.equal(view.$el.css('display'), 'none');
             done();
           });
 
-          $input.val("a");
+          $input.val('a');
           $input.trigger('change');
         });
 
@@ -50,14 +48,14 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
           hidden.once('change', function () {
             view = hidden.get('_view');
-            assert.equal(view.$el.css('display'), "block");
+            assert.equal(view.$el.css('display'), 'block');
             done();
           });
 
-          $input.val("");
+          $input.val('');
           $input.trigger('change');
         });
-      }
+      });
     });
   });
 });

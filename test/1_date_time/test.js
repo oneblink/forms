@@ -1,23 +1,23 @@
 define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (Forms, testUtils, _, moment) {
   var nativedate = [
-    'date',
-    'datetime'
-  ], nativetime = [
-    'time',
-    'datetime'
-  ], pickadate = [
-    'datenow',
-    'datefromnowplus',
-    'datefromdate',
-    'datetimenow',
-    'date column'
-  ], pickatime = [
-    'timenow',
-    'timenowplus',
-    'timenowtime',
-    'datetimenow',
-    'time column'
-  ];
+      'date',
+      'datetime'
+    ], nativetime = [
+      'time',
+      'datetime'
+    ], pickadate = [
+      'datenow',
+      'datefromnowplus',
+      'datefromdate',
+      'datetimenow',
+      'date column'
+    ], pickatime = [
+      'timenow',
+      'timenowplus',
+      'timenowtime',
+      'datetimenow',
+      'time column'
+    ];
 
   function defineModelToViewTests () {
     test('model->value', function (done) {
@@ -82,7 +82,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
               } else if (name === 'datefromdate') {
                 date = '2014-03-10';
               } else {
-                date = "2015-06-10";
+                date = '2015-06-10';
               }
               result = moment(date).format(format);
               date$.val(result);
@@ -92,7 +92,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
               assert.equal(date, el.get('_date'), name + ': _date value');
             }
             if (type !== 'date') {
-              time = "10:00";
+              time = '10:00';
               time$.val(time);
               time$.trigger('change');
               assert.lengthOf(time$, 1, name + ': has DOM time');
@@ -137,13 +137,13 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
         date = $fieldset.find('input[name="datetimenonative_date"]'),
         time = $fieldset.find('input[name="datetimenonative_time"]');
 
-      date.val("2014-02-01").change();
-      assert.equal(element.val(), "2014-02-01T00:00");
+      date.val('2014-02-01').change();
+      assert.equal(element.val(), '2014-02-01T00:00');
 
-      date.val("").change();
-      time.val("").change();
-      time.val("10:11").change();
-      assert.equal(element.val(), "0000-00-00T10:11");
+      date.val('').change();
+      time.val('').change();
+      time.val('10:11').change();
+      assert.equal(element.val(), '0000-00-00T10:11');
     });
 
     test('use datetime field - organise elements properly on screen', function () {
@@ -191,7 +191,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
             var element = form.getElement(fld);
             var $fieldset = element.attributes._view.$el;
             var $input = $fieldset.find('input[name="' + fld + subtype + '"]');
-            var $root = $("#" + $input.attr('id') + "_root.picker");
+            var $root = $('#' + $input.attr('id') + '_root.picker');
 
             assert.equal($input.hasClass('picker__input'), true);
             assert.equal($root.length, 1);
@@ -228,8 +228,8 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
           element = form.getElement(fld);
           $fieldset = element.attributes._view.$el;
           // should not contain any input fields
-          assert.equal($fieldset.find("input").length, 0);
-          assert.equal(element.attributes.picker, "shown");
+          assert.equal($fieldset.find('input').length, 0);
+          assert.equal(element.attributes.picker, 'shown');
           assert(element.attributes.readonly);
         });
       });
@@ -243,7 +243,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
           $fieldset = element.attributes._view.$el;
           // should have display: none set in stylesheet
           assert.equal($fieldset.css('display'), 'none');
-          assert.equal(element.attributes.picker, "hidden");
+          assert.equal(element.attributes.picker, 'hidden');
           assert(element.attributes.hidden);
         });
       });
@@ -272,7 +272,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
           // should contain date field
           $input = $fieldset.find("input[type='date']");
           assert.equal($input.length, 1);
-          assert($input.val(), "no value assigned to $input");
+          assert($input.val(), 'no value assigned to $input');
         });
       });
       defineModelToViewTests();
@@ -280,7 +280,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
     });
 
     suite('picker value assignment', function () {
-      var pickadate = [
+      var pickadates = [
         'datenonative',
         'datetimenonative',
         'datenow',
@@ -299,45 +299,45 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
 
       test('element value assignment reflected in picker, model, view ', function (done) {
         setTimeout(function () {
-            pickadate.forEach(function (fld) {
-              var form = Forms.current;
-              var el = form.getElement(fld);
-              var type = el.get('type');
-              var nowdate = [
-                'datenow',
-                'datefromnowplus',
-                'dateTimeHiddenNow'
-              ];
-              var date$ = el.get('_view').$el.find('input[name$=_date]');
-              var picker = date$.pickadate('picker');
-              var dateFormat = el.mapDateFormats[el.attributes.dateFormat] || "YYYY-MM-DD";
-              var expected, date;
+          pickadates.forEach(function (fld) {
+            var form = Forms.current;
+            var el = form.getElement(fld);
+            var type = el.get('type');
+            var nowdate = [
+              'datenow',
+              'datefromnowplus',
+              'dateTimeHiddenNow'
+            ];
+            var date$ = el.get('_view').$el.find('input[name$=_date]');
+            var picker = date$.pickadate('picker');
+            var dateFormat = el.mapDateFormats[el.attributes.dateFormat] || 'YYYY-MM-DD';
+            var expected, date;
 
-              if (type !== 'time') {
-                if (_.indexOf(nowdate, fld) > -1) {
-                  date = moment().format('YYYY-MM-DD');
-                } else if (fld === 'datefromdate') {
-                  date = '2014-03-10';
-                } else {
-                  date = "2015-06-10";
-                }
-                el.val(date);
-                expected = moment(date).format(dateFormat);
-
-                assert.equal(date$.val(), expected, fld + ': DOM date value');
-                assert.equal(el.get('_date'), date, fld + ': _date value');
-                if (type === 'datetime') {
-                  assert.equal(el.val().split('T')[0], el.get('_date'), fld + ': element value');
-                } else {
-                  assert.equal(el.val(), el.get('_date'), fld + ': element value');
-                }
-                if (picker) {
-                  assert.equal(picker.get('select', 'yyyy-mm-dd'), el.get('_date'), fld + ': picker value');
-                }
+            if (type !== 'time') {
+              if (_.indexOf(nowdate, fld) > -1) {
+                date = moment().format('YYYY-MM-DD');
+              } else if (fld === 'datefromdate') {
+                date = '2014-03-10';
+              } else {
+                date = '2015-06-10';
               }
-            });
-            done();
-          }, 1e3);
+              el.val(date);
+              expected = moment(date).format(dateFormat);
+
+              assert.equal(date$.val(), expected, fld + ': DOM date value');
+              assert.equal(el.get('_date'), date, fld + ': _date value');
+              if (type === 'datetime') {
+                assert.equal(el.val().split('T')[0], el.get('_date'), fld + ': element value');
+              } else {
+                assert.equal(el.val(), el.get('_date'), fld + ': element value');
+              }
+              if (picker) {
+                assert.equal(picker.get('select', 'yyyy-mm-dd'), el.get('_date'), fld + ': picker value');
+              }
+            }
+          });
+          done();
+        }, 1e3);
       });
     });
 

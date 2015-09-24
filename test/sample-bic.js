@@ -69,9 +69,9 @@ define([
   BMP.Expression.fn.interaction = function (interaction, queryString) {
     return new Promise(function (resolve, reject) {
       $.ajax({
-        type: "GET",
-        url: interaction + ".xml?" + queryString,
-        dataType: "xml"}).then(
+        type: 'GET',
+        url: interaction + '.xml?' + queryString,
+        dataType: 'xml'}).then(
         function (data) {
           resolve(data);
         }, function () {
@@ -84,9 +84,9 @@ define([
   BMP.Expression.fn.suitcase = function (suitcase, type) {
     return new Promise(function (resolve, reject) {
       $.ajax({
-        type: "GET",
-        url: suitcase + ".xml?" + type,
-        dataType: "xml"}).then(
+        type: 'GET',
+        url: suitcase + '.xml?' + type,
+        dataType: 'xml'}).then(
         function (data) {
           resolve(data);
         }, function () {

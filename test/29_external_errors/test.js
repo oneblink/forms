@@ -10,8 +10,8 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
     test('External errors set show up on form', function () {
       var element = Forms.current.getElement('textBox1')
         , externalErrors = {
-            textBox1: [{code: 'CUSTOM', CUSTOM: 'This is custom text'}]
-          };
+          textBox1: [{code: 'CUSTOM', CUSTOM: 'This is custom text'}]
+        };
       element.val('1'); // field is marked aas required in the definition
       Forms.current.setErrors(externalErrors);
 
@@ -54,7 +54,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       };
 
       var form = Forms.current,
-          element = form.getElement('city');
+        element = form.getElement('city');
       element.val('');
       assert.equal(element.validationError.value.length, 1);
 
@@ -68,7 +68,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       };
 
       var form = Forms.current,
-          element = form.getElement('city');
+        element = form.getElement('city');
 
       element.val('');
       assert.equal(element.validationError.value[0].code, 'REQUIRED');
@@ -85,19 +85,19 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       setup(function () {
         externalErrors = {
           'comments': {
-              'form2': {
-                  '1': {
-                      'comment': {
-                          'code': 'CUSTOM',
-                          'CUSTOM': 'field custom server error',
-                          'text': 'field custom server error'
-                      }
-                  }
-              },
-              'errors': {
-                code: 'CUSTOM',
-                CUSTOM: 'this is a custom subform element error'
+            'form2': {
+              '1': {
+                'comment': {
+                  'code': 'CUSTOM',
+                  'CUSTOM': 'field custom server error',
+                  'text': 'field custom server error'
+                }
               }
+            },
+            'errors': {
+              code: 'CUSTOM',
+              CUSTOM: 'this is a custom subform element error'
+            }
           }
         };
 
@@ -114,13 +114,13 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
 
       test('We can set a custom error message on a subform *element*', function () {
-          var errorMessages;
+        var errorMessages;
 
-          Forms.current.setErrors(externalErrors);
-          errorMessages = Forms.current.getElement('comments').validationError.value;
+        Forms.current.setErrors(externalErrors);
+        errorMessages = Forms.current.getElement('comments').validationError.value;
 
-          assert.equal(errorMessages[0].code, 'CUSTOM');
-          assert.equal(errorMessages[0].CUSTOM, 'this is a custom subform element error');
+        assert.equal(errorMessages[0].code, 'CUSTOM');
+        assert.equal(errorMessages[0].CUSTOM, 'this is a custom subform element error');
       });
 
       test('We can set a custom error message on an element in a specific subform', function () {

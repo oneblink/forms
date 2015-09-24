@@ -86,11 +86,11 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
 
       test('toCameraOptions called', function () {
         var form = Forms.current,
-        element = form.getElement('image'),
-        result = {
-          quality: 50,
-          imageScale: 60
-        };
+          element = form.getElement('image'),
+          result = {
+            quality: 50,
+            imageScale: 60
+          };
         assert.deepEqual(element.toCameraOptions(), result);
       });
     }); // END: suite('', ...)

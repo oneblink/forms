@@ -135,11 +135,11 @@ define(['jquery', 'BlinkForms', 'testUtils'], function ($, Forms, testUtils) {
 
     suite('Message and Headings', function () {
       test('Message field with old-definition structure', function () {
-        assert.equal($('[data-name="_message_1"]').html(), "Message using <em><strong>old definition<strong> structure</strong></strong></em>");
+        assert.equal($('[data-name="_message_1"]').html(), 'Message using <em><strong>old definition<strong> structure</strong></strong></em>');
       });
       test('Heading field with old-definition structure', function () {
-        assert.equal($('[data-name="_heading_1"]').find('h1').html(), "Heading using old definition");
-        assert.equal($('[data-name="_heading_1"]').find('p').html(), "<span>Small text to support heading</span>");
+        assert.equal($('[data-name="_heading_1"]').find('h1').html(), 'Heading using old definition');
+        assert.equal($('[data-name="_heading_1"]').find('p').html(), '<span>Small text to support heading</span>');
       });
     });
   }); // END: suite('12', ...)

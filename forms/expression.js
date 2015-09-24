@@ -7,13 +7,11 @@ define(function (require) {
 
   // this module
 
-  var Expression;
-
   /**
    * @param {Object} definition object { operator: String, operands: Array }
    * @constructor
    */
-  Expression = function (definition, ctx, names) {
+  function Expression (definition, ctx, names) {
     var self = this;
     var def = JSON.parse(JSON.stringify(definition));
 
@@ -43,7 +41,7 @@ define(function (require) {
         self.operands[index] = new Expression(op, ctx, names);
       }
     });
-  };
+  }
 
   Expression.prototype.evaluate = function () {
     var self = this;

@@ -114,12 +114,12 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       assert.equal($input.val(), numberSlider.get('value'));
 
       // set model value and should change input value
-      numberSlider.set("value", 100);
+      numberSlider.set('value', 100);
       assert.equal($input.val(), numberSlider.get('value'));
 
       // set input value, and trigger change, should change model value
       $input.val(200);
-      numberSlider.attributes._view.$el.trigger("change");
+      numberSlider.attributes._view.$el.trigger('change');
       assert.equal($input.val(), numberSlider.get('value'));
 
       // switch pages back and forth
@@ -161,7 +161,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
     test('Forms.current.get("_view").goToElement() can goto fields on other pages', function () {
       var previousPage = BMP.Forms.current.get('pages').current.cid;
-      Forms.current.get("_view").goToElement('email');
+      Forms.current.get('_view').goToElement('email');
 
       assert.notEqual(BMP.Forms.current.get('pages').current.cid, previousPage);
       assert.isTrue($('[name="email"]').is(':visible'));

@@ -164,7 +164,7 @@ function (FileModel) {
 
       test('Blob data is set with correct jpeg header', function () {
         var model = new FileModel()
-          , fromDataUriStub = sinon.stub(window.BMP.Blob, "fromDataURI")
+          , fromDataUriStub = sinon.stub(window.BMP.Blob, 'fromDataURI')
           , data = 'abc123';
 
         fromDataUriStub.returnsArg(0);

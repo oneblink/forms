@@ -13,6 +13,7 @@ npm-debug.log
 BlinkForms.sublime-*
 /nbproject
 
-# build output
+# temporary / output files
 build
 forms/locales/en/i18n.js
+.eslintcache

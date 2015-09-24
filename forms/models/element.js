@@ -24,18 +24,22 @@ define(function (require) {
   var Element;
 
   Element = Backbone.Model.extend({
-    defaults: {
-      page: 0,
-      class: '',
-      defaultValue: '',
-      value: '',
-      pattern: '',
-      hidden: false,
-      persist: true,
-      isDirty: false,
-      isPristine: true
+    defaults: function () {
+      return {
+        page: 0,
+        class: '',
+        defaultValue: '',
+        value: '',
+        pattern: '',
+        hidden: false,
+        persist: true,
+        isDirty: false,
+        isPristine: true
+      };
     },
+
     idAttribute: 'name',
+
     initialize: function () {
       var attrs = this.attributes;
       var form = attrs.form;
@@ -229,7 +233,7 @@ define(function (require) {
     set: function (key, value, options) {
       var attrs, result;
       if (!key) {
-        return;
+        return undefined;
       }
 
       if (typeof key === 'object') {

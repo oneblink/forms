@@ -26,7 +26,9 @@ define(function (require) {
     var el = this.getElement(name);
     if (!el) {
       /* eslint-disable no-console */
-      console && console.warn('Conditional Logic uses a hidden Element: ' + name);
+      if (window.console && window.console.warn) {
+        window.console.warn('Conditional Logic uses a hidden Element: ' + name);
+      }
       /* eslint-enable no-console */
       return undefined;
     }
@@ -122,8 +124,7 @@ define(function (require) {
         attrs.trigger.formEvents.push('load');
       }
 
-      // legacy calculations only expect to monitor value changes (performance)
-      attrs.event = attrs.isLegacy ? 'change:value change:html' : 'change';
+      attrs.event = 'change:value change:html';
 
       this.hookupTriggers();
 

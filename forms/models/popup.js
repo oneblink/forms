@@ -16,17 +16,19 @@ define(function (require) {
    * @property {boolean} [dissmissible=true] - See [jQuery Mobile](http://api.jquerymobile.com/1.3/popup/#option-dismissible) for more details
    */
   var PopupModel = Backbone.Model.extend({
-    defaults: {
-      title: '',
-      message: '',
+    defaults: function () {
+      return {
+        title: '',
+        message: '',
 
-      cancelButtonText: 'No',
-      cancelButtonIcon: 'delete',
+        cancelButtonText: 'No',
+        cancelButtonIcon: 'delete',
 
-      confirmButtonText: 'Yes',
-      confirmButtonIcon: 'check',
+        confirmButtonText: 'Yes',
+        confirmButtonIcon: 'check',
 
-      dissmissible: true
+        dissmissible: true
+      };
     }
   });
 

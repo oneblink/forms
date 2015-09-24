@@ -15,9 +15,9 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
       var form = Forms.current;
 
       $.ajax({
-        type: "GET",
-        url: "getformrecord.xml",
-        dataType: "xml"}).then(
+        type: 'GET',
+        url: 'getformrecord.xml',
+        dataType: 'xml'}).then(
         function (data) {
           var record = {}, node, nodes;
           nodes = data.evaluate('//' + form.attributes.name, data);
@@ -29,11 +29,11 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
             form.data().then(function (formdata) {
               var keys = ['id', 'location1', 'location2', '_action'];
               _.each(keys, function (k) {
-                assert.ok(formdata[k], k + " does not exist");
+                assert.ok(formdata[k], k + ' does not exist');
               });
               done();
             }, function () {
-              assert(false, "failed to set record");
+              assert(false, 'failed to set record');
               done();
             });
           });
@@ -68,8 +68,8 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         }
       };
 
-      spy = sinon.spy(navigator.map, "confirmLocation");
-      spyStatic = sinon.spy(navigator.map, "getStaticMap");
+      spy = sinon.spy(navigator.map, 'confirmLocation');
+      spyStatic = sinon.spy(navigator.map, 'getStaticMap');
 
       element.once('change:value', function () {
         assert.equal(spyStatic.callCount, 0);
@@ -90,7 +90,7 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
 
       navigator.map = {
         confirmLocation: function (onSuccess, onError, options) {
-          var sampleLocation = {"latitude": -33.867487, "longitude": 151.20699, "accuracy": 25000};
+          var sampleLocation = {'latitude': -33.867487, 'longitude': 151.20699, 'accuracy': 25000};
           assert.isFunction(onSuccess);
           assert.isFunction(onError);
           assert.ok(options.latitude);
@@ -109,8 +109,8 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         }
       };
 
-      spy = sinon.spy(navigator.map, "confirmLocation");
-      spyStatic = sinon.spy(navigator.map, "getStaticMap");
+      spy = sinon.spy(navigator.map, 'confirmLocation');
+      spyStatic = sinon.spy(navigator.map, 'getStaticMap');
 
       element.once('change:value', function () {
         assert.equal(spyStatic.callCount, 1);
@@ -131,13 +131,13 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
 
       navigator.map = {
         confirmLocation: function (onSuccess, onError, options) {
-          var spy2 = sinon.spy(window.console, "error");
+          var spy2 = sinon.spy(window.console, 'error');
           assert.isFunction(onSuccess);
           assert.isFunction(onError);
           assert.ok(options.latitude);
           assert.ok(options.longitude);
 
-          assert(!onError("test error"));
+          assert(!onError('test error'));
 
           setTimeout(function () {
             assert.equal(spy2.callCount, 1);
@@ -151,8 +151,8 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         }
       };
 
-      spy = sinon.spy(navigator.map, "confirmLocation");
-      spyStatic = sinon.spy(navigator.map, "getStaticMap");
+      spy = sinon.spy(navigator.map, 'confirmLocation');
+      spyStatic = sinon.spy(navigator.map, 'getStaticMap');
 
       element.once('change:value', function () {
         assert.equal(spyStatic.callCount, 0);
@@ -174,9 +174,9 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
       $clear.trigger('click');
 
       setTimeout(function () {
-          value = element.get('value');
-          assert.notOk(value, "value still exists");
-          done();
+        value = element.get('value');
+        assert.notOk(value, 'value still exists');
+        done();
       }, 0);
     });
 
@@ -186,14 +186,14 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         $locate = $view.find('.ui-btn').children('button').first(),
         spy, spyStatic, sampleImage;
 
-      sampleImage = "data:image/jpeg;base64,blah";
+      sampleImage = 'data:image/jpeg;base64,blah';
 
       navigator.map = {
         confirmLocation: function (onSuccess, onError, options) {
           var sampleLocation = {
-            "latitude": -33.867487,
-            "longitude": 151.20699,
-            "accuracy": 25000
+            'latitude': -33.867487,
+            'longitude': 151.20699,
+            'accuracy': 25000
           };
           assert.isFunction(onSuccess);
           assert.isFunction(onError);
@@ -210,8 +210,8 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         }
       };
 
-      spy = sinon.spy(navigator.map, "confirmLocation");
-      spyStatic = sinon.spy(navigator.map, "getStaticMap");
+      spy = sinon.spy(navigator.map, 'confirmLocation');
+      spyStatic = sinon.spy(navigator.map, 'getStaticMap');
 
       element.once('change:value', function () {
         var $img;
@@ -219,8 +219,8 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         assert.equal(spyStatic.callCount, 1);
         // there will be atleast one image and src would be the content sent by onSuccess
         $img = element.get('_view').$el.find('img');
-        assert.equal($img.length, 1, "image not found");
-        assert.equal(element.get('_view').$el.find('img').attr('src'), sampleImage, "invalid image src");
+        assert.equal($img.length, 1, 'image not found');
+        assert.equal(element.get('_view').$el.find('img').attr('src'), sampleImage, 'invalid image src');
 
         done();
       });
@@ -239,9 +239,9 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
       navigator.map = {
         confirmLocation: function (onSuccess, onError, options) {
           var sampleLocation = {
-            "latitude": -33.861234,
-            "longitude": 151.20699,
-            "accuracy": 25000
+            'latitude': -33.861234,
+            'longitude': 151.20699,
+            'accuracy': 25000
           };
           assert.isFunction(onSuccess);
           assert.isFunction(onError);
@@ -254,13 +254,13 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
           assert.isFunction(onSuccess);
           assert.isFunction(onError);
 
-          onError("map cannot be displayed");
+          onError('map cannot be displayed');
         }
       };
 
-      spy = sinon.spy(navigator.map, "confirmLocation");
-      spyStatic = sinon.spy(navigator.map, "getStaticMap");
-      spyError = sinon.spy(window.console, "error");
+      spy = sinon.spy(navigator.map, 'confirmLocation');
+      spyStatic = sinon.spy(navigator.map, 'getStaticMap');
+      spyError = sinon.spy(window.console, 'error');
 
       element.once('change:value', function () {
         var $img;
@@ -269,7 +269,7 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         assert.equal(spyError.callCount, 1);
         // there won't be any image, because of error call
         $img = element.get('_view').$el.find('img');
-        assert.equal($img.length, 0, "image not found");
+        assert.equal($img.length, 0, 'image not found');
         window.console.error.restore();
 
         done();
