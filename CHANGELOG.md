@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v3.8.0 - 2015-09-24
+
+
+### Changed
+
+- FORMS-226: improved UX for collapsed single-choice fields
+
+    - interaction and selection once again uses the built-in "select" widget
+
+    - consistent jQueryMobile styling is still used otherwise
+
+- FORMS-243: Backbone.Model constructors have inheritance-safe "defaults"
+
+    - follows recommendation from upstream: http://backbonejs.org/#Model-defaults
+
+    - per upstream, consumers expect either Object or Function "defaults"
+
+
+### Fixed
+
+- FORMS-225: manual calculations are no longer automatically triggered during load
+
+
 ## v3.7.2 - 2015-09-11
 
 
