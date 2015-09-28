@@ -3,6 +3,7 @@ define(function (require) {
 
   var Backbone = require('backbone');
   var _ = require('underscore');
+  var $ = require('jquery');
 
   var NotImplementedError = require('typed-errors').NotImplementedError;
   /**
@@ -11,16 +12,19 @@ define(function (require) {
   var PopupView = Backbone.View.extend({
     element: 'div',
 
-    attributes: {
-      'data-theme': 'c',
-      'data-position-to': 'window',
-      'data-transition': 'pop',
-      'data-role': 'popup'
+    attributes: function () {
+      return {
+        'data-theme': 'c',
+        'data-position-to': 'window',
+        'data-transition': 'pop',
+        'data-role': 'popup',
+        'data-dissmissible': _.isUndefined(this.model.dissmissible) ? true : this.model.dissmissible,
+        'class': 'ui-content'
+      };
     },
 
     initialize: function () {
       this._promise = null;
-      this.attributes['data-dissmissible'] = _.isUndefined(this.model.dissmissible) ? true : this.model.dissmissible;
     },
 
     render: function () {
@@ -41,12 +45,12 @@ define(function (require) {
         this._resolve = resolve;
         this._reject = reject;
 
-        this.$el = this.render().$el.popup();
-
+        this.$el = this.render().$el.popup().trigger('create');
+        // reposition before opening because triggering create and
+        // adding the video feed can change the layout dimensions
+        this.$el.one('popupafteropen', this.centreOnScreen.bind(this));
+        this.$el.one('popupafterclose', this.remove.bind(this));
         this.$el.popup('open');
-        this.$el.one('popupafterclose', function () {
-          this.remove();
-        }.bind(this));
       }.bind(this));
 
       this._promise.catch(function (err) {
@@ -63,6 +67,13 @@ define(function (require) {
       this._resolve = null;
       this._reject = null;
       this._promise = null;
+    },
+
+    centreOnScreen: function () {
+      this.$el.popup('reposition', {
+        x: ($(window).innerWidth() - this.$el.width()) / 2,
+        y: ($(window).innerHeight() - this.$el.height()) / 2
+      });
     }
   });
 
