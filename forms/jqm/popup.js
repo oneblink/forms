@@ -46,9 +46,6 @@ define(function (require) {
         this._reject = reject;
 
         this.$el = this.render().$el.popup().trigger('create');
-        // reposition before opening because triggering create and
-        // adding the video feed can change the layout dimensions
-        this.$el.one('popupafteropen', this.centreOnScreen.bind(this));
         this.$el.one('popupafterclose', this.remove.bind(this));
         this.$el.popup('open');
       }.bind(this));
@@ -70,9 +67,10 @@ define(function (require) {
     },
 
     centreOnScreen: function () {
+      var $window = $(window);
       this.$el.popup('reposition', {
-        x: ($(window).innerWidth() - this.$el.width()) / 2,
-        y: ($(window).innerHeight() - this.$el.height()) / 2
+        x: ($window.innerWidth() - this.$el.width()) / 2,
+        y: ($window.innerHeight() - this.$el.height()) / 2
       });
     }
   });
