@@ -3,10 +3,19 @@
  * @module bmMedia/getUserMedia
  * @see  module:bmMedia
  */
-define(function (require) {
+define(function () {
   'use strict';
 
-  var browserFn = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia).bind(navigator);
+  var browserFn = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+
+  // all this for phantomjs.
+  if (browserFn) {
+    browserFn = browserFn.bind(navigator);
+  } else {
+    browserFn = function () {
+      throw new TypeError('Unable to use navigator.getUserMedia as it is not available');
+    };
+  }
 
   function bmUserMedia () {}
 
@@ -44,7 +53,7 @@ define(function (require) {
   /**
    * returns access to the built in `navigator.getUserMedia`,
    * which is bound to _navigator_
-   * @return {function} 
+   * @return {function}
    */
   bmUserMedia.getBuiltinFn = function () {
     return browserFn;
