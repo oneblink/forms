@@ -14,9 +14,8 @@ define([
     });
 
     test('errors before rendering form with data', function () {
-      // var invalidFld = form.getInvalidElements().length;
-      //
-      // assert.equal(invalidFld, 4, ' invalid elements in form');
+      var invalidFld = form.getInvalidElements().length;
+      assert.equal(invalidFld, 4, ' invalid elements in form');
     });
 
     test('Render form with data', function (done) {
