@@ -3,7 +3,7 @@ define(function () {
     {
       'default': {
         name: 'form1',
-        label: 'Form 1',
+        label: 'Form1',
         _elements: [
           {
             'default': {
@@ -48,7 +48,8 @@ define(function () {
              name: 'Image',
              type: 'file',
              label: 'Image',
-             accept: "image\/*",
+             accept: "image/*",
+             capture: true,
              required: true
            }
          }
