@@ -3,7 +3,6 @@ define([
   'BlinkForms',
   'testUtils'
 ], function (_, Forms, testUtils) {
-
   testUtils.defineFormLoadSuite('form1', 'add');
 
   suite('35: signature field blocks validation', function () {
@@ -58,8 +57,6 @@ define([
         $('button[data-action=clear]', '.sigPad').trigger('click');
         assert.equal(form.getInvalidElements().length, 1, ' invalid elements in form');
       }
-
     });
-
   }); // END: suite('1', ...)
 });
