@@ -232,6 +232,8 @@ define(function (require) {
     */
     set: function (key, value, options) {
       var attrs, result;
+      var self = this;
+
       if (!key) {
         return undefined;
       }
@@ -247,12 +249,13 @@ define(function (require) {
       }
 
       result = Backbone.Model.prototype.set.call(this, attrs, options);
-
-      if ('value' in attrs) {
-        if (!options || !options.hasOwnProperty('value') || options.validate) {
-          this.isValid();
+      ['value', 'blob'].forEach(function (prop) {
+        if (prop in attrs) {
+          if (!options || !options.hasOwnProperty(prop) || options.validate) {
+            self.isValid();
+          }
         }
-      }
+      });
 
       return result;
     },
