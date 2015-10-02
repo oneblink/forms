@@ -249,13 +249,11 @@ define(function (require) {
       }
 
       result = Backbone.Model.prototype.set.call(this, attrs, options);
-      ['value', 'blob'].forEach(function (prop) {
-        if (prop in attrs) {
-          if (!options || !options.hasOwnProperty(prop) || options.validate) {
-            self.isValid();
-          }
+      if ('blob' in attrs || 'value' in attrs) {
+        if (!options || (!options.hasOwnProperty('value') || !options.hasOwnProperty('blob')) || options.validate) {
+          self.isValid();
         }
-      });
+      }
 
       return result;
     },
