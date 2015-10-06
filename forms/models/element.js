@@ -250,7 +250,7 @@ define(function (require) {
 
       result = Backbone.Model.prototype.set.call(this, attrs, options);
       if ('blob' in attrs || 'value' in attrs) {
-        if (!options || (!options.hasOwnProperty('value') || !options.hasOwnProperty('blob')) || options.validate) {
+        if (!options || options.validate) {
           self.isValid();
         }
       }
