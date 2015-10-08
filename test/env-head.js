@@ -51,7 +51,7 @@
       jquery: 'http://cdnp.blinkm.co/jquery/1.11.3/jquery-1.11.3',
       jquerymobile: 'http://cdnp.blinkm.co/jquery.mobile/1.3.2/jquery.mobile-1.3.2',
       underscore: 'http://cdnp.blinkm.co/underscorejs/1.8.3/underscore',
-      BlinkForms: ROOT_PREFIX + 'build/forms3jqm.min', // using the unminified makes it far easier to debug in tests
+      BlinkForms: ROOT_PREFIX + 'build/forms/jqm', // using the unminified makes it far easier to debug in tests
       // BlinkForms: ROOT_PREFIX + 'build/forms3jqm.min',
       BIC: TEST_PREFIX + 'sample-bic',
       '@jokeyrhyme/promised-requirejs': ROOT_PREFIX + 'node_modules/@jokeyrhyme/promised-requirejs/dist/index',
@@ -68,7 +68,9 @@
       implementations: TEST_PREFIX + 'lib/implementations',
       chai: ROOT_PREFIX + 'node_modules/chai/chai',
       sinon: ROOT_PREFIX + 'node_modules/sinon/lib/sinon',
-      testUtils: TEST_PREFIX + 'lib/utils'
+      Squire: ROOT_PREFIX + 'node_modules/squirejs/src/Squire',
+      testUtils: TEST_PREFIX + 'lib/utils',
+      forms: ROOT_PREFIX + 'forms'
     },
     shim: {
       'BMP.Blob': {

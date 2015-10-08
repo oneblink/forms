@@ -33,7 +33,17 @@ define(function (require) {
     },
 
     initialize: function (attrs) {
-      bmMediaHelper.getDevices().then(function (devices) {
+      this.getVideoDevices();
+    },
+
+    /**
+     * gets a list of video capable devices and populates
+     * `this.attributes.videoSources` with them. Automatically called
+     * during model initialisation.
+     * @return {Promise|MediaDevice}
+     */
+    getVideoDevices: function () {
+      return bmMediaHelper.getDevices().then(function (devices) {
         this.set('videoSources', _.filter(devices, videoOnly));
       }.bind(this));
     },
@@ -42,6 +52,7 @@ define(function (require) {
      * Changes the input device, typically from the front to the rear camera
      *
      * @param  {string} id - The device ID to switch to.
+     * @returns {Promise|MediaStream}
      */
     changeInputDevice: function (id) {
       var options = {
@@ -53,10 +64,12 @@ define(function (require) {
         audio: false
       };
 
-      bmMediaHelper.getMedia(options)
+      return bmMediaHelper.getMedia(options)
         .then(function (mediaStream) {
           this.stopStream();
           this.set('stream', mediaStream);
+
+          return mediaStream;
         }.bind(this))
         .catch(function (err) {
           /* eslint-disable no-unused-expressions */
@@ -93,15 +106,23 @@ define(function (require) {
 
     /**
      * Clamps the orientation between 0 and 360 (excluding 360)
+     *
+     * Negative rotations are converted to the eqivalent positive degree
+     * eg -90deg === 270deg
      * @return {Number}
      */
     getClampedOrientation: function () {
-      return this.get('orientation') % 360;
+      var rotation = this.get('orientation') % 360;
+      if (rotation < 0) {
+        rotation = 360 + rotation;
+      }
+
+      return rotation;
     },
 
     /**
      * Converts the orientation of the image from degrees to a radian
-     * @return {[type]} [description]
+     * @return {Number} - Rotation of the image in radians
      */
     getOrientationAsRadian: function () {
       return this.getClampedOrientation() * toRadian;
