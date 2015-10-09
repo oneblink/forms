@@ -204,12 +204,12 @@ define(['backbone', 'BlinkForms', 'testUtils', 'sinon', 'Squire'], function (Bac
         popupModel = null;
       });
 
-///////////// access denied
+// ############# access denied
 
       suite('when webcam access has not been granted', function () {
         setup(function () {
           popupModel = new PopupModel();
-          popupView = new PopupView({model: popupModel}).render()
+          popupView = new PopupView({model: popupModel}).render();
           popupView.$el
             .popup()
             .trigger('create');
@@ -222,8 +222,7 @@ define(['backbone', 'BlinkForms', 'testUtils', 'sinon', 'Squire'], function (Bac
           assert.equal($.trim($errorEl.text()), 'Please allow access to the camera and try again.');
         });
 
-
-        test('Cancel button click calls reject with an Error', function(){
+        test('Cancel button click calls reject with an Error', function () {
           var rejectSpy = sinon.spy();
           popupView._reject = rejectSpy;
           $('[data-onclick="on-cancel-click"]', popupView.$el).trigger('click');
@@ -234,7 +233,7 @@ define(['backbone', 'BlinkForms', 'testUtils', 'sinon', 'Squire'], function (Bac
         });
       });
 
-//////////////// access granted
+// ############# access granted
 
       suite('when webcam access has been granted', function () {
         setup(function () {
@@ -248,10 +247,10 @@ define(['backbone', 'BlinkForms', 'testUtils', 'sinon', 'Squire'], function (Bac
           assert.lengthOf($('video', popupView.$el), 1);
         });
 
-//////////////// button events
+// ############# button events
 
         suite('button events', function () {
-          test('Rotate button click calls model rotate function', function(){
+          test('Rotate button click calls model rotate function', function () {
             var rotateSpy = sinon.spy(popupModel, 'rotate');
             $('[data-onclick="on-rotate-click"]', popupView.$el).trigger('click');
             assert.equal(rotateSpy.callCount, 1);
@@ -280,7 +279,7 @@ define(['backbone', 'BlinkForms', 'testUtils', 'sinon', 'Squire'], function (Bac
           });
         });
 
-//////////////// Model Events
+// ############# Model Events
 
         suite('model events', function () {
           test('changing orientation rotates video', function () {
@@ -302,7 +301,7 @@ define(['backbone', 'BlinkForms', 'testUtils', 'sinon', 'Squire'], function (Bac
           test('updating souce list to more than one souce shows dropdown', function () {
             var mockDevices = [{id: 0, kind: 'video'}, {id: 1, kind: 'video'}];
             getDevicesStub.returns(Promise.resolve(mockDevices));
-              console.log(popupView.$deviceSelectorContainer)
+
             return popupModel.getVideoDevices().then(function () {
               assert.equal(popupView.$deviceSelectorContainer.css('display'), 'block');
             });
