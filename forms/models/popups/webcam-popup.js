@@ -40,11 +40,12 @@ define(function (require) {
      * gets a list of video capable devices and populates
      * `this.attributes.videoSources` with them. Automatically called
      * during model initialisation.
-     * @return {Promise|MediaDevice}
+     * @return {Promise|MediaDeviceList}
      */
     getVideoDevices: function () {
       return bmMediaHelper.getDevices().then(function (devices) {
         this.set('videoSources', _.filter(devices, videoOnly));
+        return this.attributes.videoSources;
       }.bind(this));
     },
 

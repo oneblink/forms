@@ -188,5 +188,127 @@ define(['backbone', 'BlinkForms', 'testUtils', 'sinon', 'Squire'], function (Bac
         });
       });
     });
+
+    suite('view', function () {
+      var popupModel = null;
+      var PopupView = null;
+      var popupView = null;
+
+      suiteSetup(function () {
+        PopupView = Forms._views.WebcamPopupView;
+      });
+
+      teardown(function () {
+        popupView.remove();
+        popupView = null;
+        popupModel = null;
+      });
+
+///////////// access denied
+
+      suite('when webcam access has not been granted', function () {
+        setup(function () {
+          popupModel = new PopupModel();
+          popupView = new PopupView({model: popupModel}).render()
+          popupView.$el
+            .popup()
+            .trigger('create');
+        });
+
+        test('"access needed" popup is shown', function () {
+          var $errorEl;
+          $errorEl = $('.bm-webrtc__bm-error', popupView.$el);
+          assert.lengthOf($errorEl, 1);
+          assert.equal($.trim($errorEl.text()), 'Please allow access to the camera and try again.');
+        });
+
+
+        test('Cancel button click calls reject with an Error', function(){
+          var rejectSpy = sinon.spy();
+          popupView._reject = rejectSpy;
+          $('[data-onclick="on-cancel-click"]', popupView.$el).trigger('click');
+
+          assert.equal(rejectSpy.callCount, 1);
+          assert.equal(rejectSpy.getCall(0).args[0].message, 'cancel');
+          popupView._reject = undefined;
+        });
+      });
+
+//////////////// access granted
+
+      suite('when webcam access has been granted', function () {
+        setup(function () {
+          popupModel = new PopupModel({
+            isPermissionGranted: true
+          });
+          popupView = new PopupView({model: popupModel}).render();
+        });
+
+        test('the webcam popup is shown', function () {
+          assert.lengthOf($('video', popupView.$el), 1);
+        });
+
+//////////////// button events
+
+        suite('button events', function () {
+          test('Rotate button click calls model rotate function', function(){
+            var rotateSpy = sinon.spy(popupModel, 'rotate');
+            $('[data-onclick="on-rotate-click"]', popupView.$el).trigger('click');
+            assert.equal(rotateSpy.callCount, 1);
+            rotateSpy.restore();
+          });
+
+          test('Cancel button click calls reject with an Error', function () {
+            var rejectSpy = sinon.spy();
+            popupView._reject = rejectSpy;
+            $('[data-onclick="on-cancel-click"]', popupView.$el).trigger('click');
+
+            assert.equal(rejectSpy.callCount, 1);
+            assert.equal(rejectSpy.getCall(0).args[0].message, 'cancel');
+            popupView._reject = undefined;
+          });
+
+          test('Confirm button click calls resolve', function () {
+            var resolveSpy = sinon.spy();
+            popupView._resolve = resolveSpy;
+            $('[data-onclick="on-confirm-click"]', popupView.$el)
+              .removeProp('disabled')
+              .trigger('click');
+
+            assert.equal(resolveSpy.callCount, 1);
+            popupView._resolve = undefined;
+          });
+        });
+
+//////////////// Model Events
+
+        suite('model events', function () {
+          test('changing orientation rotates video', function () {
+            var cssTransform;
+            var expectedTransform = 'rotate(90deg)';
+            popupModel.rotate();
+            cssTransform = $('video', popupView.$el).css('transform');
+            assert.equal(cssTransform, expectedTransform);
+          });
+
+          test('updating souce list to one souce does not show dropdown', function () {
+            var mockDevices = [{id: 0, kind: 'video'}, {id: 1, kind: 'audio'}];
+            getDevicesStub.returns(Promise.resolve(mockDevices));
+            return popupModel.getVideoDevices().then(function () {
+              assert.equal(popupView.$deviceSelectorContainer.css('display'), 'none');
+            });
+          });
+
+          test('updating souce list to more than one souce shows dropdown', function () {
+            var mockDevices = [{id: 0, kind: 'video'}, {id: 1, kind: 'video'}];
+            getDevicesStub.returns(Promise.resolve(mockDevices));
+              console.log(popupView.$deviceSelectorContainer)
+            return popupModel.getVideoDevices().then(function () {
+              assert.equal(popupView.$deviceSelectorContainer.css('display'), 'block');
+            });
+          });
+        });
+      });
+    });
   });
 });
