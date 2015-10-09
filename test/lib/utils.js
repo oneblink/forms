@@ -152,6 +152,65 @@ define([
         assert.lengthOf(ul$, 1, name + ': view displays errors');
       });
       return Promise.resolve();
+    },
+
+    generateBigFormDefinition: function () {
+      var NAME = 'test';
+      var TYPES = ['text', 'textarea', 'number', 'date', 'time', 'boolean', 'location', 'file'];
+      var CHOICE_TYPES = ['select', 'multi'];
+      var page;
+      var def = {
+        default: {
+          name: NAME,
+          _elements: []
+        }
+      };
+      var OPTIONS = (function () {
+        var options = {};
+        var option;
+        while (Object.keys(options).length < 30) {
+          option = 'option' + (Object.keys(options).length + 1);
+          options[option] = option;
+        }
+        return options;
+      }());
+      var addTypedElements = function () {
+        TYPES.forEach(function (type) {
+          def.default._elements.push({
+            default: {
+              name: type + (def.default._elements.length + 1),
+              type: type,
+              page: page
+            }
+          });
+        });
+      };
+      var addChoiceElements = function () {
+        CHOICE_TYPES.forEach(function (type) {
+          def.default._elements.push({
+            default: {
+              name: type + (def.default._elements.length + 1),
+              type: type,
+              page: page,
+              options: OPTIONS
+            }
+          });
+        });
+      };
+      while (def.default._elements.length < 300) {
+        page = Math.floor(def.default._elements.length / 30);
+        addTypedElements();
+        def.default._elements.push({
+          default: {
+            name: 'subForm' + (def.default._elements.length + 1),
+            type: 'subForm',
+            page: page,
+            subForm: NAME
+          }
+        });
+        addChoiceElements();
+      }
+      return def;
     }
 
   };
