@@ -60,7 +60,11 @@ define(function (require) {
     LocationElement: require('forms/models/elements/location'),
     FileElement: require('forms/models/elements/file'),
     DrawElement: require('forms/models/elements/draw'),
-    ButtonElement: require('forms/models/elements/button')
+    ButtonElement: require('forms/models/elements/button'),
+
+    Popup: require('forms/models/popup'),
+    WebcamPopup: require('forms/models/popups/webcam-popup')
+
   };
 
   Forms.uuid = require('uuid');

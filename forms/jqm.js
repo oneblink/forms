@@ -51,7 +51,11 @@ define(function (require) {
     LocationNativeElement: require('forms/jqm/elements/location_native'),
     SelectReadOnlyElement: require('forms/jqm/elements/select_readonly'),
     MultiReadOnlyElement: require('forms/jqm/elements/multi_readonly'),
-    WebRTCImageElement: require('forms/jqm/elements/webrtc_image')
+    WebRTCImageElement: require('forms/jqm/elements/webrtc_image'),
+
+    PopupView: require('forms/jqm/popup'),
+    ConfirmPopupView: require('forms/jqm/popups/confirm-popup'),
+    WebcamPopupView: require('forms/jqm/popups/webcam-popup')
   };
 
   return Forms._views;
