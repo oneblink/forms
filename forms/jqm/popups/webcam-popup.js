@@ -141,7 +141,6 @@ define(function (require) {
 
     updateVideoSources: function (model, value) {
       var options;
-      var createOrRefresh;
 
       if (value.length < 2) {
         return this.$deviceSelectorContainer.hide();
@@ -151,12 +150,15 @@ define(function (require) {
         return html;
       }, '');
 
-      createOrRefresh = this.$deviceSelector.data('selectmenu') === undefined ? undefined : 'refresh';
-
       this.$deviceSelector
           .empty()
-          .html(options)
-          .selectmenu(createOrRefresh);
+          .html(options);
+
+      if (this.$deviceSelector.data('selectmenu') === undefined) {
+        this.$deviceSelector.selectmenu();
+      }
+
+      this.$deviceSelector.selectmenu('refresh');
 
       this.$deviceSelectorContainer.show();
     },

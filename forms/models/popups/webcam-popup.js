@@ -23,7 +23,7 @@ define(function (require) {
         title: 'Access Needed',
 
         stream: null,
-        videoSources: [],
+        videoSources: null,
         destinationMimeType: 'image/png',
 
         cancelButtonText: 'Close',

@@ -61,7 +61,7 @@ define(['backbone', 'BlinkForms', 'testUtils', 'sinon', 'Squire'], function (Bac
           title: 'Access Needed',
 
           stream: null,
-          videoSources: [],
+          videoSources: null,
           destinationMimeType: 'image/png',
 
           cancelButtonText: 'Close',
