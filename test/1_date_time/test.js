@@ -418,7 +418,6 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
           if (!el.get('readonly')) {
             el.val(value);
           }
-
         });
       });
 
