@@ -66,7 +66,6 @@ define(function (require) {
     },
     onFormsChange: function () {
       var attrs,
-        view,
         $add,
         label,
         realLength;
@@ -87,19 +86,20 @@ define(function (require) {
         $add.button('disable');
       }
 
+      // make sure each SubForm model in the SubFormField's collection has a view
       this.model.attributes.forms.forEach(function (form) {
-        var body$, previous$, action;
-        // make sure each SubForm model in the SubFormField's collection has a view
-        action = form.attributes._action;
+        var body$, previous$;
+        var view = form.attributes._view;
+        var action = form.attributes._action;
 
         if (action !== 'remove') {
-          view = form.initializeView();
-
           if (!view || !view.$el || !view.$el.children().length) {
-            // prevent calling render() over and over as "add" buttons go crazy
+            // only call render() when necessary, otherwise "add" buttons go crazy
+            view = form.initializeView();
             form.$form = view.$el; // backwards-compatibility, convenience
             view.render();
           }
+
           body$ = view.$el.closest('body');
 
           if (!body$.length || body$[0] !== document.body) {
