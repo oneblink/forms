@@ -44,7 +44,6 @@ define(function (require) {
 
       attrs.elements = new Elements();
       // attrs._view = new Forms._views.Page({model: this});
-      this.initializeView();
 
       sections = form.attributes._sections;
 
