@@ -139,8 +139,9 @@ define(function (require) {
             input.val(value);
           } else {
             if (value) { // for default value when picker not initialised
-              input.val(moment(Date.parse(value)).format(dateFormat));
+              value = moment(Date.parse(value)).format(dateFormat);
             }
+            input.val(value);
           }
         }
       }

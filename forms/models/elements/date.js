@@ -130,6 +130,7 @@ define(function (require) {
       var type = attrs.type;
       var date;
       var time;
+      var value = '';
 
       if (type === 'date') {
         this.set('value', attrs._date);
@@ -139,13 +140,16 @@ define(function (require) {
         date = attrs._date;
         time = attrs._time;
         // TODO: somehow stop this from firing twice
-        if (!date) {
+        if (!date && time) {
           date = '0000-00-00';
         }
-        if (!time) {
+        if (!time && date && date !== '0000-00-00' && moment(date, ['YYYY-MM-DD'], true).isValid()) {
           time = '00:00';
         }
-        this.set('value', date + 'T' + time);
+        if (time && date) {
+          value = date + 'T' + time;
+        }
+        this.set('value', value);
       }
     },
 
@@ -159,6 +163,8 @@ define(function (require) {
       var time;
       var date;
       var parts;
+      var timepart = '';
+      var datepart = '';
 
       if (type === 'date') {
         this.set('_date', value);
@@ -168,12 +174,15 @@ define(function (require) {
         time = attrs._time;
         date = attrs._date;
         parts = value.split('T');
+
         if (parts[0]) {
-          this.set('_date', parts[0], {silent: true});
+          datepart = parts[0];
         }
         if (parts[1]) {
-          this.set('_time', parts[1], {silent: true});
+          timepart = parts[1];
         }
+        this.set('_date', datepart, {silent: true});
+        this.set('_time', timepart, {silent: true});
         if (time !== attrs._time) {
           this.trigger('change:_time');
         }
