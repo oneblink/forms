@@ -113,7 +113,6 @@ define(function (require) {
           }
         }
       });
-      // this.$el.trigger('create');
     },
 
     onAttached: function () {

@@ -152,7 +152,6 @@ define(function (require) {
     },
 
     add: function (action) {
-      // TODO: there is too much DOM stuff here to be in the model
       var self = this;
       var attrs = this.attributes;
       var name = attrs.subForm;
