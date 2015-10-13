@@ -17,7 +17,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
       'timenowtime',
       'datetimenow',
       'time column'
-    ],readonly = [
+    ], readonly = [
       'dateTimeRonlyNone',
       'dateTimeRonlyNow',
       'dateTimeRonlyNowP',
@@ -33,7 +33,6 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
     test('model->value', function (done) {
       setTimeout(function () {
         Forms.current.get('elements').forEach(function (el) {
-          var value = el.val();
           var name = el.get('name');
           var time = el.get('_time');
           var date = el.get('_date');
@@ -391,10 +390,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
     });
 
     suite('model view binding test', function () {
-      var form = Forms.current;
-      var timeformat;
-      var dateformat;
-      var expected;
+      var value;
       var values = {
         date: '2015-12-25',
         datetime: '2015-12-25T13:50',
@@ -427,7 +423,6 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
       });
 
       defineModelToViewTests();
-
       test('clearing value of model', function () {
         Forms.current.get('elements').forEach(function (el) {
           var type = el.get('type');
