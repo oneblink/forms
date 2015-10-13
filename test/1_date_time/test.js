@@ -17,6 +17,16 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
       'timenowtime',
       'datetimenow',
       'time column'
+    ],readonly = [
+      'dateTimeRonlyNone',
+      'dateTimeRonlyNow',
+      'dateTimeRonlyNowP',
+      'dateTimeRonlyNowPM'
+    ], hidden = [
+      'dateTimeHiddenNone',
+      'dateTimeHiddenNow',
+      'dateTimeHiddenNowP',
+      'dateTimeHddenNowPM'
     ];
 
   function defineModelToViewTests () {
@@ -34,7 +44,7 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
           }
           time$ = el.get('_view').$el.find('input[name$=_time]');
           date$ = el.get('_view').$el.find('input[name$=_date]');
-          if (value && !el.get('readonly')) {
+          if (!el.get('readonly')) {
             if (type !== 'time') {
               format = el.mapDateFormats[el.attributes.dateFormat] || 'YYYY-MM-DD';
               assert.lengthOf(date$, 1, name + ': has DOM date');
@@ -98,6 +108,42 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
               assert.lengthOf(time$, 1, name + ': has DOM time');
               assert.equal(time$.val(), time, name + ': DOM time value');
               assert.equal(time$.val(), el.get('_time'), name + ': _time value');
+            }
+          }
+        });
+        done();
+      }, 1e3);
+    });
+  }
+
+  function clearFields () {
+    test('clear view', function (done) {
+      setTimeout(function () {
+        Forms.current.get('elements').forEach(function (el) {
+          var value = '';
+          var name = el.get('name');
+          var type = el.get('type');
+          var time$;
+          var date$;
+
+          if (type === 'hidden') {
+            return;
+          }
+          time$ = el.get('_view').$el.find('input[name$=_time]');
+          date$ = el.get('_view').$el.find('input[name$=_date]');
+
+          if (!el.get('readonly')) {
+            if (type !== 'time') {
+              date$.val(value);
+              date$.trigger('change');
+              assert.lengthOf(date$, 1, name + ': has DOM date');
+              assert.equal(date$.val(), el.get('_date'), name + ': DOM date value');
+            }
+            if (type !== 'date') {
+              time$.val(value);
+              time$.trigger('change');
+              assert.lengthOf(time$, 1, name + ': has DOM time');
+              assert.equal(time$.val(), el.get('_time'), name + ': DOM time value');
             }
           }
         });
@@ -206,19 +252,6 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
     });
 
     suite('readonly, hidden', function () {
-      var readonly = [
-          'dateTimeRonlyNone',
-          'dateTimeRonlyNow',
-          'dateTimeRonlyNowP',
-          'dateTimeRonlyNowPM'
-        ],
-        hidden = [
-          'dateTimeHiddenNone',
-          'dateTimeHiddenNow',
-          'dateTimeHiddenNowP',
-          'dateTimeHddenNowPM'
-        ];
-
       test('check if readonly fields are actually readonly', function () {
         var form = Forms.current,
           element,
@@ -355,6 +388,62 @@ define(['BlinkForms', 'testUtils', 'underscore', 'moment', 'BIC'], function (For
 
       defineModelToViewTests();
       defineViewToModelTests();
+    });
+
+    suite('model view binding test', function () {
+      var form = Forms.current;
+      var timeformat;
+      var dateformat;
+      var expected;
+      var values = {
+        date: '2015-12-25',
+        datetime: '2015-12-25T13:50',
+        time: '18:33'
+      };
+      var nowdate = [
+        'datenow',
+        'datefromnowplus',
+        'dateTimeHiddenNow'
+      ];
+      test('assigning value to model', function () {
+        Forms.current.get('elements').forEach(function (el) {
+          var name = el.get('name');
+          var type = el.get('type');
+          if (type === 'hidden') {
+            return;
+          }
+          if (_.indexOf(nowdate, name) > -1) {
+            value = moment().format('YYYY-MM-DD');
+          } else if (name === 'datefromdate') {
+            value = '2014-03-10';
+          } else {
+            value = values[type];
+          }
+          if (!el.get('readonly')) {
+            el.val(value);
+          }
+
+        });
+      });
+
+      defineModelToViewTests();
+
+      test('clearing value of model', function () {
+        Forms.current.get('elements').forEach(function (el) {
+          var type = el.get('type');
+
+          if (type === 'hidden') {
+            return;
+          }
+          if (!el.get('readonly')) {
+            el.val('');
+          }
+        });
+      });
+
+      defineModelToViewTests();
+      defineViewToModelTests();
+      clearFields();
     });
   }); // END: suite('Form', ...)
 });
