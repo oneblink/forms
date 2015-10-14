@@ -1,9 +1,11 @@
-define(['forms/models/form'], function (Form) {
+define(function (require) {
   'use strict';
+
+  var Form = require('forms/models/form');
 
   // this module
 
-  var SubForm = Form.extend({
+  return Form.extend({
     initialize: function () {
       this.parentElement = null;
       Form.prototype.initialize.call(this);
@@ -32,6 +34,4 @@ define(['forms/models/form'], function (Form) {
       this.unset('_view');
     }
   });
-
-  return SubForm;
 });

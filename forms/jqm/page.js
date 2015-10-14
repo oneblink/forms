@@ -1,7 +1,9 @@
-define(['forms/jqm/section'], function (SectionView) {
+define(function (require) {
   'use strict';
 
-  var PageView = SectionView.extend({
+  var SectionView = require('forms/jqm/section');
+
+  return SectionView.extend({
     tagName: 'section',
     initialize: function () {
       var section = this.model;
@@ -13,6 +15,4 @@ define(['forms/jqm/section'], function (SectionView) {
       // this.$el.hide();
     }
   });
-
-  return PageView;
 });

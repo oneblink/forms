@@ -12,7 +12,7 @@ define(function (require) {
 
   // this module
 
-  var BooleanElementView = ElementView.extend({
+  return ElementView.extend({
     events: {
       'change [data-onchange="onChange"]': 'onChange'
     },
@@ -56,8 +56,5 @@ define(function (require) {
       input$.val(this.model.val());
       input$.slider().slider('refresh');
     }
-
   });
-
-  return BooleanElementView;
 });

@@ -12,7 +12,7 @@ define(function (require) {
 
   // this module
 
-  var ChoiceExpandedElementView = ChoiceElementView.extend({
+  return ChoiceElementView.extend({
     remove: function () {
       var type = this.attributes.type;
       if (type !== 'select') {
@@ -208,6 +208,4 @@ define(function (require) {
       return values;
     }
   });
-
-  return ChoiceExpandedElementView;
 });

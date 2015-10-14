@@ -11,7 +11,7 @@ define(function (require) {
 
   // this module
 
-  var HeadingElementView = ElementView.extend({
+  return ElementView.extend({
     tagName: 'header',
 
     // explicitly override super's modelEvents
@@ -61,6 +61,4 @@ define(function (require) {
       this.$el.fieldcontain();
     }
   });
-
-  return HeadingElementView;
 });

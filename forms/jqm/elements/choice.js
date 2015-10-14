@@ -12,7 +12,7 @@ define(function (require) {
 
   // this module
 
-  var ChoiceElementView = ElementView.extend({
+  return ElementView.extend({
 
     initialize: function () {
       ElementView.prototype.initialize.call(this);
@@ -67,8 +67,5 @@ define(function (require) {
 
       return values;
     }
-
   });
-
-  return ChoiceElementView;
 });

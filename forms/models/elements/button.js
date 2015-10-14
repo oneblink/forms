@@ -1,16 +1,12 @@
-define(['forms/models/element'], function (Element) {
+define(function (require) {
   'use strict';
 
   var $ = require('jquery');
 
-  var ButtonElement = Element.extend({
-    initialize: function () {
-      Element.prototype.initialize.apply(this, arguments);
-    },
+  var Element = require('forms/models/element');
 
+  return Element.extend({
     setDirty: $.noop,
     setPristine: $.noop
   });
-
-  return ButtonElement;
 });

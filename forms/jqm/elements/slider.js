@@ -13,7 +13,7 @@ define(function (require) {
 
   // this module
 
-  var SliderElementView = NumberElementView.extend({
+  return NumberElementView.extend({
 
     // extending super-super's modelEvents
     modelEvents: _.extend({}, ElementView.prototype.modelEvents, {
@@ -79,6 +79,4 @@ define(function (require) {
       return NumberElementView.prototype.remove.call(this);
     }
   });
-
-  return SliderElementView;
 });

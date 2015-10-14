@@ -1,11 +1,7 @@
-define(['forms/models/element'], function (Element) {
+define(function (require) {
   'use strict';
 
-  var BooleanElement = Element.extend({
-    initialize: function () {
-      Element.prototype.initialize.apply(this, arguments);
-    }
-  });
+  var Element = require('forms/models/element');
 
-  return BooleanElement;
+  return Element.extend({});
 });

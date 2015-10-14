@@ -11,7 +11,7 @@ define(function (require) {
 
   // this module
 
-  var MultiReadOnlyElementView = ElementView.extend({
+  return ElementView.extend({
     render: function () {
       var self = this;
       var attrs = self.model.attributes;
@@ -34,6 +34,4 @@ define(function (require) {
       }, 100);
     }
   });
-
-  return MultiReadOnlyElementView;
 });

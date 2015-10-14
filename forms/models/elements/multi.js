@@ -12,7 +12,7 @@ define(function (require) {
 
   // this module
 
-  var MultiElement = SelectElement.extend({
+  return SelectElement.extend({
     initialize: function () {
       var attrs;
       SelectElement.prototype.initialize.call(this);
@@ -52,8 +52,5 @@ define(function (require) {
       }
       return attrs.other && _.isEqual(attrs.value, ['other']) && !_.contains(attrs.options, 'other');
     }
-
   });
-
-  return MultiElement;
 });

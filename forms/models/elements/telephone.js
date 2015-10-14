@@ -1,10 +1,9 @@
-define(['forms/models/element'], function (Element) {
+define(function (require) {
   'use strict';
 
-  var TelephoneElement = Element.extend({
-    initialize: function () {
-      Element.prototype.initialize.apply(this, arguments);
-    },
+  var Element = require('forms/models/element');
+
+  return Element.extend({
     initializeView: function () {
       var Forms = BMP.Forms;
       var View, view;
@@ -21,6 +20,4 @@ define(['forms/models/element'], function (Element) {
       return view;
     }
   });
-
-  return TelephoneElement;
 });

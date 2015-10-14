@@ -11,7 +11,6 @@ define(function (require) {
 
   // this module
 
-  var FileElement;
   var cameraDestinationType;
 
   /*
@@ -46,7 +45,7 @@ define(function (require) {
   @property {boolean} readonly          - if true, BlobReadOnlyElement View will be used.
   @property {boolean} capture           - if true, and the device supports "getUserMedia", "WebRTCImageElement" View will be used.
 */
-  FileElement = ElementModel.extend({
+  return ElementModel.extend({
     defaults: function () {
       return _.assign(ElementModel.prototype.defaults.call(this), {
         height: 0,
@@ -181,8 +180,5 @@ override because super#validate() checks "value", and we need to check "blob"
         this.set('blob', blob);
       }
     }
-
   });
-
-  return FileElement;
 });

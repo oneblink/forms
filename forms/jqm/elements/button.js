@@ -12,7 +12,7 @@ define(function (require) {
 
   // this module
 
-  var ButtonElementView = ElementView.extend({
+  return ElementView.extend({
     remove: function () {
       this.$el.children('.ui-btn').children('button').off('click');
       return ElementView.prototype.remove.call(this);
@@ -46,6 +46,4 @@ define(function (require) {
       $button.button();
     }
   });
-
-  return ButtonElementView;
 });
