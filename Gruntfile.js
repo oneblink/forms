@@ -36,17 +36,8 @@ module.exports = function (grunt) {
           fileExclusionRegExp: /(^\.)|build|css|docs|eslint|grunt|lodash|parts|phantomjs|test|(\.json$)|(\.md$)|(\.txt$)/,
           dir: 'build',
           skipDirOptimize: false,
-//          optimize: 'uglify2',
+          generateSourceMaps: true,
           optimize: 'none',
-          uglify: {
-            max_line_length: 80
-          },
-          uglify2: {
-            output: {
-              max_line_len: 80
-            },
-            warnings: false
-          },
           paths: {
             // exclude these from the build (load from CDN)
             backbone: 'empty:',
