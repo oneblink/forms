@@ -1,14 +1,11 @@
-define(['forms/models/element'], function (Element) {
+define(function (require) {
   'use strict';
 
-  var HiddenElement = Element.extend({
-    initialize: function () {
-      Element.prototype.initialize.apply(this, arguments);
-    },
+  var Element = require('forms/models/element');
+
+  return Element.extend({
     // no-op, we don't want views here
     initializeView: function () {},
     removeView: function () {}
   });
-
-  return HiddenElement;
 });

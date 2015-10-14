@@ -1,5 +1,7 @@
-define(['forms/jqm/element'], function (ElementView) {
+define(function (require) {
   'use strict';
+
+  var ElementView = require('forms/jqm/element');
 
   var SelectReadOnlyElementView = ElementView.extend({
     render: function () {

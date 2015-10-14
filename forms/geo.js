@@ -1,6 +1,8 @@
 /* eslint-disable new-cap */ // i18n functions are not constructors
-define(['@blinkmobile/geolocation'], function (geolocation) {
+define(function (require) {
   'use strict';
+
+  var geolocation = require('@blinkmobile/geolocation');
 
   return {
 
