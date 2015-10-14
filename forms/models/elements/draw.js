@@ -4,9 +4,6 @@ define(function (require) {
   var FileElement = require('forms/models/elements/file');
 
   return FileElement.extend({
-    initialize: function () {
-      FileElement.prototype.initialize.apply(this, arguments);
-    },
     initializeView: function () {
       var Forms = BMP.Forms;
       var view;

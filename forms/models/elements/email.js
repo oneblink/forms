@@ -12,9 +12,6 @@ define(function (require) {
   // this module
 
   var EmailElement = TextElement.extend({
-    initialize: function () {
-      TextElement.prototype.initialize.apply(this, arguments);
-    },
     initializeView: function () {
       var Forms = BMP.Forms;
       var View, view;

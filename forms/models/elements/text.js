@@ -12,9 +12,6 @@ define(function (require) {
   // this module
 
   var TextElement = Element.extend({
-    initialize: function () {
-      Element.prototype.initialize.apply(this, arguments);
-    },
     initializeView: function () {
       var Forms = BMP.Forms;
       var View, view;
