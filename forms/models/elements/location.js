@@ -8,7 +8,7 @@ define(function (require) {
 
   // this module
 
-  var LocationElement = Element.extend({
+  return Element.extend({
     initializeView: function () {
       var Forms = BMP.Forms;
       var view;
@@ -49,8 +49,5 @@ define(function (require) {
           return Promise.reject(error);
         });
     }
-
   });
-
-  return LocationElement;
 });

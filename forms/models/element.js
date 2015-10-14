@@ -21,9 +21,7 @@ define(function (require) {
 
   // this module
 
-  var Element;
-
-  Element = Backbone.Model.extend({
+  return Backbone.Model.extend({
     defaults: function () {
       return {
         page: 0,
@@ -356,6 +354,4 @@ define(function (require) {
       return el;
     }
   });
-
-  return Element;
 });

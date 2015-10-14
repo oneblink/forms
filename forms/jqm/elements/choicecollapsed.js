@@ -12,7 +12,7 @@ define(function (require) {
 
   // this module
 
-  var ChoiceCollapsedElementView = ChoiceElementView.extend({
+  return ChoiceElementView.extend({
     render: function () {
       var that = this;
       var $input;
@@ -132,6 +132,4 @@ define(function (require) {
       this.$input.selectmenu();
     }
   });
-
-  return ChoiceCollapsedElementView;
 });

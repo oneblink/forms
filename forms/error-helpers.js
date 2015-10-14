@@ -63,7 +63,7 @@ define(function (require) {
     return errorObject;
   }
 
-  blinkFormsError = {
+  return {
     /**
      * converts a forms error object to an error string
      * @type {string}
@@ -89,6 +89,4 @@ define(function (require) {
 
     fromBMP: blinkFormsErrorParser
   };
-
-  return blinkFormsError;
 });

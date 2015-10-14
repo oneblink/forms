@@ -3,7 +3,7 @@ define(function (require) {
 
   var ElementView = require('forms/jqm/element');
 
-  var SelectReadOnlyElementView = ElementView.extend({
+  return ElementView.extend({
     render: function () {
       var self = this;
       var attrs = self.model.attributes;
@@ -20,6 +20,4 @@ define(function (require) {
       }, 100);
     }
   });
-
-  return SelectReadOnlyElementView;
 });

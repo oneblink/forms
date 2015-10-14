@@ -9,7 +9,7 @@ define(function (require) {
   /**
    * Popup Base View. Intended to be used by other popup views.
    */
-  var PopupView = Backbone.View.extend({
+  return Backbone.View.extend({
     element: 'div',
 
     attributes: function () {
@@ -74,6 +74,4 @@ define(function (require) {
       });
     }
   });
-
-  return PopupView;
 });

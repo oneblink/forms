@@ -13,7 +13,7 @@ define(function (require) {
 
   // this module
 
-  var NumberElement = Element.extend({
+  return Element.extend({
     initialize: function () {
       var self = this;
       var attrs = self.attributes;
@@ -141,6 +141,4 @@ define(function (require) {
       return _.isEmpty(errors) ? undefined : errors;
     }
   });
-
-  return NumberElement;
 });

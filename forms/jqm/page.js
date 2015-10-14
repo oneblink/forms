@@ -3,7 +3,7 @@ define(function (require) {
 
   var SectionView = require('forms/jqm/section');
 
-  var PageView = SectionView.extend({
+  return SectionView.extend({
     tagName: 'section',
     initialize: function () {
       var section = this.model;
@@ -15,6 +15,4 @@ define(function (require) {
       // this.$el.hide();
     }
   });
-
-  return PageView;
 });
