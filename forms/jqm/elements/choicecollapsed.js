@@ -115,7 +115,6 @@ define(function (require) {
         }
       }
       this.model.isValid();
-      this.renderErrors(this.model);
     },
 
     fetchValue: function () {

@@ -9,12 +9,11 @@ define([
   'underscore',
   'moment',
   'BlinkForms',
-  'definitions',
   'BMP.Blob',
   'BMP.BlinkGap',
   'feature!es5',
   'jquerymobile'
-], function (chai, Promise, $, _, moment, Forms, defs) {
+], function (chai, Promise, $, _, moment, Forms) {
   'use strict';
 
   var $submitPopup, $footer, $grid, $colB;
@@ -49,20 +48,22 @@ define([
 
   Forms.getDefinition = function (name, action) {
     return new Promise(function (resolve, reject) {
-      var def = _.find(defs, function (d) {
-        return d && d.default && d.default.name === name;
-      });
-      if (!def) {
-        reject(def);
-        return;
-      }
-      setTimeout(function () {
-        try {
-          resolve(Forms.flattenDefinition(def, action));
-        } catch (err) {
-          reject(err);
+      require(['definitions'], function (defs) {
+        var def = _.find(defs, function (d) {
+          return d && d.default && d.default.name === name;
+        });
+        if (!def) {
+          reject(def);
+          return;
         }
-      }, 100);
+        setTimeout(function () {
+          try {
+            resolve(Forms.flattenDefinition(def, action));
+          } catch (err) {
+            reject(err);
+          }
+        }, 100);
+      });
     });
   };
 
