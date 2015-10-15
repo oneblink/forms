@@ -14,11 +14,10 @@ define([
 
     test('errors before rendering form with data', function () {
       var invalidFld = form.getInvalidElements().length;
-      assert.equal(invalidFld, 4, ' invalid elements in form');
+      assert.equal(invalidFld, 10, ' invalid elements in form'+invalidFld);
     });
 
     test('Render form with data', function (done) {
-      // var form = Forms.current;
       $.ajax({
         type: 'GET',
         url: 'getformrecord.xml',
@@ -49,13 +48,23 @@ define([
     });
 
     test('errors After rendering form with data', function () {
+      var elements = ['date', 'datetime', 'time', 'date_n', 'datetime_n', 'time_n'];
+      var invalidEle = 1;
+
       if (testUtils.isPhantom()) {
-        assert.ok(form.getInvalidElements().length === 4, ' invalid elements in form(phantom)');
+        assert.ok(form.getInvalidElements().length === 10, ' invalid elements in form(phantom)');
       } else {
         assert.isUndefined(form.getInvalidElements(), ' no invalid elements in form');
         $('button[name="Signature"]').trigger('click');
         $('button[data-action=clear]', '.sigPad').trigger('click');
         assert.equal(form.getInvalidElements().length, 1, ' invalid elements in form');
+
+        elements.forEach(function (fld) {
+          var ele = form.getElement(fld);
+          ele.val('');
+          invalidEle++;
+          assert.equal(form.getInvalidElements().length, invalidEle, ' invalid elements in form');
+        });
       }
     });
   }); // END: suite('1', ...)

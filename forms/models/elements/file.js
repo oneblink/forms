@@ -83,6 +83,7 @@ define(function (require) {
 
       this.on('change:blob', function () {
         this.setDirty();
+        this.isValid();
       }, this);
     },
 
