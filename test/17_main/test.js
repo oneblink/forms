@@ -1,4 +1,4 @@
-define(['BlinkForms', 'BIC'], function (Forms) {
+define(['BlinkForms', 'sinon', 'BIC'], function (Forms, sinon) {
   suite('17: main', function () {
     test('BMP is defined', function () {
       assert.isDefined(window.BMP);
@@ -51,6 +51,43 @@ define(['BlinkForms', 'BIC'], function (Forms) {
 
       suite('if #defaults exists it is a function or undefined', function () {
         _.each(Forms._models, defaultsIsAFunctionTest);
+      });
+    });
+
+    suite('isValid called', function () {
+      test('all possible options', function () {
+        var model = Forms._models.Element;
+        var element = new model();
+        var isValidSpy;
+
+        isValidSpy = sinon.spy(element, 'isValid');
+
+        element.set('value', 'great work');
+        assert.ok(isValidSpy.callCount === 1);
+        element.set('value', 'great work', {});
+        assert.ok(isValidSpy.callCount === 2);
+        element.set('value', 'great work', {validate: false});
+        assert.ok(isValidSpy.callCount === 2);
+        element.set('value', 'great work', {validate: true});
+        assert.ok(isValidSpy.callCount === 3);
+
+        element.set({value: 'great work'});
+        assert.ok(isValidSpy.callCount === 4);
+        element.set({value: 'great work'}, {});
+        assert.ok(isValidSpy.callCount === 5);
+        element.set({value: 'great work'}, {validate: false});
+        assert.ok(isValidSpy.callCount === 5);
+        element.set({value: 'great work'}, {validate: true});
+        assert.ok(isValidSpy.callCount === 6);
+
+        element.set('blob', 'great work');
+        assert.ok(isValidSpy.callCount === 7);
+        element.set('blob', 'great work', {});
+        assert.ok(isValidSpy.callCount === 8);
+        element.set('blob', 'great work', {validate: false});
+        assert.ok(isValidSpy.callCount === 8);
+        element.set('blob', 'great work', {validate: true});
+        assert.ok(isValidSpy.callCount === 9);
       });
     });
   });
