@@ -100,7 +100,9 @@ define(function (require) {
       throw new TypeError('expect 2nd parameter to be an Array, or omitted');
     }
     blacklist = blacklist || [];
-    blacklist.push('id', 'name', 'label');
+
+    // FORMS-249 # Removed label from blacklist.
+    blacklist.push('id', 'name');
     if (!model instanceof Backbone.Model || !model.attributes) {
       return; // nothing to do
     }
