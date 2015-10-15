@@ -56,8 +56,8 @@ define(['BlinkForms', 'sinon', 'BIC'], function (Forms, sinon) {
 
     suite('isValid called', function () {
       test('all possible options', function () {
-        var model = Forms._models.Element;
-        var element = new model();
+        var ElementModel = Forms._models.Element;
+        var element = new ElementModel();
         var isValidSpy;
 
         isValidSpy = sinon.spy(element, 'isValid');
