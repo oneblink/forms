@@ -1,6 +1,46 @@
 # Changelog
 
 
+## v3.8.1 - 2015-10-16
+
+
+### Changed
+
+- FORMS-249: no longer prevent rowClass controlling the label setting
+
+    - before, rowClass = "label: MyLabel;" would have no affect
+
+    - pre-existing dormant rowClass settings like this may now become active
+
+    - see our documentation for how to use the rowClass setting:
+      https://github.com/blinkmobile/html-class-data.js
+
+
+### Fixed
+
+
+- FORMS-248: prevent unnecessary re-rendering of subforms
+
+    - before, each new subform triggered pre-existing siblings to re-render
+
+    - performance difference is proportional to the number of subforms
+
+    - e.g. 1st subform is no faster, 4th subform may have ~50% reduction in time taken
+
+- FORMS-236: date/time/datetime fields that the user clears will no longer pass REQUIRED validation
+
+- FORMS-237: fixed a some cases where underlying date/time/datetime values did not match the displayed value
+
+- FORMS-241: prepare our `getUserMedia()` image capture fields for Chrome 47
+
+    - no longer triggers any deprecation warnings in Chrome 45 or 46
+
+    - once Google releases Chrome 47,
+      image capture fields in older versions of our Forms library will break
+
+- FORMS-244: REQUIRED signatures that have a value now pass validation
+
+
 ## v3.8.0 - 2015-09-24
 
 
