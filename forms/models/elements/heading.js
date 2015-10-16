@@ -6,7 +6,7 @@ define(function (require) {
 
   var ElementModel = require('forms/models/element');
 
-  var HeadingElement = ElementModel.extend({
+  return ElementModel.extend({
     defaults: function () {
       return _.assign(ElementModel.prototype.defaults.call(this), {
         persist: false,
@@ -45,6 +45,4 @@ define(function (require) {
     setDirty: $.noop,
     setPristine: $.noop
   });
-
-  return HeadingElement;
 });

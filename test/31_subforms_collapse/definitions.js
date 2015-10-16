@@ -48,7 +48,10 @@ define(function () {
               label: 'Comments',
               type: 'subForm',
               subForm: 'form2',
-              rowClass: 'collapse: forms;'
+              rowClass: 'collapse:forms;label:Custom;',
+              plusButtonLabel: "PLUS",
+              minusButtonLabel: "MINUS"
+              //rowClass: 'collapse: forms;'
             }
           },
           {

@@ -11,10 +11,7 @@ define(function (require) {
 
   // this module
 
-  var EmailElement = TextElement.extend({
-    initialize: function () {
-      TextElement.prototype.initialize.apply(this, arguments);
-    },
+  return TextElement.extend({
     initializeView: function () {
       var Forms = BMP.Forms;
       var View, view;
@@ -45,6 +42,4 @@ define(function (require) {
       return _.isEmpty(errors) ? undefined : errors;
     }
   });
-
-  return EmailElement;
 });

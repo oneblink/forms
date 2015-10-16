@@ -18,7 +18,7 @@ define(function (require) {
 
   // this module
 
-  var DateElementView = ElementView.extend({
+  return ElementView.extend({
     events: {
       'change [data-onchange="onDateVChange"]': 'onDateVChange',
       'change [data-onchange="onTimeVChange"]': 'onTimeVChange'
@@ -139,8 +139,9 @@ define(function (require) {
             input.val(value);
           } else {
             if (value) { // for default value when picker not initialised
-              input.val(moment(Date.parse(value)).format(dateFormat));
+              value = moment(Date.parse(value)).format(dateFormat);
             }
+            input.val(value);
           }
         }
       }
@@ -150,8 +151,5 @@ define(function (require) {
       var name = this.model.attributes.name;
       this.$el.find('input[name="' + name + '_time"]').val(this.model.get('_time'));
     }
-
   });
-
-  return DateElementView;
 });

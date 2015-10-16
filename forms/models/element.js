@@ -21,9 +21,7 @@ define(function (require) {
 
   // this module
 
-  var Element;
-
-  Element = Backbone.Model.extend({
+  return Backbone.Model.extend({
     defaults: function () {
       return {
         page: 0,
@@ -232,6 +230,8 @@ define(function (require) {
     */
     set: function (key, value, options) {
       var attrs, result;
+      var self = this;
+
       if (!key) {
         return undefined;
       }
@@ -247,10 +247,9 @@ define(function (require) {
       }
 
       result = Backbone.Model.prototype.set.call(this, attrs, options);
-
-      if ('value' in attrs) {
-        if (!options || !options.hasOwnProperty('value') || options.validate) {
-          this.isValid();
+      if ('blob' in attrs || 'value' in attrs) {
+        if (!options || _.isEmpty(options) || options.validate) {
+          self.isValid();
         }
       }
 
@@ -355,6 +354,4 @@ define(function (require) {
       return el;
     }
   });
-
-  return Element;
 });

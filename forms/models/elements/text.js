@@ -11,10 +11,7 @@ define(function (require) {
 
   // this module
 
-  var TextElement = Element.extend({
-    initialize: function () {
-      Element.prototype.initialize.apply(this, arguments);
-    },
+  return Element.extend({
     initializeView: function () {
       var Forms = BMP.Forms;
       var View, view;
@@ -51,6 +48,4 @@ define(function (require) {
       return _.isEmpty(errors) ? undefined : errors;
     }
   });
-
-  return TextElement;
 });

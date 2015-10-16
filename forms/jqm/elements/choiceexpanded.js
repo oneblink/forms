@@ -12,7 +12,7 @@ define(function (require) {
 
   // this module
 
-  var ChoiceExpandedElementView = ChoiceElementView.extend({
+  return ChoiceElementView.extend({
     remove: function () {
       var type = this.attributes.type;
       if (type !== 'select') {
@@ -150,7 +150,6 @@ define(function (require) {
         view.$el.find('input[type = text]').val(_.difference(value, _.keys(model.attributes.options)));
       }
       this.model.isValid();
-      this.renderErrors(this.model);
     },
 
     onSelectValueChange: function () {
@@ -182,7 +181,6 @@ define(function (require) {
         this.$el.find('input[type = text]').val(this.model.get('value'));
       }
       this.model.isValid();
-      this.renderErrors(this.model);
     },
 
     fetchValue: function () {
@@ -208,6 +206,4 @@ define(function (require) {
       return values;
     }
   });
-
-  return ChoiceExpandedElementView;
 });

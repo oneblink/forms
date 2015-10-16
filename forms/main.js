@@ -60,7 +60,11 @@ define(function (require) {
     LocationElement: require('forms/models/elements/location'),
     FileElement: require('forms/models/elements/file'),
     DrawElement: require('forms/models/elements/draw'),
-    ButtonElement: require('forms/models/elements/button')
+    ButtonElement: require('forms/models/elements/button'),
+
+    Popup: require('forms/models/popup'),
+    WebcamPopup: require('forms/models/popups/webcam-popup')
+
   };
 
   Forms.uuid = require('uuid');
@@ -96,7 +100,9 @@ define(function (require) {
       throw new TypeError('expect 2nd parameter to be an Array, or omitted');
     }
     blacklist = blacklist || [];
-    blacklist.push('id', 'name', 'label');
+
+    // FORMS-249 # Removed label from blacklist.
+    blacklist.push('id', 'name');
     if (!model instanceof Backbone.Model || !model.attributes) {
       return; // nothing to do
     }
@@ -135,7 +141,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.8.0';
+  Forms.version = '3.8.1';
   Forms.supports = {};
 
   Forms.supports.blob = (function () {

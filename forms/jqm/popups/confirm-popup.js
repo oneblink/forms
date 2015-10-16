@@ -14,7 +14,7 @@ define(function (require) {
 
   // this module
 
-  var ConfirmPopup = PopupView.extend({
+  return PopupView.extend({
     template: _.template(template),
 
     className: 'bm-popup bm-confirm',
@@ -45,8 +45,5 @@ define(function (require) {
     onCancelClick: function () {
       this._reject(new Error('cancel'));
     }
-
   });
-
-  return ConfirmPopup;
 });

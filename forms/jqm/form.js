@@ -15,7 +15,7 @@ define(function (require) {
 
   // this module
 
-  var FormView = Backbone.View.extend({
+  return Backbone.View.extend({
     tagName: 'form',
 
     attributes: {
@@ -145,8 +145,5 @@ define(function (require) {
     onChangedId: function () {
       this.$el.attr('data-record-id', this.model.getElement('id').val());
     }
-
   });
-
-  return FormView;
 });

@@ -1,0 +1,53 @@
+<h1 class="bm-webrtc__bm-prompt"><%= title %></h1>
+<% if (isPermissionGranted){ %>
+  <div class="bm-webrtc__bm-container-sourcelist">
+    <select data-onchange="change-input">
+      <% _.each(videoSources, function(source) { %>
+        <option value="<%=source.id%>"><%= source.label || (source.facing === 'environment' ? 'Back Camera' : 'Front Camera') %></option>
+      <% }); %>
+    </select>
+  </div>
+  <div class="bm-webrtc__bm-imagecontainer" style="width:100%;overflow:hidden">
+    <video autoplay 
+           width="100%"
+           style="transition: transform 0.25s ease-out"
+           class="bm-webrtc__bm-video"
+           data-onclick="on-capture-click"></video>
+    <img class="bm-webrtc__bm-videostill" 
+         style="display: none;"
+         width="100%"/>
+  </div>
+<% } else { %>
+  <div class="bm-webrtc__bm-error">
+    <p>Please allow access to the camera and try again.</p>
+  </div>
+<% } %>
+<div class="bm-webrtc__bm-container"
+     data-role="controlgroup"
+     data-type="horizontal">
+  <button class="bm-webrtc__bm-button"
+     data-role="button"
+     data-inline="true"
+     data-mini="true"
+     data-onclick="on-cancel-click"><%=cancelButtonText%></a>
+    <% if (isPermissionGranted) { %>
+      <button class="bm-webrtc__bm-button"
+         data-role="button" 
+         data-inline="true"
+         data-mini="true"
+         data-onclick="on-rotate-click">Rotate</button>
+      <button class="bm-webrtc__bm-button"
+         disabled="disabled"
+         data-role="button"
+         data-inline="true"
+         data-mini="true"
+         data-onclick="on-recapture-click">Recapture</button>
+      <button class="bm-webrtc__bm-button"
+         disabled="disabled"
+         data-role="button"
+         data-inline="true"
+         data-mini="true"
+         data-onclick="on-confirm-click"><%=confirmButtonText%></button>
+    <% } %>
+</div>
+<canvas class='bm-webrtc__bm-canvas_hidden' style="display: none;"></canvas>

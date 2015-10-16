@@ -12,7 +12,7 @@ define(function (require) {
 
   // this module
 
-  var ReadOnlyElementView = ElementView.extend({
+  return ElementView.extend({
 
     // extending super-super's modelEvents
     modelEvents: _.extend({}, ElementView.prototype.modelEvents, {
@@ -47,6 +47,4 @@ define(function (require) {
       }
     }
   });
-
-  return ReadOnlyElementView;
 });

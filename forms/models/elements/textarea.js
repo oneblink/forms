@@ -1,10 +1,9 @@
-define(['forms/models/elements/text'], function (TextElement) {
+define(function (require) {
   'use strict';
 
-  var TextAreaElement = TextElement.extend({
-    initialize: function () {
-      TextElement.prototype.initialize.apply(this, arguments);
-    },
+  var TextElement = require('forms/models/elements/text');
+
+  return TextElement.extend({
     initializeView: function () {
       var Forms = BMP.Forms;
       var View, view;
@@ -21,6 +20,4 @@ define(['forms/models/elements/text'], function (TextElement) {
       return view;
     }
   });
-
-  return TextAreaElement;
 });

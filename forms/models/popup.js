@@ -15,7 +15,7 @@ define(function (require) {
    * @property {string} [confirmButtonIcon="delete"] - The confirm button icon to use. See [jQuery Mobile](http://api.jquerymobile.com/1.3/icons/) for a list of icons.
    * @property {boolean} [dissmissible=true] - See [jQuery Mobile](http://api.jquerymobile.com/1.3/popup/#option-dismissible) for more details
    */
-  var PopupModel = Backbone.Model.extend({
+  return Backbone.Model.extend({
     defaults: function () {
       return {
         title: '',
@@ -31,6 +31,4 @@ define(function (require) {
       };
     }
   });
-
-  return PopupModel;
 });

@@ -56,7 +56,6 @@ define(function (require) {
       this.onPlaceholderChange();
 
       this.$el.fieldcontain();
-      this.renderErrors();
     },
 
     remove: function () {
@@ -104,7 +103,6 @@ define(function (require) {
       // #isValid() probably should be in the model, but we keep it here to
       // preserve a strict sequence: check THEN render
       this.model.isValid();
-      this.renderErrors();
     }
   });
 });

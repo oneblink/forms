@@ -12,7 +12,7 @@ define(function (require) {
 
   // this module
 
-  var FileElementView, humanizeBytes;
+  var humanizeBytes;
 
   /**
    * @param {Number} size in bytes
@@ -33,7 +33,7 @@ define(function (require) {
     return size + ' ' + units[unitIndex];
   };
 
-  FileElementView = ElementView.extend({
+  return ElementView.extend({
     render: function () {
       this.renderLabel();
       this.renderControls();
@@ -121,8 +121,5 @@ define(function (require) {
         });
       }
     }
-
   });
-
-  return FileElementView;
 });

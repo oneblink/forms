@@ -7,7 +7,7 @@ define(function (require) {
 
   // this module
 
-  var SectionView = Backbone.View.extend({
+  return Backbone.View.extend({
     tagName: 'section',
     initialize: function () {
       var attrs = this.model.attributes;
@@ -67,6 +67,4 @@ define(function (require) {
       });
     }
   });
-
-  return SectionView;
 });

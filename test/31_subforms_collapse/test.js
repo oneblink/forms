@@ -70,6 +70,21 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           assert.lengthOf(el.get('_view').$el.find('.ui-collapsible'), 0);
         });
       });
+
+      test('label has been set by rowclass', function () {
+        var el = BMP.Forms.current.getElement('comments');
+        assert.equal(el.get('_view').$el.find('.bm-subform__bm-title').first().text(), 'Custom');
+      });
+
+      test('Plus button text takes precedence over label has been set by rowclass', function () {
+        var el = BMP.Forms.current.getElement('comments');
+        assert.equal(el.get('_view').$el.find('.bm-button.bm-add').first().text(), 'PLUS');
+      });
+
+      test('Minus button text takes precedence over label has been set by rowclass', function () {
+        var el = BMP.Forms.current.getElement('comments');
+        assert.equal(el.get('_view').$el.find('.bm-subform__bm-removebutton').first().text(), 'MINUS');
+      });
     });
   }); // END: suite('1', ...)
 });

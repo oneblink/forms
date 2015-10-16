@@ -11,7 +11,7 @@ define(function (require) {
 
   // this module
 
-  var MessageElementView = ElementView.extend({
+  return ElementView.extend({
     tagName: 'div',
 
     // explicitly override super's modelEvents
@@ -49,6 +49,4 @@ define(function (require) {
       }
     }
   });
-
-  return MessageElementView;
 });

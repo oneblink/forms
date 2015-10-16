@@ -1,7 +1,9 @@
-define(['forms/jqm/element'], function (ElementView) {
+define(function (require) {
   'use strict';
 
-  var SelectReadOnlyElementView = ElementView.extend({
+  var ElementView = require('forms/jqm/element');
+
+  return ElementView.extend({
     render: function () {
       var self = this;
       var attrs = self.model.attributes;
@@ -18,6 +20,4 @@ define(['forms/jqm/element'], function (ElementView) {
       }, 100);
     }
   });
-
-  return SelectReadOnlyElementView;
 });
