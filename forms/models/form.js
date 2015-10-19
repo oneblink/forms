@@ -21,7 +21,7 @@ define(function (require) {
   var invalidWrapperFn, isSubForm;
 
   function isVisible (elementModel) {
-    return !elementModel.get('hidden');
+    return !elementModel.attributes.hidden;
   }
 
   invalidWrapperFn = function (fn) {
@@ -32,7 +32,7 @@ define(function (require) {
       var results;
       var elements;
 
-      elements = this.get('elements');
+      elements = this.attributes.elements;
 
       if (!elements) {
         return undefined;
@@ -60,7 +60,7 @@ define(function (require) {
   };
 
   isSubForm = function (elementModel) {
-    return elementModel.get('type') === 'subForm';
+    return elementModel.attributes.type === 'subForm';
   };
 
   Form = Backbone.Model.extend({
@@ -203,7 +203,7 @@ define(function (require) {
     getPage: function (index) {
       var Forms = BMP.Forms;
       var Page = Forms._models.Page;
-      var pages = this.get('pages');
+      var pages = this.attributes.pages;
 
       // assume that by now it's okay to create vanilla Pages
       while (pages.length <= index) {
@@ -249,9 +249,9 @@ define(function (require) {
       if (!this.attributes.elements) {
         return undefined;
       }
-      return _.reduce(this.get('elements').filter(isSubForm), function (memo, elementModel) {
+      return _.reduce(this.attributes.elements.filter(isSubForm), function (memo, elementModel) {
         memo = memo || {}; // create in here so we return undefined if we have no subforms.
-        memo[elementModel.id] = elementModel.get('forms');
+        memo[elementModel.id] = elementModel.attributes.forms;
         return memo;
       }, undefined);
     },
@@ -438,7 +438,7 @@ define(function (require) {
      */
     /* eslint-disable no-unused-vars */ // stop eslint compaining about options and errorList not being used.
     setErrors: function (errorList, options) {
-      var elementsCollection = this.get('elements');
+      var elementsCollection = this.attributes.elements;
       var subForms = this.getSubforms();
 
       _.each(subForms, function (subForm, name) {

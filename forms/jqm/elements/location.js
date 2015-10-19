@@ -51,7 +51,7 @@ define(function (require) {
     },
 
     setClearButton: function () {
-      var value = this.model.get('value');
+      var value = this.model.attributes.value;
       var $clearButton = this.$el.find('[data-action=clear]');
       if (value) {
         $clearButton.button('enable');
@@ -184,10 +184,10 @@ define(function (require) {
 
       self.constructor.disableLocationButton.bind(this)();
 
-      value = model.get('value');
+      value = model.attributes.value;
       if (_.isEmpty(value) || !value.latitude || !value.longitude) {
         model.getGeoLocation().then(function () { // onSuccess
-          value = model.get('currentlocation');
+          value = model.attributes.currentlocation;
           // set value for first time
           $div.find('input').val(JSON.stringify(value));
           LocationElementView.initializeMap(value, $div);
