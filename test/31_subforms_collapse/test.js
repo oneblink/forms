@@ -85,6 +85,18 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         var el = BMP.Forms.current.getElement('comments');
         assert.equal(el.get('_view').$el.find('.bm-subform__bm-removebutton').first().text(), 'MINUS');
       });
+
+      test('collapsible subforms populated by #setRecord are collapsed', function () {
+        assert.lengthOf($('.ui-collapsible-collapsed', 'section[data-name=comments]'), 3);
+        assert.lengthOf($('.bm-form', 'section[data-name=comments]'), 3);
+      });
+
+      test('a new subform is expanded when added', function () {
+        return Forms.current.getElement('comments').add().then(function () {
+          assert.lengthOf($('.ui-collapsible-collapsed', 'section[data-name=comments]'), 3);
+          assert.lengthOf($('.bm-form', 'section[data-name=comments]'), 4);
+        });
+      });
     });
   }); // END: suite('1', ...)
 });

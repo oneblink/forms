@@ -51,7 +51,6 @@ define(function () {
               rowClass: 'collapse:forms;label:Custom;',
               plusButtonLabel: "PLUS",
               minusButtonLabel: "MINUS"
-              //rowClass: 'collapse: forms;'
             }
           },
           {

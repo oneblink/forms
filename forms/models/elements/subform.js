@@ -293,18 +293,23 @@ define(function (require) {
      */
     setRecords: function (data) {
       var me = this;
-      var forms = this.attributes.forms;
-      var addPromises = [];
-      var counter = 0;
-      var promises,
-        action;
 
       return new Promise(function (resolve, reject) {
         if (!_.isArray(data)) {
-          resolve();
-          return;
+          return resolve();
         }
+
         Promise.all([me.attributes.preloadPromise]).then(function () {
+          var forms = me.attributes.forms;
+          var addPromises = [];
+          var counter = 0;
+          var action;
+          var collapseForm = function (form) {
+            form.set({'collapsed': true});
+
+            return form;
+          };
+
           // remove all preloaded forms
           while (forms.length > 0) {
             me.remove(forms.length - 1);
@@ -315,14 +320,13 @@ define(function (require) {
             if (data[counter].id) {
               action = 'edit';
             }
-            addPromises.push(me.add(action));
+            addPromises.push(me.add(action).then(collapseForm));
             counter++;
           }
           // wait for extra (blank) records to be added
           Promise.all(addPromises).then(function () {
-            promises = [];
-            data.forEach(function (record, index) {
-              promises.push(forms.at(index).setRecord(record));
+            var promises = data.map(function (record, index) {
+              return forms.at(index).setRecord(record);
             });
 
             // wait for records to be populated
