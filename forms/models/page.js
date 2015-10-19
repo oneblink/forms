@@ -28,6 +28,7 @@ define(function (require) {
   Page = Backbone.Model.extend({
     defaults: function () {
       return {
+        _view: null,
         class: ''
       };
     },

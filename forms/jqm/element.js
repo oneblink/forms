@@ -99,7 +99,7 @@ define(function (require) {
         events.proxyUnbindEntityEvents(this, this.model, this.modelEvents);
       }
 
-      this.model.unset('_view');
+      this.model.attributes._view = null;
       return Backbone.View.prototype.remove.call(this);
     },
 

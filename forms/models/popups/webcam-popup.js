@@ -152,7 +152,7 @@ define(function (require) {
       }
 
       _.invoke(stream.getTracks(), 'stop');
-      this.unset('stream');
+      this.attributes.stream = null;
     }
   });
 });
