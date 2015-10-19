@@ -21,7 +21,7 @@ define(function (require) {
 
       if (attrs.canSpecifyOther) {
         attrs.other = attrs.canSpecifyOther;
-        delete attrs.canSpecifyOther;
+        attrs.canSpecifyOther = null;
       }
     },
 

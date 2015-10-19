@@ -56,7 +56,7 @@ define(function (require) {
           section.add(this);
         } else {
           page.add(this);
-          delete attrs.section;
+          attrs.section = null;
         }
       }
 
@@ -178,14 +178,14 @@ define(function (require) {
       var attrs = this.attributes;
       if (attrs._view) {
         attrs._view.remove();
-        delete attrs._view;
+        attrs._view = null;
       }
     },
     close: function () {
       var attrs = this.attributes;
-      delete attrs.form;
-      delete attrs.page;
-      delete attrs.section;
+      attrs.form = null;
+      attrs.page = null;
+      attrs.section = null;
       this.off(null, null, this);
     },
     /**

@@ -112,9 +112,7 @@ define(function (require) {
     }
 
     parsed = Forms.parseClass(klass);
-    blacklist.forEach(function (prop) {
-      delete parsed[prop];
-    });
+    parsed = _.omit(parsed, blacklist);
 
     defaults = _.result(model, 'defaults', {});
     model.set(Forms.castPropertyValues(parsed, defaults));
