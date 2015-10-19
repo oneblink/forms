@@ -21,13 +21,13 @@ define(function (require) {
     var elements;
     if (!_.isEmpty(elementModel.validationError)) {
       err = {};
-      err[ elementModel.get('name') ] = _.map(elementModel.validationError.value, addErrorText);
+      err[ elementModel.attributes.name ] = _.map(elementModel.validationError.value, addErrorText);
       errorList.push(err);
     }
 
-    if (elementModel.get('forms')) {
-      errorList = elementModel.get('forms').reduce(function (errList, form) {
-        elements = form.get('elements');
+    if (elementModel.attributes.forms) {
+      errorList = elementModel.attributes.forms.reduce(function (errList, form) {
+        elements = form.attributes.elements;
         if (!elements) {
           return errList;
         }
@@ -129,8 +129,8 @@ define(function (require) {
 
       errors = this.reduce(function (memo, elementModel) {
         var subFormErrors;
-        if (elementModel.get('type') === 'subForm') {
-          subFormErrors = _.chain(elementModel.get('forms').invoke('getInvalidElements'))
+        if (elementModel.attributes.type === 'subForm') {
+          subFormErrors = _.chain(elementModel.attributes.forms.invoke('getInvalidElements'))
                             .compact()
                             .pluck('errors')
                             .flatten()

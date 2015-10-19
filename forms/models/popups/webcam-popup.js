@@ -84,7 +84,7 @@ define(function (require) {
      * @return {Boolean}
      */
     isPortrait: function () {
-      var orientation = this.get('orientation');
+      var orientation = this.attributes.orientation;
       return orientation === 0 || orientation % 180 === 0;
     },
 
@@ -97,8 +97,8 @@ define(function (require) {
     rotate: function (rotateBy) {
       var orientation;
 
-      rotateBy = rotateBy || this.get('rotateBy');
-      orientation = (this.get('orientation') + rotateBy);
+      rotateBy = rotateBy || this.attributes.rotateBy;
+      orientation = (this.attributes.orientation + rotateBy);
 
       this.set('orientation', orientation);
 
@@ -113,7 +113,7 @@ define(function (require) {
      * @return {Number}
      */
     getClampedOrientation: function () {
-      var rotation = this.get('orientation') % 360;
+      var rotation = this.attributes.orientation % 360;
       if (rotation < 0) {
         rotation = 360 + rotation;
       }
@@ -134,7 +134,7 @@ define(function (require) {
      * @return {string} - A Blob URL
      */
     streamToURL: function () {
-      var stream = this.get('stream');
+      var stream = this.attributes.stream;
       if (!stream) {
         return '';
       }
@@ -146,7 +146,7 @@ define(function (require) {
      * Stops the webcam stream(s)
      */
     stopStream: function () {
-      var stream = this.get('stream');
+      var stream = this.attributes.stream;
       if (!stream) {
         return;
       }

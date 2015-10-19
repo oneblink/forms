@@ -55,7 +55,7 @@ define(function (require) {
       }
 
       this.model.unset('_view');
-      this.stopListening(this.model.get('elements'));
+      this.stopListening(this.model.attributes.elements);
 
       return Backbone.View.prototype.remove.call(this);
     },
@@ -113,28 +113,28 @@ define(function (require) {
         var pageIdOfElement;
         var pageCollection;
 
-        pageCollection = this.model.get('pages');
+        pageCollection = this.model.attributes.pages;
 
 // this is pretty hacky but it means not re-writing the form/subform rendering system
-        if (elementModel.get('parentElement')) {
-          pageIdOfElement = elementModel.get('parentElement').get('page').index();
+        if (elementModel.attributes.parentElement) {
+          pageIdOfElement = elementModel.attributes.parentElement.attributes.page.index();
         } else {
-          pageIdOfElement = elementModel.get('page').index();
+          pageIdOfElement = elementModel.attributes.page.index();
         }
 
         if (pageCollection.current && pageIdOfElement !== pageCollection.current.index()) {
           pageCollection.goto(pageIdOfElement);
         }
 
-        elementModel.get('_view').scrollTo({ duration: 100 }).then(
-          function () { resolve(elementModel.get('_view')); },
+        elementModel.attributes._view.scrollTo({ duration: 100 }).then(
+          function () { resolve(elementModel.attributes._view); },
           function () { reject(new Error('Scroll Animaiton Failed')); }
        );
       }.bind(this));
     },
 
     onAttached: function () {
-      this.model.get('pages').current.attributes.elements.forEach(function (el) {
+      this.model.attributes.pages.current.attributes.elements.forEach(function (el) {
         var view = el.attributes._view;
         if (view && typeof view.onAttached === 'function') {
           view.onAttached();

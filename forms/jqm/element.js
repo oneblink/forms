@@ -47,8 +47,8 @@ define(function (require) {
 
     attributes: function () {
       return {
-        'data-name': this.model.get('name'),
-        'data-element-type': this.model.get('type'),
+        'data-name': this.model.attributes.name,
+        'data-element-type': this.model.attributes.type,
         'data-role': 'fieldcontain',
         'class': elementClassFromModelAttributes(this.model.attributes)
       };
@@ -69,8 +69,8 @@ define(function (require) {
 
       this.$el.data('model', elementModel);
 
-      if (elementModel.get('defaultValue')) {
-        this.$el.val(elementModel.get('defaultValue'));
+      if (elementModel.attributes.defaultValue) {
+        this.$el.val(elementModel.attributes.defaultValue);
       }
 
       if (this.modelEvents) {

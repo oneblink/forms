@@ -157,10 +157,10 @@ define(function (require) {
       var view = this;
       var $inputs = view.$el.find('input[type=radio],input[type=checkbox]');
 
-      if (_.contains(_.keys(this.model.get('options')), this.model.get('value'))) {
-        this.$el.find('[value = "' + this.model.get('value') + '"]').prop('checked', true);
+      if (_.contains(_.keys(this.model.attributes.options), this.model.attributes.value)) {
+        this.$el.find('[value = "' + this.model.attributes.value + '"]').prop('checked', true);
       } else {
-        if (this.model.get('value') === '') {
+        if (this.model.attributes.value === '') {
           this.$el.find('input:checked').prop('checked', false);
         } else {
           this.$el.find('[value = other]').prop('checked', true);
@@ -176,9 +176,9 @@ define(function (require) {
 
       this.renderOtherText(_.contains(values, 'other'));
 
-      if (!_.contains(_.keys(this.model.get('options')), this.model.get('value')) && this.model.get('value') !== 'other') {
+      if (!_.contains(_.keys(this.model.attributes.options), this.model.attributes.value) && this.model.attributes.value !== 'other') {
         // Also need to fill the text box back in, in addition to selecting radio
-        this.$el.find('input[type = text]').val(this.model.get('value'));
+        this.$el.find('input[type = text]').val(this.model.attributes.value);
       }
       this.model.isValid();
     },
