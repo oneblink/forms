@@ -62,7 +62,7 @@ define(function (require) {
     },
 
     onConfirmClick: function () {
-      this._resolve(this.$canvas[0].toDataURL(this.model.get('destinationMimeType')));
+      this._resolve(this.$canvas[0].toDataURL(this.model.attributes.destinationMimeType));
     },
 
     onCancelClick: function () {
@@ -107,7 +107,7 @@ define(function (require) {
      * Applies the models orientation value to the video element
      */
     rotateVideo: function () {
-      var orientation = this.model.get('orientation');
+      var orientation = this.model.attributes.orientation;
       var rotateCSS = 'rotate(' + orientation + 'deg)';
       var paddingY = this.model.isPortrait() ? '0' : '13%';
       var paddingX = '0';
@@ -193,7 +193,7 @@ define(function (require) {
           ctx.drawImage(video, 0, 0);
       }
 
-      return this.$canvas[0].toDataURL(this.model.get('destinationMimeType'));
+      return this.$canvas[0].toDataURL(this.model.attributes.destinationMimeType);
     },
 
     cacheElements: function () {

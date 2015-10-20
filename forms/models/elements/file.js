@@ -67,7 +67,7 @@ define(function (require) {
 */
       this.on('change:value', function () {
         var value;
-        value = this.get('value');
+        value = this.attributes.value;
 
         if (value) {
           this.setBlobFromString(value);
@@ -95,14 +95,14 @@ define(function (require) {
     initializeView: function () {
       var Forms = BMP.Forms;
       var view;
-      var accept = this.get('accept') || '';
+      var accept = this.attributes.accept || '';
 
       this.removeView();
-      if (this.get('readonly')) {
+      if (this.attributes.readonly) {
         view = new Forms._views.BlobReadOnlyElement({model: this});
       } else if (BMP.BlinkGap.hasCamera() && accept.indexOf('image') === 0) {
         view = new Forms._views.BGImageElement({model: this});
-      } else if (this.getUserMediaPresent() && this.get('capture') === true) {
+      } else if (this.getUserMediaPresent() && this.attributes.capture === true) {
         view = new Forms._views.WebRTCImageElement({model: this});
       } else {
         view = new Forms._views.FileElement({model: this});

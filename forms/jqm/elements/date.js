@@ -61,7 +61,7 @@ define(function (require) {
     },
 
     render: function () {
-      var type = this.model.get('type');
+      var type = this.model.attributes.type;
 
       this.$el.empty();
       this.renderLabel();
@@ -78,7 +78,7 @@ define(function (require) {
     },
 
     onAttached: function () {
-      var type = this.model.get('type');
+      var type = this.model.attributes.type;
 
       if (type !== 'time') {
         this.onDateMChange();
@@ -110,11 +110,11 @@ define(function (require) {
 
     onDateMChange: function () {
       var name = this.model.attributes.name;
-      var value = this.model.get('_date');
+      var value = this.model.attributes._date;
       var input = this.$el.find('input[name="' + name + '_date"]');
       var picker = input.pickadate('picker');
       var pickerValue;
-      var dateFormat = this.model.mapDateFormats[this.model.get('dateFormat')] || DEFAULT_FORMAT;
+      var dateFormat = this.model.mapDateFormats[this.model.attributes.dateFormat] || DEFAULT_FORMAT;
 
       try {
         this.model.isInvalidFormat(DEFAULT_FORMAT, value);
@@ -149,7 +149,7 @@ define(function (require) {
 
     onTimeMChange: function () {
       var name = this.model.attributes.name;
-      this.$el.find('input[name="' + name + '_time"]').val(this.model.get('_time'));
+      this.$el.find('input[name="' + name + '_time"]').val(this.model.attributes._time);
     }
   });
 });

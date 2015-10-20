@@ -32,7 +32,7 @@ define(function (require) {
      */
     val: function (value) {
       if (value === undefined) {
-        return this.get('html');
+        return this.attributes.html;
       }
       this.set('html', value);
       return value;

@@ -13,7 +13,7 @@ define(function (require) {
 
   return HTMLElementView.extend({
     createElement: function () {
-      var name = this.model.get('name');
+      var name = this.model.attributes.name;
       var input$ = $('<textarea></textarea>');
       input$.attr('name', name);
       return input$;

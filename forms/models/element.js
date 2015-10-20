@@ -261,7 +261,7 @@ define(function (require) {
      */
     val: function (value) {
       if (value === undefined) {
-        return this.get('value');
+        return this.attributes.value;
       }
 
       this.set('value', value);
