@@ -17,7 +17,7 @@ define(function (require) {
     initialize: function () {
       this.listenTo(this.model, 'update:fieldErrors', function () {
         this.renderErrors.apply(this, arguments);
-      }.bind(this));
+      });
 
       ElementView.prototype.initialize.apply(this, arguments);
     },
@@ -49,7 +49,7 @@ define(function (require) {
 
       this.$el.attr('data-form', attrs.subform);
       this.$el.prepend($button);
-      this.model.attributes.forms.on('add remove', this.onFormsChange, this);
+      this.listenTo(this.model.attributes.forms, 'add remove', this.onFormsChange);
       this.$el.fieldcontain();
       this.onFormsChange();
     },

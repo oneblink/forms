@@ -93,12 +93,12 @@ define(function (require) {
         attrs.summaryPromise = this.getSummaryElements();
       }
 
-      this.attributes.forms.on('add remove', this.updateFieldErrors, this);
+      this.listenTo(this.attributes.forms, 'add remove', this.updateFieldErrors);
 
       // make sure that all form events are bubbled up through this subform
-      this.attributes.forms.on('all', function () {
+      this.listenTo(this.attributes.forms, 'all', function () {
         this.trigger.apply(this, arguments);
-      }, this);
+      });
     },
 
     initializeView: function () {
