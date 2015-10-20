@@ -54,7 +54,7 @@ define(function (require) {
         pages.current.attributes._view.remove();
       }
 
-      this.model.unset('_view');
+      this.model.attributes._view = null;
       this.stopListening(this.model.attributes.elements);
 
       return Backbone.View.prototype.remove.call(this);

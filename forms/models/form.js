@@ -66,6 +66,7 @@ define(function (require) {
   Form = Backbone.Model.extend({
     defaults: function () {
       return {
+        _view: null,
         answerSpace: '',
         class: '',
         uuid: '',

@@ -48,7 +48,7 @@ define(function (require) {
           el.attributes._view.remove();
         }
       });
-      this.model.unset('_view');
+      this.model.attributes._view = null;
       result = Backbone.View.prototype.remove.call(this);
       // not sure if this still needs to be here or not,
       // but don't see anything breaking
