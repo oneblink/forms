@@ -60,7 +60,7 @@ define(function (require) {
         if (attrs.preload !== 'no' && attrs.preloadNum) {
           attrs.preload = Number(attrs.preloadNum);
         } else if (attrs.preload === 'no') {
-          delete attrs.preload;
+          attrs.preload = null;
         }
       } else if (!isNaN(Number(attrs.preload))) {
         attrs.preload = Number(attrs.preload);

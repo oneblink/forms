@@ -67,7 +67,7 @@ define(function (require) {
           }
         }
         if (!sectionAttrs.section instanceof Section) {
-          delete sectionAttrs.section;
+          sectionAttrs.section = null;
         }
       });
       attrs.sections = sections;
@@ -84,10 +84,10 @@ define(function (require) {
       var attrs = this.attributes;
       if (attrs._view) {
         attrs._view.remove();
-        delete attrs._view;
+        attrs._view = null;
       }
-      delete attrs.form;
-      delete attrs.section;
+      attrs.form = null;
+      attrs.section = null;
       attrs.elements.forEach(function (element) {
         // some combinations of lo-dash and backbone have broken .length
         // so we need to double-check that .forEach actually yielded something

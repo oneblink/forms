@@ -1,4 +1,6 @@
-define(['BlinkForms', 'sinon', 'BIC'], function (Forms, sinon) {
+define([
+  'backbone', 'BlinkForms', 'sinon', 'BIC'
+], function (Backbone, Forms, sinon) {
   suite('17: main', function () {
     test('BMP is defined', function () {
       assert.isDefined(window.BMP);
@@ -38,6 +40,20 @@ define(['BlinkForms', 'sinon', 'BIC'], function (Forms, sinon) {
 
     test('BMP.Forms.proxyUnbindFormElementEvents is a function', function () {
       assert.isFunction(window.BMP.Forms.proxyUnbindFormElementEvents);
+    });
+
+    test('BMP.Forms.setAttributesFromClass', function () {
+      var model = new Backbone.Model({
+        class: 'id: 123; name: def; label: DEF; css-class',
+        id: 123,
+        label: 'ABC',
+        name: 'abc'
+      });
+      BMP.Forms.setAttributesFromClass(model);
+      assert.equal(model.attributes.class, 'css-class');
+      assert.equal(model.attributes.id, 123, '"id" is blacklisted');
+      assert.equal(model.attributes.label, 'DEF');
+      assert.equal(model.attributes.name, 'abc', '"name" is blacklisted');
     });
 
     suite('Model defaults', function () {

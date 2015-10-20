@@ -53,9 +53,9 @@ define(function (require) {
       // not sure if this still needs to be here or not,
       // but don't see anything breaking
       this.$el.remove();
-      delete this.model;
-      delete this.$el;
-      delete this.el;
+      this.model = null;
+      this.$el = null;
+      this.el = null;
       return result;
     },
     onAttached: function () {

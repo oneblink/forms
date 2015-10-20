@@ -96,7 +96,7 @@ define(function (require) {
         '_sections'
       ]);
       pages = this.attributes._pages;
-      delete this.attributes._pages;
+      this.attributes._pages = null;
       if (pages && _.isArray(pages)) {
         // TODO: allow pages to be redeclared per-action
         pages = new Pages(_.map(pages, function (p) {
@@ -108,7 +108,7 @@ define(function (require) {
       this.attributes.pages = pages;
 
       elements = this.attributes._elements;
-      delete this.attributes._elements;
+      this.attributes._elements = null;
       if (elements && _.isArray(elements)) {
         // TODO: allow pages to be redeclared per-action
         elements = _.map(elements, function (e) {
@@ -142,7 +142,7 @@ define(function (require) {
       this.attributes.preloadPromise = Promise.all(preloadPromises);
 
       behaviours = this.attributes._behaviours;
-      delete this.attributes._behaviours;
+      this.attributes._behaviours = null;
       if (behaviours && _.isArray(behaviours)) {
         // TODO: allow behaviours to be redeclared per-action
         behaviours = _.map(behaviours, function (b) {
@@ -179,9 +179,9 @@ define(function (require) {
       var attrs = this.attributes;
       if (attrs._view) {
         attrs._view.remove();
-        delete attrs._view;
+        attrs._view = null;
       }
-      delete this.$form;
+      this.$form = null;
       if (attrs.pages) {
         attrs.pages.forEach(function (page) {
           page.close();
