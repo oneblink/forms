@@ -102,14 +102,14 @@ define(function (require) {
       var model = this.model;
       var value;
 
-      value = model.get('value');
+      value = model.attributes.value;
 
       // disable button till location located
       self.constructor.disableLocationButton.bind(self)();
 
       if (_.isEmpty(value) || !value.latitude || !value.longitude) {
         model.getGeoLocation().then(function () { // onSuccess
-          value = model.get('currentlocation');
+          value = model.attributes.currentlocation;
           // set value for first time
           window.navigator.map.confirmLocation($.proxy(LocationNativeElementView.onSuccess, self), $.proxy(LocationNativeElementView.onFail, self), value);
           self.constructor.enableLocationButton.bind(self)();

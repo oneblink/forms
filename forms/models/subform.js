@@ -39,7 +39,7 @@ define(function (require) {
       if (this.attributes._view) {
         this.attributes._view.remove();
       }
-      this.unset('_view');
+      this.attributes._view = null;
     }
   });
 });

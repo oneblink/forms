@@ -60,7 +60,7 @@ define(function (require) {
         if (attrs.preload !== 'no' && attrs.preloadNum) {
           attrs.preload = Number(attrs.preloadNum);
         } else if (attrs.preload === 'no') {
-          delete attrs.preload;
+          attrs.preload = null;
         }
       } else if (!isNaN(Number(attrs.preload))) {
         attrs.preload = Number(attrs.preload);
@@ -159,7 +159,7 @@ define(function (require) {
       var Forms = BMP.Forms;
 
       // make a map of the field name properties so they are easy to match
-      var fieldProperties = _.reduce(self.get('_elements'), function (memo, element) {
+      var fieldProperties = _.reduce(self.attributes._elements, function (memo, element) {
         memo[element.id] = element;
 
         return memo;
@@ -187,7 +187,7 @@ define(function (require) {
 
             form = new SubFormModel(_.extend({}, def, {_elements: elements, _action: action}));
 
-            self.listenTo(form.get('elements'), 'invalid change:value change:blob', function () {
+            self.listenTo(form.attributes.elements, 'invalid change:value change:blob', function () {
               self.validate.apply(self, arguments);
               form.setDirty();
               self.setDirty();
@@ -240,14 +240,14 @@ define(function (require) {
       if (this.indexOf(form) === -1) {
         return; // invalid SubForm model, not part of this SubFrom Element
       }
-      if (form.get('_action') === 'edit') {
+      if (form.attributes._action === 'edit') {
         if (form.attributes._view) {
           form.attributes._view.remove();
-          this.stopListening(form.get('elements'));
+          this.stopListening(form.attributes.elements);
         }
         form.attributes = {
           _action: 'remove',
-          id: form.getElement('id').get('value')
+          id: form.getElement('id').attributes.value
         };
         forms.trigger('remove');
       } else {
@@ -404,7 +404,7 @@ define(function (require) {
         return counter;
       }
       forms.models.forEach(function (v) {
-        if (v.get('_action') !== 'remove') {
+        if (v.attributes._action !== 'remove') {
           counter++;
         }
       });
@@ -446,7 +446,7 @@ define(function (require) {
 
     setExternalErrors: function (elementErrorList, options) {
       // set errors on subforms
-      this.get('forms').invoke('setErrors', elementErrorList, options);
+      this.attributes.forms.invoke('setErrors', elementErrorList, options);
 
       // set errors on me.
       if (elementErrorList.errors) {

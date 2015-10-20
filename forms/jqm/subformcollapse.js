@@ -49,7 +49,7 @@ define(function (require) {
 
       this.$el.attr(
         'data-record-index',
-        this.model.parentElement.get('forms').indexOf(this.model)
+        this.model.parentElement.attributes.forms.indexOf(this.model)
       );
 
       this.$toggleTrigger = $('.ui-collapsible-heading-toggle', this.$el);

@@ -71,7 +71,7 @@ define(function (require) {
     },
 
     render: function () {
-      var type = this.model.get('type');
+      var type = this.model.attributes.type;
       var $label;
 
       if (!DatePickadateElement.pickadateParent) {

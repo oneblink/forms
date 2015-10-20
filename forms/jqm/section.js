@@ -19,7 +19,7 @@ define(function (require) {
       var self = this;
 
       this.$el.empty();
-      this.model.get('elements').forEach(function (el) {
+      this.model.attributes.elements.forEach(function (el) {
         var view, type;
         type = el.attributes.type;
         if (!el.attributes._view && typeof el.initializeView === 'function') {
@@ -43,24 +43,24 @@ define(function (require) {
     },
     remove: function () {
       var result;
-      this.model.get('elements').forEach(function (el) {
+      this.model.attributes.elements.forEach(function (el) {
         if (el.attributes._view) {
           el.attributes._view.remove();
         }
       });
-      this.model.unset('_view');
+      this.model.attributes._view = null;
       result = Backbone.View.prototype.remove.call(this);
       // not sure if this still needs to be here or not,
       // but don't see anything breaking
       this.$el.remove();
-      delete this.model;
-      delete this.$el;
-      delete this.el;
+      this.model = null;
+      this.$el = null;
+      this.el = null;
       return result;
     },
     onAttached: function () {
-      this.model.get('elements').models.forEach(function (el) {
-        var view = el.get('_view');
+      this.model.attributes.elements.models.forEach(function (el) {
+        var view = el.attributes._view;
         if (typeof view.onAttached === 'function') {
           view.onAttached();
         }

@@ -20,7 +20,7 @@ define(function (require) {
     render: function () {
       var $button,
         label;
-      var name = this.model.get('name');
+      var name = this.model.attributes.name;
       var attrs = this.model.attributes;
       var self = this;
 

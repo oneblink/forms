@@ -72,7 +72,7 @@ define(function (require) {
       var windowY = $window.innerHeight();
 
       // $div.hide();
-      $div.find('[data-role=header] > h2').text(this.model.get('label'));
+      $div.find('[data-role=header] > h2').text(this.model.attributes.label);
       $(document.body).append($div);
       $div.find('canvas').attr({
         height: Math.min(Math.floor((windowX - 60) * 4 / 9), windowY - 60),
