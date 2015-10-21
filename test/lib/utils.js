@@ -18,6 +18,10 @@ define([
       return navigator.userAgent.toLowerCase().indexOf('phantom') !== -1;
     },
 
+    loadViews: function () {
+      return promisedRequire('forms/jqm');
+    },
+
     loadForm: function (name, action) {
       var $page = $('[data-role=page]');
       var $content = $page.find('[data-role=content]');
@@ -174,13 +178,17 @@ define([
         }
         return options;
       }());
+      var isRequired = function () {
+        return def.default._elements.length % 2 === 0;
+      };
       var addTypedElements = function () {
         TYPES.forEach(function (type) {
           def.default._elements.push({
             default: {
               name: type + (def.default._elements.length + 1),
               type: type,
-              page: page
+              page: page,
+              required: isRequired()
             }
           });
         });
@@ -192,7 +200,8 @@ define([
               name: type + (def.default._elements.length + 1),
               type: type,
               page: page,
-              options: OPTIONS
+              options: OPTIONS,
+              required: isRequired()
             }
           });
         });
@@ -205,12 +214,23 @@ define([
             name: 'subForm' + (def.default._elements.length + 1),
             type: 'subForm',
             page: page,
+            required: isRequired(),
             subForm: NAME
           }
         });
         addChoiceElements();
       }
       return def;
+    },
+
+    decorateConsoleTime: function (fn, name) {
+      return function () {
+        var result;
+        console.time(name);
+        result = fn.apply(this, arguments);
+        console.timeEnd(name);
+        return result;
+      };
     }
 
   };
