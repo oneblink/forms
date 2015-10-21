@@ -71,7 +71,7 @@ define(function (require) {
                 if (!attrs.maxSubforms || me.model.getRealLength() < attrs.maxSubforms) {
                   $add.button('enable');
                 }
-                formModel.set({collapsed: false});
+                formModel.set({isCollapsed: false});
                 return formModel;
               });
     },

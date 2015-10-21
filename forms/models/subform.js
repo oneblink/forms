@@ -10,7 +10,7 @@ define(function (require) {
   return Form.extend({
     defaults: function () {
       return _.assign(Form.prototype.defaults.call(this), {
-        collapsed: false
+        isCollapsed: false
       });
     },
 
@@ -26,7 +26,7 @@ define(function (require) {
       switch (this.parentElement.attributes.collapse) {
         case 'forms':
           View = Forms._views.SubFormCollapse;
-          this.set({collapsed: true});
+          this.set({isCollapsed: true});
           break;
         default: // 'off'
           View = Forms._views.SubForm;

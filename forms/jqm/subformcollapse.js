@@ -17,7 +17,7 @@ define(function (require) {
 
   return SubFormView.extend({
     initialize: function () {
-      this.listenTo(this.model, 'change:collapsed', this.toggleView);
+      this.listenTo(this.model, 'change:isCollapsed', this.toggleView);
     },
 
     toggleView: function () {
@@ -44,7 +44,7 @@ define(function (require) {
         .children('.bm-subform__bm-summary');
 
       this.$collapsible.collapsible({
-        collapsed: this.model.get('collapsed')
+        collapsed: this.model.attributes.isCollapsed
       });
 
       this.$el.attr(
@@ -52,7 +52,7 @@ define(function (require) {
         this.model.parentElement.attributes.forms.indexOf(this.model)
       );
 
-      this.$toggleTrigger = $('.ui-collapsible-heading-toggle', this.$el);
+      this.$toggleTrigger = $('.ui-collapsible-heading-toggle', this.$collapsible.children('.ui-collapsible-heading'));
 
       this.model.parentElement.attributes.summaryPromise.then(function (names) {
         var formElementEvents = {};
