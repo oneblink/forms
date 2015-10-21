@@ -26,6 +26,7 @@ define(function (require) {
       switch (this.parentElement.attributes.collapse) {
         case 'forms':
           View = Forms._views.SubFormCollapse;
+          this.set({collapsed: true});
           break;
         default: // 'off'
           View = Forms._views.SubForm;

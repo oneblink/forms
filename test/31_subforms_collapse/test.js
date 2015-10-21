@@ -92,7 +92,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
 
       test('a new subform is expanded when added', function () {
-        return Forms.current.getElement('comments').add().then(function () {
+        return Forms.current.getElement('comments').get('_view').onAddClick().then(function () {
           assert.lengthOf($('.ui-collapsible-collapsed', 'section[data-name=comments]'), 3);
           assert.lengthOf($('.bm-form', 'section[data-name=comments]'), 4);
         });

@@ -304,11 +304,6 @@ define(function (require) {
           var addPromises = [];
           var counter = 0;
           var action;
-          var collapseForm = function (form) {
-            form.set({'collapsed': true});
-
-            return form;
-          };
 
           // remove all preloaded forms
           while (forms.length > 0) {
@@ -320,7 +315,7 @@ define(function (require) {
             if (data[counter].id) {
               action = 'edit';
             }
-            addPromises.push(me.add(action).then(collapseForm));
+            addPromises.push(me.add(action));
             counter++;
           }
           // wait for extra (blank) records to be added
