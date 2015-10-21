@@ -74,6 +74,7 @@ define(function (require) {
       attrs.sections = sections;
       this.on('remove', this.close, this);
     },
+
     initializeView: function () {
       var Forms = BMP.Forms;
       var view;
@@ -81,12 +82,24 @@ define(function (require) {
       view = new Forms._views.Page({model: this});
       this.set('_view', view);
     },
-    close: function () {
+
+    removeView: function () {
       var attrs = this.attributes;
+      attrs.sections.forEach(function (section) {
+        section.removeView();
+      });
+      attrs.elements.forEach(function (element) {
+        element.removeView();
+      });
       if (attrs._view) {
         attrs._view.remove();
         attrs._view = null;
       }
+    },
+
+    close: function () {
+      var attrs = this.attributes;
+      this.removeView();
       attrs.form = null;
       attrs.section = null;
       attrs.elements.forEach(function (element) {

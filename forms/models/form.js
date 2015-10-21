@@ -166,6 +166,19 @@ define(function (require) {
       }, 0);
     },
 
+    removeView: function () {
+      var attrs = this.attributes;
+      if (attrs.pages) { // sometimes there are no pages
+        attrs.pages.forEach(function (page) {
+          page.removeView();
+        });
+      }
+      if (attrs._view) {
+        attrs._view.remove();
+        attrs._view = null;
+      }
+    },
+
     isValid: modelValidation.isValid,
 
     /**
@@ -183,10 +196,7 @@ define(function (require) {
 
     close: function () {
       var attrs = this.attributes;
-      if (attrs._view) {
-        attrs._view.remove();
-        attrs._view = null;
-      }
+      this.removeView();
       this.$form = null;
       if (attrs.pages) {
         attrs.pages.forEach(function (page) {

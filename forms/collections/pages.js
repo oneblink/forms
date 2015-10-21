@@ -35,11 +35,7 @@ define(function (require) {
           view.render();
           form.attributes._view.$el.append(view.el);
         } else {
-          view = page.attributes._view;
-          if (view) {
-            view.remove();
-            page.attributes._view = null;
-          }
+          page.removeView();
         }
       });
       currentPage = self.current;
