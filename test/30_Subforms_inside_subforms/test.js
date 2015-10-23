@@ -116,17 +116,17 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
               });
     });
 
-    test('subform change:value events bubble up to Forms.current', function (done) {
+    test('subform valid events bubble up to Forms.current', function (done) {
       var subform = Forms.current.getElement('second_level_test');
 
       subform.add()
               .then(function () {
-                Forms.current.on('change:value', function (model, val) {
+                Forms.current.once('valid', function (model, error) {
                   assert.equal(model.id, 'second_level_text');
-                  assert.equal(val, 123);
                   done();
                 });
-                Forms.current.getElement('second_level_text').val(123);
+                Forms.current.getElement('second_level_text').val('');
+                Forms.current.getElement('second_level_text').val('eee');
               });
     });
 
@@ -150,7 +150,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
                   });
     });
 
-    test('3rd level subform invalid events bubble up to Forms.current', function (done) {
+    test('3rd level subform valid events bubble up to Forms.current', function (done) {
       var subform = Forms.current.getElement('second_level_test');
 
       return subform.add() // add second level
@@ -160,9 +160,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
                   .then(function () {
                     var thirdLevelRequiredField = Forms.current.getElement('third_level_req');
 
-                    Forms.current.on('change:value', function (model, value) {
+                    Forms.current.once('valid', function (model, value) {
                       assert.equal(model.id, 'third_level_req');
-                      assert.equal(value, 'hello');
+                      assert.equal(model.attributes.value, 'hello');
                       done();
                     });
 

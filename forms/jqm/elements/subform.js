@@ -15,8 +15,8 @@ define(function (require) {
     tagName: 'section',
 
     initialize: function () {
-      this.listenTo(this.model, 'update:fieldErrors', function () {
-        this.renderErrors.apply(this, arguments);
+      this.listenTo(this.model, 'valid invalid', function (errors) {
+        this.renderErrors(this.model, errors);
       });
 
       ElementView.prototype.initialize.apply(this, arguments);

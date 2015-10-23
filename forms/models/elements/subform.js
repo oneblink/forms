@@ -96,8 +96,11 @@ define(function (require) {
       this.listenTo(this.attributes.forms, 'add remove', this.updateFieldErrors);
 
       // make sure that all form events are bubbled up through this subform
-      this.listenTo(this.attributes.forms, 'all', function () {
-        this.trigger.apply(this, arguments);
+      this.listenTo(this.attributes.forms, 'all', function (event) {
+        if (event === 'valid' || event === 'invalid') {
+          this.trigger.apply(this, arguments);
+          this.isValid();
+        }
       });
     },
 
@@ -187,8 +190,7 @@ define(function (require) {
 
             form = new SubFormModel(_.extend({}, def, {_elements: elements, _action: action}));
 
-            self.listenTo(form.attributes.elements, 'invalid change:value change:blob', function () {
-              self.validate.apply(self, arguments);
+            self.listenTo(form.attributes.elements, 'change:value change:blob', function () {
               form.setDirty();
               self.setDirty();
               Forms.current.setDirty();
@@ -378,7 +380,6 @@ define(function (require) {
         errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
       }
       if (!_.isEmpty(errors)) {
-        this.trigger('update:fieldErrors', errors);
         return errors;
       }
     },
@@ -411,7 +412,6 @@ define(function (require) {
       var forms;
       var subformErrorCounter = 0;
       var errors;
-
       if (attrs === undefined) {
         attrs = this.attributes;
       }
@@ -425,7 +425,7 @@ define(function (require) {
 
       forms.models.forEach(function (frm) {
         var err;
-        err = frm.getInvalidElements({validate: true});
+        err = frm.getInvalidElements();
         if (err && err.length) {
           subformErrorCounter++;
         }
@@ -436,7 +436,6 @@ define(function (require) {
         errors.value = errors.value || [];
         errors.value.push({code: 'SUBFORM'});
       }
-
       return _.isEmpty(errors) ? undefined : errors;
     },
 

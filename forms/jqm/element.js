@@ -174,13 +174,18 @@ define(function (require) {
     },
 
     renderErrors: function (model, validationErrors) {
-      var attrs = (model || this.model).attributes;
-      var errors = (model || this.model).validationError || validationErrors;
+      var attrs = model.attributes;
+      var errors = validationErrors || model.validationError;
       var list$ = this.$el.children('.bm-errors__bm-list');
       var new$;
 
       if (!attrs) {
         return; // not safe to run yet
+      }
+
+      if (model !== this.model){
+        // prevent function from running if event has come from another model (eg a subform's form element)
+        return;
       }
 
       if (!errors || !errors.value || !errors.value.length) {

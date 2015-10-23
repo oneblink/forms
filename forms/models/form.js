@@ -123,22 +123,27 @@ define(function (require) {
         elements = [];
       }
       this.attributes.elements = new Elements(elements);
-      // bubble element events up through the form model.
-      this.attributes.elements.on('all', function () {
-        this.trigger.apply(this, arguments);
-      }, this);
+      // bubble element valid/invalid events up through the form model.
+      this.listenTo(this.attributes.elements, 'all', function (event) {
+        /* eslint-disable no-fallthrough*/
+        /* eslint-disable default-case*/
+        switch (event) {
+          case 'invalid':
+            this.set({
+              'isInvalid': true
+            });
+          case 'valid':
+            this.trigger.apply(this, arguments);
+            break;
+        }
+        /* eslint-enable default-case */
+        /* eslint-enable no-fallthrough*/
+      });
 
       // if any child elements change, then we are dirty
-      this.attributes.elements.on('change:value change:blob', function () {
+      this.listenTo(this.attributes.elements, 'change:value change:blob', function () {
         this.setDirty();
-      }, this);
-
-      // if any child elements are invalid, then we are invalid
-      this.attributes.elements.on('invalid', function () {
-        this.set({
-          'isInvalid': true
-        });
-      }, this);
+      });
 
       this.attributes.preloadPromise = Promise.all(preloadPromises);
 
