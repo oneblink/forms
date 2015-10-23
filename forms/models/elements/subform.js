@@ -195,6 +195,11 @@ define(function (require) {
               self.setDirty();
               Forms.current.setDirty();
             });
+
+            form.on('remove', function () {
+              self.stopListening(form.attributes.elements);
+            });
+
             form.parentElement = self;
             if (forms) {
               forms.add(form);
