@@ -16,7 +16,7 @@ define(function (require) {
 
     initialize: function () {
       this.listenTo(this.model, 'valid invalid', function (model, errors) {
-        if (model.cid !== this.model.cid) {
+        if (model !== this.model) {
           return;
         }
         this.renderErrors(this.model, errors);

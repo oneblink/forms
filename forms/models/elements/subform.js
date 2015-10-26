@@ -354,7 +354,7 @@ define(function (require) {
       // making this is asynchronous is necessary
       setTimeout(function () {
         this.isValid();
-        this.attributes.errors = this.validationError;
+        this.set('errors', this.validationError);
       }.bind(this), 0);
     },
 
