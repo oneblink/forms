@@ -14,15 +14,25 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
   // });
 
   suite('27: performance', function () {
-    var $page = $('[data-role=page]'),
-      $content = $page.find('[data-role=content]');
+    var $page = $('[data-role=page]');
+    var $content = $page.find('[data-role=content]');
+    var oldInitialize;
 
     /**
      * execute once before everything else in this suite
      */
     suiteSetup(function () {
-      $content.empty();
-      delete Forms.current;
+      return testUtils.loadViews().then(function () {
+        oldInitialize = Forms.initialize;
+        Forms.initialize = testUtils.decorateConsoleTime(oldInitialize, 'Forms.initialize()');
+
+        $content.empty();
+        delete Forms.current;
+      });
+    });
+
+    suiteTeardown(function () {
+      Forms.initialize = oldInitialize;
     });
 
     suite('Form', function () {
@@ -36,11 +46,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         this.timeout(3e3); // default is 2e3, sometimes just need a bit longer
 
         Forms.getDefinition('inspection', 'add').then(function (def) {
-          console.time('initialize');
-
           Forms.initialize(def);
-
-          console.timeEnd('initialize');
 
           console.time('behavioursExecuted');
 

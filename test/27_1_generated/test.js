@@ -1,14 +1,49 @@
 define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
   suite('27: performance', function () {
-    var $page = $('[data-role=page]'),
-      $content = $page.find('[data-role=content]');
+    var $page = $('[data-role=page]');
+    var $content = $page.find('[data-role=content]');
+    var oldInitialize;
+    var oldOnAttached;
 
     /**
      * execute once before everything else in this suite
      */
     suiteSetup(function () {
-      $content.empty();
-      delete Forms.current;
+      return testUtils.loadViews().then(function () {
+        oldOnAttached = Forms._views.Form.prototype.onAttached;
+        Forms._views.Form.prototype.onAttached = testUtils.decorateConsoleTime(oldOnAttached, 'FormView#onAttached()');
+
+        oldInitialize = Forms.initialize;
+        Forms.initialize = testUtils.decorateConsoleTime(oldInitialize, 'Forms.initialize()');
+
+        $content.empty();
+        delete Forms.current;
+      });
+    });
+
+    suiteTeardown(function () {
+      Forms._views.Form.prototype.onAttached = oldOnAttached;
+      Forms.initialize = oldInitialize;
+    });
+
+    test('Forms.getDefinition() * 10', function () {
+      var iterationCount = 10;
+      var iteration = function () {
+        return Forms.getDefinition('test', 'add')
+          .then(function (def) {
+            iterationCount -= 1;
+            return iterationCount > 0 ? iteration() : Promise.resolve(def);
+          });
+      };
+
+      this.timeout(3e3);
+
+      console.time('Forms.getDefinition() * 10');
+      return iteration()
+        .then(function (def) {
+          console.timeEnd('Forms.getDefinition() * 10');
+          assert.isObject(def);
+        });
     });
 
     suite('Form', function () {
@@ -23,12 +58,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
         return Forms.getDefinition('test', 'add')
         .then(function (def) {
-          console.time('initialize');
           console.time('preloadPromise');
 
           Forms.initialize(def);
-
-          console.timeEnd('initialize');
 
           form = Forms.current;
           assert.equal($.type(form), 'object');
@@ -98,7 +130,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
             done();
           }
         };
-        this.timeout(3e3); // default is 2e3, sometimes just need a bit longer
+        this.timeout(4e3); // default is 2e3, sometimes just need a bit longer
 
         console.time('turn to page[1]');
         Forms.on('pageInjected', onPageInjected);
