@@ -183,7 +183,7 @@ define(function (require) {
         return; // not safe to run yet
       }
 
-      if (model !== this.model){
+      if (model !== this.model) {
         // prevent function from running if event has come from another model (eg a subform's form element)
         return;
       }

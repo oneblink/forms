@@ -107,22 +107,6 @@ define([
         runTests(cases, element);
       });
 
-      test('subform validations test', function (done) {
-        var subFormElement = Forms.current.getElement('comments'),
-          $view = subFormElement.attributes._view.$el,
-          $add = $view.children('.ui-btn').children('button'),
-          subForms = subFormElement.attributes.forms;
-
-        assert.equal(subForms.length, 0, 'no subForms yet');
-        $add.trigger('click');
-        subForms.once('add', function () {
-          assert.isObject(subFormElement.validate(), 'subform validation fails');
-          subForms.at(0).getElement('comment').val('def');
-          assert.isUndefined(subFormElement.validate(), 'subform validation passes');
-          done();
-        });
-      });
-
       test('required text', function () {
         var form = Forms.current,
           element = form.getElement('city'),
@@ -264,13 +248,14 @@ define([
       test('subform require, min=1 subform test', function () {
         var subFormElement = Forms.current.getElement('comments'),
           subForms = subFormElement.attributes.forms,
-          subForm = subForms.at(0),
           errors = ['REQUIRED'];
 
-        assert.equal(subForms.length, 1, 'no subForms yet');
+        return subFormElement.add().then(function (subform) {
+          assert.equal(subForms.length, 1, 'There must be at least one subform');
 
-        subForm.parentElement.remove(subForm);
-        subformValidationTest(errors, subFormElement, 1);
+          subform.parentElement.remove(subform);
+          subformValidationTest(errors, subFormElement, 1);
+        });
       });
 
       test('maximum number of subforms test', function (done) {
@@ -288,7 +273,7 @@ define([
         setTimeout(function () {
           assert.isObject(subFormElement.validate(), 'subform validation fails');
 
-          errors = ['MAXSUBFORM', 'SUBFORM'];
+          errors = ['MAXSUBFORM'];
           subformValidationTest(errors, subFormElement, 1);
 
           subForms.at(0).getElement('comment').val('def');
@@ -306,8 +291,6 @@ define([
 
       test('subform require, min=2 subform test', function (done) {
         var subFormElement = Forms.current.getElement('names'),
-          $view = subFormElement.attributes._view.$el,
-          $add = $view.children('.ui-btn').children('button'),
           subForms = subFormElement.attributes.forms,
           errors;
 
@@ -318,16 +301,15 @@ define([
           errors = ['REQUIRED', 'MINSUBFORM'];
           subformValidationTest(errors, subFormElement, 1);
 
-          $add.trigger('click');
-          subForms.once('add', function () {
-            errors = ['MINSUBFORM', 'SUBFORM'];
+          subFormElement.add().then(function () {
+            errors = ['MINSUBFORM'];
             subformValidationTest(errors, subFormElement, 2);
 
-            $add.trigger('click');
-            subForms.once('add', function () {
-              errors = ['SUBFORM'];
-              subformValidationTest(errors, subFormElement, 2);
-              done();
+            subFormElement.add().then(function () {
+              setTimeout(function () {
+                assert.notOk(subFormElement.validationError);
+                done();
+              }, 100);
             });
           });
         });
