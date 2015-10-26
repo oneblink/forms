@@ -15,7 +15,10 @@ define(function (require) {
     tagName: 'section',
 
     initialize: function () {
-      this.listenTo(this.model, 'valid invalid', function (errors) {
+      this.listenTo(this.model, 'valid invalid', function (model, errors) {
+        if (model.cid !== this.model.cid) {
+          return;
+        }
         this.renderErrors(this.model, errors);
       });
 

@@ -95,11 +95,10 @@ define(function (require) {
 
       this.listenTo(this.attributes.forms, 'add remove', this.updateFieldErrors);
 
-      // make sure that all form events are bubbled up through this subform
+      // make sure that form valid/invalid events are bubbled up through this subform
       this.listenTo(this.attributes.forms, 'all', function (event) {
         if (event === 'valid' || event === 'invalid') {
           this.trigger.apply(this, arguments);
-          this.isValid();
         }
       });
     },
@@ -355,38 +354,8 @@ define(function (require) {
       // making this is asynchronous is necessary
       setTimeout(function () {
         this.isValid();
-        this.set('errors', this.validationError);
+        this.attributes.errors = this.validationError;
       }.bind(this), 0);
-    },
-
-    validateField: function (attrs) {
-      var forms;
-      var errors = {};
-      var realLength = this.getRealLength();
-      if (attrs === undefined) {
-        attrs = this.attributes;
-      }
-
-      forms = attrs.forms;
-
-      // check if there is any subform added
-      if (forms && (attrs.required && realLength === 0 || attrs.minSubforms && attrs.minSubforms === 1 && realLength === 0)) {
-        errors.value = errors.value || [];
-        errors.value.push({code: 'REQUIRED'});
-      }
-      // check for max subforms
-      if (forms && attrs.maxSubforms && realLength > attrs.maxSubforms) {
-        errors.value = errors.value || [];
-        errors.value.push({code: 'MAXSUBFORM', MAX: attrs.maxSubforms});
-      }
-      // check for min subforms
-      if (forms && attrs.minSubforms && attrs.minSubforms > 1 && realLength < attrs.minSubforms) {
-        errors.value = errors.value || [];
-        errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
-      }
-      if (!_.isEmpty(errors)) {
-        return errors;
-      }
     },
 
     getButtonLabel: function () {
@@ -415,33 +384,33 @@ define(function (require) {
 
     validate: function (attrs) {
       var forms;
-      var subformErrorCounter = 0;
-      var errors;
+      var errors = {};
+      var realLength = this.getRealLength();
+
       if (attrs === undefined) {
         attrs = this.attributes;
       }
 
-      errors = this.validateField(attrs) || {};
-
       forms = attrs.forms;
-      if (!forms) {
-        return _.isEmpty(errors) ? undefined : errors;
-      }
 
-      forms.models.forEach(function (frm) {
-        var err;
-        err = frm.getInvalidElements();
-        if (err && err.length) {
-          subformErrorCounter++;
-        }
-      });
-
-      // check if subform fields has any errors
-      if (subformErrorCounter > 0) {
+      // check if there is any subform added
+      if (forms && (attrs.required && realLength === 0 || attrs.minSubforms && attrs.minSubforms === 1 && realLength === 0)) {
         errors.value = errors.value || [];
-        errors.value.push({code: 'SUBFORM'});
+        errors.value.push({code: 'REQUIRED'});
       }
-      return _.isEmpty(errors) ? undefined : errors;
+      // check for max subforms
+      if (forms && attrs.maxSubforms && realLength > attrs.maxSubforms) {
+        errors.value = errors.value || [];
+        errors.value.push({code: 'MAXSUBFORM', MAX: attrs.maxSubforms});
+      }
+      // check for min subforms
+      if (forms && attrs.minSubforms && attrs.minSubforms > 1 && realLength < attrs.minSubforms) {
+        errors.value = errors.value || [];
+        errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
+      }
+      if (!_.isEmpty(errors)) {
+        return errors;
+      }
     },
 
     setExternalErrors: function (elementErrorList, options) {
