@@ -1,11 +1,19 @@
 define(function (require) {
   'use strict';
 
+  var _ = require('underscore');
+
   var Form = require('forms/models/form');
 
   // this module
 
   return Form.extend({
+    defaults: function () {
+      return _.assign(Form.prototype.defaults.call(this), {
+        isCollapsed: false
+      });
+    },
+
     initialize: function () {
       this.parentElement = null;
       Form.prototype.initialize.call(this);
@@ -18,6 +26,7 @@ define(function (require) {
       switch (this.parentElement.attributes.collapse) {
         case 'forms':
           View = Forms._views.SubFormCollapse;
+          this.set({isCollapsed: true});
           break;
         default: // 'off'
           View = Forms._views.SubForm;

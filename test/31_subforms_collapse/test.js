@@ -77,13 +77,28 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       });
 
       test('Plus button text takes precedence over label has been set by rowclass', function () {
-        var el = BMP.Forms.current.getElement('comments');
-        assert.equal(el.get('_view').$el.find('.bm-button.bm-add').first().text(), 'PLUS');
+        assert.equal($('.bm-button.bm-add', $('section[data-name=comments]').first().children('.ui-btn')).text(), 'PLUS');
       });
 
       test('Minus button text takes precedence over label has been set by rowclass', function () {
         var el = BMP.Forms.current.getElement('comments');
         assert.equal(el.get('_view').$el.find('.bm-subform__bm-removebutton').first().text(), 'MINUS');
+      });
+
+      test('collapsible subforms populated by #setRecord are collapsed', function () {
+        assert.lengthOf($('.ui-collapsible-collapsed', 'section[data-name=comments]'), 3);
+        assert.lengthOf($('.bm-form', 'section[data-name=comments]'), 3);
+      });
+
+      test('a new subform is expanded when added', function () {
+        return Forms.current.getElement('comments').get('_view').onAddClick().then(function () {
+          assert.lengthOf($('.ui-collapsible-collapsed', 'section[data-name=comments]'), 3);
+          assert.lengthOf($('.bm-form', 'section[data-name=comments]'), 4);
+        });
+      });
+
+      test('collapsible sub forms have a single toggle trigger element', function () {
+        assert.lengthOf(BMP.Forms.current.getElement('comments').getForm(0).attributes._view.$toggleTrigger, 1);
       });
     });
   }); // END: suite('1', ...)

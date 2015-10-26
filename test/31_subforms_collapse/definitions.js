@@ -51,7 +51,6 @@ define(function () {
               rowClass: 'collapse:forms;label:Custom;',
               plusButtonLabel: "PLUS",
               minusButtonLabel: "MINUS"
-              //rowClass: 'collapse: forms;'
             }
           },
           {
@@ -126,11 +125,58 @@ define(function () {
               label: 'Comment',
               type: 'textarea'
             }
+          },
+          {
+            'default': {
+              name: 'subsub',
+              label: 'Sub Sub',
+              type: 'subForm',
+              subForm: 'form3',
+              collapse: 'forms'
+            }
           }
         ]
       },
       list: {
         _elements: ['datetimenow', 'comment']
+      }
+    },
+    {
+      'default': {
+        name: 'form3',
+        label: 'Sub Sub',
+        _elements: [
+          {
+            'default': {
+              name: 'id',
+              type: 'hidden'
+            }
+          },
+          {
+            "default": {
+              "name": "subsubdatetime",
+              "type": "datetime",
+              "label": "Datetimenow",
+              "labelPlacement": "default",
+              "labelStyle": "Plain",
+              "picker": "picker",
+              "dateFormat": "yyyy_mm_dd",
+              "timeFormat": "hh_mm_ss",
+              "minuteStep": "1",
+              "defaultValue": "now"
+            }
+          },
+          {
+            'default': {
+              name: 'subsubcomment',
+              label: 'Sub Sub Comment',
+              type: 'textarea'
+            }
+          }
+        ]
+      },
+      list: {
+        _elements: ['subsubdatetime', 'comment']
       }
     }
   ];
