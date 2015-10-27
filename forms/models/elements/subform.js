@@ -60,7 +60,7 @@ define(function (require) {
         if (attrs.preload !== 'no' && attrs.preloadNum) {
           attrs.preload = Number(attrs.preloadNum);
         } else if (attrs.preload === 'no') {
-          delete attrs.preload;
+          attrs.preload = null;
         }
       } else if (!isNaN(Number(attrs.preload))) {
         attrs.preload = Number(attrs.preload);
@@ -93,12 +93,14 @@ define(function (require) {
         attrs.summaryPromise = this.getSummaryElements();
       }
 
-      this.attributes.forms.on('add remove', this.updateFieldErrors, this);
+      this.listenTo(this.attributes.forms, 'add remove', this.updateFieldErrors);
 
-      // make sure that all form events are bubbled up through this subform
-      this.attributes.forms.on('all', function () {
-        this.trigger.apply(this, arguments);
-      }, this);
+      // make sure that form valid/invalid events are bubbled up through this subform
+      this.listenTo(this.attributes.forms, 'all', function (event) {
+        if (event === 'valid' || event === 'invalid') {
+          this.trigger.apply(this, arguments);
+        }
+      });
     },
 
     initializeView: function () {
@@ -159,7 +161,7 @@ define(function (require) {
       var Forms = BMP.Forms;
 
       // make a map of the field name properties so they are easy to match
-      var fieldProperties = _.reduce(self.get('_elements'), function (memo, element) {
+      var fieldProperties = _.reduce(self.attributes._elements, function (memo, element) {
         memo[element.id] = element;
 
         return memo;
@@ -187,12 +189,16 @@ define(function (require) {
 
             form = new SubFormModel(_.extend({}, def, {_elements: elements, _action: action}));
 
-            self.listenTo(form.get('elements'), 'invalid change:value change:blob', function () {
-              self.validate.apply(self, arguments);
+            self.listenTo(form.attributes.elements, 'change:value change:blob', function () {
               form.setDirty();
               self.setDirty();
               Forms.current.setDirty();
             });
+
+            form.on('remove', function () {
+              self.stopListening(form.attributes.elements);
+            });
+
             form.parentElement = self;
             if (forms) {
               forms.add(form);
@@ -240,14 +246,14 @@ define(function (require) {
       if (this.indexOf(form) === -1) {
         return; // invalid SubForm model, not part of this SubFrom Element
       }
-      if (form.get('_action') === 'edit') {
+      if (form.attributes._action === 'edit') {
         if (form.attributes._view) {
           form.attributes._view.remove();
-          this.stopListening(form.get('elements'));
+          this.stopListening(form.attributes.elements);
         }
         form.attributes = {
           _action: 'remove',
-          id: form.getElement('id').get('value')
+          id: form.getElement('id').attributes.value
         };
         forms.trigger('remove');
       } else {
@@ -293,18 +299,18 @@ define(function (require) {
      */
     setRecords: function (data) {
       var me = this;
-      var forms = this.attributes.forms;
-      var addPromises = [];
-      var counter = 0;
-      var promises,
-        action;
 
       return new Promise(function (resolve, reject) {
         if (!_.isArray(data)) {
-          resolve();
-          return;
+          return resolve();
         }
+
         Promise.all([me.attributes.preloadPromise]).then(function () {
+          var forms = me.attributes.forms;
+          var addPromises = [];
+          var counter = 0;
+          var action;
+
           // remove all preloaded forms
           while (forms.length > 0) {
             me.remove(forms.length - 1);
@@ -320,9 +326,8 @@ define(function (require) {
           }
           // wait for extra (blank) records to be added
           Promise.all(addPromises).then(function () {
-            promises = [];
-            data.forEach(function (record, index) {
-              promises.push(forms.at(index).setRecord(record));
+            var promises = data.map(function (record, index) {
+              return forms.at(index).setRecord(record);
             });
 
             // wait for records to be populated
@@ -352,10 +357,35 @@ define(function (require) {
       }.bind(this), 0);
     },
 
-    validateField: function (attrs) {
+    getButtonLabel: function () {
+      var attrs = this.attributes;
+      var additionalString = '';
+      if (attrs.maxSubforms) {
+        additionalString = ' (' + this.getRealLength() + '/' + attrs.maxSubforms + ')';
+      }
+      return additionalString;
+    },
+
+    getRealLength: function () {
+      var forms = this.attributes.forms;
+      var counter = 0;
+
+      if (!forms) {
+        return counter;
+      }
+      forms.models.forEach(function (v) {
+        if (v.attributes._action !== 'remove') {
+          counter++;
+        }
+      });
+      return counter;
+    },
+
+    validate: function (attrs) {
       var forms;
       var errors = {};
       var realLength = this.getRealLength();
+
       if (attrs === undefined) {
         attrs = this.attributes;
       }
@@ -378,71 +408,13 @@ define(function (require) {
         errors.value.push({code: 'MINSUBFORM', MIN: attrs.minSubforms});
       }
       if (!_.isEmpty(errors)) {
-        this.trigger('update:fieldErrors', errors);
         return errors;
       }
     },
 
-    getButtonLabel: function () {
-      var attrs = this.attributes;
-      var additionalString = '';
-      if (attrs.maxSubforms) {
-        additionalString = ' (' + this.getRealLength() + '/' + attrs.maxSubforms + ')';
-      }
-      return additionalString;
-    },
-
-    getRealLength: function () {
-      var forms = this.attributes.forms;
-      var counter = 0;
-
-      if (!forms) {
-        return counter;
-      }
-      forms.models.forEach(function (v) {
-        if (v.get('_action') !== 'remove') {
-          counter++;
-        }
-      });
-      return counter;
-    },
-
-    validate: function (attrs) {
-      var forms;
-      var subformErrorCounter = 0;
-      var errors;
-
-      if (attrs === undefined) {
-        attrs = this.attributes;
-      }
-
-      errors = this.validateField(attrs) || {};
-
-      forms = attrs.forms;
-      if (!forms) {
-        return _.isEmpty(errors) ? undefined : errors;
-      }
-
-      forms.models.forEach(function (frm) {
-        var err;
-        err = frm.getInvalidElements({validate: true});
-        if (err && err.length) {
-          subformErrorCounter++;
-        }
-      });
-
-      // check if subform fields has any errors
-      if (subformErrorCounter > 0) {
-        errors.value = errors.value || [];
-        errors.value.push({code: 'SUBFORM'});
-      }
-
-      return _.isEmpty(errors) ? undefined : errors;
-    },
-
     setExternalErrors: function (elementErrorList, options) {
       // set errors on subforms
-      this.get('forms').invoke('setErrors', elementErrorList, options);
+      this.attributes.forms.invoke('setErrors', elementErrorList, options);
 
       // set errors on me.
       if (elementErrorList.errors) {

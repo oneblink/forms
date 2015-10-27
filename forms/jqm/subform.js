@@ -45,7 +45,7 @@ define(function (require) {
 
       this.$el.attr(
         'data-record-index',
-        parentElement.get('forms').indexOf(this.model)
+        parentElement.attributes.forms.indexOf(this.model)
      );
 
       this.$el.prepend($button);

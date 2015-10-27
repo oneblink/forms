@@ -3,7 +3,7 @@ define(function (require) {
 
   // foreign modules
 
-  // var $ = require('jquery');
+  var $ = require('jquery');
   var _ = require('underscore');
 
   // local modules
@@ -16,6 +16,14 @@ define(function (require) {
   // this module
 
   return SubFormView.extend({
+    initialize: function () {
+      this.listenTo(this.model, 'change:isCollapsed', this.toggleView);
+    },
+
+    toggleView: function () {
+      this.$toggleTrigger.trigger('click');
+    },
+
     render: function () {
       var parentAttrs = this.model.parentElement.attributes;
 
@@ -35,12 +43,16 @@ define(function (require) {
       this.$summary = this.$collapsible.children('h3')
         .children('.bm-subform__bm-summary');
 
-      this.$collapsible.collapsible();
+      this.$collapsible.collapsible({
+        collapsed: this.model.attributes.isCollapsed
+      });
 
       this.$el.attr(
         'data-record-index',
-        this.model.parentElement.get('forms').indexOf(this.model)
+        this.model.parentElement.attributes.forms.indexOf(this.model)
       );
+
+      this.$toggleTrigger = $('.ui-collapsible-heading-toggle', this.$collapsible.children('.ui-collapsible-heading'));
 
       this.model.parentElement.attributes.summaryPromise.then(function (names) {
         var formElementEvents = {};

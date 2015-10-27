@@ -112,9 +112,7 @@ define(function (require) {
     }
 
     parsed = Forms.parseClass(klass);
-    blacklist.forEach(function (prop) {
-      delete parsed[prop];
-    });
+    parsed = _.omit(parsed, blacklist);
 
     defaults = _.result(model, 'defaults', {});
     model.set(Forms.castPropertyValues(parsed, defaults));
@@ -141,7 +139,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.8.1';
+  Forms.version = '3.9.0';
   Forms.supports = {};
 
   Forms.supports.blob = (function () {

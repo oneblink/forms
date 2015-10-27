@@ -21,7 +21,7 @@ define(function (require) {
   var invalidWrapperFn, isSubForm;
 
   function isVisible (elementModel) {
-    return !elementModel.get('hidden');
+    return !elementModel.attributes.hidden;
   }
 
   invalidWrapperFn = function (fn) {
@@ -32,7 +32,7 @@ define(function (require) {
       var results;
       var elements;
 
-      elements = this.get('elements');
+      elements = this.attributes.elements;
 
       if (!elements) {
         return undefined;
@@ -60,12 +60,13 @@ define(function (require) {
   };
 
   isSubForm = function (elementModel) {
-    return elementModel.get('type') === 'subForm';
+    return elementModel.attributes.type === 'subForm';
   };
 
   Form = Backbone.Model.extend({
     defaults: function () {
       return {
+        _view: null,
         answerSpace: '',
         class: '',
         uuid: '',
@@ -96,7 +97,7 @@ define(function (require) {
         '_sections'
       ]);
       pages = this.attributes._pages;
-      delete this.attributes._pages;
+      this.attributes._pages = null;
       if (pages && _.isArray(pages)) {
         // TODO: allow pages to be redeclared per-action
         pages = new Pages(_.map(pages, function (p) {
@@ -108,7 +109,7 @@ define(function (require) {
       this.attributes.pages = pages;
 
       elements = this.attributes._elements;
-      delete this.attributes._elements;
+      this.attributes._elements = null;
       if (elements && _.isArray(elements)) {
         // TODO: allow pages to be redeclared per-action
         elements = _.map(elements, function (e) {
@@ -122,27 +123,32 @@ define(function (require) {
         elements = [];
       }
       this.attributes.elements = new Elements(elements);
-      // bubble element events up through the form model.
-      this.attributes.elements.on('all', function () {
-        this.trigger.apply(this, arguments);
-      }, this);
+      // bubble element valid/invalid events up through the form model.
+      this.listenTo(this.attributes.elements, 'all', function (event) {
+        /* eslint-disable no-fallthrough*/
+        /* eslint-disable default-case*/
+        switch (event) {
+          case 'invalid':
+            this.set({
+              'isInvalid': true
+            });
+          case 'valid':
+            this.trigger.apply(this, arguments);
+            break;
+        }
+        /* eslint-enable default-case */
+        /* eslint-enable no-fallthrough*/
+      });
 
       // if any child elements change, then we are dirty
-      this.attributes.elements.on('change:value change:blob', function () {
+      this.listenTo(this.attributes.elements, 'change:value change:blob', function () {
         this.setDirty();
-      }, this);
-
-      // if any child elements are invalid, then we are invalid
-      this.attributes.elements.on('invalid', function () {
-        this.set({
-          'isInvalid': true
-        });
-      }, this);
+      });
 
       this.attributes.preloadPromise = Promise.all(preloadPromises);
 
       behaviours = this.attributes._behaviours;
-      delete this.attributes._behaviours;
+      this.attributes._behaviours = null;
       if (behaviours && _.isArray(behaviours)) {
         // TODO: allow behaviours to be redeclared per-action
         behaviours = _.map(behaviours, function (b) {
@@ -179,9 +185,9 @@ define(function (require) {
       var attrs = this.attributes;
       if (attrs._view) {
         attrs._view.remove();
-        delete attrs._view;
+        attrs._view = null;
       }
-      delete this.$form;
+      this.$form = null;
       if (attrs.pages) {
         attrs.pages.forEach(function (page) {
           page.close();
@@ -203,7 +209,7 @@ define(function (require) {
     getPage: function (index) {
       var Forms = BMP.Forms;
       var Page = Forms._models.Page;
-      var pages = this.get('pages');
+      var pages = this.attributes.pages;
 
       // assume that by now it's okay to create vanilla Pages
       while (pages.length <= index) {
@@ -249,9 +255,9 @@ define(function (require) {
       if (!this.attributes.elements) {
         return undefined;
       }
-      return _.reduce(this.get('elements').filter(isSubForm), function (memo, elementModel) {
+      return _.reduce(this.attributes.elements.filter(isSubForm), function (memo, elementModel) {
         memo = memo || {}; // create in here so we return undefined if we have no subforms.
-        memo[elementModel.id] = elementModel.get('forms');
+        memo[elementModel.id] = elementModel.attributes.forms;
         return memo;
       }, undefined);
     },
@@ -438,7 +444,7 @@ define(function (require) {
      */
     /* eslint-disable no-unused-vars */ // stop eslint compaining about options and errorList not being used.
     setErrors: function (errorList, options) {
-      var elementsCollection = this.get('elements');
+      var elementsCollection = this.attributes.elements;
       var subForms = this.getSubforms();
 
       _.each(subForms, function (subForm, name) {

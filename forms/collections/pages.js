@@ -38,7 +38,7 @@ define(function (require) {
           view = page.attributes._view;
           if (view) {
             view.remove();
-            page.unset('_view');
+            page.attributes._view = null;
           }
         }
       });

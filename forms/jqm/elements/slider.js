@@ -26,7 +26,7 @@ define(function (require) {
       slider$ = this.$el.children('div.ui-slider');
       if (slider$.length) {
         // we are dealing with jQueryMobile-enhanced DOM structure
-        this.$input.val(this.model.get('value'));
+        this.$input.val(this.model.attributes.value);
         this.$input.slider();
         this.$input.slider('refresh');
       }
@@ -50,7 +50,7 @@ define(function (require) {
           var val, modelVal;
           this.$input = $(this).find('input');
           val = this.$input.val();
-          modelVal = self.model.get('value');
+          modelVal = self.model.attributes.value;
 
           if (modelVal !== val) {
             self.model.set('value', this.$input.val());
@@ -60,7 +60,7 @@ define(function (require) {
 
       this.$input.attr({
         name: name,
-        value: this.model.get('value')
+        value: this.model.attributes.value
       });
       ['min', 'max', 'step'].forEach(function (prop) {
         if ($.isNumeric(attrs[prop])) {
@@ -68,14 +68,13 @@ define(function (require) {
         }
       }.bind(this));
 
-      this.model.on('change:value', this.renderSlider, this);
+      this.listenTo(this.model, 'change:value', this.renderSlider);
       this.$el.fieldcontain();
       this.renderSlider();
     },
 
     remove: function () {
       this.$el.off('change');
-      this.model.off('change:value');
       return NumberElementView.prototype.remove.call(this);
     }
   });

@@ -47,8 +47,8 @@ define(function (require) {
 
     attributes: function () {
       return {
-        'data-name': this.model.get('name'),
-        'data-element-type': this.model.get('type'),
+        'data-name': this.model.attributes.name,
+        'data-element-type': this.model.attributes.type,
         'data-role': 'fieldcontain',
         'class': elementClassFromModelAttributes(this.model.attributes)
       };
@@ -69,8 +69,8 @@ define(function (require) {
 
       this.$el.data('model', elementModel);
 
-      if (elementModel.get('defaultValue')) {
-        this.$el.val(elementModel.get('defaultValue'));
+      if (elementModel.attributes.defaultValue) {
+        this.$el.val(elementModel.attributes.defaultValue);
       }
 
       if (this.modelEvents) {
@@ -99,7 +99,7 @@ define(function (require) {
         events.proxyUnbindEntityEvents(this, this.model, this.modelEvents);
       }
 
-      this.model.unset('_view');
+      this.model.attributes._view = null;
       return Backbone.View.prototype.remove.call(this);
     },
 
@@ -174,13 +174,18 @@ define(function (require) {
     },
 
     renderErrors: function (model, validationErrors) {
-      var attrs = (model || this.model).attributes;
-      var errors = (model || this.model).validationError || validationErrors;
+      var attrs = model.attributes;
+      var errors = validationErrors || model.validationError;
       var list$ = this.$el.children('.bm-errors__bm-list');
       var new$;
 
       if (!attrs) {
         return; // not safe to run yet
+      }
+
+      if (model !== this.model) {
+        // prevent function from running if event has come from another model (eg a subform's form element)
+        return;
       }
 
       if (!errors || !errors.value || !errors.value.length) {

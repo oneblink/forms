@@ -16,7 +16,7 @@ define(function (require) {
 
     initialize: function () {
       ElementView.prototype.initialize.call(this);
-      this.model.on('change:options', this.renderOptions, this);
+      this.listenTo(this.model, 'change:options', this.renderOptions);
     },
 
     renderOtherText: function (render) {

@@ -34,9 +34,9 @@ define(function (require) {
       var attrs = this.attributes;
       if (attrs._view) {
         attrs._view.remove();
-        delete attrs._view;
+        attrs._view = null;
       }
-      delete attrs.form;
+      attrs.form = null;
       attrs.elements.forEach(function (element) {
         element.close();
       });

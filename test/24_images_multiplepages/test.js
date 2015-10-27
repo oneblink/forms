@@ -69,7 +69,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
                 assert.lengthOf(view.children('figure').children('img'), 1);
               }
             } else {
-              assert.isUndefined(element.attributes._view);
+              assert.notOk(element.attributes._view);
             }
 
             done();
@@ -113,7 +113,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
                 assert.lengthOf(view.children('figure').children('img'), 1);
               }
             } else {
-              assert.isUndefined(element.attributes._view);
+              assert.notOk(element.attributes._view);
             }
 
             done();

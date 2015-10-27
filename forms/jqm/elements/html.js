@@ -97,7 +97,7 @@ define(function (require) {
       } else {
         this.$input.val(value);
       }
-      if (this.model.get('isPristine')) {
+      if (this.model.attributes.isPristine) {
         return;
       }
       // #isValid() probably should be in the model, but we keep it here to
