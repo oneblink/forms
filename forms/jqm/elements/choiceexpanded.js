@@ -18,6 +18,8 @@ define(function (require) {
       if (type !== 'select') {
         this.$el.find('input').off('click');
       }
+      this.$fieldset = null;
+
       return ChoiceElementView.prototype.remove.call(this);
     },
 
@@ -26,7 +28,7 @@ define(function (require) {
         this.$label = $('<legend></legend>');
       }
 
-      if (!this.$el.find(this.$label).length) {
+      if (!this.$fieldset.find(this.$label).length) {
         this.$fieldset.prepend(this.$label);
       }
 
