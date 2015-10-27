@@ -56,17 +56,29 @@ define(function (require) {
       this.$el.fieldcontain();
       this.onFormsChange();
     },
+
+    /**
+     * Adds a new subform and scrolls to the first element
+     * @return {Promise(FormModel)} - A Promise that resolves with the newly added FormModel or rejects with any errors encounterd
+     */
     onAddClick: function () {
-      var self = this;
-      var attrs = self.model.attributes;
-      var $add = self.$el.children('button').add(self.$el.children('.ui-btn').children('button'));
+      var me = this;
+      var attrs = me.model.attributes;
+      var $add = me.$el.children('button').add(me.$el.children('.ui-btn').children('button'));
+
       $add.button('disable');
-      return self.model.add().then(function () {
-        if (!attrs.maxSubforms || self.model.getRealLength() < attrs.maxSubforms) {
-          $add.button('enable');
-        }
-      });
+
+      return me.model
+              .add()
+              .then(function (formModel) {
+                if (!attrs.maxSubforms || me.model.getRealLength() < attrs.maxSubforms) {
+                  $add.button('enable');
+                }
+                formModel.set({isCollapsed: false});
+                return formModel;
+              });
     },
+
     onFormsChange: function () {
       var attrs,
         $add,
