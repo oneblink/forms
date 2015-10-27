@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v3.9.0 - 2015-10-27
+
+
+### Fixed
+
+- FORMS-254: user-fixed errors in sub-records within sub-form-elements no longer block submission or throw `Error`s
+
+    - propagate "valid" and "invalid" events (and nothing else) from sub-records to parents (may improve performance due to less work)
+
+    - improve cleaning up of model-event handlers in views
+
+- FORMS-230: clicking to add a collapsed sub-form automatically expands it
+
+- FORMS-233: slight performance improvements, refactoring for future work
+
+    - building on work in FORMS-248 and FORMS-254
+
+    - still bigger improvements to come, watch this space!
+
+    - HelpDesk: 7001-PASX-8787
+
+
 ## v3.8.1 - 2015-10-16
 
 
