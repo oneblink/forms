@@ -545,6 +545,41 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         });
       });
     });
+
+    suite('Expanded Choice Element', function () {
+      var originalLabel;
+      var model;
+      var elementContainerElement;
+      var labelElement;
+
+      suiteSetup(function () {
+        model = Forms.current.getElement('selecte');
+        elementContainerElement = $('div[data-name=selecte]');
+        labelElement = $('legend', elementContainerElement);
+        originalLabel = model.attributes.label;
+        model.set('label', 'A new Label &amp; text');
+      });
+
+      suiteTeardown(function () {
+        model.set('label', originalLabel);
+        elementContainerElement = null;
+        labelElement = null;
+      });
+
+      test('label element should be a <LEGEND> element', function () {
+        assert.lengthOf(labelElement, 1, 'Label should exist in');
+      });
+
+      test('Setting models label attribute correctly sets the label on the view', function () {
+        // make sure text is encoded properly
+        assert.strictEqual(labelElement.text(), 'A new Label & text');
+      });
+
+      test('There should not be a <LABEL> element in the container', function () {
+        // make sure no extra label field is added
+        assert.lengthOf(elementContainerElement.children('label'), 0);
+      });
+    });
   }); // END: suite('Form', ...)
 
   suite('change page', function () {
