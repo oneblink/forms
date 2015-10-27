@@ -41,14 +41,14 @@ define(function (require) {
 
       this.$el.fieldcontain();
 
-      this.model.on('change:blob', function () {
+      this.listenTo(this.model, 'change:blob', function () {
         this.model.updateWarning();
         if (_.isEmpty(this.model.attributes.warning)) {
           this.renderWarning();
         } else {
           this.renderFigure();
         }
-      }, this);
+      });
     },
 
     renderControls: function () {
@@ -105,8 +105,6 @@ define(function (require) {
 
     remove: function () {
       this.$el.children('input').off('change');
-      this.model.off('change:blob', this.renderFigure, this);
-      this.model.off('change:progress', this.renderProgress, this);
       return ElementView.prototype.remove.call(this);
     },
 

@@ -47,7 +47,7 @@ define(function (require) {
 
       $button.find('button').button();
 
-      this.model.on('change:value', this.renderFigure, this);
+      this.listenTo(this.model, 'change:value', this.renderFigure);
     },
 
     setClearButton: function () {
@@ -106,12 +106,11 @@ define(function (require) {
 
     remove: function () {
       this.$el.children('button').off('click');
-      this.model.off('change:value', this.renderFigure, this);
       return ElementView.prototype.remove.call(this);
     },
 
     onAttached: function () {
-      this.model.on('change:value', this.setClearButton, this);
+      this.listenTo(this.model, 'change:value', this.setClearButton, this);
       this.setClearButton();
     }
   }, {

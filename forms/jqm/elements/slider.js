@@ -68,14 +68,13 @@ define(function (require) {
         }
       }.bind(this));
 
-      this.model.on('change:value', this.renderSlider, this);
+      this.listenTo(this.model, 'change:value', this.renderSlider);
       this.$el.fieldcontain();
       this.renderSlider();
     },
 
     remove: function () {
       this.$el.off('change');
-      this.model.off('change:value');
       return NumberElementView.prototype.remove.call(this);
     }
   });

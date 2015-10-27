@@ -46,7 +46,7 @@ define(function (require) {
       $input.on('change', function () {
         that.model.set('value', that.prepModelValue());
       });
-      this.model.on('change:value', this.onValueChange, this);
+      this.listenTo(this.model, 'change:value', this.onValueChange);
     },
 
     renderOptions: function () {

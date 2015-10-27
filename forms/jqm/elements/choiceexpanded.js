@@ -43,11 +43,11 @@ define(function (require) {
       this._renderOptions();
 
       if (type === 'select') {
-        this.model.on('change:value', this.onSelectValueChange, this);
+        this.listenTo(this.model, 'change:value', this.onSelectValueChange);
         this.onSelectValueChange();
       } else { // type === 'multi'
         // bind custom handler for checkboxes <- array
-        this.model.on('change:value', this.onMultiValueChange, this);
+        this.listenTo(this.model, 'change:value', this.onMultiValueChange);
         this.onMultiValueChange();
       }
 

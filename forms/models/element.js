@@ -157,7 +157,7 @@ define(function (require) {
       this.setDirty();
 
       this.validationError = { value: _.uniq(errors.concat(elementErrorList).reverse()) };
-      this.trigger('invalid', this, elementErrorList);
+      this.trigger('invalid', this, this.validationError);
     },
 
     setDirty: modelStates.setDirty,

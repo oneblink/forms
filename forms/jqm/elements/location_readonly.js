@@ -10,7 +10,7 @@ define(function (require) {
       this.$el.empty();
       this.renderLabel();
 
-      this.model.on('change:value', this.renderFigure, this);
+      this.listenTo(this.model, 'change:value', this.renderFigure);
     }
   });
 });
