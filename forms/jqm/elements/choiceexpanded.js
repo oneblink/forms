@@ -34,7 +34,6 @@ define(function (require) {
     },
 
     render: function () {
-      //var $fieldset;
       var attrs = this.model.attributes;
       var type = attrs.type;
 
