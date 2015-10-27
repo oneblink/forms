@@ -21,24 +21,36 @@ define(function (require) {
       return ChoiceElementView.prototype.remove.call(this);
     },
 
+    renderLabel: function () {
+      if (!this.$label) {
+        this.$label = $('<legend></legend>');
+      }
+
+      if (!this.$el.find(this.$label).length) {
+        this.$fieldset.prepend(this.$label);
+      }
+
+      this.$label.html(this.model.attributes.label || '');
+    },
+
     render: function () {
-      var $fieldset;
+      //var $fieldset;
       var attrs = this.model.attributes;
       var type = attrs.type;
 
       this.$el.empty();
 
-      $fieldset = $('<fieldset></fieldset>').attr({
+      this.$fieldset = $('<fieldset></fieldset>').attr({
         'data-role': 'controlgroup'
       });
       if (attrs.layout === 'horizontal') {
-        $fieldset.attr({
+        this.$fieldset.attr({
           'data-type': 'horizontal'
         });
       }
-      $fieldset.prepend($('<legend></legend>').text(attrs.label));
 
-      this.$el.append($fieldset);
+      this.$el.append(this.$fieldset);
+      this.renderLabel();
 
       this._renderOptions();
 
@@ -51,13 +63,13 @@ define(function (require) {
         this.onMultiValueChange();
       }
 
-      $fieldset.controlgroup();
+      this.$fieldset.controlgroup();
       this.$el.fieldcontain();
     },
 
     _renderOptions: function () {
       var self = this;
-      var $fieldset = this.$el.children('fieldset');
+      var $fieldset = this.$fieldset;
       var attrs = this.model.attributes;
       var type = attrs.type;
       var options = attrs.options;
@@ -105,7 +117,7 @@ define(function (require) {
 
       this.render();
       this.$el.find('label > input').checkboxradio();
-      this.$el.children('fieldset').controlgroup();
+      this.$fieldset.controlgroup();
       this.$el.fieldcontain();
       if (type === 'select') {
         this.onSelectValueChange();
