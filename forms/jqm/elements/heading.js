@@ -19,8 +19,7 @@ define(function (require) {
       'change:text': 'renderHeading',
       'change:smallText': 'renderSmallText',
       'change:class': 'onChangeClass',
-      'change:hidden': 'onChangeHidden',
-      'change:label': 'renderLabel'
+      'change:hidden': 'onChangeHidden'
     },
 
     initialize: function () {
