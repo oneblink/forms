@@ -28,7 +28,7 @@ define(function (require) {
         this.$label = $('<legend></legend>');
       }
 
-      if (!this.$fieldset.find(this.$label).length) {
+      if (!$.contains(this.$fieldset[0], this.$label[0])) {
         this.$fieldset.prepend(this.$label);
       }
 
