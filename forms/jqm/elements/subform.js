@@ -29,11 +29,6 @@ define(function (require) {
       this.$el.children('.ui-btn').children('button').off('click');
       this.model.attributes.forms.off('change', this.onFormsChange, this);
       this.stopListening(this.model, 'invalid valid');
-      this.model.attributes.forms.forEach(function (form) {
-        if (form.attributes._view) {
-          form.attributes._view.remove();
-        }
-      });
       return ElementView.prototype.remove.call(this);
     },
     render: function () {
