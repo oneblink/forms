@@ -11,9 +11,20 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         var el = BMP.Forms.current.getElement(name);
         assert(el.attributes.summaryPromise);
         return el.attributes.summaryPromise.then(function (names) {
-          assert.deepEqual(names, ['datetimenow', 'comment'], name);
+          assert.deepEqual(names, ['datetimenow', 'comment', 'hidden-field'], name);
         });
       }));
+    });
+
+    test('hidden fields do not throw a type error', function () {
+      var subform = Forms.current.getElement('comments');
+
+      assert.doesNotThrow(function () {
+        subform.add().then(function (newSubForm) {
+          // reset to default state
+          subform.remove(newSubForm);
+        });
+      });
     });
 
     suite('after #setRecord()', function () {
