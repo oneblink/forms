@@ -44,17 +44,10 @@ define(function (require) {
     onInvalidChange: toggleClass('bm-form-invalid', 'isInvalid'),
 
     remove: function () {
-      var pages = this.model.attributes.pages;
-
       events.proxyUnbindFormElementEvents(this, this.model, this.formElementEvents);
       events.proxyBindEntityEvents(this, this.model, this.modelEvents);
       this.$el.removeData('model');
 
-      if (pages && pages.current && pages.current.attributes._view) {
-        pages.current.attributes._view.remove();
-      }
-
-      this.model.attributes._view = null;
       this.stopListening(this.model.attributes.elements);
 
       return Backbone.View.prototype.remove.call(this);

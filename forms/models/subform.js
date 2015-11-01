@@ -36,11 +36,9 @@ define(function (require) {
       return view;
     },
 
-    removeView: function () {
-      if (this.attributes._view) {
-        this.attributes._view.remove();
-      }
-      this.attributes._view = null;
+    close: function () {
+      this.parentElement = null;
+      return Form.prototype.close.call(this);
     }
   });
 });

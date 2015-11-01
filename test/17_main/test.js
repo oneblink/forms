@@ -56,6 +56,15 @@ define([
       assert.equal(model.attributes.name, 'abc', '"name" is blacklisted');
     });
 
+    test('Model#removeView() implemented where #initializeView() is', function () {
+      Object.keys(Forms._models).forEach(function (name) {
+        var Model = Forms._models[name];
+        if (Model.prototype.initializeView) {
+          assert.isFunction(Model.prototype.removeView, name + '#removeView()');
+        }
+      });
+    });
+
     suite('Model defaults', function () {
       function defaultsIsAFunctionTest (model, name) {
         return test(name + '.defaults is a function', function () {

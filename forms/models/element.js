@@ -85,6 +85,8 @@ define(function (require) {
       this.on('change:value', function () {
         this.setDirty();
       }, this);
+
+      // this causes problems if sub-record "remove" events are propagated
       this.on('remove', this.close, this);
     },
 
@@ -175,6 +177,7 @@ define(function (require) {
     updateWarning: function () {
       this.set('warning', this.warn());
     },
+
     removeView: function () {
       var attrs = this.attributes;
       if (attrs._view) {
@@ -182,8 +185,10 @@ define(function (require) {
         attrs._view = null;
       }
     },
+
     close: function () {
       var attrs = this.attributes;
+      this.removeView();
       attrs.form = null;
       attrs.page = null;
       attrs.section = null;
