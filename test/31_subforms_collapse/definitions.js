@@ -50,7 +50,28 @@ define(function () {
               subForm: 'form2',
               rowClass: 'collapse:forms;label:Custom;',
               plusButtonLabel: "PLUS",
-              minusButtonLabel: "MINUS"
+              minusButtonLabel: "MINUS",
+              "_elements": {
+                "datetimenow": {
+                  "hide": "",
+                  "override": "",
+                  "type": "datetime",
+                  "id": "datetimenow"
+                },
+                'comment': {
+                  "hide": "",
+                  "override": "",
+                  "type": "textarea",
+                  "id": "comment"
+                },
+                'hidden-field': {
+                  "hide": "1",
+                  "override": "",
+                  "type": "textarea",
+                  "id": "hidden-field"
+                }
+
+              },
             }
           },
           {
@@ -128,6 +149,13 @@ define(function () {
           },
           {
             'default': {
+              name: 'hidden-field',
+              label: 'Hidden Comment',
+              type: 'textarea'
+            }
+          },
+          {
+            'default': {
               name: 'subsub',
               label: 'Sub Sub',
               type: 'subForm',
@@ -138,7 +166,7 @@ define(function () {
         ]
       },
       list: {
-        _elements: ['datetimenow', 'comment']
+        _elements: ['datetimenow', 'comment', 'hidden-field']
       }
     },
     {
