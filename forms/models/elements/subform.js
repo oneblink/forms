@@ -111,6 +111,21 @@ define(function (require) {
       return view;
     },
 
+    removeView: function () {
+      this.attributes.forms.forEach(function (form) {
+        form.removeView();
+      });
+      return ElementModel.prototype.removeView.call(this);
+    },
+
+    close: function () {
+      this.removeView();
+      this.attributes.forms.forEach(function (form) {
+        form.close();
+      });
+      return ElementModel.prototype.close.call(this);
+    },
+
     getSummaryElements: function () {
       var name = this.attributes.subForm;
       var Forms = BMP.Forms;
@@ -244,13 +259,11 @@ define(function (require) {
         form = index;
       }
       if (this.indexOf(form) === -1) {
-        return; // invalid SubForm model, not part of this SubFrom Element
+        return; // invalid SubForm model, not part of this SubForm Element
       }
       if (form.attributes._action === 'edit') {
-        if (form.attributes._view) {
-          form.attributes._view.remove();
-          this.stopListening(form.attributes.elements);
-        }
+        this.stopListening(form.attributes.elements);
+        form.removeView();
         form.attributes = {
           _action: 'remove',
           id: form.getElement('id').attributes.value

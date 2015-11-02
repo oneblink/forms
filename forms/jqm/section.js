@@ -43,16 +43,9 @@ define(function (require) {
     },
     remove: function () {
       var result;
-      this.model.attributes.elements.forEach(function (el) {
-        if (el.attributes._view) {
-          el.attributes._view.remove();
-        }
-      });
-      this.model.attributes._view = null;
       result = Backbone.View.prototype.remove.call(this);
       // not sure if this still needs to be here or not,
       // but don't see anything breaking
-      this.$el.remove();
       this.model = null;
       this.$el = null;
       this.el = null;

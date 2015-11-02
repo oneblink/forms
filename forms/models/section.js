@@ -23,6 +23,7 @@ define(function (require) {
 
       this.on('remove', this.close, this);
     },
+
     initializeView: function () {
       var Forms = BMP.Forms;
       var view;
@@ -30,12 +31,17 @@ define(function (require) {
       view = new Forms._views.Section({model: this});
       this.set('_view', view);
     },
+
+    removeView: function () {
+      this.attributes.elements.forEach(function (element) {
+        element.removeView();
+      });
+      return Element.prototype.removeView.call(this);
+    },
+
     close: function () {
       var attrs = this.attributes;
-      if (attrs._view) {
-        attrs._view.remove();
-        attrs._view = null;
-      }
+      this.removeView();
       attrs.form = null;
       attrs.elements.forEach(function (element) {
         element.close();
@@ -43,6 +49,7 @@ define(function (require) {
 
       this.off('remove', this.close, this);
     },
+
     add: function (element) {
       this.attributes.elements.add(element);
     }
