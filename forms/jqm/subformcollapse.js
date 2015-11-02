@@ -77,7 +77,12 @@ define(function (require) {
 
     renderSummary: function () {
       var values = Object.keys(this.formElementEvents).map(function (name) {
-        return this.model.getElement(name).val();
+        var element = this.model.getElement(name);
+        if (!element) {
+          return undefined;
+        }
+
+        return element.val();
       }.bind(this));
       this.$summary.text(_.compact(values).join(', '));
     }
