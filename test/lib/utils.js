@@ -160,9 +160,10 @@ define([
 
     generateBigFormDefinition: function () {
       var NAME = 'test';
-      var TYPES = ['text', 'textarea', 'number', 'date', 'time', 'boolean', 'location', 'file'];
+      var TYPES = ['boolean', 'button', 'datetime', 'date', 'time', 'draw', 'email', 'file', 'hidden', 'location', 'number', 'password', 'telephone', 'text', 'textarea', 'url'];
       var CHOICE_TYPES = ['select', 'multi'];
-      var page;
+      var DISPLAY_TYPES = ['heading', 'message'];
+      var page = 0;
       var def = {
         default: {
           name: NAME,
@@ -181,14 +182,30 @@ define([
       var isRequired = function () {
         return def.default._elements.length % 2 === 0;
       };
+      var generateName = function (type) {
+        return type + (def.default._elements.length + 1);
+      }
       var addTypedElements = function () {
         TYPES.forEach(function (type) {
           def.default._elements.push({
             default: {
-              name: type + (def.default._elements.length + 1),
+              name: generateName(type),
               type: type,
               page: page,
               required: isRequired()
+            }
+          });
+        });
+      };
+      var addDisplayElements = function () {
+        DISPLAY_TYPES.forEach(function (type) {
+          def.default._elements.push({
+            default: {
+              name: generateName(type),
+              type: type,
+              html: generateName(type), // for message
+              text: generateName(type), // for heading
+              page: page
             }
           });
         });
@@ -197,7 +214,7 @@ define([
         CHOICE_TYPES.forEach(function (type) {
           def.default._elements.push({
             default: {
-              name: type + (def.default._elements.length + 1),
+              name: generateName(type),
               type: type,
               page: page,
               options: OPTIONS,
@@ -208,10 +225,11 @@ define([
       };
       while (def.default._elements.length < 300) {
         page = Math.floor(def.default._elements.length / 30);
+        addDisplayElements();
         addTypedElements();
         def.default._elements.push({
           default: {
-            name: 'subForm' + (def.default._elements.length + 1),
+            name: generateName('subForm'),
             type: 'subForm',
             page: page,
             required: isRequired(),
