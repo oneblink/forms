@@ -27,6 +27,23 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         }, 200);
       });
 
+      test('hidding button element does not run behaviour', function (done) {
+        var form = BMP.Forms.current;
+        var button = form.getElement('calc_button');
+        // existing values of elements
+        //test1 = test11
+        //test2 = test22
+        //calc = test11test22
+        form.getElement('test2').val('test12');
+        button.set('hidden', true);
+
+        setTimeout(function () {
+          //expected value is test11test22 as Manual calculation button has not been clicked.
+          assert.equal(form.getElement('calc').val(), 'test11test22');
+          done();
+        }, 1);
+      });
+
       test('changing field value does not run behaviour', function (done) {
         var form = BMP.Forms.current;
 
