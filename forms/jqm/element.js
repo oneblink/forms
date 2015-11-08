@@ -250,13 +250,12 @@ define(function (require) {
       // when a field is hidden, we no longer care
       // about if it is valid or not.
       this.model.validationError = undefined;
-      this.model.trigger('change:value');
+      this.model.trigger('valid', this);
     },
 
     show: function () {
       if (this.$el.css('display') === 'none') {
         this.$el.css('display', '');
-        this.model.trigger('change:value');
       }
     },
 
