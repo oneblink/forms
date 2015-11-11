@@ -99,23 +99,23 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
       testUtils.defineLabelTest();
 
-      test('add subForm31 x4', function () {
-        console.time('add subForm31 x4');
+      test('add subForm40 x4', function () {
+        console.time('add subForm40 x4');
         return Forms.current.setRecord({
-          subForm31: [{}, {}, {}, {}]
+          subForm40: [{}, {}, {}, {}]
         })
         .then(function () {
-          console.timeEnd('add subForm31 x4');
+          console.timeEnd('add subForm40 x4');
         });
       });
 
-      test('add subForm64 x4', function () {
-        console.time('add subForm64 x4');
+      test('add subForm61 x4', function () {
+        console.time('add subForm61 x4');
         return Forms.current.setRecord({
-          subForm64: [{}, {}, {}, {}]
+          subForm61: [{}, {}, {}, {}]
         })
         .then(function () {
-          console.timeEnd('add subForm64 x4');
+          console.timeEnd('add subForm61 x4');
         });
       });
 

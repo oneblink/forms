@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v3.9.1 - 2015-11-12
+
+
+### Fixed
+
+- FORMS-247: changing the "label" property on a ChoiceElement model no longer results in more than one visible label
+
+    - HelpDesk: 8384-ODJX-5396
+
+- FORMS-250: the summary for a collapsed SubForm no longer throws errors when summary values are empty
+
+- FORMS-255: changing the "hidden" property of a ButtonElement model no longer triggers its associated manual calculation Behaviour
+
+
 ## v3.9.0 - 2015-10-27
 
 

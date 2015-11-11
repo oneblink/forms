@@ -5,7 +5,7 @@
   everything except the file being tested should be mocked or stubbed out.
 */
 define(['models/element'],
-function (ElementModel /* change this to whatever you want */) {
+function (ElementModel) {
   'use strict';
 
   var noop = function () {};
