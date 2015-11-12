@@ -115,5 +115,114 @@ define([
         assert.ok(isValidSpy.callCount === 9);
       });
     });
+
+    suite('error-helper', function () {
+      suite('toErrorString', function () {
+        test('correctly converts a forms error object to a string', function () {
+          assert.equal(BMP.Forms.errorHelpers.toErrorString({code: 'MAX', MAX: 3}), 'must not be higher than 3');
+        });
+
+        test('returns a string', function () {
+          assert.isString(BMP.Forms.errorHelpers.toErrorString('a custom string'));
+          assert.equal(BMP.Forms.errorHelpers.toErrorString('a custom string'), 'a custom string');
+        });
+
+        test('throws when object is not to spec', function () {
+          assert.throws(function () {
+            BMP.Forms.errorHelpers.toErrorString({field: 'value'});
+          });
+        });
+
+        test('throws when anything other than string or object is used', function () {
+          assert.throws(function () {
+            BMP.Forms.errorHelpers.toErrorString(1);
+          });
+
+          assert.throws(function () {
+            BMP.Forms.errorHelpers.toErrorString([1, 2, 3]);
+          });
+
+          assert.throws(function () {
+            BMP.Forms.errorHelpers.toErrorString(null);
+          });
+
+          assert.throws(function () {
+            BMP.Forms.errorHelpers.toErrorString(undefined);
+          });
+          assert.throws(function () {
+            BMP.Forms.errorHelpers.toErrorString(function () {});
+          });
+        });
+      });
+
+      suite('toFormsError', function () {
+        test('returns a Forms error object with text', function () {
+          var result = BMP.Forms.errorHelpers.toFormsError('MAX', 3);
+
+          assert.isObject(result);
+          assert.property(result, 'code');
+          assert.property(result, 'MAX');
+          assert.property(result, 'text');
+
+          assert.equal(result.text, 'must not be higher than 3');
+        });
+      });
+
+      suite('fromBMP', function () {
+        test('returns a custom error', function () {
+          var errorString = 'custom';
+          var result = BMP.Forms.errorHelpers.fromBMP(errorString);
+          assert.isObject(result);
+          assert.property(result, 'code');
+          assert.property(result, 'CUSTOM');
+          assert.property(result, 'text');
+          assert.equal(result.text, errorString);
+        });
+
+        test('converts a server $errors to a FORMS error object', function () {
+          var externalErrors = {
+            'text_area': ' is required',
+            'textbox': ' is required',
+            'location': ' is required',
+            'sketch_signature': ' is required',
+            'subform': {
+              'errors': [{
+                'code': 'REQUIRED'
+              }]
+            }
+          };
+
+          var expected = {
+            'text_area': {
+              'code': 'CUSTOM',
+              'CUSTOM': ' is required',
+              'text': ' is required'
+            },
+            'textbox': {
+              'code': 'CUSTOM',
+              'CUSTOM': ' is required',
+              'text': ' is required'
+            },
+            'location': {
+              'code': 'CUSTOM',
+              'CUSTOM': ' is required',
+              'text': ' is required'
+            },
+            'sketch_signature': {
+              'code': 'CUSTOM',
+              'CUSTOM': ' is required',
+              'text': ' is required'
+            },
+            'subform': {
+              'errors': [{
+                'code': 'REQUIRED'
+              }]
+            }
+          };
+
+          assert.deepEqual(BMP.Forms.errorHelpers.fromBMP(externalErrors), expected);
+        });
+      });
+    });
   });
 });
