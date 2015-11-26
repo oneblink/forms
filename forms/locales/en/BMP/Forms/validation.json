@@ -10,5 +10,6 @@
   "MAXSUBFORM": "no more than {MAX} {MAX, plural, one{form} other{forms}}",
   "MINSUBFORM": "no less than {MIN} {MIN, plural, one{form} other{forms}}",
   "SUBFORM": "there are some errors in subform formfields",
+  "FIRST_OPTION_NOT_VALID": "The first option is not a valid choice",
   "CUSTOM": "{CUSTOM}"
 }

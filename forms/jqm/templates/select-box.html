@@ -1,0 +1,11 @@
+<select 
+  class="bm-singleselect"
+  name="<%= name %>"
+  data-native-menu="<%= nativeMenu ? 'true' : 'false' %>">
+  <% optionCollection.each(function (option) { %>
+    <option
+      data-cid="<%= option.cid %>"
+      value="<%= option.attributes.value %>"
+      <%= option.attributes.isSelected ? 'selected' : '' %>><%= option.attributes.label %></option>
+  <% }) %>
+</select>

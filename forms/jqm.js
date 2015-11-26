@@ -39,6 +39,9 @@ define(function (require) {
     BooleanElement: require('forms/jqm/elements/boolean'),
     ChoiceCollapsedElement: require('forms/jqm/elements/choicecollapsed'),
     ChoiceExpandedElement: require('forms/jqm/elements/choiceexpanded'),
+    SelectBoxElement: require('forms/jqm/elements/select-box'),
+    RadioElement: require('forms/jqm/elements/radio-buttons'),
+
     LocationElement: require('forms/jqm/elements/location'),
     FileElement: require('forms/jqm/elements/file'),
     DrawElement: require('forms/jqm/elements/draw'),

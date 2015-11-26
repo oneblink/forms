@@ -316,7 +316,7 @@ define(function (require) {
           TypedElement = Forms._models.BooleanElement;
           break;
         case 'select':
-          TypedElement = Forms._models.SelectElement;
+          TypedElement = attrs.mode === 'expanded' || /mode:\s*expanded/i.test(attrs.rowClass) ? Forms._models.SingleChoiceElement : Forms._models.SingleChoiceSelectboxElement;
           break;
         case 'multi':
           TypedElement = Forms._models.MultiElement;

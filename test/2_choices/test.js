@@ -19,35 +19,33 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         var $checked;
 
         element.val('');
-        $other = $view.find('input[type=text]');
+        $other = $view.find('.bm-othertext');
         assert.notOk(element.val(), name + ': model value is falsey');
-        // assert.lengthOf($selected, 0, name + ': nothing checked');
-        assert.lengthOf($other, 0, name + ': other box absent');
+        assert.isTrue($other.is(':visible'), name + ' other should be visible');
 
         value = 'a';
         element.val(value);
-        $other = $view.find('input[type=text]');
+        $other = $view.find('.bm-othertext');
         $checked = $view.find(':checked');
         assert.equal(element.val(), value, name + ': model value correct');
         assert.lengthOf($checked, 1, name + ': 1 checked');
-        assert.lengthOf($other, 0, name + ': other box absent');
-        assert.equal($checked.val(), value, name + ': model value correct');
+        assert.isFalse($other.is(':visible'));
+        assert.equal($checked.val(), value, name + ': DOM "other" value correct');
 
         value = '123';
         element.val(value);
-        $other = $view.find('input[type=text]');
+        $other = $view.find('.bm-othertext');
         $checked = $view.find(':checked');
         assert.deepEqual(element.val(), value, name + ': model value correct');
         assert.lengthOf($checked, 1, name + ': 1 checked');
-        assert.lengthOf($other, 1, name + ': other box present');
+        assert.isTrue($other.is(':visible'));
         assert.equal($other.val(), '123', name + ': other box shows "123"');
-        assert.equal($checked.val(), 'other', name + ': model value correct');
+        assert.equal(element.attributes.optionCollection.getOtherValue(), '123', name + ': "Other" option value is correct');
 
-        element.val('');
-        $other = $view.find('input[type=text]');
+        element.val(null);
+        $other = $view.find('.bm-othertext');
         assert.notOk(element.val(), name + ': model value is falsey');
-        // assert.lengthOf($selected, 0, name + ': nothing checked');
-        assert.lengthOf($other, 0, name + ': other box absent');
+        assert.isFalse($other.is(':visible'), name + ' should not have "other" showing');
       });
     });
 
@@ -278,7 +276,7 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         assert.equal($el.find('select').val(), 'b');
 
         element.val('');
-        assert($el.find('select').val());
+        assert.equal($el.find('select').val(), '');
       });
 
       test(name + ': view->model', function () {
@@ -299,18 +297,18 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
 
         if (element.attributes.type === 'multi') {
           element.val(['b']);
-          assert.equal($el.find('.ui-checkbox-on').text().trim(), 'beta');
+          assert.equal($el.find('.ui-checkbox-on').text().trim(), 'beta', name);
         } else {
           element.val('b');
-          assert.equal($el.find('.ui-radio-on').text().trim(), 'beta');
+          assert.equal($el.find('.ui-radio-on').text().trim(), 'beta', name);
         }
 
         if (element.attributes.type === 'multi') {
           element.val([]);
-          assert.lengthOf($el.find('.ui-checkbox-on'), 0);
+          assert.lengthOf($el.find('.ui-checkbox-on'), 0, name);
         } else {
-          element.val('');
-          assert.lengthOf($el.find('.ui-radio-on'), 0);
+          element.val(null);
+          assert.lengthOf($el.find('.ui-radio-on'), 0, name);
         }
       });
 
@@ -321,10 +319,10 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
 
         if (element.attributes.type === 'multi') {
           $el.find('.ui-checkbox').eq(2).children('label').trigger('click');
-          assert.deepEqual(element.val(), ['g']);
+          assert.deepEqual(element.val(), ['g'], name);
         } else {
           $el.find('.ui-radio').eq(2).children('label').trigger('click');
-          assert.equal(element.val(), 'g');
+          assert.equal(element.val(), 'g', name);
         }
       });
     });
@@ -342,7 +340,6 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
       var form = Forms.current;
       choiceElements.forEach(function (name) {
         var element = form.getElement(name);
-        // var currentOptions = element.get('options');
         element.set('options', newOptions);
       });
     });
@@ -356,36 +353,39 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
         var $other;
         var $checked;
 
-        element.val('');
-        $other = $view.find('input[type=text]');
+        element.val(null);
+        $other = $view.find('.bm-othertext');
         assert.notOk(element.val(), name + ': model value is falsey');
-        // assert.lengthOf($selected, 0, name + ': nothing checked');
-        assert.lengthOf($other, 0, name + ': other box absent');
+        assert.isFalse($other.is(':visible'), name + ': other box should not be visible');
+
+        element.val('');
+        $other = $view.find('.bm-othertext');
+        assert.notOk(element.val(), name + ': model value is falsey');
+        assert.isTrue($other.is(':visible'), name + ': other box should be visible');
 
         value = 'd';
         element.val(value);
-        $other = $view.find('input[type=text]');
+        $other = $view.find('.bm-othertext');
         $checked = $view.find(':checked');
         assert.equal(element.val(), value, name + ': model value correct');
         assert.lengthOf($checked, 1, name + ': 1 checked');
-        assert.lengthOf($other, 0, name + ': other box absent');
-        assert.equal($checked.val(), value, name + ': model value correct');
+        assert.isFalse($other.is(':visible'), name + ' other should not be visible');
+        assert.equal(element.attributes.optionCollection.getSelected()[0].attributes.value, value, name + ': selected option value correct');
 
         value = '123';
         element.val(value);
-        $other = $view.find('input[type=text]');
+        $other = $view.find('.bm-othertext');
         $checked = $view.find(':checked');
         assert.deepEqual(element.val(), value, name + ': model value correct');
         assert.lengthOf($checked, 1, name + ': 1 checked');
-        assert.lengthOf($other, 1, name + ': other box present');
         assert.equal($other.val(), '123', name + ': other box shows "123"');
-        assert.equal($checked.val(), 'other', name + ': model value correct');
+        assert.equal(element.attributes.optionCollection.getOtherValue(), '123', name + ': Other option value should be set correctly');
+        assert.isTrue($other.is(':visible'), name + ' expected other text box to be visible');
 
         element.val('');
-        $other = $view.find('input[type=text]');
-        assert.notOk(element.val(), name + ': model value is falsey');
-        // assert.lengthOf($selected, 0, name + ': nothing checked');
-        assert.lengthOf($other, 0, name + ': other box absent');
+        $other = $view.find('.bm-othertext');
+        assert.strictEqual(element.val(), '', name + ': model value is falsey');
+        assert.isTrue($other.is(':visible'), name + ': other box should be visible');
       });
     });
 
@@ -534,14 +534,13 @@ define(['BlinkForms', 'testUtils', 'underscore'], function (Forms, testUtils, _)
       });
 
       _.each(fields, function (v, k) {
-        test(k, function (done) {
+        test(k, function () {
           element = form.getElement(k);
-          assert.equal(element.attributes._view.$el.children('ul').children('li').length, 1);
-          element.set('value', v);
-          assert.equal(element.attributes._view.$el.children('ul').children('li').length, 0);
-          element.set('value', null);
-          assert.equal(element.attributes._view.$el.children('ul').children('li').length, 1);
-          done();
+          assert.lengthOf(element.attributes._view.$el.find('.bm-errors__bm-required'), 1, element.id + ' should be required');
+          element.val(v);
+          assert.lengthOf(element.attributes._view.$el.find('.bm-errors__bm-required'), 0, element.id + ' should not be required');
+          element.val(null);
+          assert.lengthOf(element.attributes._view.$el.find('.bm-errors__bm-required'), 1, element.id + ' should be required part deux');
         });
       });
     });

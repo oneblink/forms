@@ -55,6 +55,8 @@ define(function (require) {
     TextElement: require('forms/models/elements/text'),
     TextAreaElement: require('forms/models/elements/textarea'),
     BooleanElement: require('forms/models/elements/boolean'),
+    SingleChoiceElement: require('forms/models/elements/single-choice'),
+    SingleChoiceSelectboxElement: require('forms/models/elements/single-choice-selectbox'),
     SelectElement: require('forms/models/elements/select'),
     MultiElement: require('forms/models/elements/multi'),
     LocationElement: require('forms/models/elements/location'),

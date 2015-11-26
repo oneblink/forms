@@ -27,8 +27,8 @@ define([
 
       _.each(cases, function (v, i) {
         element.val(v);
-        assert.isObject(element.validate(), 'now has a validation error');
-        assert.isArray(element.validate().value, 'something wrong with value');
+        assert.isObject(element.validate(), element.id + ' should now have a validation error');
+        assert.isArray(element.validate().value, element.id + ' has something wrong with error value');
         error = _.find(element.validate().value, function (e) {
           return _.isObject(e) && e.code === i;
         });
@@ -202,11 +202,6 @@ define([
 
         cases = {
           'REQUIRED': ''
-        };
-        runTests(cases, element);
-
-        cases = {
-          'REQUIRED': 'other'
         };
         runTests(cases, element);
       });
