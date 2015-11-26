@@ -226,7 +226,7 @@ define(function (require) {
     mapTimeFormats: {
       'hh:mm': 'HH:mm',
       hh_mm_ss: 'HH:mm', // HH:MM:SS
-      h_mm_ss: 'hh:mm A',// HH:MM:SS AM/PM %r
+      h_mm_ss: 'hh:mm A', // HH:MM:SS AM/PM %r
       h_mm: 'hh:mm A' // HH:MM AM/PM
     }
   });

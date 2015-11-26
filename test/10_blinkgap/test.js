@@ -7,7 +7,7 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
       getPictureStub,
       getDrawingFn;
 
-    getDrawingFn = function (onSuccess) {//, onError, options) {
+    getDrawingFn = function (onSuccess) {
       // options = options || {};
       if ($.type(onSuccess) === 'function') {
         // TODO: return something better
