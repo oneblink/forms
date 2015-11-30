@@ -1,12 +1,12 @@
 <fieldset data-role="controlgroup" data-type="<%=layout%>" >
-  <legend class="bm-radiooptions-label"><%=label%></legend>
-  <div class="bm-radiooptions-container">
+  <legend class="bm-choice-label"><%=label%></legend>
+  <div class="bm-choice-container">
   <% optionCollection.each(function (option) { %>
     <label><%= option.attributes.label %>
-      <input class="bm-radiooptions-input" 
-              type="radio"
+      <input class="bm-choice-input" 
+              type="<%= type === 'multi' ? 'checkbox' : 'radio'%>"
               data-cid="<%= option.cid %>"
-              name="<%=name%>"
+              name="<%= type ==='multi' ? name + '[]' : name %>"
               value="<%=option.attributes.value%>"
               <%= option.attributes.isSelected ? 'checked' : ''%> />
     </label>

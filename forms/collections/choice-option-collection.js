@@ -2,14 +2,17 @@ define(function (require) {
   'use strict';
 
   var Backbone = require('backbone');
+  var _ = require('underscore');
+
+  var OptionModel = require('forms/models/choice-option');
 
   return Backbone.Collection.extend({
-    model: Backbone.Model,
+    model: OptionModel,
 
     OTHER_ID: 'bm-other',
 
     deselectAll: function (options) {
-      this.invoke('set', 'isSelected', false, options);
+      this.invoke('deselect', options);
     },
 
     /**
@@ -20,23 +23,37 @@ define(function (require) {
       return this.where({isSelected: true});
     },
 
-    getOtherValue: function () {
-      var other = this.get(this.OTHER_ID);
-      return other ? other.attributes.value : undefined;
+    /**
+     * Gets the values of each selected items
+     * @return {Array|Any} 
+     */
+    getSelectedValues: function () {
+      return this.reduce(function (memo, option) {
+        if (option.attributes.isSelected) {
+          memo.push(option.attributes.value);
+        }
+        return memo;
+      }, []);
     },
 
     /**
-     * Selects an option awt the specified index
-     * @param  {Number} index - The index to select
-     * @return {OptionModel}       - The option Model that was selected or undefined if index is out of bounds.
+     * Gets the model with a value that matches
+     * @param  {any} value - The value to look for
+     * @return {Option Model}
      */
-    select: function (index) {
-      var option = this.models[index];
-      if (option) {
-        option.set('isSelected', true);
-      }
+    getOptionByValue: function (value) {
+      return this.find(function (option) {
+        return option.attributes.value === value && !option.isOther();
+      });
+    },
 
-      return option;
+    getOtherOption: function () {
+      return this.get(this.OTHER_ID);
+    },
+
+    getOtherValue: function () {
+      var other = this.get(this.OTHER_ID);
+      return other ? other.attributes.value : undefined;
     }
   });
 });

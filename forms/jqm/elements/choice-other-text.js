@@ -20,15 +20,15 @@ define(function (require) {
       'blur .bm-othertext': 'setModelValue'
     },
 
-    modelEvents: {
-      'change:isOtherVisible': 'onOtherVisibleChange',
-      'change:value': 'onChangeValue'
+    collectionEvents: {
+      'change:value': 'onChangeValue',
+      'change:isSelected': 'onOtherVisibleChange'
     },
 
     template: _.template(template),
 
     initialize: function () {
-      events.proxyBindEntityEvents(this, this.model, this.modelEvents);
+      events.proxyBindEntityEvents(this, this.model.attributes.optionCollection, this.collectionEvents);
     },
 
     render: function () {
@@ -46,15 +46,26 @@ define(function (require) {
     },
 
     setModelValue: function () {
-      this.model.val(this.$input.val());
+      var otherOption = this.model.attributes.optionCollection.getOtherOption();
+      otherOption.set('value', this.$input.val());
     },
 
-    onChangeValue: function () {
-      this.$input.val(this.model.attributes.value);
+    onChangeValue: function (model, value) {
+      if (model.id !== this.model.attributes.optionCollection.OTHER_ID) {
+        return;
+      }
+      this.$input.val(value);
     },
 
-    onOtherVisibleChange: function () {
-      if (this.model.attributes.isOtherVisible) {
+    onOtherVisibleChange: function (model, value) {
+      if (!model) {
+        model = this.model.attributes.optionCollection.getOtherOption();
+        value = model.attributes.value;
+      } else if (model.id !== this.model.attributes.optionCollection.OTHER_ID) {
+        return;
+      }
+
+      if (value) {
         this.$el.show();
         return;
       }

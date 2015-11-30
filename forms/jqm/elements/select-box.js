@@ -23,6 +23,7 @@ define(function (require) {
       }
 
       this.listenTo(this.model.attributes.optionCollection, 'change:isSelected', this.onModelOptionSelect);
+      this.listenTo(this.model.attributes.optionCollection, 'change:value', this.onOptionValueChange);
       this.listenTo(this.model.attributes.optionCollection, 'reset', this.renderOptions);
 
       ElementView.prototype.initialize.apply(this, arguments);
@@ -33,7 +34,6 @@ define(function (require) {
 
       this.$el.append(this.template(this.model.attributes));
       this.$select = this.$el.find('.bm-singleselect');
-      this.$select.selectmenu();
 
       if (this.model.attributes.other) {
         this.$el.append(this.otherTextView.render().$el);
@@ -53,13 +53,23 @@ define(function (require) {
       this.$select.html(html).selectmenu('refresh');
     },
 
-    onChange: function () {
+    onChange: function (e) {
       this.model.selectOptionByIndex(this.$select.prop('selectedIndex'));
     },
 
     onModelOptionSelect: function (optionModel) {
       this.$select.prop('selectedIndex', this.model.attributes.optionCollection.indexOf(optionModel));
       this.$select.selectmenu('refresh');
+    },
+
+    onOptionValueChange: function (model, value) {
+      if (model.isOther()) {
+        this.$select[0].namedItem(model.id).value = model.attributes.value;
+      }
+    },
+
+    onAttached: function () {
+      this.$select.selectmenu();
     }
   });
 });

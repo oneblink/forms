@@ -83,6 +83,7 @@ define(function (require) {
       this.on('invalid valid', this.updateErrors, this);
 
       this.on('change:value', function () {
+       // console.log('setting dirty', this.id)
         this.setDirty();
       }, this);
 
@@ -319,7 +320,8 @@ define(function (require) {
           TypedElement = attrs.mode === 'expanded' || /mode:\s*expanded/i.test(attrs.rowClass) ? Forms._models.SingleChoiceElement : Forms._models.SingleChoiceSelectboxElement;
           break;
         case 'multi':
-          TypedElement = Forms._models.MultiElement;
+          // TypedElement = Forms._models.MultiElement;
+          TypedElement = attrs.mode === 'expanded' || /mode:\s*expanded/i.test(attrs.rowClass) ? Forms._models.MultiChoiceElement : Forms._models.MultiChoiceSelectboxElement;
           break;
         case 'hidden':
           TypedElement = Forms._models.HiddenElement;

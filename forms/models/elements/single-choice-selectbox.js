@@ -30,13 +30,7 @@ define(function (require) {
     },
 
     isEmpty: function () {
-      return !_.any(this.attributes.optionCollection.tail(), function (option) {
-        if (option.id === this.attributes.optionCollection.OTHER_ID) {
-          return option.attributes.isSelected && option.attributes.value;
-        }
-
-        return option.attributes.isSelected;
-      }, this);
+      return this._isEmpty(this.attributes.optionCollection.tail());
     },
 
     mapOptions: function () {
@@ -47,7 +41,7 @@ define(function (require) {
         options.unshift({
           id: 'bm-header-option',
           label: 'Select one...',
-          value: ''
+          value: null
         });
       }
 
@@ -81,7 +75,7 @@ define(function (require) {
      * @return {string|OptionsModel} - The string value if no parameter is supplied or the options model that holds the specified value
      */
     val: function (value) {
-      var optionsModel;
+      var optionModel;
 
       if (value === undefined) {
         return SingleChoiceModel.prototype.val.apply(this, arguments);
@@ -89,16 +83,17 @@ define(function (require) {
 
       if (value === null) {
         this.attributes.optionCollection.deselectAll();
-        optionsModel = this.attributes.optionCollection.select(0);
+        optionModel = this.attributes.optionCollection.at(0);
+        optionModel.select();
         this.set({
           value: null,
           isOtherVisible: false
         });
       } else {
-        optionsModel = SingleChoiceModel.prototype.val.apply(this, arguments);
+        optionModel = SingleChoiceModel.prototype.val.apply(this, arguments);
       }
 
-      return optionsModel;
+      return optionModel;
     },
 
     validate: function () {
@@ -108,7 +103,7 @@ define(function (require) {
       if (this.attributes.optionCollection.length &&
           this.attributes.firstOptionNotValid &&
           this.attributes.required &&
-          this.attributes.optionCollection.first().attributes.isSelected) {
+          this.attributes.optionCollection.first().isSelected()) {
         newErrors.push({code: 'FIRST_OPTION_NOT_VALID'});
       }
 

@@ -5,9 +5,9 @@ define(function (require) {
 
   var ElementModel = require('forms/models/element');
   var ChoiceOptionsCollection = require('forms/collections/choice-option-collection');
+  var OptionCollectionMixin = require('forms/mixins/option-collection-mixin');
 
-  // radio button choice model
-  return ElementModel.extend({
+  var SingleChoiceModel = {
     defaults: function () {
       return _.assign(ElementModel.prototype.defaults.call(this), {
         mode: 'expanded',
@@ -47,50 +47,6 @@ define(function (require) {
     },
 
     /**
-     * Are any options selected?
-     * @return {Boolean}
-     */
-    isEmpty: function () {
-      return !this.attributes.optionCollection.getSelected().length;
-    },
-
-    /**
-     * Convert an object of key/value pairs (`attributes.options`) into an array of
-     * select option attributes.
-     * @return {[type]} [description]
-     */
-    mapOptions: function () {
-      var options = _.map(this.attributes.options, function (label, value) {
-        return {
-          id: value,
-          isSelected: value === this.attributes.value,
-          label: label,
-          value: value
-        };
-      }, this);
-
-      // add other option to the end
-      if (this.attributes.other) {
-        options.push({
-          id: this.attributes.optionCollection.OTHER_ID,
-          isSelected: false,
-          label: 'Other',
-          value: this.attributes.optionCollection.getOtherValue()
-        });
-      }
-
-      return options;
-    },
-
-    /**
-     * Calls `reset` on `attributes.optionCollection` passing in an array
-     * created by mapping over `attributes.options`.
-     */
-    resetOptionCollection: function () {
-      this.attributes.optionCollection.reset(this.mapOptions());
-    },
-
-    /**
      * Select an option at a particular index which will be the
      * models value.
      *
@@ -101,12 +57,15 @@ define(function (require) {
       var optionsModel;
 
       this.attributes.optionCollection.deselectAll();
-      optionsModel = this.attributes.optionCollection.select(optionIndex);
+      optionsModel = this.attributes.optionCollection.at(optionIndex);
 
-      this.set({
-        'value': optionsModel.attributes.value,
-        'isOtherVisible': optionsModel && optionsModel.attributes.id === this.attributes.optionCollection.OTHER_ID
-      });
+      if (optionsModel) {
+        optionsModel.select();
+        this.set({
+          'value': optionsModel.attributes.value
+        });
+      }
+
       return optionsModel;
     },
 
@@ -120,29 +79,33 @@ define(function (require) {
      */
     val: function (value) {
       var selectedOption;
+
       if (value === undefined) {
         selectedOption = this.attributes.optionCollection.getSelected()[0];
         return selectedOption ? selectedOption.attributes.value : undefined;
       }
+
+      //this.setDirty();
       this.attributes.optionCollection.deselectAll();
 
       if (value !== null) {
-        selectedOption = this.attributes.optionCollection.get(value) || this.attributes.optionCollection.get(this.attributes.optionCollection.OTHER_ID);
+        selectedOption = this.attributes.optionCollection.getOptionByValue(value) || this.attributes.optionCollection.get(this.attributes.optionCollection.OTHER_ID);
         if (selectedOption) {
-          selectedOption.set('isSelected', true);
+          selectedOption.select();
 
-          if (selectedOption.id === this.attributes.optionCollection.OTHER_ID) {
+          if (selectedOption.isOther()) {
             selectedOption.set('value', value);
           }
         }
       }
 
       this.set({
-        'value': value,
-        'isOtherVisible': selectedOption && selectedOption.id === this.attributes.optionCollection.OTHER_ID
+        'value': value
       });
 
       return selectedOption;
     }
-  });
+  };
+
+  return ElementModel.extend(_.assign({}, OptionCollectionMixin, SingleChoiceModel));
 });

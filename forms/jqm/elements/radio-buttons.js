@@ -19,23 +19,23 @@ define(function (require) {
         this.otherTextView = new OtherTextView({model: this.model});
       }
       this.listenTo(this.model.attributes.optionCollection, 'change:isSelected', this.onModelOptionSelect);
-      this.listenTo(this.model.attributes.optionCollection, 'update', this.renderOptions);
+      this.listenTo(this.model.attributes.optionCollection, 'reset', this.renderOptions);
 
       ElementView.prototype.initialize.apply(this, arguments);
     },
 
-    enhanceOptions: function () {
+    onAttached: function () {
       if (this.$radioOptions) {
         this.$radioOptions.off('click');
       }
-      this.$radioOptions = this.$el.find('.bm-radiooptions-input');
+      this.$radioOptions = this.$el.find('.bm-choice-input');
       this.$radioOptions.checkboxradio();
+      console.log('enchancing radio buttons for ', this.model.id)
       this.$radioOptions.on('click', this.onOptionClick.bind(this));
     },
 
     render: function () {
       this.$el.append(this.template(this.model.attributes));
-      this.enhanceOptions();
 
       if (this.model.attributes.other) {
         this.$el.append(this.otherTextView.render().$el);
@@ -48,7 +48,7 @@ define(function (require) {
 
     renderLabel: function () {
       if (!this.$label) {
-        this.$label = $('.bm-radiooptions-label');
+        this.$label = $('.bm-choice-label');
       }
 
       if (!$.contains(this.el, this.$label[0])) {
@@ -64,8 +64,8 @@ define(function (require) {
         return memo;
       }, '', this);
 
-      this.$el.find('.bm-radiooptions-container').html(html);
-      this.enhanceOptions();
+      this.$el.find('.bm-choice-container').html(html);
+      this.onAttached();
     },
 
     remove: function () {
@@ -79,8 +79,9 @@ define(function (require) {
       this.$radioOptions.checkboxradio('refresh');
     },
 
-    onOptionClick: function (e) {
-      this.model.val(e.target.value);
+    onOptionClick: function () {
+      var val = _.pluck(this.$radioOptions.filter(':checked'), 'value');
+      this.model.val(val.length === 1 ? val[0] : val);
     }
   });
 });

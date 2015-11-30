@@ -1,1 +1,5 @@
-<option value="<%= attributes.value %>" <%=  attributes.isSelected ? 'selected' : '' %>><%= attributes.label %></option>
+<option value="<%= attributes.value %>"
+        name="<%= attributes.id %>"
+        <%=  attributes.isSelected ? 'selected' : '' %>>
+  <%= attributes.label %>
+</option>

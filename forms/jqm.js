@@ -40,6 +40,7 @@ define(function (require) {
     ChoiceCollapsedElement: require('forms/jqm/elements/choicecollapsed'),
     ChoiceExpandedElement: require('forms/jqm/elements/choiceexpanded'),
     SelectBoxElement: require('forms/jqm/elements/select-box'),
+    SelectBoxMultiElement: require('forms/jqm/elements/select-box-multi'),
     RadioElement: require('forms/jqm/elements/radio-buttons'),
 
     LocationElement: require('forms/jqm/elements/location'),
