@@ -30,7 +30,7 @@ define(function (require) {
     },
 
     remove: function () {
-      this.$el.find('input').off('click');
+      this.$el.find('input[type="button"]').off('click');
       this.model.off('change:blob', this.renderFigure, this);
       return FileElementView.prototype.remove.call(this);
     }
