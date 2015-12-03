@@ -139,7 +139,7 @@ define(function (require) {
     view.render();
   };
 
-  Forms.version = '3.9.1';
+  Forms.version = '3.9.2';
   Forms.supports = {};
 
   Forms.supports.blob = (function () {
