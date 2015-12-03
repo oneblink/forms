@@ -1,6 +1,16 @@
 # Changelog
 
 
+## v3.9.2 - 2015-12-03
+
+
+### Fixed
+
+- FORMS-251: no longer show error summary on page turn, just for submission
+
+- FORMS-257: handle submission errors from the server without throwing errors
+
+
 ## v3.9.1 - 2015-11-12
 
 
