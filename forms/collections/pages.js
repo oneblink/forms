@@ -17,29 +17,29 @@ define(function (require) {
     model: Page,
     goto: function (index) {
       var self, currentform, currentPage;
+      var view;
       self = this;
       if (!_.isNumber(index)) {
         index = 0;
       }
       self.current = null;
 
-      // TODO: separate out the View parts, they don't belong here
-      this.forEach(function (page, number) {
-        var form = page.attributes.form;
-        var view;
+      self.current = this.at(index);
+      currentPage = self.current;
+      currentform = currentPage.attributes.form;
 
-        if (number === index) {
-          self.current = page;
-          page.initializeView();
-          view = page.attributes._view;
-          view.render();
-          form.attributes._view.$el.append(view.el);
-        } else {
+      // TODO: separate out the View parts, they don't belong here
+
+      currentPage.initializeView();
+      view = currentPage.attributes._view;
+      view.render();
+      currentform.attributes._view.$el.append(view.el);
+
+      this.forEach(function (page, number) {
+        if (number !== index) {
           page.removeView();
         }
       });
-      currentPage = self.current;
-      currentform = currentPage.attributes.form;
 
       pollUntil(function () {
         var aBody$;
