@@ -119,6 +119,9 @@ define(function (require) {
           pageCollection.goto(pageIdOfElement);
         }
 
+        // make sure that any collapsed forms that hold the element are expanded
+        elementModel.attributes.form.set('isCollapsed', false);
+
         elementModel.attributes._view.scrollTo({ duration: 100 }).then(
           function () { resolve(elementModel.attributes._view); },
           function () { reject(new Error('Scroll Animaiton Failed')); }

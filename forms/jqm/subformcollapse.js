@@ -25,6 +25,7 @@ define(function (require) {
     },
 
     render: function () {
+      var that = this;
       var parentAttrs = this.model.parentElement.attributes;
 
       // explictly skip super and use super-super
@@ -53,6 +54,14 @@ define(function (require) {
       );
 
       this.$toggleTrigger = $('.ui-collapsible-heading-toggle', this.$collapsible.children('.ui-collapsible-heading'));
+
+      // silently update the collapsed value so we dont cause an infinite loop
+      this.$collapsible.on('collapse', function () {
+        that.model.set('isCollapsed', true, {silent: true});
+      });
+      this.$collapsible.on('expand', function () {
+        that.model.set('isCollapsed', false, {silent: true});
+      });
 
       this.model.parentElement.attributes.summaryPromise.then(function (names) {
         var formElementEvents = {};
