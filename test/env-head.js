@@ -51,6 +51,7 @@
       jquery: 'http://cdnp.blinkm.co/jquery/1.11.3/jquery-1.11.3',
       jquerymobile: 'http://cdnp.blinkm.co/jquery.mobile/1.3.2/jquery.mobile-1.3.2',
       underscore: 'http://cdnp.blinkm.co/underscorejs/1.8.3/underscore',
+      moment: 'http://cdnp.blinkm.co/moment/2.10.3/moment',
       BlinkForms: ROOT_PREFIX + 'build/forms/jqm', // using the unminified makes it far easier to debug in tests
       // BlinkForms: ROOT_PREFIX + 'build/forms3jqm.min',
       BIC: TEST_PREFIX + 'sample-bic',
@@ -61,7 +62,6 @@
       picker: ROOT_PREFIX + 'node_modules/pickadate/lib/picker',
       'picker.date': ROOT_PREFIX + 'node_modules/pickadate/lib/picker.date',
       'picker.time': ROOT_PREFIX + 'node_modules/pickadate/lib/picker.time',
-      moment: ROOT_PREFIX + 'node_modules/moment/min/moment.min',
       bluebird: ROOT_PREFIX + 'node_modules/bluebird/js/browser/bluebird.min',
       feature: ROOT_PREFIX + 'node_modules/amd-feature/feature',
       'es5-shim': ROOT_PREFIX + 'node_modules/es5-shim/es5-shim.min',
