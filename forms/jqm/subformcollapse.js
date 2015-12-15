@@ -4,6 +4,7 @@ define(function (require) {
   // foreign modules
 
   var $ = require('jquery');
+  var Backbone = require('backbone');
   var _ = require('underscore');
 
   // local modules
@@ -18,6 +19,14 @@ define(function (require) {
   return SubFormView.extend({
     initialize: function () {
       this.listenTo(this.model, 'change:isCollapsed', this.toggleView);
+      this.listenTo(Backbone, 'element:focus', this.focusChildElement);
+    },
+
+    // if the view being focussed is a descendant then make sure the sub form is not collapsed.
+    focusChildElement: function (childView) {
+      if ($.contains(this.el, childView.el)) {
+        this.model.set('isCollapsed', false);
+      }
     },
 
     toggleView: function () {

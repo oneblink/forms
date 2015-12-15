@@ -268,6 +268,8 @@ define(function (require) {
      * @param  {Object} options Passed to [jQuery.animate](http://api.jquery.com/animate/)
      */
     scrollTo: function (options) {
+      Backbone.trigger('element:focus', this);
+
       return Promise.resolve($body.animate({
         scrollTop: this.$el.offset().top
       }, options).promise());

@@ -198,7 +198,8 @@ define(function () {
             'default': {
               name: 'subsubcomment',
               label: 'Sub Sub Comment',
-              type: 'textarea'
+              type: 'textarea',
+              required: '1'
             }
           }
         ]
