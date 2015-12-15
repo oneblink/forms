@@ -51,7 +51,7 @@
       jquery: 'http://cdnp.blinkm.co/jquery/1.11.3/jquery-1.11.3',
       jquerymobile: 'http://cdnp.blinkm.co/jquery.mobile/1.3.2/jquery.mobile-1.3.2',
       underscore: 'http://cdnp.blinkm.co/underscorejs/1.8.3/underscore',
-      moment: 'http://cdnp.blinkm.co/moment/2.10.3/moment',
+      moment: 'http://cdnp.blinkm.co/moment/2.10.3/moment.min',
       BlinkForms: ROOT_PREFIX + 'build/forms/jqm', // using the unminified makes it far easier to debug in tests
       // BlinkForms: ROOT_PREFIX + 'build/forms3jqm.min',
       BIC: TEST_PREFIX + 'sample-bic',
