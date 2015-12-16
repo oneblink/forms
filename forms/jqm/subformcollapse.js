@@ -4,7 +4,6 @@ define(function (require) {
   // foreign modules
 
   var $ = require('jquery');
-  var Backbone = require('backbone');
   var _ = require('underscore');
 
   // local modules
