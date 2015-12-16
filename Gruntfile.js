@@ -46,6 +46,7 @@ module.exports = function (grunt) {
             jquerymobile: 'empty:',
             underscore: 'empty:',
             signaturepad: 'empty:',
+            moment: 'empty:',
             // libraries to be built-in
             '@blinkmobile/cast-property-types': 'node_modules/@blinkmobile/cast-property-types/dist/index',
             '@blinkmobile/geolocation': 'node_modules/@blinkmobile/geolocation/geolocation',
@@ -54,7 +55,6 @@ module.exports = function (grunt) {
             '@blinkmobile/varied-definition': 'node_modules/@blinkmobile/varied-definition/dist/index',
             'typed-errors': 'node_modules/js-typed-errors/dist/typed-errors',
             'classnames': 'node_modules/classnames/index',
-            moment: 'node_modules/moment/min/moment.min',
             picker: 'node_modules/pickadate/lib/picker',
             'picker.date': 'node_modules/pickadate/lib/picker.date',
             'picker.time': 'node_modules/pickadate/lib/picker.time',
