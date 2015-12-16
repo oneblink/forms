@@ -13,13 +13,14 @@ define(function (require) {
   var FormView = require('forms/jqm/form');
   var SubFormView = require('forms/jqm/subform');
   var template = require('text!forms/jqm/templates/subform-collapse.html');
+  var Forms = require('forms/main');
 
   // this module
 
   return SubFormView.extend({
     initialize: function () {
       this.listenTo(this.model, 'change:isCollapsed', this.toggleView);
-      this.listenTo(Backbone, 'element:focus', this.focusChildElement);
+      this.listenTo(Forms, 'element:focus', this.focusChildElement);
     },
 
     // if the view being focussed is a descendant then make sure the sub form is not collapsed.
