@@ -65,11 +65,14 @@ define(function (require) {
       this.$toggleTrigger = $('.ui-collapsible-heading-toggle', this.$collapsible.children('.ui-collapsible-heading'));
 
       // silently update the collapsed value so we dont cause an infinite loop
-      this.$collapsible.on('collapse', function () {
+      this.$collapsible.on('collapse', function (e) {
         that.model.set('isCollapsed', true, {silent: true});
+        e.stopPropagation();
       });
-      this.$collapsible.on('expand', function () {
+
+      this.$collapsible.on('expand', function (e) {
         that.model.set('isCollapsed', false, {silent: true});
+        e.stopPropagation();
       });
 
       this.model.parentElement.attributes.summaryPromise.then(function (names) {
