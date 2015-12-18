@@ -111,6 +111,21 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       test('collapsible sub forms have a single toggle trigger element', function () {
         assert.lengthOf(BMP.Forms.current.getElement('comments').getForm(0).attributes._view.$toggleTrigger, 1);
       });
+
+      test('fields with errors will expand a collapsed parent when scrolled to', function () {
+        var subsubForm = BMP.Forms.current.getElement('subsub');
+        var originalScrollPos = 0;
+
+        $(window).scrollTop(originalScrollPos);
+
+        return subsubForm.add().then(function (newForm) {
+          assert.lengthOf(newForm.getInvalidElements().errors, 1);
+
+          return newForm.getInvalidElements().errors[0].get('_view').scrollTo().then(function () {
+            assert.isAbove($(window).scrollTop(), originalScrollPos);
+          });
+        });
+      });
     });
   }); // END: suite('1', ...)
 });
