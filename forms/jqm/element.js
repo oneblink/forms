@@ -13,6 +13,7 @@ define(function (require) {
   var events = require('forms/events');
   var formsErrors = require('forms/error-helpers');
   var tplList = _.template(require('text!forms/jqm/templates/bm-list.html'));
+  var Forms = require('forms/main');
 
   var NotImplementedError = require('typed-errors').NotImplementedError;
 
@@ -268,6 +269,8 @@ define(function (require) {
      * @param  {Object} options Passed to [jQuery.animate](http://api.jquery.com/animate/)
      */
     scrollTo: function (options) {
+      Forms.trigger('element:focus', this);
+
       return Promise.resolve($body.animate({
         scrollTop: this.$el.offset().top
       }, options).promise());

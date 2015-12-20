@@ -199,6 +199,7 @@ define(function () {
               name: 'subsubcomment',
               label: 'Sub Sub Comment',
               type: 'text'
+              required: '1'
             }
           }
         ]
