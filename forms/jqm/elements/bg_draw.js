@@ -21,7 +21,7 @@ define(function (require) {
         this.$el.append(this.$controls);
       }
       if (!this.$draw) {
-        this.$draw = $('<button>Signature</button>');
+        this.$draw = $('<input type="button" value="Signature">');
         this.$draw.attr('name', attrs.name);
         this.$controls.append(this.$draw);
         this.$draw.on('click', BGDrawElementView.onButtonClick.bind(this));
@@ -30,7 +30,7 @@ define(function (require) {
     },
 
     remove: function () {
-      this.$el.children('button').off('click');
+      this.$el.find('input[type="button"]').off('click');
       this.model.off('change:blob', this.renderFigure, this);
       return FileElementView.prototype.remove.call(this);
     }
