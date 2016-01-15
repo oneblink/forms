@@ -65,7 +65,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         test('click 1st remove button', function (done) {
           subForm = subForms.at(0);
           $view = subForm.attributes._view.$el;
-          $remove = $view.children('.ui-btn').children('button');
+          $remove = $view.children('.ui-btn').children('input[type=button]');
 
           Promise.resolve()
           .then(function () {
@@ -105,7 +105,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         test('remove newly added subform', function (done) {
           subForm = subForms.at(3);
           $view = subForm.attributes._view.$el;
-          $remove = $view.children('.ui-btn').children('button');
+          $remove = $view.children('.ui-btn').children('input[type=button]');
 
           Promise.resolve()
           .then(function () {
@@ -158,7 +158,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         subForms = subFormElement.attributes.forms;
         subForm = subForms.at(2);
         $view = subForm.attributes._view.$el;
-        $remove = $view.children('.ui-btn').children('button');
+        $remove = $view.children('.ui-btn').children('input[type=button]');
 
         Promise.resolve()
         .then(function () {
@@ -200,7 +200,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           subForms = subFormElement.attributes.forms;
           subForm = subForms.at(0);
           $view = subForm.attributes._view.$el;
-          $remove = $view.children('.ui-btn').children('button');
+          $remove = $view.children('.ui-btn').children('input[type=button]');
 
           Promise.resolve()
           .then(function () {
@@ -231,7 +231,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
           // form index 0 will have status removed because its an edit form
           subForm = subForms.at(1);
           $view = subForm.attributes._view.$el;
-          $remove = $view.children('.ui-btn').children('button');
+          $remove = $view.children('.ui-btn').children('input[type=button]');
 
           Promise.resolve()
           .then(function () {

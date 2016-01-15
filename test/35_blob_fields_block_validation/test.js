@@ -55,7 +55,7 @@ define([
         assert.ok(form.getInvalidElements().length === 10, ' invalid elements in form(phantom)');
       } else {
         assert.isUndefined(form.getInvalidElements(), ' no invalid elements in form');
-        $('button[name="Signature"]').trigger('click');
+        $('input[type=button][name="Signature"]').trigger('click');
         $('button[data-action=clear]', '.sigPad').trigger('click');
         assert.equal(form.getInvalidElements().length, 1, ' invalid elements in form');
 
