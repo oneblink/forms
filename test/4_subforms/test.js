@@ -43,9 +43,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         return subFormElement.add().then(function () {
           subForm = subForms.at(0);
           $view = subForm.attributes._view.$el;
-          $remove = $view.children('.ui-btn').children('button');
+          $remove = $view.children('.ui-btn').children('input[type="button"]');
 
-          assert($remove.html(), 'Notes', 'label for MINUS `Notes` subForm not set properly');
+          assert($remove.val(), 'Notes', 'label for MINUS `Notes` subForm not set properly');
         });
       });
 
@@ -79,9 +79,9 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         return subFormElement.add().then(function () {
           subForm = subForms.at(0);
           $view = subForm.attributes._view.$el;
-          $remove = $view.children('.ui-btn').children('button');
+          $remove = $view.children('.ui-btn').children('input[type="button"]');
 
-          assert($remove.html(), 'reviews', 'label for MINUS `reviews` subForm not set properly');
+          assert($remove.val(), 'reviews', 'label for MINUS `reviews` subForm not set properly');
         });
       });
 
@@ -162,7 +162,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
 
         subFormElement.add().then(function () {
           var subForm = subFormElement.get('forms').at(0);
-          assert(subForm.get('_view').$el.children('.ui-btn').children('button').html(), 'MINUS', 'label for MINUS `comments` subForm not set properly');
+          assert(subForm.get('_view').$el.children('.ui-btn').children('input[type="button"]').val(), 'MINUS', 'label for MINUS `comments` subForm not set properly');
 
           return subFormElement.add().then(function () {
             assert.equal(subFormElement.get('forms').length, 2, 'should be 2 subForms');

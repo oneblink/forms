@@ -12,12 +12,21 @@ define(function (require) {
   var FormView = require('forms/jqm/form');
   var SubFormView = require('forms/jqm/subform');
   var template = require('text!forms/jqm/templates/subform-collapse.html');
+  var Forms = require('forms/main');
 
   // this module
 
   return SubFormView.extend({
     initialize: function () {
       this.listenTo(this.model, 'change:isCollapsed', this.toggleView);
+      this.listenTo(Forms, 'element:focus', this.focusChildElement);
+    },
+
+    // if the view being focussed is a descendant then make sure the sub form is not collapsed.
+    focusChildElement: function (childView) {
+      if ($.contains(this.el, childView.el)) {
+        this.model.set('isCollapsed', false);
+      }
     },
 
     toggleView: function () {
@@ -25,6 +34,7 @@ define(function (require) {
     },
 
     render: function () {
+      var that = this;
       var parentAttrs = this.model.parentElement.attributes;
 
       // explictly skip super and use super-super
@@ -53,6 +63,17 @@ define(function (require) {
       );
 
       this.$toggleTrigger = $('.ui-collapsible-heading-toggle', this.$collapsible.children('.ui-collapsible-heading'));
+
+      // silently update the collapsed value so we dont cause an infinite loop
+      this.$collapsible.on('collapse', function (e) {
+        that.model.set('isCollapsed', true, {silent: true});
+        e.stopPropagation();
+      });
+
+      this.$collapsible.on('expand', function (e) {
+        that.model.set('isCollapsed', false, {silent: true});
+        e.stopPropagation();
+      });
 
       this.model.parentElement.attributes.summaryPromise.then(function (names) {
         var formElementEvents = {};

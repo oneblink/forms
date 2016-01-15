@@ -56,8 +56,9 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         var form = Forms.current,
           element = form.getElement('draw'),
           view = element.get('_view'),
-          $button = view.$el.find('button');
+          $button = view.$el.find('input[type="button"]');
 
+        assert.equal($button.parent().text(), 'Signature');
         $button.trigger('click');
         assert(getDrawingStub.called);
       });
@@ -68,8 +69,9 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         var form = Forms.current,
           element = form.getElement('image_capture'),
           view = element.get('_view'),
-          $button = view.$el.find('button').first();
+          $button = view.$el.find('input[type="button"]').first();
 
+        assert.equal($button.parent().text(), 'Camera');
         $button.trigger('click');
         assert(getPictureStub.called);
       });
@@ -78,8 +80,9 @@ define(['BlinkForms', 'testUtils', 'sinon'], function (Forms, testUtils, sinon) 
         var form = Forms.current,
           element = form.getElement('image'),
           view = element.get('_view'),
-          $button = view.$el.find('button').last();
+          $button = view.$el.find('input[type="button"]').last();
 
+        assert.equal($button.parent().text(), 'Gallery');
         $button.trigger('click');
         assert(getPictureStub.called);
       });

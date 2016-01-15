@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.9.3 - 2016-01-15
+
+
+### Changed
+
+- FORMS-246: `require()` separate Moment.js, not compiled-in (#61, @simonmarklar)
+
+    - HelpDesk: 3214-YIHX-8393
+
+
+### Fixed
+
+- FORMS-258: return/go key during text input no longer triggers signature, camera or delete sub-form buttons (#58, @GeetaSajwan)
+
+- FORMS-260: navigation from the error summary properly expands any collapsed sub-forms if necessary (#60, @simonmarklar)
+
+
 ## v3.9.2 - 2015-12-03
 
 

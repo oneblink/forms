@@ -45,16 +45,16 @@ define(function (require) {
       }
 
       if (!this.$camera) {
-        this.$camera = this.$controls.find('button').first();
-        this.$camera.text('Camera');
+        this.$camera = this.$controls.find('input[type="button"]').first();
+        this.$camera.val('Camera');
         this.$camera.data('SourceType', PictureSourceType.CAMERA);
         this.$camera.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
       }
       this.$camera.button();
 
       if (!this.$gallery) {
-        this.$gallery = this.$controls.find('button').last();
-        this.$gallery.text('Gallery');
+        this.$gallery = this.$controls.find('input[type="button"]').last();
+        this.$gallery.val('Gallery');
         // http://cordova.apache.org/docs/en/2.5.0/cordova_camera_camera.md.html
         this.$gallery.data('SourceType', PictureSourceType.PHOTOLIBRARY);
         this.$gallery.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
@@ -68,7 +68,7 @@ define(function (require) {
       @description Removes the view and associated events from the DOM
     */
     remove: function () {
-      this.$el.find('button').off('click');
+      this.$el.find('input[type="button"]').off('click');
       this.model.off('change:blob', this.renderFigure, this);
       return FileElementView.prototype.remove.call(this);
     }

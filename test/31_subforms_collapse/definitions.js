@@ -61,13 +61,13 @@ define(function () {
                 'comment': {
                   "hide": "",
                   "override": "",
-                  "type": "textarea",
+                  "type": "text",
                   "id": "comment"
                 },
                 'hidden-field': {
                   "hide": "1",
                   "override": "",
-                  "type": "textarea",
+                  "type": "text",
                   "id": "hidden-field"
                 }
 
@@ -144,14 +144,14 @@ define(function () {
             'default': {
               name: 'comment',
               label: 'Comment',
-              type: 'textarea'
+              type: 'text'
             }
           },
           {
             'default': {
               name: 'hidden-field',
               label: 'Hidden Comment',
-              type: 'textarea'
+              type: 'text'
             }
           },
           {
@@ -198,7 +198,8 @@ define(function () {
             'default': {
               name: 'subsubcomment',
               label: 'Sub Sub Comment',
-              type: 'textarea'
+              type: 'text',
+              required: '1'
             }
           }
         ]

@@ -34,12 +34,11 @@ define(function (require) {
       var name = parentElement.attributes.minusButtonLabel;
       var $button;
 
-      $button = $('<button data-onclick="onRemoveClick"></button>').attr({
-        type: 'button',
+      $button = $('<input type="button" data-onclick="onRemoveClick" />').attr({
         'data-icon': 'minus',
-        'data-action': 'remove'
-      }).text(name)
-        .on('click', this.onRemoveClick.bind(this));
+        'data-action': 'remove',
+        'value': name
+      }).on('click', this.onRemoveClick.bind(this));
 
       FormView.prototype.render.call(this);
 
