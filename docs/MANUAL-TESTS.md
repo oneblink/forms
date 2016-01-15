@@ -17,6 +17,13 @@
 
 - open every test/\*/index.html file in Chrome via http://localhost:8080/
 
+    ```sh
+    # change path to Chrome executable as appropriate
+    for f in test/**/*.html; do
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --incognito http://localhost:8080/$f
+    done
+    ```
+
 - if you open too much at once, you may need to refresh to get a 100% pass
 
 
