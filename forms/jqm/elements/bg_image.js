@@ -46,7 +46,7 @@ define(function (require) {
 
       if (!this.$camera) {
         this.$camera = this.$controls.find('input[type="button"]').first();
-        this.$camera.text('Camera');
+        this.$camera.val('Camera');
         this.$camera.data('SourceType', PictureSourceType.CAMERA);
         this.$camera.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
       }
@@ -54,7 +54,7 @@ define(function (require) {
 
       if (!this.$gallery) {
         this.$gallery = this.$controls.find('input[type="button"]').last();
-        this.$gallery.text('Gallery');
+        this.$gallery.val('Gallery');
         // http://cordova.apache.org/docs/en/2.5.0/cordova_camera_camera.md.html
         this.$gallery.data('SourceType', PictureSourceType.PHOTOLIBRARY);
         this.$gallery.on('click', $.proxy(BGCameraElementView.onButtonClick, this));
