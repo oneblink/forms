@@ -497,8 +497,8 @@ define(function (require) {
         return new Form();
       }
 
-      attrs._action = action;
       form = new Form(attrs);
+      form.set('_action', action);
 
       return form;
     },

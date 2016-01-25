@@ -195,9 +195,6 @@ define(function (require) {
                 return memo;
               }
 
-              // let the element know who its parent is
-              element.parentElement = self;
-
               memo.push(element);
               return memo;
             }, []);
