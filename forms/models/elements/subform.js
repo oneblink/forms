@@ -195,15 +195,13 @@ define(function (require) {
                 return memo;
               }
 
-              // let the element know who its parent is
-              element.parentElement = self;
-
               memo.push(element);
               return memo;
             }, []);
 
             form = new SubFormModel(_.extend({}, def, {_elements: elements, _action: action}));
-            form.attributes.elements.invoke('set', 'page', self.attributes.page);
+            form.attributes.elements.invoke('set', {'page': self.attributes.page, 'parentElement': self});
+
             self.listenTo(form.attributes.elements, 'change:value change:blob', function () {
               form.setDirty();
               self.setDirty();

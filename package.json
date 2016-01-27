@@ -14,7 +14,7 @@
     "@blinkmobile/geolocation": "1.0.1",
     "@blinkmobile/html-class-data": "1.0.0",
     "@blinkmobile/jqpromise": "1.0.1",
-    "@blinkmobile/varied-definition": "1.0.0",
+    "@blinkmobile/varied-definition": "1.1.0",
     "amd-feature": "jensarps/AMD-feature#v1.2.1",
     "blinkgap-utils": "git://github.com/blinkmobile/blinkgap-utils#500774457d",
     "classnames": "^2.1.3",
