@@ -19,9 +19,15 @@ define(function (require) {
       var self, currentform, currentPage;
       var view;
       self = this;
+
       if (!_.isNumber(index)) {
         index = 0;
       }
+
+      if (self.current) {
+        self.current.removeView();
+      }
+
       self.current = null;
 
       self.current = this.at(index);
@@ -34,12 +40,6 @@ define(function (require) {
       view = currentPage.attributes._view;
       view.render();
       currentform.attributes._view.$el.append(view.el);
-
-      this.forEach(function (page, number) {
-        if (number !== index) {
-          page.removeView();
-        }
-      });
 
       pollUntil(function () {
         var aBody$;

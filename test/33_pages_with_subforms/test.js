@@ -70,6 +70,16 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         });
 
         testUtils.defineButtonTest();
+
+        test('Going to the same page does not re-initialise the page', function () {
+          var numButtons = $('[data-onclick="onAddClick"]').length;
+
+          gotoPage(1);
+          assert.lengthOf($('[data-onclick="onAddClick"]'), numButtons);
+
+          gotoPage(1);
+          assert.lengthOf($('[data-onclick="onAddClick"]'), numButtons);
+        });
       });
     });
   });
