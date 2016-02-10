@@ -1,4 +1,23 @@
-# Changelog
+# Change Log
+
+
+## 3.9.4 - 2016-02-11
+
+
+### Changed
+
+- FORMS-253: don't mutate the definition Object provided by the BIC (#62, @simonmarklar)
+
+    - slight performance improvement due to doing less initialisation work
+
+    - preparation for upcoming performance improvements
+
+
+### Fixed
+
+- FORMS-265: avoid double-display of form after turning page via `.goto()` (#63, @simonmarklar)
+
+    - HelpDesk: 1117-ERUZ-2695
 
 
 ## v3.9.3 - 2016-01-15
