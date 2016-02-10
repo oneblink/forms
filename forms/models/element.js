@@ -9,8 +9,6 @@ define(function (require) {
   'use strict';
 
   // foreign modules
-
-  var $ = require('jquery');
   var _ = require('underscore');
   var Backbone = require('backbone');
 
@@ -41,25 +39,12 @@ define(function (require) {
 
     initialize: function () {
       var attrs = this.attributes;
-      var form = attrs.form;
-      var page = attrs.page;
       var Forms = BMP.Forms;
-      var section = $.trim(attrs.section || '');
+
       // migrate builder rowClass to class
       attrs.class = attrs.class || attrs.rowClass || '';
 
       Forms.setAttributesFromClass(this);
-
-      if (form) {
-        page = attrs.page = form.getPage(attrs.page);
-        if (page && section) {
-          section = attrs.section = page.getSection(section);
-          section.add(this);
-        } else {
-          page.add(this);
-          attrs.section = null;
-        }
-      }
 
       this.set('value', attrs.defaultValue, {silent: true, validate: false});
       if (!attrs.label && attrs.type !== 'message') {
@@ -88,6 +73,22 @@ define(function (require) {
 
       // this causes problems if sub-record "remove" events are propagated
       this.on('remove', this.close, this);
+    },
+
+    setPage: function (form) {
+      var page, section;
+
+      page = form.getPage(this.attributes.page);
+      section = this.attributes.section;
+      this.set('page', page);
+      if (page && section) {
+        section = page.getSection(section);
+        this.set('section', section);
+        section.add(this);
+      } else {
+        page.add(this);
+        this.attributes.section = null;
+      }
     },
 
     isEmpty: function () {
@@ -289,9 +290,7 @@ define(function (require) {
       if (!attrs || !_.isObject(attrs)) {
         return new Element();
       }
-      if (form) {
-        attrs.form = form;
-      }
+
       // TODO: determine Element type and select sub-Prototype
       switch (attrs.type) {
         case 'draw':
@@ -357,6 +356,9 @@ define(function (require) {
       }
       // TODO: set View = read-only view for m.readOnly
       el = new TypedElement(attrs);
+      el.set('form', form);
+      el.setPage(form);
+
       return el;
     }
   });
