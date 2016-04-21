@@ -24,10 +24,21 @@ define(function () {
               label: 'Address',
               type: 'subForm',
               subForm: 'Address',
-              plusButtonLabel: "Add",
-              minusButtonLabel: "Remove",
+              plusButtonLabel: "Add Address",
+              minusButtonLabel: "Remove Address",
               // preloadNum: "2",
               // preload: "admin_defined"
+            }
+          },
+          {
+            'default': {
+              name: 'Minimum',
+              label: 'Minimum',
+              type: 'subForm',
+              subForm: 'MinimumForm',
+              plusButtonLabel: 'Add minimum form',
+              minusButtonLabel: 'Remove minimum form',
+              minSubforms: '1'
             }
           }
         ]
@@ -80,6 +91,27 @@ define(function () {
             'default': {
               name: 'Phone',
               label: 'Phone',
+              type: 'text'
+            }
+          }
+        ]
+      }
+    },
+    {
+      'default': {
+        name: 'MinimumForm',
+        label: 'MinimumForm',
+        _elements: [
+          {
+            'default': {
+              name: 'id',
+              type: 'hidden'
+            }
+          },
+          {
+            'default': {
+              name: 'Minimum',
+              label: 'Minimum',
               type: 'text'
             }
           }

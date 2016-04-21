@@ -29,6 +29,25 @@ define(function (require) {
       'class': 'bm-form'
     },
 
+    initialize: function () {
+      FormView.prototype.initialize.call(this);
+
+      this.listenTo(this.model.parentElement.attributes.forms, 'add', this.enableRemoveButton);
+      this.listenTo(this.model.parentElement.attributes.forms, 'remove', this.disableRemoveButton);
+    },
+
+    disableRemoveButton: function (model, collection, options) {
+      if (this.model.parentElement.getRealLength() <= this.model.parentElement.attributes.minSubforms) {
+        this.$el.find('[data-onclick="onRemoveClick"]').button('disable');
+      }
+    },
+
+    enableRemoveButton: function (model, collection, options) {
+      if (this.model.parentElement.getRealLength() > this.model.parentElement.attributes.minSubforms) {
+        this.$el.find('[data-onclick="onRemoveClick"]').button('enable');
+      }
+    },
+
     render: function () {
       var parentElement = this.model.parentElement;
       var name = parentElement.attributes.minusButtonLabel;
@@ -49,6 +68,7 @@ define(function (require) {
 
       this.$el.prepend($button);
       $button.button().addClass('bm-button bm-remove');
+      this.disableRemoveButton();
     },
 
     /**
