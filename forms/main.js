@@ -150,7 +150,6 @@ define(function (require) {
     } catch (ignore) {
       return false;
     }
-    return false;
   }());
 
   Forms.loaded = {};

@@ -1,0 +1,17 @@
+{
+  "extends": ["eslint:recommended", "semistandard"],
+  "env": {
+    "amd": true,
+    "browser": true,
+    "mocha": false,
+    "node": false
+  },
+  "globals": {
+    "BMP": true,
+    /* Web Platform APIs */
+    "MediaStreamTrack": false
+  },
+  "parserOptions": {
+    "ecmaVersion": 5
+  }
+}
