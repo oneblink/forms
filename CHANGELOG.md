@@ -1,6 +1,14 @@
 # Change Log
 
 
+## 3.10.0 - 2016-04-22
+
+
+### Changed
+
+- FORMS-268: prevent subform removal when already at limit (#64, @simonmarklar)
+
+
 ## 3.9.4 - 2016-02-11
 
 
