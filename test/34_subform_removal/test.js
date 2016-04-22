@@ -62,6 +62,21 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
               Phone: '100'
             }
           ]
+        }, {
+          id: 5,
+          Detail: 'Sideways',
+          Phone: [
+            {
+              id: 100,
+              Phone: '123'
+            }
+          ]
+        }
+      ],
+      Minimum: [
+        {
+          id: 11,
+          Minimum: '123456'
         }
       ]
     };
@@ -199,6 +214,24 @@ define(['BlinkForms', 'testUtils', 'BIC'], function (Forms, testUtils) {
           phoneSubFormList.forEach(function (phoneSubform) {
             assert.notEqual(phoneSubform.id, removedId);
           });
+        });
+      });
+    });
+
+    suite('when a sub subform is removed and it has a minimum number', function () {
+      test('and is populated from the database, the minimum number must be honoured', function () {
+        var subFormWithMinimum = BMP.Forms.current.getElement('Minimum');
+        var $view = subFormWithMinimum.attributes._view.$el;
+        var $removeButton = $view.find('[data-onclick="onRemoveClick"]');
+        assert.isOk($removeButton[0].disabled);
+      });
+
+      test('you can remove a subform if there are more than the minimum', function () {
+        var subFormWithMinimum = BMP.Forms.current.getElement('Minimum');
+        subFormWithMinimum.add().then(function () {
+          var $view = subFormWithMinimum.attributes._view.$el;
+          var $removeButton = $view.find('[data-onclick="onRemoveClick"]');
+          assert.notOk($removeButton[0].disabled);
         });
       });
     });

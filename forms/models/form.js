@@ -320,10 +320,10 @@ define(function (require) {
               return;
             }
             if (type === 'subForm') {
-              promises.push(new Promise(function (subResolve) {
+              promises.push(new Promise(function (resolve) {
                 el.getRecord().then(function (v) {
                   data[el.attributes.name] = v;
-                  subResolve();
+                  resolve();
                 });
               }));
               return;
