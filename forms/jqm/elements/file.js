@@ -100,7 +100,7 @@ define(function (require) {
         });
         $figure.append($img);
       }
-      this.$file.after($figure);
+      this.$el.append($figure);
     },
 
     remove: function () {
