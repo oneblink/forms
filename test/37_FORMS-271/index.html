@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <script src="../../node_modules/mocha/mocha.js"></script>
+    <script src="http://d1c6dfkb81l78v.cloudfront.net/blink/require/6/require.min.js"></script>
+
+    <script src="../env-head.js"></script>
+</head>
+<body>
+<div data-role="page" data-url="/">
+    <header data-role="header"></header>
+    <div data-role="content" role="main"></div>
+    <footer data-role="footer"></footer>
+</div>
+<div id="mocha"></div>
+<script>
+    require(['test'], function () {
+        mocha.run();
+    });
+</script>
+</body>
+</html>
