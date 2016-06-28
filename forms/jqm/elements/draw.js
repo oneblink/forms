@@ -21,7 +21,7 @@ define(function (require) {
       var attrs = this.model.attributes;
       if (!this.$controls) {
         this.$controls = $('<div class="ui-input-text"></div>');
-        this.$el.append(this.$controls);
+        this.$label.after(this.$controls);
       }
       if (!this.$draw) {
         this.$draw = $('<input type="button" value="Signature">');

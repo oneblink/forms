@@ -1,4 +1,4 @@
-define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
+define(['jquery', 'BlinkForms', 'testUtils'], function ($, Forms, testUtils) {
   var assert = window.assert;
 
   var types = [ 'draw', 'file', 'location', 'subForm', 'boolean', 'select',
@@ -15,6 +15,10 @@ define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
       var content$;
       var model;
       var view;
+
+      suiteSetup(function () {
+        return testUtils.loadViews();
+      });
 
       setup(function () {
         content$ = $('[data-role="content"]');
@@ -39,6 +43,7 @@ define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
 
         test('error list is beneath field input', function () {
           var last$ = view.$el.children().last();
+          assert.equal(view.$el.children('.bm-errors__bm-list').length, 1);
           assert.equal(last$[0].tagName.toLowerCase(), 'ul');
         });
       });
@@ -55,6 +60,7 @@ define(['jquery', 'BlinkForms', 'BIC'], function ($, Forms) {
 
         test('error list is beneath field input', function () {
           var last$ = view.$el.children().last();
+          assert.equal(view.$el.children('.bm-errors__bm-list').length, 1);
           assert.equal(last$[0].tagName.toLowerCase(), 'ul');
         });
       });

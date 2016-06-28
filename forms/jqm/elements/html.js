@@ -48,7 +48,7 @@ define(function (require) {
           'data-onchange': 'onKeyDown',
           'data-onkeydown': 'onKeyDown'
         });
-        this.$el.append(this.$input);
+        this.$label.after(this.$input);
         this.$input.textinput();
         this.$input.attr('cid', this.model.cid);
       }

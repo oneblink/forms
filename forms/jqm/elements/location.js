@@ -20,6 +20,9 @@ define(function (require) {
       BMP.Forms.loadMapScript();
       this.renderButtons();
       this.$el.fieldcontain();
+
+      // triggering validation here just in case we have unrendered errors
+      this.model.isValid();
     },
     renderButtons: function () {
       var $locateButton, $clearButton, $div, $button;
@@ -39,7 +42,7 @@ define(function (require) {
       $div = $('<div class="ui-input-text"></div>');
       $div.append($button);
 
-      this.$el.append($div);
+      this.$label.after($div);
       this.renderFigure();
 
       $locateButton.find('button').on('click', $.proxy(self.constructor.onButtonClick, this));
