@@ -33,7 +33,7 @@
 
   [
     window.ROOT_PREFIX + 'node_modules/mocha/mocha.css',
-    'http://cdnp.blinkm.co/jquery.mobile/1.3.2/jquery.mobile-1.3.2.min.css',
+    'http://d2wxp0xv9nwmh.cloudfront.net/jquery.mobile/1.3.2/jquery.mobile-1.3.2.min.css',
     window.ROOT_PREFIX + 'css/testrunner.css',
     window.ROOT_PREFIX + 'node_modules/pickadate/lib/themes/default.css',
     window.ROOT_PREFIX + 'node_modules/pickadate/lib/themes/default.date.css',
@@ -47,18 +47,18 @@
 
   require.config({
     paths: {
-      backbone: 'http://cdnp.blinkm.co/backbonejs/1.2.1/backbone',
-      jquery: 'http://cdnp.blinkm.co/jquery/1.11.3/jquery-1.11.3',
-      jquerymobile: 'http://cdnp.blinkm.co/jquery.mobile/1.3.2/jquery.mobile-1.3.2',
-      underscore: 'http://cdnp.blinkm.co/underscorejs/1.8.3/underscore',
-      moment: 'http://cdnp.blinkm.co/moment/2.10.3/moment.min',
+      backbone: 'http://d2wxp0xv9nwmh.cloudfront.net/backbonejs/1.2.1/backbone',
+      jquery: 'http://d2wxp0xv9nwmh.cloudfront.net/jquery/1.11.3/jquery-1.11.3',
+      jquerymobile: 'http://d2wxp0xv9nwmh.cloudfront.net/jquery.mobile/1.3.2/jquery.mobile-1.3.2',
+      underscore: 'http://d2wxp0xv9nwmh.cloudfront.net/underscorejs/1.8.3/underscore',
+      moment: 'http://d2wxp0xv9nwmh.cloudfront.net/moment/2.10.3/moment.min',
       BlinkForms: ROOT_PREFIX + 'build/forms/jqm', // using the unminified makes it far easier to debug in tests
       // BlinkForms: ROOT_PREFIX + 'build/forms3jqm.min',
       BIC: TEST_PREFIX + 'sample-bic',
       '@jokeyrhyme/promised-requirejs': ROOT_PREFIX + 'node_modules/@jokeyrhyme/promised-requirejs/dist/index',
       'BMP.Blob': TEST_PREFIX + 'lib/bmp-blobs',
       'BMP.BlinkGap': ROOT_PREFIX + 'node_modules/blinkgap-utils/BMP.BlinkGap',
-      signaturepad: 'http://cdnp.blinkm.co/signaturepad/2.3.0/jq.sig.min',
+      signaturepad: 'http://d2wxp0xv9nwmh.cloudfront.net/signaturepad/2.3.0/jq.sig.min',
       picker: ROOT_PREFIX + 'node_modules/pickadate/lib/picker',
       'picker.date': ROOT_PREFIX + 'node_modules/pickadate/lib/picker.date',
       'picker.time': ROOT_PREFIX + 'node_modules/pickadate/lib/picker.time',
