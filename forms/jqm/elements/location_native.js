@@ -14,6 +14,9 @@ define(function (require) {
   var LocationNativeElementView = LocationElementView.extend({
     render: function () {
       this.renderButtons();
+
+      // triggering validation here just in case we have unrendered errors
+      this.model.isValid();
     },
     renderFigure: function () {
       var $figure,

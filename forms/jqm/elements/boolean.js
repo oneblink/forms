@@ -39,8 +39,11 @@ define(function (require) {
         $input.append($option);
       });
 
-      this.$el.append($input);
+      this.$label.after($input);
       this.$el.fieldcontain();
+
+      // triggering validation here just in case we have unrendered errors
+      this.model.isValid();
     },
 
     onAttached: function () {

@@ -56,7 +56,7 @@ define(function (require) {
       if (!this.$file) {
         this.$file = $('<input type="file" />');
         this.$file.attr('name', attrs.name);
-        this.$el.append(this.$file);
+        this.$label.after(this.$file);
         this.$file.on('change', function (event) {
           this.onInputChange(event);
         }.bind(this));

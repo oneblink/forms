@@ -43,11 +43,11 @@
     "grunt-contrib-requirejs": "^1.0.0",
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-exec": "~0.4",
+    "grunt-exec": "^1.0",
     "grunt-mocha": "^1.0.1",
     "messageformat": "~0.2.1",
     "mocha": "^2.3",
-    "requirejs": "~2.1",
+    "requirejs": "^2.2",
     "sinon": "^1.14",
     "squirejs": "^0.2.1",
     "text": "requirejs/text#2.0.14"
