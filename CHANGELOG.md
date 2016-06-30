@@ -1,6 +1,18 @@
 # Change Log
 
 
+## 3.10.1 - 2016-06-30
+
+
+### Fixed
+
+- FORMS-271: ensure field label and input are above inline error list (#65, @jokeyrhyme)
+
+    - HelpDesk: 8168-ERDG-5413
+
+- FORMS-271: fixed a case where boolean and location fields might be missing their inline error lists
+
+
 ## 3.10.0 - 2016-04-22
 
 
