@@ -39,9 +39,8 @@ define(function (require) {
 
       if (!this.$controls) {
         this.$controls = $('<div class="ui-input-text"></div>');
-        this.$el.append(this.$controls);
         this.$controls.append(html);
-        this.$el.append(this.$controls);
+        this.$label.after(this.$controls);
       }
 
       if (!this.$camera) {

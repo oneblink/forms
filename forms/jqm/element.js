@@ -109,7 +109,7 @@ define(function (require) {
       }
 
       if (!this.$el.find(this.$label).length) {
-        this.$el.append(this.$label);
+        this.$el.prepend(this.$label);
       }
 
       this.$label.html(this.model.attributes.label || '');
