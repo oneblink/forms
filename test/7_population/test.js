@@ -80,7 +80,7 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
         var el = form.getElement('UpperCase');
         assert.ok(el, 'bfe[' + name + ']');
         assert.equal(el.val(), 'abcdef', 'bfe[' + name + ']: .val()');
-        assert.includes(el.attributes._view.$el.text(), 'abcdef');
+        assert.equal(el.attributes._view.$input.val(), 'abcdef', 'bfe[' + name + ']: $input.val()');
       });
     });
 
