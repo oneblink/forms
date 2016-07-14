@@ -38,6 +38,12 @@ define(function () {
           },
           {
             'default': {
+              name: 'UpperCase',
+              type: 'text'
+            }
+          },
+          {
+            'default': {
               name: 'comments',
               label: 'Comments',
               type: 'subForm',
