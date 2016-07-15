@@ -57,6 +57,33 @@ define(['BlinkForms', 'testUtils'], function (Forms, testUtils) {
       assert.equal(comment.val(), 'get a comb');
     });
 
+    suite('FORMS-272: record data that does not match field name case', function () {
+      var mismatchRecord = { uppercase: 'abcdef' };
+
+      suiteSetup(function (done) {
+        Forms.current.setRecord(mismatchRecord).then(function () {
+          done();
+        });
+      });
+
+      test('#getElement() is no longer case sensitive', function () {
+        var form = BMP.Forms.current;
+        ['UpperCase', 'uppercase', 'uPPERcASE'].forEach(function (name) {
+          var el = form.getElement(name);
+          assert.ok(el, 'bfe[' + name + ']');
+          assert.strictEqual(el, form.getElement('UpperCase'), 'bfe[' + name + ']');
+        });
+      });
+
+      test('record data that does not match field name case', function () {
+        var form = BMP.Forms.current;
+        var el = form.getElement('UpperCase');
+        assert.ok(el, 'bfe[' + name + ']');
+        assert.equal(el.val(), 'abcdef', 'bfe[' + name + ']: .val()');
+        assert.equal(el.attributes._view.$input.val(), 'abcdef', 'bfe[' + name + ']: $input.val()');
+      });
+    });
+
     suite('comments.setRecords() with 3 subForms', function () {
       suiteSetup(function () {
         record = {
