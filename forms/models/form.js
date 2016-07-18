@@ -232,6 +232,12 @@ define(function (require) {
     */
     getElement: function (name) {
       var element;
+
+      // only works with a truthy string
+      if (!name || typeof name !== 'string') {
+        return undefined;
+      }
+
       // removed subforms have thier elements array removed
       if (!this.attributes.elements) {
         return undefined;
