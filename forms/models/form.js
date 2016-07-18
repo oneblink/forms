@@ -232,11 +232,28 @@ define(function (require) {
     */
     getElement: function (name) {
       var element;
+
+      // only works with a truthy string
+      if (!name || typeof name !== 'string') {
+        return undefined;
+      }
+
       // removed subforms have thier elements array removed
       if (!this.attributes.elements) {
         return undefined;
       }
       element = this.attributes.elements.get(name);
+
+      if (!element) {
+        // using .every() because .forEach() doesn't have early bail-out
+        this.attributes.elements.every(function (el) {
+          if (el.attributes.name.toLowerCase() === name.toLowerCase()) {
+            element = el;
+            return false;
+          }
+          return true;
+        });
+      }
 
       if (!element && name !== 'id') {
         // this is supposed to recursively search sub forms for an element.
