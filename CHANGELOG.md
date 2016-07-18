@@ -1,6 +1,20 @@
 # Change Log
 
 
+## 3.10.2 - 2016-07-18
+
+
+### Fixed
+
+- FORMS-272: populate fields even when data has names that don't match case (#67, @jokeyrhyme)
+
+    - HelpDesk: 4002-UDJX-6616
+
+- FORMS-272: `Form#getElement(name)` is no longer case-sensitive
+
+    - note: using a name with the wrong case (or is missing) is bad for performance
+
+
 ## 3.10.1 - 2016-06-30
 
 
