@@ -29,6 +29,8 @@ define(function (require) {
 
   Forms = window.BMP.Forms;
 
+  require('./polyfill-object-assign.js');
+
   _.extend(Forms, Backbone.Events);
 
   _.extend(Forms, require('forms/events'));
@@ -114,7 +116,8 @@ define(function (require) {
     parsed = Forms.parseClass(klass);
     parsed = _.omit(parsed, blacklist);
 
-    defaults = _.result(model, 'defaults', {});
+    // Underscore 1.6 ignores the 3rd argument for a fallback value
+    defaults = _.result(model, 'defaults', {}) || {};
     model.set(Forms.castPropertyValues(parsed, defaults));
   };
 
