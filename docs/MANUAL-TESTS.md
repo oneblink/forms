@@ -13,9 +13,9 @@
 
 ## 3. automated tests should complete in Google Chrome
 
-- start a static-file web server, e.g. [`http-server`](https://www.npmjs.com/package/http-server)
+-   start a static-file web server, e.g. [`http-server`](https://www.npmjs.com/package/http-server)
 
-- open every test/\*/index.html file in Chrome via http://localhost:8080/
+-   open every test/\*/index.html file in Chrome via http://localhost:8080/
 
     ```sh
     # change path to Chrome executable as appropriate
@@ -24,15 +24,15 @@
     done
     ```
 
-- if you open too much at once, you may need to refresh to get a 100% pass
+-   if you open too much at once, you may need to refresh to get a 100% pass
 
 
 ## 4. double-check reported BIC and Forms versions
 
-- start a static-file web server, e.g. [`http-server`](https://www.npmjs.com/package/http-server)
+-   start a static-file web server, e.g. [`http-server`](https://www.npmjs.com/package/http-server)
 
-- open a test/\*/index.html file in Chrome via http://localhost:8080/
+-   open a test/\*/index.html file in Chrome via http://localhost:8080/
 
-- run `window.BMP.Forms.version` in JavaScript Console and confirm output
+-   run `window.BMP.Forms.version` in JavaScript Console and confirm output
 
-- double-check [package.json](../package.json) has correct "version"
+-   double-check [package.json](../package.json) has correct "version"
