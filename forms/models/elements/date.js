@@ -1,15 +1,13 @@
 define(function (require) {
   'use strict';
 
-  var _ = require('underscore');
-
   var ElementModel = require('forms/models/element');
   var moment = require('moment');
 
   return ElementModel.extend({
 
     defaults: function () {
-      return _.assign(ElementModel.prototype.defaults.call(this), {
+      return Object.assign(ElementModel.prototype.defaults.call(this), {
         _time: '',
         _date: ''
       });

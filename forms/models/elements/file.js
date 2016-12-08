@@ -47,7 +47,7 @@ define(function (require) {
 */
   return ElementModel.extend({
     defaults: function () {
-      return _.assign(ElementModel.prototype.defaults.call(this), {
+      return Object.assign(ElementModel.prototype.defaults.call(this), {
         height: 0,
         width: 0,
         progress: null,

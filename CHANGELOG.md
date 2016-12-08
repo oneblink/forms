@@ -1,6 +1,18 @@
 # Change Log
 
 
+## Unreleased
+
+
+### Fixed
+
+-   FORMS-275: compatibility with Underscore 1.6.0
+
+    -   resolves issues caused when older versions introduced by 3rd-party code (e.g. Cordova plugins) replace the default Underscore 1.8.3
+
+    -   HelpDesk: 6090-QETB-0974
+
+
 ## 3.10.2 - 2016-07-18
 
 

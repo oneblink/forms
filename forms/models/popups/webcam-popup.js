@@ -14,7 +14,7 @@ define(function (require) {
 
   return PopupModel.extend({
     defaults: function () {
-      return _.assign(PopupModel.prototype.defaults.call(this), {
+      return Object.assign(PopupModel.prototype.defaults.call(this), {
         orientation: 0,
         rotateBy: 90,
 

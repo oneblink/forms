@@ -2,13 +2,12 @@ define(function (require) {
   'use strict';
 
   var $ = require('jquery');
-  var _ = require('underscore');
 
   var ElementModel = require('forms/models/element');
 
   return ElementModel.extend({
     defaults: function () {
-      return _.assign(ElementModel.prototype.defaults.call(this), {
+      return Object.assign(ElementModel.prototype.defaults.call(this), {
         persist: false,
         level: 1
       });
